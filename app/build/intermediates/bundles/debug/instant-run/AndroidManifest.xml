@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.mr_zyl.project824"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="23" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        name="com.example.mr_zyl.project.BaseApp"
+        android:name="com.android.tools.fd.runtime.BootstrapApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/app_icon"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" >
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="K1y0i0B78WZT3LVZR2GvVG1FgwkGsxOA" />
+
+        <activity android:name="com.example.mr_zyl.project.MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.example.mr_zyl.project.LaunchActivity" />
+        <activity android:name="com.example.mr_zyl.project.pro.publish.view.PlayActivity" />
+        <activity android:name="com.example.mr_zyl.project.pro.mine.view.activity.MoreLevelActivity" />
+        <activity android:name="com.example.mr_zyl.project.pro.mine.view.activity.PuBuWaterActivity" />
+        <activity android:name="com.example.mr_zyl.project.pro.mine.view.activity.BaiduMapActivity" />
+        <activity android:name="com.example.mr_zyl.project.pro.mine.view.activity.CurtainActivity" />
+        <activity android:name="com.example.mr_zyl.project.pro.mine.view.activity.FastBlurActivity" />
+        <activity android:name="com.example.mr_zyl.project.pro.mine.view.activity.BlurredActivity" />
+        <activity android:name="com.example.mr_zyl.project.pro.mine.view.activity.ListViewSSActivity" />
+        <activity android:name="com.example.mr_zyl.project.pro.mine.view.activity.LoadGifActivity" />
+        <activity android:name="com.example.mr_zyl.project.pro.mine.view.activity.QRImageActivity" />
+        <activity android:name="com.example.mr_zyl.project.pro.newpost.view.Activity.TestMeasureActivity" />
+        <activity android:name="com.example.mr_zyl.project.pro.essence.view.activity.BrowerActivity" />
+    </application>
+
+</manifest>

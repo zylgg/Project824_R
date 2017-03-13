@@ -1,0 +1,366 @@
+[
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_expanded_menu_layout.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_expanded_menu_layout.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_header.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.3.0\\res\\layout\\design_navigation_item_header.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.3.0\\res\\layout\\design_navigation_item.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\xrefreshview_footer.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\xrefreshview_footer.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\mine.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\mine.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\item_build_default.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\item_build_default.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\toolbar_essence_layout.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\toolbar_essence_layout.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_listitem_multichoice.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.robbypond\\material-dialogs\\1.0.0\\res\\layout\\dialog_listitem_multichoice.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_customer.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\notification_template_customer.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_qrimage.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\activity_qrimage.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\material_dialog.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.robbypond\\material-dialogs\\1.0.0\\res\\layout\\material_dialog.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_menu_item_layout.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_action_menu_item_layout.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_more_level.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\activity_more_level.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_activity_chooser_view.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\fragment_essence_video.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\fragment_essence_video.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_fast_blur.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\activity_fast_blur.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_radio.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_list_menu_item_radio.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\newpost.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\newpost.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_item_material.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\select_dialog_item_material.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\myprogress_dialog.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\myprogress_dialog.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_subheader.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.3.0\\res\\layout\\design_navigation_item_subheader.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\lv_header.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\lv_header.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_big_media_narrow.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\notification_template_big_media_narrow.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_blurred.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\activity_blurred.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_activity_chooser_view_list_item.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_activity_chooser_view_list_item.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_listitem_singlechoice.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.robbypond\\material-dialogs\\1.0.0\\res\\layout\\dialog_listitem_singlechoice.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_test_video_play.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\activity_test_video_play.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_list_view_ss.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\activity_list_view_ss.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_close_item_material.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_action_mode_close_item_material.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_multichoice_material.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\select_dialog_multichoice_material.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\essence_mylv_fragment_layout.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\essence_mylv_fragment_layout.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_media_action.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\notification_media_action.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_test_measure.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\activity_test_measure.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_separator.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.3.0\\res\\layout\\design_navigation_item_separator.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_listitem.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.robbypond\\material-dialogs\\1.0.0\\res\\layout\\dialog_listitem.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_toolbar.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_screen_toolbar.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_tab_text.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.3.0\\res\\layout\\design_layout_tab_text.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_menu_item_action_area.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.3.0\\res\\layout\\design_menu_item_action_area.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_dialog_title_material.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_dialog_title_material.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_snackbar_include.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.3.0\\res\\layout\\design_layout_snackbar_include.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\view_tab_indicator.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\view_tab_indicator.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_media_cancel_action.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\notification_media_cancel_action.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_singlechoice_material.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\select_dialog_singlechoice_material.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_time.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\notification_template_part_time.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_menu_layout.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_action_menu_layout.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\curtain.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\curtain.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_launch.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\activity_launch.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_curtain.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\activity_curtain.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_view_list_nav_layout.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_action_bar_view_list_nav_layout.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_snackbar.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.3.0\\res\\layout\\design_layout_snackbar.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\blurredview.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.qiushui\\blurredview\\0.8.1\\res\\layout\\blurredview.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_item_layout.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_popup_menu_item_layout.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_main.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_checkbox.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_list_menu_item_checkbox.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\attention.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\attention.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_content_include.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_screen_content_include.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_header_item_layout.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_popup_menu_header_item_layout.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_tab_icon.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.3.0\\res\\layout\\design_layout_tab_icon.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_screen_simple.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_lines.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\notification_template_lines.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_big_media.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\notification_template_big_media.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\essence.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\essence.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_brower.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\activity_brower.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_baidu_map.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\activity_baidu_map.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_bottom_sheet_dialog.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.3.0\\res\\layout\\design_bottom_sheet_dialog.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_layout.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_list_menu_item_layout.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_bar.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_action_mode_bar.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\newfragmentlayout.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\newfragmentlayout.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_material.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_alert_dialog_material.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\notification_template_media.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_icon.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_list_menu_item_icon.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\toolbar_mine_layout.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\toolbar_mine_layout.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\main_head.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\main_head.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\listviewsss_items.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\listviewsss_items.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\item_essence_video_layout.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\item_essence_video_layout.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_load_gif.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\activity_load_gif.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_menu_item.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.3.0\\res\\layout\\design_navigation_menu_item.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_chronometer.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\notification_template_part_chronometer.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_view.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_search_view.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_select_dialog_material.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_select_dialog_material.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_up_container.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_action_bar_up_container.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_bar_title_item.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_action_bar_title_item.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\support_simple_spinner_dropdown_item.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_menu.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.3.0\\res\\layout\\design_navigation_menu.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_search_dropdown_item_icons_2line.xml",
+        "source": "E:\\example\\Project824\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_search_dropdown_item_icons_2line.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\myalert_dialog_progress.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\myalert_dialog_progress.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_pu_bu_water.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\activity_pu_bu_water.xml"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\layout\\publish.xml",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\layout\\publish.xml"
+    }
+]

@@ -1,0 +1,67 @@
+<resources>
+    <string name="app_name">824工厂</string>
+
+    <string name="main_essence_text">精华</string>
+    <string name="main_mine_text">我</string>
+    <string name="main_newpost_text">新项</string>
+    <string name="main_attention_text">关注</string>
+
+    <string name="main_mine_title_text">我的</string>
+
+    <string name="login_and_register_text">登录/注册</string>
+    <string name="login_phone_text">手机号</string>
+    <string name="login_password_text">密码</string>
+    <string name="login_register_text">注册账号</string>
+    <string name="login_forget_password_text">忘记密码?</string>
+    <string name="login_quick_text">快速登录</string>
+    <string name="login_qq_text">QQ登录</string>
+    <string name="login_sina_text">微博登录</string>
+    <string name="login_tencent_text">腾讯微博</string>
+    <string name="login_login_text">登录</string>
+    <string name="login_attention_register_text">注册</string>
+
+    <string name="xrefreshview_header_hint_normal">下拉刷新</string>
+    <string name="xrefreshview_header_hint_ready">松开刷新数据</string>
+    <string name="xrefreshview_header_hint_refreshing">正在刷新...</string>
+    <string name="xrefreshview_header_hint_loading">正在加载...</string>
+    <string name="xrefreshview_header_hint_loaded">加载完成</string>
+    <string name="xrefreshview_header_hint_loaded_fail">加载失败</string>
+    <string name="xrefreshview_header_last_time">上次更新时间：</string>
+    <string name="xrefreshview_footer_hint_normal">加载完成</string>
+    <string name="xrefreshview_footer_hint_fail">加载失败，请重试</string>
+    <string name="xrefreshview_footer_hint_complete">已无更多数据</string>
+    <string name="xrefreshview_footer_hint_click">点击加载更多</string>
+    <string name="xrefreshview_footer_hint_release">松开加载更多</string>
+    <string name="xrefreshview_footer_hint_ready">松开载入更多</string>
+    <string name="xrefreshview_never_refresh">从未刷新</string>
+    <string name="xrefreshview_refresh_justnow">刚刚刷新</string>
+    <string name="xrefreshview_refresh_minutes_ago">%1s分钟之前刷新</string>
+    <string name="xrefreshview_refresh_hours_ago">%1s小时之前刷新</string>
+    <string name="xrefreshview_refresh_days_ago">%1s天之前刷新</string>
+
+
+    <array name="essence_video_tab">
+        <item>全部@zylmove@0</item>
+        <item>视频@zylmove@1</item>
+        <item>声音@zylmove@2</item>
+        <item>图片@zylmove@3</item>
+        <item>段子@zylmove@4</item>
+        <item>广告@zylmove@5</item>
+        <item>剧情@zylmove@6</item>
+    </array>
+
+    <array name="newpost_video_tab">
+        <item>美女@zylmove@0</item>
+        <item>搞笑@zylmove@1</item>
+        <item>视频@zylmove@2</item>
+        <item>段子@zylmove@3</item>
+        <item>城市@zylmove@4</item>
+        <item>农村@zylmove@5</item>
+        <item>青春@zylmove@6</item>
+    </array>
+
+    <array name="attention_video_tab">
+        <item>订阅@zylmove@0</item>
+        <item>关注@zylmove@1</item>
+    </array>
+</resources>

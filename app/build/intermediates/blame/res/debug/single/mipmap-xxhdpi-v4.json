@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi-v4\\ic_launcher.png",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi-v4\\default_error.png",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\mipmap-xxhdpi\\default_error.png"
+    },
+    {
+        "merged": "E:\\example\\Project824\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi-v4\\item_essence_header_default.jpg",
+        "source": "E:\\example\\Project824\\app\\src\\main\\res\\mipmap-xxhdpi\\item_essence_header_default.jpg"
+    }
+]

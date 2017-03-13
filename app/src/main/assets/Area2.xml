@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<address>
+    <province name="北京市">
+        <city name="北京辖区">
+            <country name="东城区" />
+            <country name="西城区" />
+        </city>
+        <city name="北京辖县">
+            <country name="密云县" />
+            <country name="延庆县" />
+        </city>
+    </province>
+    <!-- -->
+    <province name="天津市">
+        <city name="天津辖区">
+            <country name="和平区" />
+            <country name="河东区" />
+        </city>
+        <city name="天津辖县">
+            <country name="宁河县" />
+            <country name="静海县" />
+        </city>
+    </province>
+
+</address>
