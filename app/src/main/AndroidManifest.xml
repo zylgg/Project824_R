@@ -24,13 +24,17 @@
             android:value="K1y0i0B78WZT3LVZR2GvVG1FgwkGsxOA" />
 
         <activity android:name="com.example.mr_zyl.project.MainActivity">
+
+        </activity>
+        <activity
+            android:name="com.example.mr_zyl.project.LaunchActivity"
+            android:hardwareAccelerated="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.mr_zyl.project.LaunchActivity" />
         <activity android:name="com.example.mr_zyl.project.pro.publish.view.PlayActivity" />
         <activity android:name="com.example.mr_zyl.project.pro.mine.view.activity.MoreLevelActivity" />
         <activity android:name="com.example.mr_zyl.project.pro.mine.view.activity.PuBuWaterActivity" />

@@ -1,19 +1,30 @@
 package com.example.mr_zyl.project;
 
-import android.app.Activity;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
-public class LaunchActivity extends Activity {
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
+public class LaunchActivity extends AppCompatActivity {
 
     ImageView iv_hai;
+    ObjectAnimator objectAnimator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,41 +33,80 @@ public class LaunchActivity extends Activity {
 
 //        ToastUtil.showToast(this,"2*2="+ MathKit.square(2));
         iv_hai = (ImageView) findViewById(R.id.iv_hai);
-        //初始化补间动画
-        AlphaAnimation alphaA = new AlphaAnimation(0, 1f);
-        ScaleAnimation scaleA = new ScaleAnimation(0.8f, 1f, 0.8f, 1f, Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF, 0.5f);
-        AnimationSet setA = new AnimationSet(true);
-        setA.addAnimation(alphaA);
-//        setA.addAnimation(scaleA);
-        setA.setDuration(2000);
-        setA.setFillAfter(true);
-        setA.setInterpolator(new LinearInterpolator());//插值器-匀速
-        //设置动画监听
-        setA.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
+        ImageLoader.getInstance().displayImage("drawable://" + R.drawable.hai, iv_hai, new AnimateFirstDisplayListener());
+
+
+    }
+
+    /**
+     * 图片加载监听事件
+     **/
+    private class AnimateFirstDisplayListener extends SimpleImageLoadingListener {
+
+        final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
+
+        @Override
+        public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+            if (loadedImage != null) {
+                ImageView imageView = (ImageView) view;
+                boolean firstDisplay = !displayedImages.contains(imageUri);
+                if (firstDisplay) {
+                    animate(imageView, 2000); // 设置image隐藏动画500ms
+                    displayedImages.add(imageUri); // 将图片uri添加到集合中
+                }
 
             }
+        }
+    }
+
+    public void animate(View imageView, int durationMillis) {
+        if (imageView != null) {
+            AlphaAnimation fadeImage = new AlphaAnimation(1f, 1f);
+            fadeImage.setDuration(durationMillis);
+            fadeImage.setInterpolator(new LinearInterpolator());
+            fadeImage.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    new Handler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(new Intent(LaunchActivity.this,
+                                    MainActivity.class));
+                            finish();
+                        }
+                    });
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            imageView.startAnimation(fadeImage);
+
+        }
+    }
+
+    private void setImageViewAnimation(View view) {
+        objectAnimator = ObjectAnimator.ofFloat(view, "alpha",
+                0.1f, 1.0f);
+        objectAnimator.setDuration(2000);
+        objectAnimator.addListener(new AnimatorListenerAdapter() {
 
             @Override
-            public void onAnimationEnd(Animation animation) {
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        startActivity(new Intent(LaunchActivity.this, MainActivity.class));
-                        finish();
-                    }
-                });
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                startActivity(new Intent(LaunchActivity.this,
+                        MainActivity.class));
+                finish();
             }
         });
-        //给imageview设置动画
-        iv_hai.startAnimation(setA);
+        objectAnimator.start();
     }
 
     @Override

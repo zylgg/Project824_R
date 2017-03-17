@@ -66,8 +66,9 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         for (int i = 0; i < tablists.size(); i++) {
             Tabitem tabItem = tablists.get(i);
             TabHost.TabSpec tabSpec = fragmenttabhost
-                    .newTabSpec(tabItem.getTitleString())
-                    .setIndicator(tabItem.getview());
+                    .newTabSpec(tabItem.getTitleString())//添加标题，
+                    .setIndicator(tabItem.getview());//添加相应的view布局
+            //参数1：选项卡；参数1，选项卡绑定的碎片fragment；参数3，该fragment所携带的bundle数据
             fragmenttabhost.addTab(tabSpec, tabItem.getFragmentclass(), tabItem.getBundle());
             //给我们的Tab按钮设置背景
             fragmenttabhost.getTabWidget()

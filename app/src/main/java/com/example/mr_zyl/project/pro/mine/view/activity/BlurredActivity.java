@@ -39,7 +39,6 @@ public class BlurredActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blurred);
 
-
         // 初始化视图
         initViews();
 
@@ -68,6 +67,8 @@ public class BlurredActivity extends AppCompatActivity {
         lv.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
+                //SCROLL_STATE_IDLE是当屏幕停止滚动时
+                //是当用户在以触屏方式滚动屏幕并且手指仍然还在屏幕上时 ||当用户由于之前划动屏幕并抬起手指，屏产生惯性滑动时
                if (scrollState==SCROLL_STATE_TOUCH_SCROLL||scrollState==SCROLL_STATE_FLING){
                    listview_state=true;
                }else {
@@ -78,7 +79,9 @@ public class BlurredActivity extends AppCompatActivity {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 if (listview_state){
+                    //设置图片上移的距离
                     mBlurredView.setBlurredTop((firstVisibleItem + 1) * 10);
+                    //设置模糊程度
                     mBlurredView.setBlurredLevel((firstVisibleItem + 1) * 10);
                 }
             }
