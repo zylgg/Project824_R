@@ -153,7 +153,7 @@ public class RingView extends View {
         getSectorClip(canvas, startAngle);
 
 
-        //覆盖扇形区域 中间那一个小圆
+        //覆盖扇形区域的中间那一个小圆
         path.reset();
         paint.setColor(Color.WHITE);
         path.addCircle(content_X, content_Y, smallRadius, Path.Direction.CCW);
