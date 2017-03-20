@@ -137,12 +137,14 @@ public class RingView extends View {
 //        super.onDraw(canvas);  
         paint.setColor(RingColor);//ring的颜色  
         Path path = new Path();
+        //绘制大圆
         path.reset();  
         /*画圆   Path.Direction.CCW 逆时针 Path.Direction.CW 顺时针*/
         path.addCircle(content_X, content_Y, bigRadius, Path.Direction.CCW);
         path.close();
         canvas.drawPath(path, paint);
 
+        //绘制小圆
         path.reset();
         paint.setColor(Color.WHITE);
         path.addCircle(content_X, content_Y, smallRadius, Path.Direction.CCW);
@@ -151,12 +153,14 @@ public class RingView extends View {
         getSectorClip(canvas, startAngle);
 
 
+        //覆盖扇形区域 中间那一个小圆
         path.reset();
         paint.setColor(Color.WHITE);
         path.addCircle(content_X, content_Y, smallRadius, Path.Direction.CCW);
         path.close();
         canvas.drawPath(path, paint);
 
+        //绘制进度数值
         if (text != null) {
             paint.setColor(Color.GREEN);
             paint.setFakeBoldText(true);
@@ -164,7 +168,7 @@ public class RingView extends View {
 
             float text_w = paint.measureText(text);//文字的宽
             float text_h = Math.abs(paint.ascent() + paint.descent());//文字的高
-
+            //从文字左下角开始绘制
             canvas.drawText(text, width / 2 - text_w / 2, height / 2 + text_h / 2, paint);
         }
     }
@@ -189,10 +193,10 @@ public class RingView extends View {
 
                 (float) (content_Y + bigRadius * Math.sin(SweepAngle * Math.PI / 180))); // 终点点角度在圆上对应的纵坐标  
         path.close();
-        //设置一个正方形，内切圆
+        //设置一个正方形-圆外接正方形
         RectF rectF = new RectF(content_X - bigRadius, content_Y - bigRadius, content_X + bigRadius,
                 content_Y + bigRadius);
-        // 下面是获得弧形剪裁区的方法  
+        // 下面是获得弧形剪裁区的方法  （参数2，开始角度；参数3，所要扫过的角度）
         path.addArc(rectF, startAngle, SweepAngle - startAngle);
         canvas.drawPath(path, paint);
 

@@ -21,7 +21,7 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="K1y0i0B78WZT3LVZR2GvVG1FgwkGsxOA" />
+            android:value="sGz75rp7TClWy47XIqHZ46dvvYmhACKK" />
 
         <activity android:name="com.example.mr_zyl.project.MainActivity">
 

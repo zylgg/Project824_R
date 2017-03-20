@@ -155,7 +155,7 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
         if (holder.itemtype == 1) {
             holder.siv_largepic.getOptions()
                     .setImageDisplayer(new DefaultImageDisplayer())
-                    .setCacheProcessedImageInDisk(true)// 为了加快速度，将经过ImageProcessor、resize或thumbnailMode处理过或者读取时inSampleSize大于等于8的图片保存到磁盘缓存中，下次就直接读取
+//                    .setCacheProcessedImageInDisk(true)// 为了加快速度，将经过ImageProcessor、resize或thumbnailMode处理过或者读取时inSampleSize大于等于8的图片保存到磁盘缓存中，下次就直接读取
                     .setCacheInMemoryDisabled(true);// 禁用内存缓存
             holder.siv_largepic.setSupportZoom(true);//大图才支持缩放
             holder.siv_largepic.setSupportLargeImage(true);//支持大图

@@ -50,7 +50,7 @@ public class BrowerActivity extends BaseActivity {
         boolean is_largepic = bundles.getBoolean("is_largepic");
 
         siv_browerpic = (SketchImageView) findViewById(R.id.siv_browerpic);
-        rv_loadprogress = (RingView) findViewById(R.id.rv_loadprogress);
+        rv_loadprogress = (RingView) findViewById(R.id.rv_BrowerActivity_loadprogress);
         rv_loadprogress.setVisibility(View.INVISIBLE);
         layout_detail_toolbar = (LinearLayout) findViewById(R.id.layout_detail_toolbar);
         button_detail_share = (TextView) findViewById(R.id.button_detail_share);

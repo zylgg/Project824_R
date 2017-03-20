@@ -15,7 +15,6 @@ import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project.R;
-import com.example.mr_zyl.project.pro.mine.giflib.GifLoader;
 import com.example.mr_zyl.project.pro.mine.view.MediaService;
 import com.example.mr_zyl.project.utils.ImageUtils;
 
@@ -28,7 +27,6 @@ import pl.droidsonroids.gif.GifImageView;
 public class LoadGifActivity extends AppCompatActivity {
 
     private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
-    private GifLoader gifLoader;
     private GifImageView giv_loadgifview;
     private Activity context;
     private NotificationManager manger;
@@ -39,7 +37,6 @@ public class LoadGifActivity extends AppCompatActivity {
         setContentView(R.layout.activity_load_gif);
         manger = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         context = this;
-        gifLoader = GifLoader.getInstance(this);
         TextView tv_loadpic = (TextView) findViewById(R.id.tv_loadpic);
         giv_loadgifview = (GifImageView) findViewById(R.id.giv_loadgifview);
         try {
@@ -129,7 +126,11 @@ public class LoadGifActivity extends AppCompatActivity {
                     // 得到图片的全路径
                     Uri uri = data.getData();
                     String image_path = ImageUtils.getImageAbsolutePath(context, uri);
-                    gifLoader.displayImage("http://wimg.spriteapp.cn/ugc/2017/02/27/58b398b00925c_1.jpg", giv_loadgifview, true);
+                    try {
+                        giv_loadgifview.setImageDrawable(new GifDrawable(image_path));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 break;
 
