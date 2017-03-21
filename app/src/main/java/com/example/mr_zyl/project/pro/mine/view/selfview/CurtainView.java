@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
 import com.example.mr_zyl.project.R;
-import com.example.mr_zyl.project.utils.WindowUtils;
+import com.example.mr_zyl.project.utils.DisplayUtil;
 
 import java.lang.reflect.Field;
 
@@ -101,8 +101,8 @@ public class CurtainView extends RelativeLayout implements OnTouchListener {
         //Interpolator 设置为有反弹效果的  （Bounce：反弹）
         Interpolator interpolator = new BounceInterpolator();
         mScroller = new Scroller(context, interpolator);
-        mScreenHeigh = WindowUtils.getWindowHeigh(context);
-        mScreenWidth = WindowUtils.getWindowWidth(context);
+        mScreenHeigh = DisplayUtil.Height(context);
+        mScreenWidth = DisplayUtil.Width(context);
         // 背景设置成透明
         this.setBackgroundColor(Color.argb(0, 0, 0, 0));
         final View view = LayoutInflater.from(mContext).inflate(R.layout.curtain, null);

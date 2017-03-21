@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mr_zyl.project.R;
@@ -24,14 +25,23 @@ import com.example.mr_zyl.project.pro.mine.view.activity.MoreLevelActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.QRImageActivity;
 import com.example.mr_zyl.project.pro.mine.view.navigation.MineNavigationBuilder;
 import com.example.mr_zyl.project.pro.mine.view.selfview.SmileyLoadingView;
+import com.example.mr_zyl.project.utils.DisplayUtil;
+import com.example.mr_zyl.project.utils.SystemAppUtils;
 import com.example.mr_zyl.project.utils.ToastUtil;
 
 /**
  * Created by Mr_Zyl on 2016/8/25.
  */
 public class Mine extends BaseFragment {
+
     public DefaultImpleItemBuilder builder, mapbuilder, GoNewFragment;
+    /**
+     * 我构建的item布局
+     */
     public LinearLayout ll_mine_itemview;
+    /**
+     * 是否停止了进度动画
+     */
     boolean is_stop = true;
 
     @Override
@@ -42,6 +52,17 @@ public class Mine extends BaseFragment {
     @Override
     public void initContentView(View viewContent) {
         RatingBar mRatingbar = (RatingBar) viewContent.findViewById(R.id.ratingBar);
+        TextView tv_fenbianlv = (TextView) viewContent.findViewById(R.id.tv_fenbianlv);
+        tv_fenbianlv.setText("完整高度" +
+                SystemAppUtils.getDpi(getContext())
+                + "-状态栏"
+                + SystemAppUtils.getStatusHeight(getContext())
+                + "-宽度"
+                + DisplayUtil.Width(getContext())
+                + "\n内容高度"
+                + DisplayUtil.Height(getContext())
+                + "-物理按键"
+                + SystemAppUtils.getBottomStatusHeight(getContext()));
         mRatingbar.setIsIndicator(false);//是否 不允许用户操作
         ll_mine_itemview = (LinearLayout) viewContent.findViewById(R.id.ll_mine_itemview);
         final SmileyLoadingView slv_loading_view = (SmileyLoadingView) viewContent.findViewById(R.id.slv_loading_view);

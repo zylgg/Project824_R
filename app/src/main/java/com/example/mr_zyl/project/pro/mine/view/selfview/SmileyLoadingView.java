@@ -89,7 +89,6 @@ public class SmileyLoadingView extends View {
     }
 
     private void init(AttributeSet attrs) {
-
         // get attrs
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.SmileyLoadingView);
         mStrokeColor = ta.getColor(R.styleable.SmileyLoadingView_strokeColor, DEFAULT_PAINT_COLOR);
@@ -141,9 +140,9 @@ public class SmileyLoadingView extends View {
             if (mFirstStep) {
                 mArcPath.reset();
                 /**
-                 * 第一个参数是你弧形的画的矩形范围，就是你的圆弧画满后是内切的
+                 * 第一个参数是圆弧的外接正方形
                  * 第二个参数是起始的角度
-                 * 第三个参数是移动的度数 ，所以终点度数是第二个参数加上第三个参数
+                 * 第三个参数是移动的度数
                  * */
                 mArcPath.addArc(mRectF, mStartAngle, mSweepAngle);
                 canvas.drawPath(mArcPath, mArcPaint);
@@ -163,8 +162,7 @@ public class SmileyLoadingView extends View {
     }
 
     /**
-     * measure width
-     *
+     * 测量宽度
      * @param measureSpec spec
      * @return width
      */
@@ -188,8 +186,7 @@ public class SmileyLoadingView extends View {
     }
 
     /**
-     * measure height
-     *
+     * 测量高度
      * @param measureSpec spec
      * @return height
      */
@@ -215,6 +212,7 @@ public class SmileyLoadingView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+        //计算内边距
         int paddingLeft = getPaddingLeft();
         int paddingRight = getPaddingRight();
         int paddingTop = getPaddingTop();
@@ -252,6 +250,9 @@ public class SmileyLoadingView extends View {
         mRightEyePos[1] += mStrokeWidth >> 1;
     }
 
+    /**
+     * 当view从窗口分离时触发
+     */
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
@@ -261,7 +262,7 @@ public class SmileyLoadingView extends View {
     }
 
     /**
-     * Set paint color alpha
+     * 设置画笔透明度
      *
      * @param alpha alpha
      */
@@ -295,7 +296,6 @@ public class SmileyLoadingView extends View {
      *
      * @param duration duration
      */
-    @SuppressWarnings("unused")
     public void setAnimDuration(int duration) {
         mAnimDuration = duration;
     }
@@ -305,7 +305,6 @@ public class SmileyLoadingView extends View {
      *
      * @param repeatCount repeat count
      */
-    @SuppressWarnings("unused")
     public void setAnimRepeatCount(int repeatCount) {
         mAnimRepeatCount = repeatCount;
     }

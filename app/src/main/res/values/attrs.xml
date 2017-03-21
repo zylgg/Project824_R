@@ -24,6 +24,9 @@
         <attr name="autoRefresh" format="boolean" />
         <attr name="autoLoadMore" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="RingView">
+        <attr name="ringtextcolor" format="color"/>
+    </declare-styleable>
 
 
 </resources>

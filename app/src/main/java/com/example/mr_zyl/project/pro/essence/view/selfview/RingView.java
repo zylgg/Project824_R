@@ -1,6 +1,7 @@
 package com.example.mr_zyl.project.pro.essence.view.selfview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,28 +11,19 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.example.mr_zyl.project.R;
+
 import java.text.DecimalFormat;
+
 
 /**
  * @author TFHR02
  */
 public class RingView extends View {
-
-    public RingView(Context context) {
-        super(context);
-    }
-
-
-    public RingView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        if (!init) {
-            initPaint();
-        }
-    }
-
-    public RingView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
+    /**
+     * 环进度值文本的颜色
+     */
+    private int ringtextcolor = 0;
 
 
     /**
@@ -52,15 +44,6 @@ public class RingView extends View {
      * 是否第一次
      */
     private boolean init = false;
-    /**
-     * 背景
-     */
-    private static final int BackGround = Color.parseColor("#FF0000");
-//    /** 
-//     * 已经完成的颜色 
-//     */  
-//    private static final int CircleColor = Color.YELLOW;  
-
     /**
      * 完成扇形角度
      */
@@ -101,13 +84,37 @@ public class RingView extends View {
     /**
      * 文件显示的文本
      */
-    private String text ="";
+    private String text = "";
     private static final int TEXTSIZE = 25;
     /**
      * 环宽
      */
     private int ring_width = 10;
 
+    public RingView(Context context) {
+        super(context);
+    }
+
+    public RingView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initAttrs(attrs,context);
+        if (!init) {
+            initPaint();
+        }
+    }
+    private void initAttrs(AttributeSet attrs,Context context){
+        TypedArray array = context.obtainStyledAttributes(attrs,R.styleable.RingView);
+        int attrsize = array.getIndexCount();
+        for (int i = 0; i < attrsize; i++) {
+            int arrrid = array.getIndex(i);
+            switch (arrrid) {
+                case R.styleable.RingView_ringtextcolor:
+                    ringtextcolor = array.getColor(arrrid, Color.argb(255, 0, 255, 0));
+                    break;
+            }
+        }
+        array.recycle();
+    }
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -131,11 +138,11 @@ public class RingView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        //终点角度小于等于0是不绘制
         if (SweepAngle <= 0) {
             return;
         }
-//        super.onDraw(canvas);  
-        paint.setColor(RingColor);//ring的颜色  
+        paint.setColor(RingColor);//ring的颜色
         Path path = new Path();
         //绘制大圆
         path.reset();  
@@ -162,7 +169,7 @@ public class RingView extends View {
 
         //绘制进度数值
         if (text != null) {
-            paint.setColor(Color.GREEN);
+            paint.setColor(ringtextcolor);
             paint.setFakeBoldText(true);
             paint.setTextSize(TEXTSIZE);
 
@@ -185,7 +192,7 @@ public class RingView extends View {
         // 下面是获得一个三角形的剪裁区  
         path.moveTo(content_X, content_Y); // 圆心  
         path.lineTo(
-                (float) (content_X + bigRadius * Math.cos(startAngle * Math.PI / 180)), // 起始点角度在圆上对应的横坐标  
+                (float) (content_X + bigRadius * Math.cos(startAngle * Math.PI / 180)), // 起始点角度在圆上对应的横坐标;  startAngle，Math.cos(a)里面a的单位是弧度。
 
                 (float) (content_Y + bigRadius * Math.sin(startAngle * Math.PI / 180))); // 起始点角度在圆上对应的纵坐标  
         path.lineTo(
