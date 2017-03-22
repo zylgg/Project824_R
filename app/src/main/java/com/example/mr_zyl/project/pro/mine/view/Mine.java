@@ -53,7 +53,7 @@ public class Mine extends BaseFragment {
     public void initContentView(View viewContent) {
         RatingBar mRatingbar = (RatingBar) viewContent.findViewById(R.id.ratingBar);
         TextView tv_fenbianlv = (TextView) viewContent.findViewById(R.id.tv_fenbianlv);
-        tv_fenbianlv.setText("完整高度" +
+        String screeninfo="完整高度" +
                 SystemAppUtils.getDpi(getContext())
                 + "-状态栏"
                 + SystemAppUtils.getStatusHeight(getContext())
@@ -62,7 +62,8 @@ public class Mine extends BaseFragment {
                 + "\n内容高度"
                 + DisplayUtil.Height(getContext())
                 + "-物理按键"
-                + SystemAppUtils.getBottomStatusHeight(getContext()));
+                + SystemAppUtils.getBottomStatusHeight(getContext());
+        tv_fenbianlv.setText(screeninfo);
         mRatingbar.setIsIndicator(false);//是否 不允许用户操作
         ll_mine_itemview = (LinearLayout) viewContent.findViewById(R.id.ll_mine_itemview);
         final SmileyLoadingView slv_loading_view = (SmileyLoadingView) viewContent.findViewById(R.id.slv_loading_view);
@@ -71,9 +72,9 @@ public class Mine extends BaseFragment {
             @Override
             public void onClick(View v) {
                 if (is_stop) {
-                    slv_loading_view.start();
+                    slv_loading_view.startSmile();
                 } else {
-                    slv_loading_view.stop(false);
+                    slv_loading_view.stopSmile(false);
                 }
                 is_stop = !is_stop;
                 bt_smile_stop.setText(is_stop ? "开始笑" : "停止笑");

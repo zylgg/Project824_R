@@ -6,6 +6,8 @@ package com.example.mr_zyl.project.bean;
 public class TextJavaMethod {
     public static void main(String[] args){
         double a=7.0/3;
-        System.out.print(a);
+        float angle=120f;
+        boolean is_real= angle % 360 > 225.0f;
+        System.out.print(is_real);
     }
 }
