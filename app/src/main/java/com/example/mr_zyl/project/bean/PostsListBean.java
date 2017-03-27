@@ -1,5 +1,6 @@
 package com.example.mr_zyl.project.bean;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.List;
@@ -124,8 +125,26 @@ public class PostsListBean {
         private boolean is_largepic;//是不是大图(是，View.VISIBLE;否，View.GONE)
         private int is_showOnClickBrowerView;//是否显示点击查看控件
         private float largeimg_zoom=1;//如果是大图与屏幕 对比的缩放比
-        private int view_maxheight;
-        private ImageView.ScaleType viewScaleType;
+        private int view_maxheight;//view需要设置的最大高度
+        private ImageView.ScaleType viewScaleType;//IV的缩放类型
+        private boolean is_video=false;//是不是视频
+        private int is_showvideotag= View.GONE;//是否显示视频标记
+
+        public int getIs_showvideotag() {
+            return is_showvideotag;
+        }
+
+        public void setIs_showvideotag(int is_showvideotag) {
+            this.is_showvideotag = is_showvideotag;
+        }
+
+        public boolean is_video() {
+            return is_video;
+        }
+
+        public void setIs_video(boolean is_video) {
+            this.is_video = is_video;
+        }
 
         public ImageView.ScaleType getViewScaleType() {
             return viewScaleType;

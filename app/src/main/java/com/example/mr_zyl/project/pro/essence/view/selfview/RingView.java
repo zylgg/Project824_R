@@ -34,7 +34,7 @@ public class RingView extends View {
     /**
      * 进度的颜色
      */
-    private final static int PecentColor = Color.parseColor("#14b7f8");
+    private static int PecentColor = Color.parseColor("#14b7f8");
 
     /**
      * 画笔
@@ -110,6 +110,9 @@ public class RingView extends View {
             switch (arrrid) {
                 case R.styleable.RingView_ringtextcolor:
                     ringtextcolor = array.getColor(arrrid, Color.argb(255, 0, 255, 0));
+                    break;
+                case R.styleable.RingView_pecentColor:
+                    PecentColor=array.getColor(arrrid,Color.argb(255, 0, 255, 0));
                     break;
             }
         }

@@ -71,7 +71,7 @@
             android:id="@+id/siv_pic"
             android:layout_width="1024px"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/margin_left_6_dp"
             android:layout_marginRight="@dimen/margin_left_6_dp"
             android:layout_marginTop="@dimen/margin_left_5_dp"
@@ -82,7 +82,7 @@
             android:id="@+id/siv_largepic"
             android:layout_width="1024px"
             android:layout_height="300dp"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/margin_left_6_dp"
             android:layout_marginRight="@dimen/margin_left_6_dp"
             android:layout_marginTop="@dimen/margin_left_5_dp"
@@ -93,19 +93,27 @@
             android:id="@+id/siv_gifpic"
             android:layout_width="1024px"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/margin_left_6_dp"
             android:layout_marginRight="@dimen/margin_left_6_dp"
             android:layout_marginTop="@dimen/margin_left_5_dp"
             android:src="@drawable/item_essence_video_bg"
             android:visibility="gone" />
+        <com.example.mr_zyl.project.pro.essence.view.selfview.PlayVideoIconView
+            android:id="@+id/pviv_video_detail"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            app:themecolor="@color/colorAccent"/>
 
         <com.example.mr_zyl.project.pro.essence.view.selfview.RingView
             android:id="@+id/rv_loadprogress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            app:ringtextcolor="@color/colorAccent"/>
+            app:ringtextcolor="@color/colorAccent"
+            app:pecentColor="@color/colorAccent"/>
 
         <TextView
             android:id="@+id/tv_commondata_detail"

@@ -26,6 +26,10 @@
     </declare-styleable>
     <declare-styleable name="RingView">
         <attr name="ringtextcolor" format="color"/>
+        <attr name="pecentColor" format="color"/>
+    </declare-styleable>
+    <declare-styleable name="PlayVideoIconView">
+        <attr name="themecolor" format="color"></attr>
     </declare-styleable>
 
 
