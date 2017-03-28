@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_essence_text">essence</string>
+    <string name="main_mine_text">me</string>
+    <string name="main_newpost_text">newpost </string>
+    <string name="main_attention_text">attention</string>
+
+    <string name="main_mine_title_text">mine</string>
+</resources>

@@ -28,7 +28,7 @@ public class EssenceAdapter extends FragmentStatePagerAdapter {
         String[] title = mTitles.get(position).split(TAB_TAG);
         fragment.setType(Integer.parseInt(title[1]));
         fragment.setTitle(title[0]);
-        if (position>=2){
+        if (position>=5){
             return new EssenceMyLvFragment();
         }else {
             return fragment;

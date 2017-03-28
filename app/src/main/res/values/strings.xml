@@ -41,11 +41,11 @@
 
 
     <array name="essence_video_tab">
-        <item>全部@zylmove@0</item>
-        <item>视频@zylmove@1</item>
-        <item>声音@zylmove@2</item>
-        <item>图片@zylmove@3</item>
-        <item>段子@zylmove@4</item>
+        <item>全部@zylmove@1</item>
+        <item>视频@zylmove@41</item>
+        <item>声音@zylmove@31</item>
+        <item>图片@zylmove@10</item>
+        <item>段子@zylmove@29</item>
         <item>广告@zylmove@5</item>
         <item>剧情@zylmove@6</item>
     </array>

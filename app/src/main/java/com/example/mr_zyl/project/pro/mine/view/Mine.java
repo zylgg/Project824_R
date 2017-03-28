@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -15,6 +14,7 @@ import android.widget.Toast;
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.base.view.item.DefaultImpleItemBuilder;
+import com.example.mr_zyl.project.pro.essence.view.selfview.PlayVideoIconView;
 import com.example.mr_zyl.project.pro.mine.view.activity.BaiduMapActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.BlurredActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.CurtainActivity;
@@ -43,6 +43,10 @@ public class Mine extends BaseFragment {
      * 是否停止了进度动画
      */
     boolean is_stop = true;
+    private RatingBar mRatingbar;
+    private TextView tv_fenbianlv;
+    private PlayVideoIconView pviv_mine_test;
+    private SmileyLoadingView slv_loading_view;
 
     @Override
     public int getContentView() {
@@ -51,9 +55,11 @@ public class Mine extends BaseFragment {
 
     @Override
     public void initContentView(View viewContent) {
-        RatingBar mRatingbar = (RatingBar) viewContent.findViewById(R.id.ratingBar);
-        TextView tv_fenbianlv = (TextView) viewContent.findViewById(R.id.tv_fenbianlv);
-        String screeninfo="完整高度" +
+        //初始化自定义的构造者模式的toolbar
+        initToolBar(viewContent);
+        //设备屏幕信息
+        tv_fenbianlv = (TextView) viewContent.findViewById(R.id.tv_fenbianlv);
+        String screeninfo = "完整高度" +
                 SystemAppUtils.getDpi(getContext())
                 + "-状态栏"
                 + SystemAppUtils.getStatusHeight(getContext())
@@ -64,30 +70,32 @@ public class Mine extends BaseFragment {
                 + "-物理按键"
                 + SystemAppUtils.getBottomStatusHeight(getContext());
         tv_fenbianlv.setText(screeninfo);
+        //分辨率
+        mRatingbar = (RatingBar) viewContent.findViewById(R.id.ratingBar);
         mRatingbar.setIsIndicator(false);//是否 不允许用户操作
-        ll_mine_itemview = (LinearLayout) viewContent.findViewById(R.id.ll_mine_itemview);
-        final SmileyLoadingView slv_loading_view = (SmileyLoadingView) viewContent.findViewById(R.id.slv_loading_view);
-        final Button bt_smile_stop = (Button) viewContent.findViewById(R.id.bt_smile_stop);
-        bt_smile_stop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (is_stop) {
-                    slv_loading_view.startSmile();
-                } else {
-                    slv_loading_view.stopSmile(false);
-                }
-                is_stop = !is_stop;
-                bt_smile_stop.setText(is_stop ? "开始笑" : "停止笑");
-            }
-        });
-
         mRatingbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 ToastUtil.showToast(getContext(), rating + "--" + fromUser, Toast.LENGTH_SHORT);
             }
         });
-        initToolBar(viewContent);
+        //测试自定义控件（微笑进度圈，播放按钮）
+        slv_loading_view = (SmileyLoadingView) viewContent.findViewById(R.id.slv_loading_view);
+        pviv_mine_test = (PlayVideoIconView) viewContent.findViewById(R.id.pviv_mine_test);
+        pviv_mine_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pviv_mine_test.getPlayStatus()==PlayVideoIconView.STATUS.pause){
+                    pviv_mine_test.setPlayStatus(PlayVideoIconView.STATUS.playing);
+                    slv_loading_view.startSmile();
+                }else {
+                    pviv_mine_test.setPlayStatus(PlayVideoIconView.STATUS.pause);
+                    slv_loading_view.stopSmile(false);
+                }
+            }
+        });
+        //初始化自定义的构造者模式的item布局
+        ll_mine_itemview = (LinearLayout) viewContent.findViewById(R.id.ll_mine_itemview);
         builder = new DefaultImpleItemBuilder(getActivity());
         builder.setLeftIcons(R.drawable.login_unlogin_header)
                 .setTitleText("位置")
@@ -202,6 +210,10 @@ public class Mine extends BaseFragment {
         mapbuilder.BindParentView((ViewGroup) ll_mine_itemview);
     }
 
+    /**
+     * 初始化自定义的构造者模式的toolbar
+     * @param viewContent 父view
+     */
     private void initToolBar(View viewContent) {
         MineNavigationBuilder builder = new MineNavigationBuilder(getContext());
         builder.setTitle(R.string.main_mine_text)
