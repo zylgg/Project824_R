@@ -17,6 +17,7 @@ import com.example.mr_zyl.project.utils.ToastUtil;
 
 import java.util.Arrays;
 
+import de.greenrobot.event.EventBus;
 import me.xiaopan.sketch.Configuration;
 import me.xiaopan.sketch.Sketch;
 import me.xiaopan.sketch.cache.BitmapPool;
@@ -40,24 +41,6 @@ public class essence extends BaseFragment {
     public void initContentView(View viewContent) {
         initToolBar(viewContent);
         initbaseview(viewContent);
-//        initlistener();
-    }
-
-    private void initlistener() {
-        tab_essence.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
     }
 
     private void initbaseview(View viewContent) {
@@ -83,7 +66,7 @@ public class essence extends BaseFragment {
                         boolean is_load=Settings.getBoolean(getContext(), Settings.PREFERENCE_SCROLLING_PAUSE_LOAD);
 
                         Settings.putBoolean(getContext(), Settings.PREFERENCE_SCROLLING_PAUSE_LOAD, !is_load);
-                        ToastUtil.showToast(getContext(), is_load?"滑动时加载！":"滑动式不加载！", 0);
+                        ToastUtil.showToast(getContext(), is_load?"滑动时加载！":"滑动时不加载！", 0);
                     }
                 }).createAndBind((ViewGroup) viewContent);
     }
@@ -153,5 +136,9 @@ public class essence extends BaseFragment {
         this.tab_essence.setupWithViewPager(this.vp_essence);
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

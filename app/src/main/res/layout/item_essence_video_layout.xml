@@ -71,17 +71,19 @@
             android:id="@+id/siv_pic"
             android:layout_width="1024px"
             android:layout_height="wrap_content"
+            android:contentDescription="用于播放普通图片"
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/margin_left_6_dp"
             android:layout_marginRight="@dimen/margin_left_6_dp"
             android:layout_marginTop="@dimen/margin_left_5_dp"
             android:src="@drawable/item_essence_video_bg"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <me.xiaopan.sketch.SketchImageView
             android:id="@+id/siv_largepic"
             android:layout_width="1024px"
             android:layout_height="300dp"
+            android:contentDescription="用于播放大图片"
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/margin_left_6_dp"
             android:layout_marginRight="@dimen/margin_left_6_dp"
@@ -89,16 +91,29 @@
             android:src="@drawable/item_essence_video_bg"
             android:visibility="gone" />
 
+
         <me.xiaopan.sketch.SketchImageView
             android:id="@+id/siv_gifpic"
             android:layout_width="1024px"
             android:layout_height="wrap_content"
+            android:contentDescription="用于播放gif图片"
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/margin_left_6_dp"
             android:layout_marginRight="@dimen/margin_left_6_dp"
             android:layout_marginTop="@dimen/margin_left_5_dp"
             android:src="@drawable/item_essence_video_bg"
             android:visibility="gone" />
+        <com.example.zylsmallvideolibrary.JCVideoPlayer
+            android:id="@+id/jcv_videopic"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:contentDescription="用于播放短视频"
+            android:layout_marginLeft="@dimen/margin_left_6_dp"
+            android:layout_marginRight="@dimen/margin_left_6_dp"
+            android:layout_marginTop="@dimen/margin_left_5_dp"
+            android:layout_centerInParent="true"
+            />
+
         <com.example.mr_zyl.project.pro.essence.view.selfview.PlayVideoIconView
             android:id="@+id/pviv_video_detail"
             android:layout_width="36dp"

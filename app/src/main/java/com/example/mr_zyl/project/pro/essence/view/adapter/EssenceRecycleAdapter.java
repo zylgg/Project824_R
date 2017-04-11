@@ -1,5 +1,6 @@
 package com.example.mr_zyl.project.pro.essence.view.adapter;
 
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,6 +24,7 @@ import com.example.mr_zyl.project.pro.essence.view.selfview.PlayVideoIconView;
 import com.example.mr_zyl.project.pro.essence.view.selfview.RingView;
 import com.example.mr_zyl.project.utils.DateUtils;
 import com.example.mr_zyl.project.utils.DisplayUtil;
+import com.example.zylsmallvideolibrary.JCVideoPlayer;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
@@ -79,11 +81,11 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
                     postList.setView_maxheight((int) (img_h * scale));
                 }
             }
-            if (postList.getVideouri() != null && postList.getVideouri().endsWith("mp4")) {
+            if (postList.getVideouri() != null && postList.getVideouri().endsWith("mp4")) {//如果是视频
                 postList.setLargeimg_zoom(1);
                 postList.setIs_largepic(false);
                 postList.setIs_showOnClickBrowerView(View.GONE);
-                postList.setView_maxheight(DisplayUtil.dip2px(context, 500));
+                postList.setView_maxheight((int) (img_h));
 
                 postList.setIs_video(true);
                 postList.setIs_showvideotag(View.VISIBLE);
@@ -115,7 +117,7 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
                     return 2;
                 }
                 else if (postLists.is_video()){
-                    return 1;
+                    return 3;
                 }
                 else if (postLists.getIs_gif() != null && !postLists.is_largepic() && postLists.getIs_gif().equals("0")) {
                     return 0;
@@ -127,22 +129,34 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
 
     @Override
     public EssenceViewHolders onCreateViewHolder(ViewGroup parent, int viewType, boolean isItem) {
-        View views = LayoutInflater.from(context).inflate(R.layout.item_essence_video_layout, null, false);
+        LayoutInflater inflates = (LayoutInflater) context.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
+//        View views = LayoutInflater.from(context).inflate(R.layout.item_essence_video_layout, null, false);
+        View views=inflates.inflate(R.layout.item_essence_video_layout, parent, false);
+
         ImageView iv_pic = (ImageView) views.findViewById(R.id.siv_pic);
         SketchImageView siv_largepic = (SketchImageView) views.findViewById(R.id.siv_largepic);
         SketchImageView siv_gifpic = (SketchImageView) views.findViewById(R.id.siv_gifpic);
+        JCVideoPlayer jcv_videopic= (JCVideoPlayer) views.findViewById(R.id.jcv_videopic);
         if (viewType == 0) {
             iv_pic.setVisibility(View.VISIBLE);
             siv_largepic.setVisibility(View.GONE);
             siv_gifpic.setVisibility(View.GONE);
+            jcv_videopic.setVisibility(View.GONE);
         } else if (viewType == 1) {
             iv_pic.setVisibility(View.GONE);
             siv_largepic.setVisibility(View.VISIBLE);
             siv_gifpic.setVisibility(View.GONE);
+            jcv_videopic.setVisibility(View.GONE);
         } else if (viewType == 2) {
             iv_pic.setVisibility(View.GONE);
             siv_largepic.setVisibility(View.GONE);
             siv_gifpic.setVisibility(View.VISIBLE);
+            jcv_videopic.setVisibility(View.GONE);
+        } else if (viewType==3){
+            iv_pic.setVisibility(View.GONE);
+            siv_largepic.setVisibility(View.GONE);
+            siv_gifpic.setVisibility(View.GONE);
+            jcv_videopic.setVisibility(View.VISIBLE);
         }
         EssenceViewHolders holders = new EssenceViewHolders(views, true);
         holders.itemtype = viewType;
@@ -157,10 +171,13 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
 
         holder.tv_name.setText(postList.getName());
         holder.tv_time.setText(DateUtils.parseDate(postList.getCreate_time()));
+        //设置内容
         holder.tv_content.setText(postList.getText());
+        //是否显示数据详情标记(针对gif的)
         holder.tv_commondata_detail.setVisibility(postList.getIs_showOnClickBrowerView());
-        holder.pviv_video_detail.setVisibility(postList.getIs_showvideotag());
-
+        //是否显示视频标记
+//        holder.pviv_video_detail.setVisibility(postList.getIs_showvideotag());
+        //默认加载进度圈隐藏
         holder.rv_loadprogress.setVisibility(View.INVISIBLE);
         // 普通图
         if (holder.itemtype == 0) {
@@ -223,6 +240,10 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
 
             holder.siv_gifpic.displayImage(postList.getCdn_img());
             holder.siv_gifpic.setOnClickListener(new pic_onclicklistener(postList.getCdn_img(), postList.is_largepic(), postList.getVideouri()));
+        }
+        //video视频
+        if (holder.itemtype==3){
+            holder.jcv_videopic.setUp(postList.getVideouri(),postList.getCdn_img(),postList.getText(),false);
         }
 
         holder.tv_like.setText(postList.getDing());
@@ -300,6 +321,7 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
         public RingView rv_loadprogress;
         public int itemtype;
         public PlayVideoIconView pviv_video_detail;
+        public JCVideoPlayer jcv_videopic;
 
         public EssenceViewHolders(View itemView, boolean isItem) {
             super(itemView);
@@ -319,6 +341,7 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
                         .findViewById(R.id.siv_largepic);
                 siv_gifpic = (SketchImageView) itemView
                         .findViewById(R.id.siv_gifpic);
+                jcv_videopic= (JCVideoPlayer) itemView.findViewById(R.id.jcv_videopic);
                 tv_commondata_detail = (TextView) itemView
                         .findViewById(R.id.tv_commondata_detail);
 

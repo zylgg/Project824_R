@@ -38,7 +38,9 @@ public class AnimationBatchExecutor {
         int delay = 0;
         int w = 0;
         for (View view : views) {
-            handler.postDelayed(new ExecuteAnimation(view, show ? showAnimResId : hiddenAnimResId, show ? View.VISIBLE : View.INVISIBLE), delay + (w * 10));
+            handler.postDelayed(
+                    new ExecuteAnimation(view, show ? showAnimResId : hiddenAnimResId, show ? View.VISIBLE : View.INVISIBLE),
+                    delay + (w * 10));
             w++;
             delay += delayMills;
         }

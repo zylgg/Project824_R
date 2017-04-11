@@ -122,6 +122,7 @@ public class PostsListBean {
         private String ding;
         private int favourite;
 
+        //外加属性
         private boolean is_largepic;//是不是大图(是，View.VISIBLE;否，View.GONE)
         private int is_showOnClickBrowerView;//是否显示点击查看控件
         private float largeimg_zoom=1;//如果是大图与屏幕 对比的缩放比
