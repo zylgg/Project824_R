@@ -124,12 +124,21 @@ public class PostsListBean {
 
         //外加属性
         private boolean is_largepic;//是不是大图(是，View.VISIBLE;否，View.GONE)
-        private int is_showOnClickBrowerView;//是否显示点击查看控件
+        private int is_showOnClickBrowerView=View.GONE;//是否显示点击查看控件
         private float largeimg_zoom=1;//如果是大图与屏幕 对比的缩放比
         private int view_maxheight;//view需要设置的最大高度
         private ImageView.ScaleType viewScaleType;//IV的缩放类型
         private boolean is_video=false;//是不是视频
+        private boolean is_mp3=false;//是不是mp3
         private int is_showvideotag= View.GONE;//是否显示视频标记
+
+        public boolean is_mp3() {
+            return is_mp3;
+        }
+
+        public void setIs_mp3(boolean is_mp3) {
+            this.is_mp3 = is_mp3;
+        }
 
         public int getIs_showvideotag() {
             return is_showvideotag;

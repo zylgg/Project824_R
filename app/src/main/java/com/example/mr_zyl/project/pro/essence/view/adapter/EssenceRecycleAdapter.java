@@ -1,11 +1,13 @@
 package com.example.mr_zyl.project.pro.essence.view.adapter;
 
+import android.annotation.TargetApi;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -43,7 +45,7 @@ import me.xiaopan.sketch.request.DownloadProgressListener;
 public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAdapter.EssenceViewHolders> {
     private List<PostsListBean.PostList> lists;
     private Context context;
-    private int itemtype = 0;//0,pic;1,bigpic;2,gif;3,视频
+    private int itemtype = 0;//0,pic;1,bigpic;2,gif;3,视频;4,音乐
     private float view_w = 0.0f;
 
     public EssenceRecycleAdapter(Context context, List<PostsListBean.PostList> lists) {
@@ -65,16 +67,16 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
 
             float scale = view_w / img_w;
             //如果图片缩放后的尺寸大于屏幕高度=大图
-            if (postList.getIs_gif() != null && postList.getIs_gif().equals("0") && img_h * scale > view_h) {
-                //不是gif图片，而且是长图（大图），
+            if (postList.getIs_gif() != null && postList.getIs_gif().equals("0") && img_h > view_h) {
+                //不是gif图片，而是长图（大图），
                 postList.setLargeimg_zoom(scale);
                 postList.setIs_largepic(true);
                 postList.setIs_showOnClickBrowerView(View.VISIBLE);
                 postList.setView_maxheight(DisplayUtil.dip2px(context, 300));
             } else {//普通图片
+                postList.setIs_showOnClickBrowerView(View.GONE);
                 postList.setLargeimg_zoom(scale);
                 postList.setIs_largepic(false);
-                postList.setIs_showOnClickBrowerView(View.GONE);
                 postList.setView_maxheight((int) (img_h * scale));
                 if (postList.getIs_gif() != null && postList.getIs_gif().equals("1")) {//如果是gif图
                     postList.setIs_largepic(false);
@@ -82,18 +84,15 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
                 }
             }
             if (postList.getVideouri() != null && postList.getVideouri().endsWith("mp4")) {//如果是视频
-                postList.setLargeimg_zoom(1);
-                postList.setIs_largepic(false);
-                postList.setIs_showOnClickBrowerView(View.GONE);
-                postList.setView_maxheight((int) (img_h));
-
                 postList.setIs_video(true);
                 postList.setIs_showvideotag(View.VISIBLE);
+            } else if (postList.getVoiceuri() != null && postList.getVoiceuri().endsWith("mp3")) {//如果是mp3
+                postList.setIs_showvideotag(View.GONE);
+                postList.setIs_mp3(true);
             } else {
                 postList.setIs_video(false);
-                postList.setIs_showvideotag(View.GONE);
+                postList.setIs_mp3(false);
             }
-
         }
         this.lists = lists;
 
@@ -115,11 +114,11 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
                     return 1;
                 } else if (postLists.getIs_gif() != null && postLists.getIs_gif().equals("1")) {
                     return 2;
-                }
-                else if (postLists.is_video()){
+                } else if (postLists.is_video()) {
                     return 3;
-                }
-                else if (postLists.getIs_gif() != null && !postLists.is_largepic() && postLists.getIs_gif().equals("0")) {
+                } else if (postLists.is_mp3()) {
+                    return 4;
+                } else if (postLists.getIs_gif() != null && !postLists.is_largepic() && postLists.getIs_gif().equals("0")) {
                     return 0;
                 }
             }
@@ -131,12 +130,12 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
     public EssenceViewHolders onCreateViewHolder(ViewGroup parent, int viewType, boolean isItem) {
         LayoutInflater inflates = (LayoutInflater) context.getSystemService(Service.LAYOUT_INFLATER_SERVICE);
 //        View views = LayoutInflater.from(context).inflate(R.layout.item_essence_video_layout, null, false);
-        View views=inflates.inflate(R.layout.item_essence_video_layout, parent, false);
+        View views = inflates.inflate(R.layout.item_essence_video_layout, parent, false);
 
         ImageView iv_pic = (ImageView) views.findViewById(R.id.siv_pic);
         SketchImageView siv_largepic = (SketchImageView) views.findViewById(R.id.siv_largepic);
         SketchImageView siv_gifpic = (SketchImageView) views.findViewById(R.id.siv_gifpic);
-        JCVideoPlayer jcv_videopic= (JCVideoPlayer) views.findViewById(R.id.jcv_videopic);
+        JCVideoPlayer jcv_videopic = (JCVideoPlayer) views.findViewById(R.id.jcv_videopic);
         if (viewType == 0) {
             iv_pic.setVisibility(View.VISIBLE);
             siv_largepic.setVisibility(View.GONE);
@@ -152,7 +151,12 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
             siv_largepic.setVisibility(View.GONE);
             siv_gifpic.setVisibility(View.VISIBLE);
             jcv_videopic.setVisibility(View.GONE);
-        } else if (viewType==3){
+        } else if (viewType == 3) {
+            iv_pic.setVisibility(View.GONE);
+            siv_largepic.setVisibility(View.GONE);
+            siv_gifpic.setVisibility(View.GONE);
+            jcv_videopic.setVisibility(View.VISIBLE);
+        } else if (viewType == 4) {
             iv_pic.setVisibility(View.GONE);
             siv_largepic.setVisibility(View.GONE);
             siv_gifpic.setVisibility(View.GONE);
@@ -164,6 +168,7 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
     }
 
 
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(final EssenceViewHolders holder, int position, boolean isItem) {
         final PostsListBean.PostList postList = this.lists.get(position);
@@ -178,7 +183,9 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
         //是否显示视频标记
 //        holder.pviv_video_detail.setVisibility(postList.getIs_showvideotag());
         //默认加载进度圈隐藏
-        holder.rv_loadprogress.setVisibility(View.INVISIBLE);
+        holder.rv_loadprogress.setVisibility(View.GONE);
+        //默认不显示视频播放控件
+        holder.jcv_videopic.setVisibility(View.GONE);
         // 普通图
         if (holder.itemtype == 0) {
             holder.iv_pic.getLayoutParams().height = postList.getView_maxheight();
@@ -242,10 +249,30 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
             holder.siv_gifpic.setOnClickListener(new pic_onclicklistener(postList.getCdn_img(), postList.is_largepic(), postList.getVideouri()));
         }
         //video视频
-        if (holder.itemtype==3){
-            holder.jcv_videopic.setUp(postList.getVideouri(),postList.getCdn_img(),postList.getText(),false);
+        if (holder.itemtype == 3) {
+            holder.jcv_videopic.setVisibility(View.VISIBLE);
+            holder.jcv_videopic.getLayoutParams().width= (int) view_w;
+//            holder.jcv_videopic.setSkin(
+//                    R.color.colorAccent,
+//                    R.color.colorAccent,
+//                    R.color.colorAccent,
+//                    R.color.colorAccent,
+//                    R.color.colorAccent,
+//                    R.color.colorAccent);
+            holder.jcv_videopic.setUp(postList.getVideouri(), postList.getBimageuri(), postList.getText(), false);
         }
-
+        //voice声音
+        if (holder.itemtype == 4) {
+            holder.jcv_videopic.setVisibility(View.VISIBLE);
+//            holder.jcv_videopic.setSkin(
+//                    R.color.colorAccent,
+//                    R.color.colorAccent,
+//                    R.color.colorAccent,
+//                    R.color.colorAccent,
+//                    R.color.colorAccent,
+//                    R.color.colorAccent);
+            holder.jcv_videopic.setUp(postList.getVoiceuri(), postList.getBimageuri(), postList.getText(), false);
+        }
         holder.tv_like.setText(postList.getDing());
         holder.tv_dislike.setText(postList.getCai());
         holder.tv_forword.setText(postList.getRepost());
@@ -341,7 +368,7 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
                         .findViewById(R.id.siv_largepic);
                 siv_gifpic = (SketchImageView) itemView
                         .findViewById(R.id.siv_gifpic);
-                jcv_videopic= (JCVideoPlayer) itemView.findViewById(R.id.jcv_videopic);
+                jcv_videopic = (JCVideoPlayer) itemView.findViewById(R.id.jcv_videopic);
                 tv_commondata_detail = (TextView) itemView
                         .findViewById(R.id.tv_commondata_detail);
 

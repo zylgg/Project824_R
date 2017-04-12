@@ -107,7 +107,7 @@
             android:id="@+id/jcv_videopic"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:contentDescription="用于播放短视频"
+            android:contentDescription="用于播放视频或mp3"
             android:layout_marginLeft="@dimen/margin_left_6_dp"
             android:layout_marginRight="@dimen/margin_left_6_dp"
             android:layout_marginTop="@dimen/margin_left_5_dp"
@@ -119,8 +119,8 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_centerInParent="true"
-            android:visibility="invisible"
-            app:themecolor="@color/colorAccent"/>
+            app:themecolor="@color/colorAccent"
+            android:visibility="gone"/>
 
         <com.example.mr_zyl.project.pro.essence.view.selfview.RingView
             android:id="@+id/rv_loadprogress"
@@ -128,7 +128,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             app:ringtextcolor="@color/colorAccent"
-            app:pecentColor="@color/colorAccent"/>
+            app:pecentColor="@color/colorAccent"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_commondata_detail"
@@ -138,7 +139,8 @@
             android:gravity="center"
             android:text="点击查看全图"
             android:textColor="@android:color/holo_green_dark"
-            android:visibility="invisible" />
+            android:visibility="gone"
+            />
 
     </RelativeLayout>
 

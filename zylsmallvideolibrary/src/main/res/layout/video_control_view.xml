@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black">
+    >
 
     <RelativeLayout
         android:id="@+id/parentview"
@@ -99,7 +99,7 @@
 
     <ImageView
         android:id="@+id/thumb"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
@@ -107,8 +107,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#000000"
-        android:scaleType="fitCenter" />
+        android:background="@color/white_fafaf8"
+        />
 
     <LinearLayout
         android:id="@+id/title_container"

@@ -1,7 +1,6 @@
 package com.example.zylsmallvideolibrary;
 
 import android.content.Context;
-import android.graphics.PixelFormat;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
 
@@ -17,7 +16,7 @@ import android.view.SurfaceView;
 class ResizeSurfaceView extends SurfaceView {
     public ResizeSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        getHolder().setFormat(PixelFormat.TRANSPARENT);
+//        getHolder().setFormat(PixelFormat.TRANSPARENT);//设置为透明
     }
 
     @Override
