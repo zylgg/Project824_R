@@ -30,12 +30,8 @@ import java.util.UUID;
 import de.greenrobot.event.EventBus;
 
 /**
- * <p>节操视频播放器，库的外面所有使用的接口也在这里</p>
- * <p>Jiecao video player，all outside the library interface is here</p>
- *
+ * 自定义播放器 优化
  * @see <a href="https://github.com/lipangit/jiecaovideoplayer">JiecaoVideoplayer Github</a>
- * Created by Nathen
- * On 2015/11/30 11:59
  */
 public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, View.OnTouchListener {
 
@@ -87,7 +83,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     private static boolean isFromFullScreenBackHere = false;//如果是true表示这个正在不是全屏，并且全屏刚推出，总之进入过全屏
     static boolean isClickFullscreen = false;
 
-    private static ImageView.ScaleType speScalType = null;
     public JCVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
         uuid = UUID.randomUUID().toString();
@@ -124,14 +119,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         rlParent.setOnClickListener(this);
         ivBack.setOnClickListener(this);
         skProgress.setOnTouchListener(this);
-        if (speScalType != null) {
-            ivThumb.setScaleType(speScalType);
-        }
     }
 
     /**
      * <p>配置要播放的内容</p>
-     * <p>Configuring the Content to Play</p>
      *
      * @param url   视频地址 | Video address
      * @param thumb 缩略图地址 | Thumbnail address
@@ -143,7 +134,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * <p>配置要播放的内容</p>
-     * <p>Configuring the Content to Play</p>
      *
      * @param url         视频地址 | Video address
      * @param thumb       缩略图地址 | Thumbnail address
@@ -165,11 +155,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             ivBack.setVisibility(View.GONE);
         }
         tvTitle.setText(title);
-        ivThumb.setVisibility(View.VISIBLE);
         ivStart.setVisibility(View.VISIBLE);
         llBottomControl.setVisibility(View.INVISIBLE);
         pbBottom.setVisibility(View.VISIBLE);
-        ImageLoader.getInstance().displayImage(thumb, ivThumb, Utils.getDefaultDisplayImageOption());
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
         if (uuid.equals(JCMediaManager.intance().uuid)) {
@@ -178,12 +166,14 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
             ifMp3 = true;
             loadMp3Thum();
+        }else if (!TextUtils.isEmpty(url) && url.contains(".mp4")){
+            ivThumb.setVisibility(View.VISIBLE);
+            ImageLoader.getInstance().displayImage(thumb, ivThumb, Utils.getDefaultDisplayImageOption());
         }
     }
 
     /**
      * <p>只在全全屏中调用的方法</p>
-     * <p>Only in fullscreen can call this</p>
      *
      * @param url   视频地址 | Video address
      * @param thumb 缩略图地址 | Thumbnail address
@@ -201,7 +191,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             ivFullScreen.setImageResource(enlargRecId == 0 ? R.drawable.enlarge_video : enlargRecId);
         }
         tvTitle.setText(title);
-        ivThumb.setVisibility(View.VISIBLE);
         ivStart.setVisibility(View.VISIBLE);
         llBottomControl.setVisibility(View.INVISIBLE);
         pbBottom.setVisibility(View.VISIBLE);
@@ -211,12 +200,14 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
             ifMp3 = true;
             loadMp3Thum();
+        }else if (!TextUtils.isEmpty(url) && url.contains(".mp4")){
+            ivThumb.setVisibility(View.VISIBLE);
+            ImageLoader.getInstance().displayImage(thumb, ivThumb, Utils.getDefaultDisplayImageOption());
         }
     }
 
     /**
      * <p>只在全全屏中调用的方法</p>
-     * <p>Only in fullscreen can call this</p>
      *
      * @param state int state
      */
@@ -244,6 +235,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
             updateStartImage();
             ivStart.setVisibility(View.VISIBLE);
+            surfaceView.setVisibility(View.INVISIBLE);
             llBottomControl.setVisibility(View.VISIBLE);
             pbBottom.setVisibility(View.INVISIBLE);
             setTitleVisibility(View.VISIBLE);
@@ -291,6 +283,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }
         if (videoEvents.type == VideoEvents.VE_PREPARED) {
             if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
+            surfaceView.setVisibility(View.VISIBLE);
             JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
             JCMediaManager.intance().mediaPlayer.start();
             pbLoading.setVisibility(View.INVISIBLE);
@@ -652,7 +645,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        //TODO MediaPlayer set holder,MediaPlayer prepareToPlay
         EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_CREATED));
         if (ifFullScreen) {
             JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
@@ -689,7 +681,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * <p>有特殊需要的客户端</p>
-     * <p>Clients with special needs</p>
      *
      * @param onClickListener 开始按钮点击的回调函数 | Click the Start button callback function
      */
@@ -738,27 +729,18 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         return false;
     }
 
-    private void loadMp3Thum() {
-        ImageLoader.getInstance().displayImage(thumb, ivCover, Utils.getDefaultDisplayImageOption());
-    }
-
     /**
-     * <p>默认的缩略图的scaleType是fitCenter，这时候图片如果和屏幕尺寸不同的话左右或上下会有黑边，可以根据客户端需要改成fitXY或这其他模式</p>
-     * <p>The default thumbnail scaleType is fitCenter, and this time the picture if different screen sizes up and down or left and right, then there will be black bars, or it may need to change fitXY other modes based on the client</p>
-     *
-     * @param thumbScaleType 缩略图的scalType | Thumbnail scaleType
+     * 加载mp3缩略图
      */
-    public static void setThumbImageViewScalType(ImageView.ScaleType thumbScaleType) {
-        speScalType = thumbScaleType;
+    private void loadMp3Thum() {
+        ivCover.setVisibility(View.VISIBLE);
+        ImageLoader.getInstance().displayImage(thumb, ivCover, Utils.getDefaultDisplayImageOption());
     }
 
     /**
      * <p>只设置这一个播放器的皮肤<br>
      * 这个需要在setUp播放器的属性之前调用，因为enlarge图标的原因<br>
      * 所有参数如果不需要修改的设为0</p>
-     * <p>This setting only one player skin<br>
-     * This requires the player before setUp property called, because of the enlarge icon<br>
-     * If you do not modify all parameters can be set to 0</p>
      *
      * @param titleColor              标题颜色 | title color
      * @param timeColor               时间颜色 | time color
@@ -775,7 +757,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * <p>设置应用内所有播放器的皮肤</p>
-     * <p>Apply all settings within the player skin</p>
      */
     public static void setGlobleSkin(int titleColor, int timeColor, int seekDrawable, int bottomControlBackground,
                                      int enlargRecId, int shrinkRecId) {

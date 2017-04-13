@@ -1,10 +1,9 @@
 package com.example.zylsmallvideolibrary;
 
 /**
- * Created by Nathen
- * On 2016/02/23 15:19
+ * 设置播放器皮肤
  */
-class Skin {
+public class Skin {
     Skin(int titleColor, int timeColor, int seekDrawable, int bottomControlBackground, int enlargRecId, int shrinkRecId) {
         this.titleColor = titleColor;
         this.timeColor = timeColor;

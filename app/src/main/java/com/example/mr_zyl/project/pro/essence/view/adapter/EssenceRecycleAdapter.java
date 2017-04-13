@@ -86,14 +86,19 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
             if (postList.getVideouri() != null && postList.getVideouri().endsWith("mp4")) {//如果是视频
                 postList.setIs_video(true);
                 postList.setIs_showvideotag(View.VISIBLE);
-                if (img_h*scale<=img_w){
-                    postList.setView_maxheight((int) (img_h * scale));
-                }else{
+                if (img_h*scale>DisplayUtil.dip2px(context, 300)){//以300为基准
                     postList.setView_maxheight(DisplayUtil.dip2px(context, 300));
+                }else{
+                    postList.setView_maxheight((int)(img_h*scale));
                 }
             } else if (postList.getVoiceuri() != null && postList.getVoiceuri().endsWith("mp3")) {//如果是mp3
                 postList.setIs_showvideotag(View.GONE);
                 postList.setIs_mp3(true);
+                if (img_h*scale<=img_w){//如果缩放后高<宽
+                    postList.setView_maxheight((int) (img_h * scale));
+                }else{
+                    postList.setView_maxheight(DisplayUtil.dip2px(context, 300));
+                }
             } else {
                 postList.setIs_video(false);
                 postList.setIs_mp3(false);
@@ -258,25 +263,13 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
             holder.jcv_videopic.setVisibility(View.VISIBLE);
             holder.jcv_videopic.getLayoutParams().width= (int) view_w;
             holder.jcv_videopic.getLayoutParams().height = postList.getView_maxheight();
-//            holder.jcv_videopic.setSkin(
-//                    R.color.colorAccent,
-//                    R.color.colorAccent,
-//                    R.color.colorAccent,
-//                    R.color.colorAccent,
-//                    R.color.colorAccent,
-//                    R.color.colorAccent);
             holder.jcv_videopic.setUp(postList.getVideouri(), postList.getBimageuri(), postList.getText(), false);
         }
         //voice声音
         if (holder.itemtype == 4) {
             holder.jcv_videopic.setVisibility(View.VISIBLE);
-//            holder.jcv_videopic.setSkin(
-//                    R.color.colorAccent,
-//                    R.color.colorAccent,
-//                    R.color.colorAccent,
-//                    R.color.colorAccent,
-//                    R.color.colorAccent,
-//                    R.color.colorAccent);
+            holder.jcv_videopic.getLayoutParams().width= (int) view_w;
+            holder.jcv_videopic.getLayoutParams().height = postList.getView_maxheight();
             holder.jcv_videopic.setUp(postList.getVoiceuri(), postList.getBimageuri(), postList.getText(), false);
         }
         holder.tv_like.setText(postList.getDing());
