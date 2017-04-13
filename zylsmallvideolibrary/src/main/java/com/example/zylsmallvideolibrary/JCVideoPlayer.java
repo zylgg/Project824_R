@@ -30,7 +30,7 @@ import java.util.UUID;
 import de.greenrobot.event.EventBus;
 
 /**
- * 自定义播放器 优化
+ * 自定义JC播放器 优化
  * @see <a href="https://github.com/lipangit/jiecaovideoplayer">JiecaoVideoplayer Github</a>
  */
 public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, View.OnTouchListener {
@@ -123,7 +123,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * <p>配置要播放的内容</p>
-     *
      * @param url   视频地址 | Video address
      * @param thumb 缩略图地址 | Thumbnail address
      * @param title 标题 | title
@@ -208,7 +207,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * <p>只在全全屏中调用的方法</p>
-     *
      * @param state int state
      */
     public void setState(int state) {
@@ -668,7 +666,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * <p>停止所有音频的播放</p>
-     * <p>release all videos</p>
      */
     public static void releaseAllVideos() {
         if (!isClickFullscreen) {
@@ -681,7 +678,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * <p>有特殊需要的客户端</p>
-     *
      * @param onClickListener 开始按钮点击的回调函数 | Click the Start button callback function
      */
     @Deprecated
