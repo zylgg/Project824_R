@@ -13,7 +13,7 @@ import de.greenrobot.event.EventBus;
 
 public class FullScreenActivity extends Activity {
 
-    static void toActivityFromNormal(Context context, int state, String url, String thumb, String title) {
+    public static void toActivityFromNormal(Context context, int state, String url, String thumb, String title) {
         STATE = state;
         URL = url;
         THUMB = thumb;
@@ -44,21 +44,24 @@ public class FullScreenActivity extends Activity {
     public static boolean manualQuit = false;
     protected static Skin skin;
     static boolean start = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //隐藏状态栏也虚拟按键实现全屏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         View decor = this.getWindow().getDecorView();
         decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
         setContentView(R.layout.activity_full_screen);
 
         jcVideoPlayer = (JCVideoPlayer) findViewById(R.id.jcvideoplayer);
-        if (skin != null) {
-            jcVideoPlayer.setSkin(skin.titleColor, skin.timeColor, skin.seekDrawable, skin.bottomControlBackground,
-                    skin.enlargRecId, skin.shrinkRecId);
-        }
+//        if (skin != null) {
+//            jcVideoPlayer.setSkin(skin.titleColor, skin.timeColor, skin.seekDrawable, skin.bottomControlBackground,
+//                    skin.enlargRecId, skin.shrinkRecId);
+//        }
         jcVideoPlayer.setUpForFullscreen(URL, THUMB, TITLE);
         jcVideoPlayer.setState(STATE);
         JCMediaManager.intance().setUuid(jcVideoPlayer.uuid);

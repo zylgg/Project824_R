@@ -206,7 +206,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * <p>只在全全屏中调用的方法</p>
+     * <p>只在全屏中调用的方法</p>
      * @param state int state
      */
     public void setState(int state) {
@@ -264,7 +264,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             ivStart.setImageResource(R.drawable.click_video_play_selector);
             ivThumb.setVisibility(View.VISIBLE);
             ivStart.setVisibility(View.VISIBLE);
-//                JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
+//            JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
             //TODO 这里要将背景置黑，
 //            surfaceView.setBackgroundColor(R.color.black_a10_color);
             CURRENT_STATE = CURRENT_STATE_NORMAL;
@@ -532,6 +532,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }
     }
 
+    /**
+     * 更新播放图标
+     */
     private void updateStartImage() {
         if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
             ivStart.setImageResource(R.drawable.click_video_pause_selector);
@@ -540,6 +543,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }
     }
 
+    /**
+     * 设置进度缓冲 进度
+     * @param secProgress
+     */
     private void setProgressBuffered(int secProgress) {
         if (secProgress >= 0) {
             skProgress.setSecondaryProgress(secProgress);
@@ -547,6 +554,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }
     }
 
+    /**
+     * 从计时器设置进度和时间
+     */
     private void setProgressAndTimeFromTimer() {
         int position = JCMediaManager.intance().mediaPlayer.getCurrentPosition();
         int duration = JCMediaManager.intance().mediaPlayer.getDuration();
@@ -589,6 +599,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     }
 
+    /**
+     * 视图从界面分离时
+     */
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
@@ -599,6 +612,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }
     }
 
+    /**
+     * 试图加载到界面时
+     */
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -619,6 +635,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         sendPointEvent(VideoEvents.POINT_QUIT_FULLSCREEN);
     }
 
+    /**
+     * 停止全屏或退出全屏显示 展开
+     */
     private void stopToFullscreenOrQuitFullscreenShowDisplay() {
         if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
             JCMediaManager.intance().mediaPlayer.start();
@@ -774,6 +793,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }
     }
 
+    /**
+     * 设置背景（控件的背景色）
+     * @param skin
+     */
     private void setSkin(Skin skin) {
         Resources resource = getContext().getResources();
         if (skin.titleColor != 0) {
