@@ -12,7 +12,7 @@ public class VideoEvents {
     public static final int VE_SURFACEHOLDER_FINISH_FULLSCREEN = 366006;
     public static final int VE_MEDIAPLAYER_FINISH_COMPLETE = 366007;
     public static final int VE_MEDIAPLAYER_UPDATE_BUFFER = 366008;
-    public static final int VE_MEDIAPLAYER_UPDATE_PROGRESS = 366011;
+    public static final int VE_MEDIAPLAYER_UPDATE_PROGRESS = 366011;//更新播放进度
     public static final int VE_MEDIAPLAYER_SEEKCOMPLETE = 366009;
     public static final int VE_MEDIAPLAYER_RESIZE = 366010;
 

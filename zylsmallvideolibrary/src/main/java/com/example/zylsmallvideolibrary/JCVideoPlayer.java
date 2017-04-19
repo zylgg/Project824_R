@@ -31,6 +31,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * 自定义JC播放器 优化
+ *
  * @see <a href="https://github.com/lipangit/jiecaovideoplayer">JiecaoVideoplayer Github</a>
  */
 public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, View.OnTouchListener {
@@ -38,7 +39,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     //控件
     public ImageView iv_start;
     /**
-     *视频加载过程中的进度圈
+     * 视频加载过程中的进度圈
      */
     private ProgressBar pb_loading;
     private ProgressBar pb_main_progressbar;
@@ -86,7 +87,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     private boolean touchingProgressBar = false;
     private static boolean isFromFullScreenBackHere = false;//如果是true表示这个正在不是全屏，并且全屏刚推出，总之进入过全屏
     public static boolean isClickFullscreen = false;
-    private String TAG="JCVideoPlayer";
+    private String TAG = "JCVideoPlayer";
 
     public JCVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -94,6 +95,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         init(context);
         initlistener();
     }
+
     private void init(Context context) {
         View.inflate(context, R.layout.video_control_view, this);
         iv_start = (ImageView) findViewById(R.id.iv_start);
@@ -131,8 +133,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * <p>配置要播放的内容</p>
+     *
      * @param url   视频地址 | Video address
-     * @param url2 缩略图地址 | Thumbnail address
+     * @param url2  缩略图地址 | Thumbnail address
      * @param title 标题 | title
      */
     public void setUp(String url, String url2, String title) {
@@ -143,7 +146,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * <p>配置要播放的内容</p>
      *
      * @param url         视频地址 | Video address
-     * @param url2       缩略图地址 | Thumbnail address
+     * @param url2        缩略图地址 | Thumbnail address
      * @param title       标题 | title
      * @param ifShowTitle 是否在非全屏下显示标题 | The title is displayed in full-screen under
      */
@@ -177,7 +180,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             ifMp3 = true;
             iv_mp3cover.setVisibility(View.VISIBLE);
             ImageLoader.getInstance().displayImage(url2, iv_mp3cover, Utils.getDefaultDisplayImageOption());
-        }else if (!TextUtils.isEmpty(url) && url.contains(".mp4")){
+        } else if (!TextUtils.isEmpty(url) && url.contains(".mp4")) {
             iv_mp4cover.setVisibility(View.VISIBLE);
             ImageLoader.getInstance().displayImage(url2, iv_mp4cover, Utils.getDefaultDisplayImageOption());
         }
@@ -187,7 +190,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * <p>只在全全屏中调用的方法</p>
      *
      * @param url   视频地址 | Video address
-     * @param url2 缩略图地址 | Thumbnail address
+     * @param url2  缩略图地址 | Thumbnail address
      * @param title 标题 | title
      */
     public void setUpForFullscreen(String url, String url2, String title) {
@@ -212,7 +215,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             ifMp3 = true;
             iv_mp3cover.setVisibility(View.VISIBLE);
             ImageLoader.getInstance().displayImage(url2, iv_mp3cover, Utils.getDefaultDisplayImageOption());
-        }else if (!TextUtils.isEmpty(url) && url.contains(".mp4")){//如果是播放mp4
+        } else if (!TextUtils.isEmpty(url) && url.contains(".mp4")) {//如果是播放mp4
             iv_mp4cover.setVisibility(View.VISIBLE);
             ImageLoader.getInstance().displayImage(url2, iv_mp4cover, Utils.getDefaultDisplayImageOption());
         }
@@ -220,6 +223,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * <p>只在全屏中调用的方法</p>
+     *
      * @param state int state
      */
     public void setState(int state) {
@@ -235,6 +239,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
             updateStartImage();
             iv_start.setVisibility(View.VISIBLE);
+            sv_surfaceView.setVisibility(View.VISIBLE);//显示surfaceview
             ll_bottom_control.setVisibility(View.VISIBLE);
             pb_main_progressbar.setVisibility(View.INVISIBLE);
             setTitleVisibility(View.VISIBLE);
@@ -246,6 +251,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
             updateStartImage();
             iv_start.setVisibility(View.VISIBLE);
+            sv_surfaceView.setVisibility(View.VISIBLE);//显示surfaceview
             sv_surfaceView.setVisibility(View.INVISIBLE);
             ll_bottom_control.setVisibility(View.VISIBLE);
             pb_main_progressbar.setVisibility(View.INVISIBLE);
@@ -281,7 +287,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             //TODO 这里要将背景置黑，
 //            sv_surfaceView.setBackgroundColor(R.color.black_a10_color);
             CURRENT_STATE = CURRENT_STATE_NORMAL;
-            setKeepScreenOn(false);
+            setKeepScreenOn(false);//控制屏幕灭屏
             sendPointEvent(ifFullScreen ? VideoEvents.POINT_AUTO_COMPLETE_FULLSCREEN : VideoEvents.POINT_AUTO_COMPLETE);
         }
         if (!JCMediaManager.intance().uuid.equals(uuid)) {
@@ -293,31 +299,35 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             return;
         }
         if (videoEvents.type == VideoEvents.VE_PREPARED) {
-            if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
-            sv_surfaceView.setVisibility(View.VISIBLE);
-            JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
-            JCMediaManager.intance().mediaPlayer.start();
-            pb_loading.setVisibility(View.INVISIBLE);
-            if (!ifMp3) {
-                iv_mp3cover.setVisibility(View.INVISIBLE);
+            if (CURRENT_STATE != CURRENT_STATE_PREPAREING) {//如果状态不是“正在准备”就退出
+                return;
             }
-            ll_bottom_control.setVisibility(View.VISIBLE);
-            pb_main_progressbar.setVisibility(View.INVISIBLE);
-            CURRENT_STATE = CURRENT_STATE_PLAYING;
-            startDismissControlViewTimer();
-            startProgressTimer();
+            sv_surfaceView.setVisibility(View.VISIBLE);//显示surfaceview
+            JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);//设置显示方式
+            JCMediaManager.intance().mediaPlayer.start();//开始或恢复播放
+            pb_loading.setVisibility(View.INVISIBLE);//隐藏加载进度圈
+            if (!ifMp3){
+                iv_mp3cover.setVisibility(View.INVISIBLE);//隐藏mp3缩略图
+            }
+            iv_mp4cover.setVisibility(View.INVISIBLE);//隐藏mp4缩略图
+            ll_bottom_control.setVisibility(View.VISIBLE);//显示底部控制区域
+            pb_main_progressbar.setVisibility(View.INVISIBLE);//隐藏主要的进度条
+            CURRENT_STATE = CURRENT_STATE_PLAYING;//设置状态为正在播放
+
+            startDismissControlViewTimer();//开启倒计时 隐藏“表面的控件”
+            startProgressTimer();//控制每隔0.3s更新播放进度
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_UPDATE_BUFFER) {
-            if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
+            if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {//不是初始化，或者不是正在准备的状态
                 int percent = Integer.valueOf(videoEvents.obj.toString());
-                setProgressBuffered(percent);
+                setProgressBuffered(percent);//设置缓冲进度
             }
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_UPDATE_PROGRESS) {
-            if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
-                setProgressAndTimeFromTimer();
+            if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {//不是初始化，或者不是正在准备的状态
+                setProgressAndTimeFromTimer();//从计时器设置进度和时间
             }
-        } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN) {
-            if (isClickFullscreen) {
-                isFromFullScreenBackHere = true;
+        } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN) {//关闭全屏时
+            if (isClickFullscreen) {//如果是点击全屏的
+                isFromFullScreenBackHere = true;//表示离开全屏
                 isClickFullscreen = false;
                 int prev_state = Integer.valueOf(videoEvents.obj.toString());
                 setState(prev_state);
@@ -356,24 +366,24 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             if (CURRENT_STATE == CURRENT_STATE_NORMAL) {//如果为 初始化状态
                 JCMediaManager.intance().clearWidthAndHeight();
 
-                CURRENT_STATE = CURRENT_STATE_PREPAREING;//设置为 准备状态
+                CURRENT_STATE = CURRENT_STATE_PREPAREING;//设置为 正在准备状态
                 iv_start.setVisibility(View.INVISIBLE);//播放状态按钮 设置隐藏
-                iv_mp4cover.setVisibility(View.INVISIBLE);//音频缩略图 设置隐藏
+                iv_mp4cover.setVisibility(View.VISIBLE);//音频缩略图 设置显示
+                iv_mp3cover.setVisibility(View.VISIBLE);//音乐缩略图 设置显示
                 pb_loading.setVisibility(View.VISIBLE);//加载进度圈 设置显示
-                iv_mp3cover.setVisibility(View.VISIBLE);//音乐缩略图 设置隐藏
 
                 setProgressAndTime(0, 0, 0);//初始化进度
                 setProgressBuffered(0);//初始化缓存进度
-                JCMediaManager.intance().prepareToPlay(getContext(), url);
-                JCMediaManager.intance().setUuid(uuid);
+                JCMediaManager.intance().prepareToPlay(getContext(), url);//准备去播放
+                JCMediaManager.intance().setUuid(uuid);//设置uuid
                 Log.i(TAG, "play video");
 
                 VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_START);
                 videoEvents.obj = uuid;
                 EventBus.getDefault().post(videoEvents);
-                sv_surfaceView.requestLayout();
-                setKeepScreenOn(true);
 
+                sv_surfaceView.requestLayout();
+                setKeepScreenOn(true);//控制屏幕常亮
                 sendPointEvent(i == R.id.iv_start ? VideoEvents.POINT_START_ICON : VideoEvents.POINT_START_THUMB);
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                 CURRENT_STATE = CURRENT_STATE_PAUSE;
@@ -385,7 +395,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 Log.i(TAG, "pause video");
 
                 updateStartImage();
-                setKeepScreenOn(false);
+                setKeepScreenOn(false);//控制屏幕灭屏
                 cancelDismissControlViewTimer();
                 sendPointEvent(ifFullScreen ? VideoEvents.POINT_STOP_FULLSCREEN : VideoEvents.POINT_STOP);
             } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
@@ -398,7 +408,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 Log.i(TAG, "go on video");
 
                 updateStartImage();
-                setKeepScreenOn(true);
+                setKeepScreenOn(true);//控制屏幕常亮
                 startDismissControlViewTimer();
                 sendPointEvent(ifFullScreen ? VideoEvents.POINT_RESUME_FULLSCREEN : VideoEvents.POINT_RESUME);
             }
@@ -449,10 +459,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     //只是onClickToggleClear这个方法中逻辑的一部分
     private void dismissControlView() {
-        ll_bottom_control.setVisibility(View.INVISIBLE);
-        pb_main_progressbar.setVisibility(View.VISIBLE);
-        setTitleVisibility(View.INVISIBLE);
-        iv_start.setVisibility(View.INVISIBLE);
+        ll_bottom_control.setVisibility(View.INVISIBLE);//隐藏底部控制区域
+        pb_main_progressbar.setVisibility(View.VISIBLE);//显示主要的进度条
+        setTitleVisibility(View.INVISIBLE);//隐藏标题
+        iv_start.setVisibility(View.INVISIBLE);//隐藏播放控制按钮
     }
 
     private void cancelDismissControlViewTimer() {
@@ -538,6 +548,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * 设置标题显示与隐藏
+     *
      * @param visable
      */
     private void setTitleVisibility(int visable) {
@@ -565,6 +576,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * 设置 “缓冲进度”
+     *
      * @param secProgress
      */
     private void setProgressBuffered(int secProgress) {
@@ -586,6 +598,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * 初始化进度，当前时间，总时间
+     *
      * @param progress
      * @param currentTime
      * @param totalTime
@@ -726,6 +739,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * <p>有特殊需要的客户端</p>
+     *
      * @param onClickListener 开始按钮点击的回调函数 | Click the Start button callback function
      */
     @Deprecated
@@ -816,6 +830,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * 设置背景（控件的背景色）
+     *
      * @param skin
      */
     private void setSkin(Skin skin) {

@@ -35,7 +35,9 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     }
 
     public void prepareToPlay(Context context, String url) {
-        if (TextUtils.isEmpty(url)) return;
+        if (TextUtils.isEmpty(url)) {
+            return;
+        }
         try {
             mediaPlayer.release();
             mediaPlayer = new MediaPlayer();
@@ -62,14 +64,6 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
         EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_PREPARED));
     }
 
-    /**
-     * 当一个媒体是播放完毕的时候发出通知
-     * @param mp
-     */
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE));
-    }
 
     /**
      * 当播放网络的数据流的buffer发生变化的时候发出通知
@@ -90,6 +84,15 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     @Override
     public void onSeekComplete(MediaPlayer mp) {
         EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_SEEKCOMPLETE));
+    }
+
+    /**
+     * 当一个媒体是播放完毕的时候发出通知
+     * @param mp
+     */
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE));
     }
 
     /**
