@@ -283,6 +283,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             iv_start.setImageResource(R.drawable.click_video_play_selector);
             iv_mp4cover.setVisibility(View.VISIBLE);
             iv_start.setVisibility(View.VISIBLE);
+            ll_bottom_control.setVisibility(View.INVISIBLE);//默认隐藏底部控制按钮
+            pb_main_progressbar.setVisibility(View.VISIBLE);//显示主要的进度条
 //            JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
             //TODO 这里要将背景置黑，
 //            sv_surfaceView.setBackgroundColor(R.color.black_a10_color);
@@ -306,7 +308,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);//设置显示方式
             JCMediaManager.intance().mediaPlayer.start();//开始或恢复播放
             pb_loading.setVisibility(View.INVISIBLE);//隐藏加载进度圈
-            if (!ifMp3){
+            if (!ifMp3) {
                 iv_mp3cover.setVisibility(View.INVISIBLE);//隐藏mp3缩略图
             }
             iv_mp4cover.setVisibility(View.INVISIBLE);//隐藏mp4缩略图
@@ -419,7 +421,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             } else {//打开全屏
                 FullScreenActivity.skin = skin;
                 JCMediaManager.intance().mediaPlayer.pause();
-                JCMediaManager.intance().mediaPlayer.setDisplay(null);
+//                JCMediaManager.intance().mediaPlayer.setDisplay(null);
                 JCMediaManager.intance().backUpUuid();
                 isClickFullscreen = true;
                 FullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, url2, title);
@@ -645,10 +647,11 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         EventBus.getDefault().unregister(this);
-//        cancelDismissControlViewTimer();
-        if (uuid.equals(JCMediaManager.intance().uuid)) {
-            JCMediaManager.intance().mediaPlayer.stop();
-        }
+        cancelDismissControlViewTimer();
+//        if (uuid.equals(JCMediaManager.intance().uuid)) {
+//            JCMediaManager.intance().mediaPlayer.stop();
+//        }
+        releaseAllVideos();
     }
 
     /**
@@ -731,7 +734,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public static void releaseAllVideos() {
         if (!isClickFullscreen) {
             JCMediaManager.intance().mediaPlayer.stop();
-            JCMediaManager.intance().setUuid("");
             JCMediaManager.intance().setUuid("");
             EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE));
         }
