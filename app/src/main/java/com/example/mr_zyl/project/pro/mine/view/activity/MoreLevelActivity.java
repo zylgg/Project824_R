@@ -1,8 +1,8 @@
 package com.example.mr_zyl.project.pro.mine.view.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.mr_zyl.project.MainActivity;
 import com.example.mr_zyl.project.pro.mine.bean.City;
@@ -15,22 +15,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MoreLevelActivity extends AppCompatActivity {
-    public List<Province> Prov_lists = new ArrayList<Province>();
+    public List<Province> Prov_lists = new ArrayList<Province>();//省市级连数据表
     public List<Node> mDatas = new ArrayList<Node>();
-    public List<Node> mDatasA = new ArrayList<Node>();
-    public List<Node> mDatasB = new ArrayList<Node>();
-    public List<Node> mDatasC = new ArrayList<Node>();
+    public List<Node> mDatasA = new ArrayList<Node>();//第一级
+    public List<Node> mDatasB = new ArrayList<Node>();//第二级
+    public List<Node> mDatasC = new ArrayList<Node>();//第三级
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_more_level);
-        InitData();
+//        InitData();
+        initTestdata();
         MoreLevelView mlv = new MoreLevelView(this);
-        mDatas.addAll(mDatasA);
-        mDatas.addAll(mDatasB);
-        mDatas.addAll(mDatasC);
-        mlv.setdata(mDatas,Prov_lists);
+//        mlv.setdata(mDatas,Prov_lists);
+        mlv.setdata(mDatas,null);
         mlv.setonThreenViewCllickListenner(new MoreLevelView.itemonclickCallBack() {
             @Override
             public void setonItemClick(String address) {
@@ -61,7 +60,7 @@ public class MoreLevelActivity extends AppCompatActivity {
                     City city = city_lists.get(j);
                     node = new Node(BBB, AAA, city.getCityname());
                     mDatasB.add(node);
-//建议点击父view时加载子view，(写法如下)
+                    //建议点击父view时加载子view，(写法如下)
 //                    List<Country> country_lists = city.getCountrylist();
 //                    for (int k = 0;k < country_lists.size();k++) {
 //                        Country country = country_lists.get(k);
@@ -74,9 +73,12 @@ public class MoreLevelActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        mDatas.addAll(mDatasA);
+        mDatas.addAll(mDatasB);
+        mDatas.addAll(mDatasC);
     }
 
-    private void initdata() {
+    private void initTestdata() {
 
         // id , pid , label , 其他属性
         mDatas.add(new Node(1, 0, "游戏"));

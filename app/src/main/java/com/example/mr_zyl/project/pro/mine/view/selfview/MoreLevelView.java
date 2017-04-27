@@ -28,9 +28,14 @@ public class MoreLevelView extends LinearLayout {
     private Context mContext;
     LayoutParams rootLayoutParams, itemLayoutParams, dividerLayoutParams, itemLayoutParams_80;
     Drawable drawable_open, drawable_close;
+
     public MoreLevelView(Context context) {
         super(context);
         mContext = context;
+    }
+
+    public void setdata(List<Node> lists) {
+        setdata(lists, null);
     }
 
     public void setdata(List<Node> lists, List<Province> ProLists) {
@@ -56,12 +61,15 @@ public class MoreLevelView extends LinearLayout {
         return Sview;
     }
 
-    public interface  itemonclickCallBack{
+    //处理点击第三级菜单回调数据
+    public interface itemonclickCallBack {
         void setonItemClick(String address);
     }
-    itemonclickCallBack listenner;
-    public void setonThreenViewCllickListenner(itemonclickCallBack listenner){
-        this.listenner=listenner;
+
+    private itemonclickCallBack listenner;
+
+    public void setonThreenViewCllickListenner(itemonclickCallBack listenner) {
+        this.listenner = listenner;
     }
 
     private View addchildview(LinearLayout ll_son, final int id) {
@@ -75,9 +83,9 @@ public class MoreLevelView extends LinearLayout {
         LL_root.setOrientation(LinearLayout.VERTICAL);
         List<Node> lists_0 = getListByPid(id);//*********id如果为二级节点的id，怎么得到子view的数据?????????
         for (int i = 0; i < lists_0.size(); i++) {
-            Node nodes = lists_0.get(i);
+            final Node nodes = lists_0.get(i);
             nodes.setParent(getNodeByid(id));
-            //添加一个TextView用于存放菜单内容
+            //添加一个TextView用于存放菜单item内容
             final TextView tv_start = new TextView(mContext);
             tv_start.setLayoutParams(itemLayoutParams_80);
             tv_start.setId(nodes.getId());
@@ -85,32 +93,25 @@ public class MoreLevelView extends LinearLayout {
             tv_start.setTextColor(new Color().BLACK);
             tv_start.setPadding(60 * nodes.getLevel(), 0, 0, 0);
             tv_start.setCompoundDrawables(drawable_close, null, null, null);
-            tv_start.setGravity(Gravity.CENTER_VERTICAL|Gravity.LEFT);
+            tv_start.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
             tv_start.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     LinearLayout ll_son = (LinearLayout) v.getTag();
                     //如果点击的是第三级view---直接返回
-                    if (v.getPaddingLeft() / 60 == 2) {
-                        Node TheParentnode=getNodeByid(id);//获取父节点
-                        Node TheParentParentnode=TheParentnode.getParent();//获取父节点的父节点
-                        StringBuffer sb=new StringBuffer();
-                        sb.append(TheParentParentnode.getName()+"-");
-                        sb.append(TheParentnode.getName()+"-");
-                        sb.append(tv_start.getText().toString());
+                    if (getListByPid(nodes.getId()).size() == 0) {//没有子元素，就回调
                         //响应回调监听
-                        listenner.setonItemClick(sb.toString());
-
+                        listenner.setonItemClick(GetAllNodeName(nodes));
                         return;
                     }
                     //如果下级菜单没子菜单，则去添加生成
                     if (ll_son.getChildCount() == 0) {
                         tv_start.setCompoundDrawables(drawable_open, null, null, null);
                         addchildview(ll_son, v.getId());
-                    } else if (ll_son.isShown()) {
+                    } else if (ll_son.isShown()) {//如果子view显示了就隐藏
                         tv_start.setCompoundDrawables(drawable_close, null, null, null);
                         ll_son.setVisibility(View.GONE);
-                    } else {
+                    } else {//如果子view没显示就显示
                         tv_start.setCompoundDrawables(drawable_open, null, null, null);
                         ll_son.setVisibility(View.VISIBLE);
                     }
@@ -125,11 +126,21 @@ public class MoreLevelView extends LinearLayout {
             ll_end.setLayoutParams(itemLayoutParams);
             ll_end.setOrientation(LinearLayout.VERTICAL);
             ll_end.setGravity(View.GONE);
-            tv_start.setTag(ll_end);
+            tv_start.setTag(ll_end);//菜单的标记为子view
 
             LL_root.addView(ll_end);
         }
         return LL_root;
+    }
+
+    private StringBuffer sb = new StringBuffer();//拼接返回值
+
+    private String GetAllNodeName(Node nodes) {
+        sb.append(nodes.getName()+"-");
+        if (nodes.getLevel() != 0) {//已经是顶层了
+            GetAllNodeName(nodes.getParent());
+        }
+        return sb.toString();
     }
 
     private View add_divder() {
@@ -140,7 +151,7 @@ public class MoreLevelView extends LinearLayout {
     }
 
     /**
-     * 根据pid得到对象的菜单集合
+     * 根据pid得到对象的菜单集合（获取子元素）
      *
      * @param id
      * @return
@@ -154,27 +165,29 @@ public class MoreLevelView extends LinearLayout {
                 resultNodes.add(node);
             }
         }
-        if (resultNodes.size() == 0) {
-            return GetThreethView(id);
+        if (resultNodes.size() == 0 && ProLists != null) {
+            return GetThirdViewData(id);
         }
         return resultNodes;
     }
 
-    private List<Node> GetThreethView(int pid) {
+    private List<Node> GetThirdViewData(int pid) {//涉及到省市级连的时候
         //加载第三级view
         List<Node> resultNodes = new ArrayList<Node>();
         Node node = getNodeByid(pid);
         String nodename = node.getName();
         Node parentnode = node.getParent();
-        String parentnodename = parentnode.getName();
-        for (Province p : ProLists) {
-            if (p.getProvince().equals(parentnodename)) {//判断第一级view的名字
-                List<City> citylists = p.getCitylist();
-                for (City c : citylists) {
-                    if (c.getCityname().equals(nodename)) {//判断当前view的名字
-                        List<Country> countrylists = c.getCountrylist();
-                        for (int i = 0; i < countrylists.size(); i++) {
-                            resultNodes.add(new Node(i, pid, countrylists.get(i).getCountryname()));
+        if (parentnode != null) {
+            String parentnodename = parentnode.getName();
+            for (Province p : ProLists) {
+                if (p.getProvince().equals(parentnodename)) {//判断第一级view的名字
+                    List<City> citylists = p.getCitylist();
+                    for (City c : citylists) {
+                        if (c.getCityname().equals(nodename)) {//判断当前view的名字
+                            List<Country> countrylists = c.getCountrylist();
+                            for (int i = 0; i < countrylists.size(); i++) {
+                                resultNodes.add(new Node(i, pid, countrylists.get(i).getCountryname()));
+                            }
                         }
                     }
                 }
