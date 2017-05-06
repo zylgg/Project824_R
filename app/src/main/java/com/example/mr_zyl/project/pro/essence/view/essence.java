@@ -3,11 +3,13 @@ package com.example.mr_zyl.project.pro.essence.view;
 import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.text.format.Formatter;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.mr_zyl.project.MainActivity;
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceAdapter;
@@ -49,6 +51,8 @@ public class essence extends BaseFragment {
     }
 
     private void initToolBar(View viewContent) {
+        MainActivity activity = (MainActivity) getActivity();
+        Toolbar toolbar= activity.getview();
         EssenceNavigationBuilder builder = new EssenceNavigationBuilder(getContext());
         builder
                 .setTitle(R.string.main_essence_text)
@@ -68,7 +72,8 @@ public class essence extends BaseFragment {
                         Settings.putBoolean(getContext(), Settings.PREFERENCE_SCROLLING_PAUSE_LOAD, !is_load);
                         ToastUtil.showToast(getContext(), is_load?"滑动时加载！":"滑动时不加载！", 0);
                     }
-                }).createAndBind((ViewGroup) viewContent);
+                }).createAndBind((ViewGroup) toolbar);
+
     }
 
     /**
