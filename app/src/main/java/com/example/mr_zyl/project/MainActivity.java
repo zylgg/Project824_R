@@ -89,7 +89,10 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
 
     @Override
     public Toolbar getview() {
-        return t_maintoolbar;
+        if (t_maintoolbar!=null){
+            return t_maintoolbar;
+        }
+        return null;
     }
     private void addBadge(){
         for (int i=0;i<tablists.size();i++){
