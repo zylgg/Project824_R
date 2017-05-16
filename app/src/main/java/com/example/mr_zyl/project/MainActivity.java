@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,11 +24,10 @@ import com.example.mr_zyl.project.utils.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TabHost.OnTabChangeListener,OnToolBarSetting {
+public class MainActivity extends AppCompatActivity implements TabHost.OnTabChangeListener {
 
     private List<Tabitem> tablists;
     private MyFragmentTabHost fragmenttabhost;
-    private Toolbar t_maintoolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +60,6 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     }
 
     private void initTabHost() {
-        t_maintoolbar= (Toolbar) findViewById(R.id.t_maintoolbar);
-        setSupportActionBar(t_maintoolbar);
         fragmenttabhost = (MyFragmentTabHost) findViewById(android.R.id.tabhost);
         fragmenttabhost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
         fragmenttabhost.getTabWidget().setDividerDrawable(null);
@@ -85,14 +81,6 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
                 tabItem.setChecked(true);
             }
         }
-    }
-
-    @Override
-    public Toolbar getview() {
-        if (t_maintoolbar!=null){
-            return t_maintoolbar;
-        }
-        return null;
     }
     private void addBadge(){
         for (int i=0;i<tablists.size();i++){

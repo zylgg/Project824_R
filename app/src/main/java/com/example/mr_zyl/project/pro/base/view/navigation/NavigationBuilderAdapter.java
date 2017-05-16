@@ -12,6 +12,8 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder{
 
     private Context context;
     private String title;
+    private int backgroundIconRes;
+
     private int leftIconRes;
     private int rightIconRes;
     private int titleIconRes;
@@ -27,6 +29,12 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder{
 
     public Context getContext() {
         return context;
+    }
+
+    @Override
+    public NavigationBuilder setBackground(int backgroundIconRes) {
+        this.backgroundIconRes=backgroundIconRes;
+        return this;
     }
 
     @Override
@@ -110,6 +118,10 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder{
 
     public View getContentView() {
         return contentView;
+    }
+
+    public int getBackgroundIconRes() {
+        return backgroundIconRes;
     }
 
     public int getLeftIconRes() {

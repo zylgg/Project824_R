@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 
 public interface NavigationBuilder {
 
+    public NavigationBuilder setBackground(int backgroundIconRes);
     public NavigationBuilder setTitle(String title);
 
     public NavigationBuilder setTitle(int title);
