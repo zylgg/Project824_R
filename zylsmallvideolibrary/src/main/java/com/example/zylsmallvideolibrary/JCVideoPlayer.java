@@ -733,6 +733,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      */
     public static void releaseAllVideos() {
         if (!isClickFullscreen) {
+            JCMediaManager.intance().clearWidthAndHeight();
             JCMediaManager.intance().mediaPlayer.stop();
             JCMediaManager.intance().setUuid("");
             EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE));
