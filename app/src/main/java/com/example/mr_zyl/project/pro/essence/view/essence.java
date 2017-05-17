@@ -51,7 +51,6 @@ public class essence extends BaseFragment {
     private void initToolBar(View viewContent) {
         EssenceNavigationBuilder builder = new EssenceNavigationBuilder(getContext());
         builder
-                .setBackground(R.color.colorAccent)
                 .setTitle(R.string.main_essence_text)
                 .setLeftIcon(R.drawable.main_essence_btn_selector)
                 .setRightIcon(R.drawable.main_essence_btn_more_selector)

@@ -23,12 +23,15 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="sGz75rp7TClWy47XIqHZ46dvvYmhACKK" />
 
-        <activity android:name="com.example.mr_zyl.project.MainActivity">
+        <activity
+            android:name="com.example.mr_zyl.project.MainActivity"
+            android:theme="@style/AppTheme">
 
         </activity>
         <activity
             android:name="com.example.mr_zyl.project.LaunchActivity"
-            android:hardwareAccelerated="false">
+            android:hardwareAccelerated="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,7 +49,9 @@
         <activity android:name="com.example.mr_zyl.project.pro.mine.view.activity.LoadGifActivity" />
         <activity android:name="com.example.mr_zyl.project.pro.mine.view.activity.QRImageActivity" />
         <activity android:name="com.example.mr_zyl.project.pro.newpost.view.Activity.TestMeasureActivity" />
-        <activity android:name="com.example.mr_zyl.project.pro.essence.view.activity.BrowerActivity"></activity>
+        <activity
+            android:name="com.example.mr_zyl.project.pro.essence.view.activity.BrowerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>
