@@ -3,6 +3,7 @@ package com.example.mr_zyl.project.pro.essence.view.activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -44,6 +45,7 @@ public class BrowerActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brower);
         context = this;
+        hideBottomMenu();
 
         Bundle bundles = getIntent().getBundleExtra("pic_bundle");
         picurl = bundles.getString("picurl");
@@ -126,6 +128,22 @@ public class BrowerActivity extends BaseActivity {
                     return false;
                 }
             });
+        }
+    }
+    /**
+     * 隐藏底部虚拟按键，且全屏
+     */
+    private void hideBottomMenu() {
+        //隐藏虚拟按键，并且全屏
+        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+            View v = this.getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            //for new api versions.
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
         }
     }
 
