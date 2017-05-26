@@ -9,7 +9,7 @@
 
         <!--拉升到顶部状态栏，并且定义顶部状态栏透明-->
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
     </style>
 
 </resources>
