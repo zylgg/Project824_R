@@ -42,6 +42,10 @@ public class LoadGifActivity extends AppCompatActivity {
         try {
             InputStream gifis= getResources().getAssets().open("talk.gif");
             giv_loadgifview.setImageDrawable(new GifDrawable(gifis));
+
+//            String url="http://testad.chinacqet.com/ads/420713df27156931521bf241bf2d7e18";
+//            ImageLoader.getInstance().displayImage(url,giv_loadgifview);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
