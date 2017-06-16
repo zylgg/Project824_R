@@ -3,7 +3,6 @@ package com.example.mr_zyl.project.pro.essence.view.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.example.mr_zyl.project.R;
@@ -91,35 +90,35 @@ public class EssenceVideoFragment extends BaseFragment {
     }
 
     public void onEventMainThread(VideoEvents event) {
-        if (event.type == VideoEvents.POINT_START_ICON) {
-            Log.i("Video Event", "POINT_START_ICON" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_START_THUMB) {
-            Log.i("Video Event", "POINT_START_THUMB" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_STOP) {
-            Log.i("Video Event", "POINT_STOP" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_STOP_FULLSCREEN) {
-            Log.i("Video Event", "POINT_STOP_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_RESUME) {
-            Log.i("Video Event", "POINT_RESUME" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_RESUME_FULLSCREEN) {
-            Log.i("Video Event", "POINT_RESUME_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_CLICK_BLANK) {
-            Log.i("Video Event", "POINT_CLICK_BLANK" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_CLICK_BLANK_FULLSCREEN) {
-            Log.i("Video Event", "POINT_CLICK_BLANK_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_CLICK_SEEKBAR) {
-            Log.i("Video Event", "POINT_CLICK_SEEKBAR" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_CLICK_SEEKBAR_FULLSCREEN) {
-            Log.i("Video Event", "POINT_CLICK_SEEKBAR_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_AUTO_COMPLETE) {
-            Log.i("Video Event", "POINT_AUTO_COMPLETE" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_AUTO_COMPLETE_FULLSCREEN) {
-            Log.i("Video Event", "POINT_AUTO_COMPLETE_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_ENTER_FULLSCREEN) {
-            Log.i("Video Event", "POINT_ENTER_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_QUIT_FULLSCREEN) {
-            Log.i("Video Event", "POINT_QUIT_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
-        }
+//        if (event.type == VideoEvents.POINT_START_ICON) {
+//            Log.i("Video Event", "POINT_START_ICON" + " title is : " + event.obj + " url is : " + event.obj1);
+//        } else if (event.type == VideoEvents.POINT_START_THUMB) {
+//            Log.i("Video Event", "POINT_START_THUMB" + " title is : " + event.obj + " url is : " + event.obj1);
+//        } else if (event.type == VideoEvents.POINT_STOP) {
+//            Log.i("Video Event", "POINT_STOP" + " title is : " + event.obj + " url is : " + event.obj1);
+//        } else if (event.type == VideoEvents.POINT_STOP_FULLSCREEN) {
+//            Log.i("Video Event", "POINT_STOP_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
+//        } else if (event.type == VideoEvents.POINT_RESUME) {
+//            Log.i("Video Event", "POINT_RESUME" + " title is : " + event.obj + " url is : " + event.obj1);
+//        } else if (event.type == VideoEvents.POINT_RESUME_FULLSCREEN) {
+//            Log.i("Video Event", "POINT_RESUME_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
+//        } else if (event.type == VideoEvents.POINT_CLICK_BLANK) {
+//            Log.i("Video Event", "POINT_CLICK_BLANK" + " title is : " + event.obj + " url is : " + event.obj1);
+//        } else if (event.type == VideoEvents.POINT_CLICK_BLANK_FULLSCREEN) {
+//            Log.i("Video Event", "POINT_CLICK_BLANK_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
+//        } else if (event.type == VideoEvents.POINT_CLICK_SEEKBAR) {
+//            Log.i("Video Event", "POINT_CLICK_SEEKBAR" + " title is : " + event.obj + " url is : " + event.obj1);
+//        } else if (event.type == VideoEvents.POINT_CLICK_SEEKBAR_FULLSCREEN) {
+//            Log.i("Video Event", "POINT_CLICK_SEEKBAR_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
+//        } else if (event.type == VideoEvents.POINT_AUTO_COMPLETE) {
+//            Log.i("Video Event", "POINT_AUTO_COMPLETE" + " title is : " + event.obj + " url is : " + event.obj1);
+//        } else if (event.type == VideoEvents.POINT_AUTO_COMPLETE_FULLSCREEN) {
+//            Log.i("Video Event", "POINT_AUTO_COMPLETE_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
+//        } else if (event.type == VideoEvents.POINT_ENTER_FULLSCREEN) {
+//            Log.i("Video Event", "POINT_ENTER_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
+//        } else if (event.type == VideoEvents.POINT_QUIT_FULLSCREEN) {
+//            Log.i("Video Event", "POINT_QUIT_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
+//        }
     }
 
     @Override

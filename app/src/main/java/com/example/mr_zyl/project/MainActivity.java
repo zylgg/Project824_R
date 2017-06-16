@@ -1,6 +1,8 @@
 package com.example.mr_zyl.project;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -29,10 +33,22 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     private List<Tabitem> tablists;
     private MyFragmentTabHost fragmenttabhost;
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //透明状态栏
+//        StatusUtils.setTransparent(this);
+//        StatusUtils.setColor(this,getResources().getColor(R.color.colorAccent));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = getWindow();
+            // Translucent status bar
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
         //先初始化每个tab对象的数据
         initFragmentTabData();
         //再初始化TabHost控件
@@ -97,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     public void onBackPressed() {
         if (System.currentTimeMillis()-lasttime<2000){
             finish();
+            System.exit(0);
         }else {
             ToastUtil.showToast(this,"再点击一次退出App！");
         }

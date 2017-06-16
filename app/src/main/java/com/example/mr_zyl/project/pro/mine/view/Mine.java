@@ -217,6 +217,7 @@ public class Mine extends BaseFragment {
     private void initToolBar(View viewContent) {
         MineNavigationBuilder builder = new MineNavigationBuilder(getContext());
         builder.setTitle(R.string.main_mine_text)
+                .setBackground(R.color.main_bottom_bg)
                 .setLeftIcon(R.drawable.main_essence_btn_selector)
                 .setRightIcon(R.drawable.main_essence_btn_more_selector)
                 .setLeftIconOnClickListener(new View.OnClickListener() {
