@@ -581,10 +581,10 @@ public class StatusUtils {
         ViewGroup parent = (ViewGroup) activity.findViewById(android.R.id.content);
         for (int i = 0, count = parent.getChildCount(); i < count; i++) {
             View childView = parent.getChildAt(i);
-            if (childView instanceof ViewGroup) {
-                childView.setFitsSystemWindows(true);
-                ((ViewGroup) childView).setClipToPadding(true);
-            }
+//            if (childView instanceof ViewGroup) {
+//                childView.setFitsSystemWindows(true);
+//                ((ViewGroup) childView).setClipToPadding(true);
+//            }
         }
     }
 

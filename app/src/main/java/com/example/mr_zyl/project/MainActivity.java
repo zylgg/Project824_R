@@ -10,8 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -23,6 +22,8 @@ import com.example.mr_zyl.project.pro.mine.view.Mine;
 import com.example.mr_zyl.project.pro.newpost.view.Newpost;
 import com.example.mr_zyl.project.pro.publish.view.PlayActivity;
 import com.example.mr_zyl.project.pro.publish.view.Publish;
+import com.example.mr_zyl.project.utils.StatusUtils;
+import com.example.mr_zyl.project.utils.SystemAppUtils;
 import com.example.mr_zyl.project.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -39,21 +40,23 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //透明状态栏
-//        StatusUtils.setTransparent(this);
-//        StatusUtils.setColor(this,getResources().getColor(R.color.colorAccent));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = getWindow();
-            // Translucent status bar
-            window.setFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+        StatusUtils.setTransparent(this);
+        //设置不填充到虚拟按键之下
+        setNoFitBottomStatus();
 
         //先初始化每个tab对象的数据
         initFragmentTabData();
         //再初始化TabHost控件
         initTabHost();
         addBadge();
+    }
+
+    private void setNoFitBottomStatus() {
+        ViewGroup contentView = (ViewGroup)findViewById(android.R.id.content);
+        int bottomStatusHeight = SystemAppUtils.getBottomStatusHeight(this);
+        if (bottomStatusHeight>0){
+            contentView.setPadding(0,0,0,bottomStatusHeight);
+        }
     }
 
     private void initFragmentTabData() {
