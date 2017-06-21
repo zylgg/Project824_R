@@ -1,5 +1,6 @@
 package com.example.mr_zyl.project.pro.mine.view;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,13 +30,21 @@ import com.example.mr_zyl.project.pro.mine.view.selfview.SmileyLoadingView;
 import com.example.mr_zyl.project.utils.DisplayUtil;
 import com.example.mr_zyl.project.utils.SystemAppUtils;
 import com.example.mr_zyl.project.utils.ToastUtil;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
+import com.zhy.http.okhttp.request.RequestCall;
+
+import java.io.File;
+
+import okhttp3.Call;
+import okhttp3.Request;
 
 /**
  * Created by Mr_Zyl on 2016/8/25.
  */
 public class Mine extends BaseFragment {
 
-    public DefaultImpleItemBuilder builder, mapbuilder, GoNewFragment;
+    public DefaultImpleItemBuilder builder;
     /**
      * 我构建的item布局
      */
@@ -43,10 +53,26 @@ public class Mine extends BaseFragment {
      * 是否停止了进度动画
      */
     boolean is_stop = true;
+    /**
+     * 自定义的评分控件
+     */
     private RatingBar mRatingbar;
+    /**
+     * 分辨率设备信息
+     */
     private TextView tv_fenbianlv;
+    /**
+     * 自定义的播放图标
+     */
     private PlayVideoIconView pviv_mine_test;
+    /**
+     * 微笑进度圈
+     */
     private SmileyLoadingView slv_loading_view;
+    /**
+     * 进度条
+     */
+    private ProgressBar pb_mine_progressbar;
 
     @Override
     public int getContentView() {
@@ -61,15 +87,15 @@ public class Mine extends BaseFragment {
         tv_fenbianlv = (TextView) viewContent.findViewById(R.id.tv_fenbianlv);
         String screeninfo = "完整高度" +
                 SystemAppUtils.getDpi(getContext())
-                + "-状态栏"
+                + "\n状态栏"
                 + SystemAppUtils.getStatusHeight(getContext())
-                + "-宽度"
+                + "\n宽度"
                 + DisplayUtil.Width(getContext())
                 + "\n内容高度"
                 + DisplayUtil.Height(getContext())
-                + "-虚拟按键"
+                + "\n虚拟按键"
                 + SystemAppUtils.getBottomStatusHeight(getContext());
-        tv_fenbianlv.setText(screeninfo);
+        tv_fenbianlv.append(screeninfo);
         //分辨率
         mRatingbar = (RatingBar) viewContent.findViewById(R.id.ratingBar);
         mRatingbar.setIsIndicator(false);//是否 不允许用户操作
@@ -81,21 +107,32 @@ public class Mine extends BaseFragment {
         });
         //测试自定义控件（微笑进度圈，播放按钮）
         slv_loading_view = (SmileyLoadingView) viewContent.findViewById(R.id.slv_loading_view);
+        pb_mine_progressbar = (ProgressBar) viewContent.findViewById(R.id.pb_mine_progressbar);
         pviv_mine_test = (PlayVideoIconView) viewContent.findViewById(R.id.pviv_mine_test);
         pviv_mine_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pviv_mine_test.getPlayStatus()==PlayVideoIconView.STATUS.pause){
+                if (pviv_mine_test.getPlayStatus() == PlayVideoIconView.STATUS.pause) {//暂停时
                     pviv_mine_test.setPlayStatus(PlayVideoIconView.STATUS.playing);
                     slv_loading_view.startSmile();
-                }else {
+                    DownQQMusicApk();
+                } else {//正在播放时
                     pviv_mine_test.setPlayStatus(PlayVideoIconView.STATUS.pause);
                     slv_loading_view.stopSmile(false);
                 }
             }
         });
-        //初始化自定义的构造者模式的item布局
+        initBuilderItems(viewContent);
+    }
+
+    /**
+     * 初始化自定义的构造者模式的item布局
+     *
+     * @param viewContent
+     */
+    private void initBuilderItems(View viewContent) {
         ll_mine_itemview = (LinearLayout) viewContent.findViewById(R.id.ll_mine_itemview);
+
         builder = new DefaultImpleItemBuilder(getActivity());
         builder.setLeftIcons(R.drawable.login_unlogin_header)
                 .setTitleText("位置")
@@ -107,8 +144,8 @@ public class Mine extends BaseFragment {
                 });
         builder.BindParentView((ViewGroup) ll_mine_itemview);
 
-        mapbuilder = new DefaultImpleItemBuilder(getActivity());
-        mapbuilder.setLeftIcons(R.drawable.login_unlogin_header)
+        builder = new DefaultImpleItemBuilder(getActivity());
+        builder.setLeftIcons(R.drawable.login_unlogin_header)
                 .setTitleText("地图")
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -116,10 +153,10 @@ public class Mine extends BaseFragment {
                         startActivity(new Intent(getActivity(), BaiduMapActivity.class));
                     }
                 });
-        mapbuilder.BindParentView((ViewGroup) ll_mine_itemview);
+        builder.BindParentView((ViewGroup) ll_mine_itemview);
 
-        GoNewFragment = new DefaultImpleItemBuilder(getActivity());
-        GoNewFragment.setLeftIcons(R.drawable.login_unlogin_header)
+        builder = new DefaultImpleItemBuilder(getActivity());
+        builder.setLeftIcons(R.drawable.login_unlogin_header)
                 .setTitleText("新界面")
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -136,10 +173,10 @@ public class Mine extends BaseFragment {
 
                     }
                 });
-        GoNewFragment.BindParentView((ViewGroup) ll_mine_itemview);
+        builder.BindParentView((ViewGroup) ll_mine_itemview);
 
-        mapbuilder = new DefaultImpleItemBuilder(getActivity());
-        mapbuilder.setLeftIcons(R.drawable.login_unlogin_header)
+        builder = new DefaultImpleItemBuilder(getActivity());
+        builder.setLeftIcons(R.drawable.login_unlogin_header)
                 .setTitleText("窗帘效果界面")
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -147,10 +184,10 @@ public class Mine extends BaseFragment {
                         startActivity(new Intent(getActivity(), CurtainActivity.class));
                     }
                 });
-        mapbuilder.BindParentView((ViewGroup) ll_mine_itemview);
+        builder.BindParentView(ll_mine_itemview);
 
-        mapbuilder = new DefaultImpleItemBuilder(getActivity());
-        mapbuilder.setLeftIcons(R.drawable.login_unlogin_header)
+        builder = new DefaultImpleItemBuilder(getActivity());
+        builder.setLeftIcons(R.drawable.login_unlogin_header)
                 .setTitleText("各种高斯样式")
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -158,10 +195,10 @@ public class Mine extends BaseFragment {
                         startActivity(new Intent(getActivity(), FastBlurActivity.class));
                     }
                 });
-        mapbuilder.BindParentView((ViewGroup) ll_mine_itemview);
+        builder.BindParentView(ll_mine_itemview);
 
-        mapbuilder = new DefaultImpleItemBuilder(getActivity());
-        mapbuilder.setLeftIcons(R.drawable.login_unlogin_header)
+        builder = new DefaultImpleItemBuilder(getActivity());
+        builder.setLeftIcons(R.drawable.login_unlogin_header)
                 .setTitleText("动态模糊--")
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -169,10 +206,10 @@ public class Mine extends BaseFragment {
                         startActivity(new Intent(getActivity(), BlurredActivity.class));
                     }
                 });
-        mapbuilder.BindParentView((ViewGroup) ll_mine_itemview);
+        builder.BindParentView(ll_mine_itemview);
 
-        mapbuilder = new DefaultImpleItemBuilder(getActivity());
-        mapbuilder.setLeftIcons(R.drawable.login_unlogin_header)
+        builder = new DefaultImpleItemBuilder(getActivity());
+        builder.setLeftIcons(R.drawable.login_unlogin_header)
                 .setTitleText("listview单条刷新")
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -182,10 +219,10 @@ public class Mine extends BaseFragment {
                         startActivity(intent);
                     }
                 });
-        mapbuilder.BindParentView((ViewGroup) ll_mine_itemview);
+        builder.BindParentView(ll_mine_itemview);
 
-        mapbuilder = new DefaultImpleItemBuilder(getActivity());
-        mapbuilder.setLeftIcons(R.drawable.login_unlogin_header)
+        builder = new DefaultImpleItemBuilder(getActivity());
+        builder.setLeftIcons(R.drawable.login_unlogin_header)
                 .setTitleText("本地Gif加载")
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -195,10 +232,10 @@ public class Mine extends BaseFragment {
                         startActivity(intent);
                     }
                 });
-        mapbuilder.BindParentView((ViewGroup) ll_mine_itemview);
+        builder.BindParentView(ll_mine_itemview);
 
-        mapbuilder = new DefaultImpleItemBuilder(getActivity());
-        mapbuilder.setLeftIcons(R.drawable.login_unlogin_header)
+        builder = new DefaultImpleItemBuilder(getActivity());
+        builder.setLeftIcons(R.drawable.login_unlogin_header)
                 .setTitleText("生成二维码")
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -207,17 +244,18 @@ public class Mine extends BaseFragment {
                         startActivity(intent);
                     }
                 });
-        mapbuilder.BindParentView((ViewGroup) ll_mine_itemview);
+        builder.BindParentView(ll_mine_itemview);
     }
 
     /**
      * 初始化自定义的构造者模式的toolbar
+     *
      * @param viewContent 父view
      */
     private void initToolBar(View viewContent) {
         MineNavigationBuilder builder = new MineNavigationBuilder(getContext());
         builder.setTitle(R.string.main_mine_text)
-                .setBackground(R.color.colorPrimary)
+                .setBackground(R.drawable.toolbar_background_mine_shape)
                 .setLeftIcon(R.drawable.main_essence_btn_selector)
                 .setRightIcon(R.drawable.main_essence_btn_more_selector)
                 .setLeftIconOnClickListener(new View.OnClickListener() {
@@ -232,6 +270,55 @@ public class Mine extends BaseFragment {
                         ToastUtil.showToast(getContext(), "right", 0);
                     }
                 }).createAndBind((ViewGroup) viewContent);
+    }
+
+    /**
+     * 测试下载
+     */
+    private RequestCall call;
+
+    private void DownQQMusicApk() {
+        String filepath = BaseFragment.FilePath;
+        File files = new File(filepath);
+        if (!files.exists()) {
+            files.mkdirs();
+        }
+        //okhttputils不支持断点续传。。。
+        FileCallBack fileCallBack = new FileCallBack(filepath, "qqmusic.apk") {
+            @Override
+            public void onBefore(Request request, int id) {
+                showProgressDialog("下载中。。。", false, ProgressDialog.STYLE_HORIZONTAL);
+            }
+
+            @Override
+            public void inProgress(float progress, long total, int id) {
+                int progress_value = (int) (progress * total);
+                int total_value = (int) total;
+                setHorizontalProgressValue(total_value, progress_value);
+//                pb_mine_progressbar.setMax(progress_value);
+//                pb_mine_progressbar.setProgress(total_value);
+//                Log.i("FileCallBack", "progress: " + progress_value);
+//                Log.i("FileCallBack", "total: " + total_value);
+            }
+
+            @Override
+            public void onResponse(File response, int id) {
+                ToastUtil.showToast(Fcontext, "path " + response.getAbsolutePath());
+                pviv_mine_test.performClick();
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                ToastUtil.showToast(Fcontext, "下载失败！");
+            }
+
+            @Override
+            public void onAfter(int id) {
+                dismissProgressDialog();
+            }
+        };
+        call = OkHttpUtils.get().url("http://dldir1.qq.com/music/clntupate/QQMusic72282.apk").build();
+        call.execute(fileCallBack);
     }
 
     @Override

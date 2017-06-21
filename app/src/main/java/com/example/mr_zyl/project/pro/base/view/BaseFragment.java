@@ -2,10 +2,12 @@ package com.example.mr_zyl.project.pro.base.view;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.mvp.presenter.impl.MvpBasePresenter;
 import com.example.mr_zyl.project.mvp.view.impl.MvpFragment;
 import com.example.mr_zyl.project.pro.essence.view.selfview.MyProgressDialog;
@@ -21,6 +23,7 @@ public abstract class BaseFragment<P extends MvpBasePresenter> extends MvpFragme
     private boolean isinit;
     public Context Fcontext;
     private MyProgressDialog mProgressDialog, mProgressDialog_HORIZONTAL;
+    public static String FilePath=Environment.getExternalStorageDirectory()+"/"+ R.string.app_name;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,11 +73,22 @@ public abstract class BaseFragment<P extends MvpBasePresenter> extends MvpFragme
         if (null == mProgressDialog_HORIZONTAL) {
             mProgressDialog_HORIZONTAL = new MyProgressDialog(getContext(), 0, message);
             mProgressDialog_HORIZONTAL.setProgressStyle(Style);
+            mProgressDialog_HORIZONTAL.setProgressNumberFormat("%1s m/%2s m");
             mProgressDialog_HORIZONTAL.setMax(100);
         }
         mProgressDialog_HORIZONTAL.setCanceledOnTouchOutside(canceledOntouchOut);
         mProgressDialog_HORIZONTAL.setCancelable(false);
         mProgressDialog_HORIZONTAL.show();
+    }
+    /**
+     * 设置进度值
+     * @param value
+     */
+    public void setHorizontalProgressValue(int max,int value){
+        if (null != mProgressDialog_HORIZONTAL) {
+            mProgressDialog_HORIZONTAL.setMax(max);
+            mProgressDialog_HORIZONTAL.setProgress(value);
+        }
     }
     protected MyProgressDialog getHORIZONTALProgressDialog(){
         if (null != mProgressDialog_HORIZONTAL) {

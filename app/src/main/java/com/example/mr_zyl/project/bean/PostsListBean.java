@@ -9,9 +9,7 @@ import java.util.List;
  * 基础数据结构
  */
 public class PostsListBean {
-
     private Info info;
-
     private List<PostList> list;
 
     public Info getInfo() {
@@ -30,7 +28,7 @@ public class PostsListBean {
         this.list = list;
     }
 
-    public class Info{
+    public class Info {
         private String vendor;
         private int count;
         private int page;
@@ -79,7 +77,7 @@ public class PostsListBean {
     }
 
 
-    public class PostList{
+    public class PostList {
         private String id;
         private String type;
         private String text;
@@ -108,7 +106,9 @@ public class PostsListBean {
         private String original_pid;
         private int cache_version;
         private String cai;
+        private Object top_cmt;
         private String weixin_url;
+        private Object themes;
         private String image0;
         private String image2;
         private String image1;
@@ -124,13 +124,13 @@ public class PostsListBean {
 
         //外加属性
         private boolean is_largepic;//是不是大图(是，View.VISIBLE;否，View.GONE)
-        private int is_showOnClickBrowerView=View.GONE;//是否显示点击查看控件
-        private float largeimg_zoom=1;//如果是大图与屏幕 对比的缩放比
+        private int is_showOnClickBrowerView = View.GONE;//是否显示点击查看控件
+        private float largeimg_zoom = 1;//如果是大图与屏幕 对比的缩放比
         private int view_maxheight;//view需要设置的最大高度
         private ImageView.ScaleType viewScaleType;//IV的缩放类型
-        private boolean is_video=false;//是不是视频
-        private boolean is_mp3=false;//是不是mp3
-        private int is_showvideotag= View.GONE;//是否显示视频标记
+        private boolean is_video = false;//是不是视频
+        private boolean is_mp3 = false;//是不是mp3
+        private int is_showvideotag = View.GONE;//是否显示视频标记
 
         public boolean is_mp3() {
             return is_mp3;
@@ -522,6 +522,22 @@ public class PostsListBean {
 
         public void setFavourite(int favourite) {
             this.favourite = favourite;
+        }
+
+        public Object getTop_cmt() {
+            return top_cmt;
+        }
+
+        public void setTop_cmt(Object top_cmt) {
+            this.top_cmt = top_cmt;
+        }
+
+        public Object getThemes() {
+            return themes;
+        }
+
+        public void setThemes(Object themes) {
+            this.themes = themes;
         }
     }
 

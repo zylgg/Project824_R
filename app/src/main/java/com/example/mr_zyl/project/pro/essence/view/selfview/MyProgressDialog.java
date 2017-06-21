@@ -17,10 +17,10 @@ import android.widget.TextView;
 
 import com.example.mr_zyl.project.R;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 public class MyProgressDialog extends Dialog {
-
     public static final int STYLE_SPINNER = 0;
 
     /**
@@ -70,13 +70,14 @@ public class MyProgressDialog extends Dialog {
         mProgressPercentFormat.setMaximumFractionDigits(0);
     }
 
+    // 格式化数据
+    private DecimalFormat Point2Df = new DecimalFormat("###0.00");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         LayoutInflater inflater = LayoutInflater.from(mContext);
         if (mProgressStyle == STYLE_HORIZONTAL) {
-
             mViewUpdateHandler = new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
@@ -84,9 +85,12 @@ public class MyProgressDialog extends Dialog {
 
                     int progress = mProgress.getProgress();
                     int max = mProgress.getMax();
+                    //格式化后
+                    String progress_formatafter =Point2Df.format((float)progress / (1024 * 1024));
+                    String max_formatafter = Point2Df.format(((float)max / (1024 * 1024)));
                     if (mProgressNumberFormat != null) {
                         String format = mProgressNumberFormat;
-                        mProgressNumber.setText(String.format(format, progress, max));
+                        mProgressNumber.setText(String.format(format, progress_formatafter, max_formatafter));
                     } else {
                         mProgressNumber.setText("");
                     }
@@ -103,6 +107,8 @@ public class MyProgressDialog extends Dialog {
             };
             View view = inflater.inflate(
                     R.layout.myalert_dialog_progress, null);
+            mMessageView = (TextView) view.findViewById(R.id.message);
+            mMessageView.setText(mMessage);
             mProgress = (ProgressBar) view.findViewById(R.id.progress);
             mProgressNumber = (TextView) view.findViewById(R.id.progress_number);
             mProgressPercent = (TextView) view.findViewById(R.id.progress_percent);
@@ -203,6 +209,7 @@ public class MyProgressDialog extends Dialog {
 
     /**
      * 增加或者减少第一进度
+     *
      * @param diff
      */
     public void incrementProgressBy(int diff) {
@@ -216,6 +223,7 @@ public class MyProgressDialog extends Dialog {
 
     /**
      * 增加或者减少第二进度
+     *
      * @param diff
      */
     public void incrementSecondaryProgressBy(int diff) {
@@ -243,7 +251,9 @@ public class MyProgressDialog extends Dialog {
         }
     }
 
-    /**设置进度条是否确定显示
+    /**
+     * 设置进度条是否确定显示
+     *
      * @param indeterminate
      */
     public void setIndeterminate(boolean indeterminate) {
@@ -277,6 +287,7 @@ public class MyProgressDialog extends Dialog {
         mProgressNumberFormat = format;
         onProgressChanged();
     }
+
     public void setProgressPercentFormat(NumberFormat format) {
         mProgressPercentFormat = format;
         onProgressChanged();

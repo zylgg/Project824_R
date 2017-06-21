@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="mine" />
+        android:text="分辨率信息：" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,7 +50,14 @@
             app:themecolor="@color/colorAccent"
             />
     </LinearLayout>
-
+    <ProgressBar
+        android:id="@+id/pb_mine_progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:max="100" />
 
     <ScrollView
         android:layout_width="match_parent"

@@ -50,8 +50,7 @@ public class essence extends BaseFragment {
 
     private void initToolBar(View viewContent) {
         EssenceNavigationBuilder builder = new EssenceNavigationBuilder(getContext());
-        builder
-                .setBackground(R.color.colorAccent)
+        builder.setBackground(R.drawable.toolbar_backgound_essence_shape)
                 .setTitle(R.string.main_essence_text)
                 .setLeftIcon(R.drawable.main_essence_btn_selector)
                 .setRightIcon(R.drawable.main_essence_btn_more_selector)
@@ -64,10 +63,10 @@ public class essence extends BaseFragment {
                 .setRightIconOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        boolean is_load=Settings.getBoolean(getContext(), Settings.PREFERENCE_SCROLLING_PAUSE_LOAD);
+                        boolean is_load = Settings.getBoolean(getContext(), Settings.PREFERENCE_SCROLLING_PAUSE_LOAD);
 
                         Settings.putBoolean(getContext(), Settings.PREFERENCE_SCROLLING_PAUSE_LOAD, !is_load);
-                        ToastUtil.showToast(getContext(), is_load?"滑动时加载！":"滑动时不加载！", 0);
+                        ToastUtil.showToast(getContext(), is_load ? "滑动时加载！" : "滑动时不加载！", 0);
                     }
                 }).createAndBind((ViewGroup) viewContent);
 
@@ -88,17 +87,17 @@ public class essence extends BaseFragment {
         long memorymaxSizeFormat = memoryCache.getMaxSize();
         //BitMapPool
         BitmapPool bitmapPool = configuration.getBitmapPool();
-        long poolusedSizeFormat =bitmapPool.getSize();
+        long poolusedSizeFormat = bitmapPool.getSize();
         long poolmaxSizeFormat = bitmapPool.getMaxSize();
 
         //总使用内存
-        String all_usercatch= Formatter.formatFileSize(getContext(),usedSizeFormat+memoryusedSizeFormat+poolusedSizeFormat);
+        String all_usercatch = Formatter.formatFileSize(getContext(), usedSizeFormat + memoryusedSizeFormat + poolusedSizeFormat);
         //总内存
-        String all_catch= Formatter.formatFileSize(getContext(),maxSizeFormat+memorymaxSizeFormat+poolmaxSizeFormat);
+        String all_catch = Formatter.formatFileSize(getContext(), maxSizeFormat + memorymaxSizeFormat + poolmaxSizeFormat);
 
         MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
                 .title("设置")
-                .content("已使用：" +all_usercatch)
+                .content("已使用：" + all_usercatch)
                 .callback(new MaterialDialog.SimpleCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
