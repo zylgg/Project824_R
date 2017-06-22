@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.mr_zyl.project">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -51,9 +50,7 @@
         <activity android:name="com.example.mr_zyl.project.pro.mine.view.activity.LoadGifActivity" />
         <activity android:name="com.example.mr_zyl.project.pro.mine.view.activity.QRImageActivity" />
         <activity android:name="com.example.mr_zyl.project.pro.newpost.view.Activity.TestMeasureActivity" />
-        <activity
-            android:name="com.example.mr_zyl.project.pro.essence.view.activity.BrowerActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name="com.example.mr_zyl.project.pro.essence.view.activity.BrowerActivity" />
     </application>
 
 </manifest>

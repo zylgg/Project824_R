@@ -6,7 +6,6 @@
         <!--<item name="colorPrimary">@color/colorPrimary</item>-->
         <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
         <!--<item name="colorAccent">@color/colorAccent</item>-->
-        <!-- 键盘区域颜色 -->
     </style>
     <style name="Myratingbar" parent="Base.Widget.AppCompat.RatingBar.Indicator">
         <item name="android:progressDrawable">@drawable/ratingbar_style</item>

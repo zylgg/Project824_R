@@ -13,10 +13,24 @@ import com.example.mr_zyl.project.R;
  * Created by Mr_Zyl on 2016/9/16.
  */
 public class DefaultImpleItemBuilder extends BaseItemBuilder {
-    private int LeftIconRes;
-    private String Text;
-    private View.OnClickListener OnClickListener;
 
+    /**
+     * 左边的图标资源ID
+     */
+    private int LeftIconRes;
+    /**
+     * 文本内容
+     */
+    private String Text;
+    /**
+     * 标题
+     */
+    private TextView tv_title;
+    /**
+     * 左边的图标
+     */
+    private ImageView iv_left;
+    private View.OnClickListener OnClickListener;
     public DefaultImpleItemBuilder(Context context) {
         super(context);
     }
@@ -31,11 +45,6 @@ public class DefaultImpleItemBuilder extends BaseItemBuilder {
         return this;
     }
 
-    public DefaultImpleItemBuilder setTitletText(int stringID) {
-        setTitleText(getContext().getString(stringID));
-        return this;
-    }
-
     public DefaultImpleItemBuilder setTitleText(String string) {
         this.Text = string;
         return this;
@@ -45,24 +54,11 @@ public class DefaultImpleItemBuilder extends BaseItemBuilder {
         this.OnClickListener = OnClickListener;
         return this;
     }
-
-    TextView tv_title;
-    ImageView iv_left;
-
     public TextView getTv_title() {
         return tv_title;
     }
-
-    public void setTv_title(TextView tv_title) {
-        this.tv_title = tv_title;
-    }
-
     public ImageView getIv_left() {
         return iv_left;
-    }
-
-    public void setIv_left(ImageView iv_left) {
-        this.iv_left = iv_left;
     }
 
     @Override
@@ -81,13 +77,13 @@ public class DefaultImpleItemBuilder extends BaseItemBuilder {
         if (!TextUtils.isEmpty(Text)) {
             tv_title.setText(Text);
             tv_title.setVisibility(View.VISIBLE);
+            contentview.setTag(Text);
         } else {
             tv_title.setVisibility(View.INVISIBLE);
         }
         if (OnClickListener != null) {
             contentview.setOnClickListener(OnClickListener);
         }
-
         return contentview;
     }
 }

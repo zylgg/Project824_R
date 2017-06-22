@@ -6,6 +6,8 @@
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="green">#1fbba6</color>
+    <color name="red">#FF0000</color>
     <!--透明色-->
     <color name="transparent">#00000000</color>
 

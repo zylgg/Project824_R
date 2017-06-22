@@ -33,12 +33,14 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
 
     private List<Tabitem> tablists;
     private MyFragmentTabHost fragmenttabhost;
+    private TextView tv_bottomnavigation_view;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tv_bottomnavigation_view= (TextView) findViewById(R.id.tv_bottomnavigation_view);
         //透明状态栏
         StatusUtils.setTransparent(this);
         //设置不填充到虚拟按键之下
@@ -53,9 +55,10 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
 
     private void setNoFitBottomStatus() {
         ViewGroup contentView = (ViewGroup)findViewById(android.R.id.content);
-        int bottomStatusHeight = SystemAppUtils.getBottomStatusHeight(this);
+        final int bottomStatusHeight = SystemAppUtils.getBottomStatusHeight(this);
         if (bottomStatusHeight>0){
-            contentView.setPadding(0,0,0,bottomStatusHeight);
+//            contentView.setPadding(0,0,0,bottomStatusHeight);
+            tv_bottomnavigation_view.getLayoutParams().height=bottomStatusHeight;
         }
     }
 
@@ -118,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
             finish();
             System.exit(0);
         }else {
-            ToastUtil.showToast(this,"再点击一次退出App！");
+            ToastUtil.showToast(this,"再点击一次退出"+getString(R.string.app_name)+"！");
         }
         lasttime=System.currentTimeMillis();
     }

@@ -17,7 +17,6 @@ import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.base.view.item.DefaultImpleItemBuilder;
 import com.example.mr_zyl.project.pro.essence.view.selfview.PlayVideoIconView;
-import com.example.mr_zyl.project.pro.mine.view.activity.BaiduMapActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.BlurredActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.CurtainActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.FastBlurActivity;
@@ -35,6 +34,8 @@ import com.zhy.http.okhttp.callback.FileCallBack;
 import com.zhy.http.okhttp.request.RequestCall;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Request;
@@ -42,7 +43,7 @@ import okhttp3.Request;
 /**
  * Created by Mr_Zyl on 2016/8/25.
  */
-public class Mine extends BaseFragment {
+public class Mine extends BaseFragment implements View.OnClickListener, RatingBar.OnRatingBarChangeListener {
 
     public DefaultImpleItemBuilder builder;
     /**
@@ -73,6 +74,8 @@ public class Mine extends BaseFragment {
      * 进度条
      */
     private ProgressBar pb_mine_progressbar;
+    private List<BuilderItemEntity> itemlists = new ArrayList<>();
+    private Intent intent = null;
 
     @Override
     public int getContentView() {
@@ -83,170 +86,25 @@ public class Mine extends BaseFragment {
     public void initContentView(View viewContent) {
         //初始化自定义的构造者模式的toolbar
         initToolBar(viewContent);
+        initview(viewContent);
+        initlistener();
+        initBuilderItems(viewContent);
+    }
+
+    private void initview(View viewContent) {
         //设备屏幕信息
         tv_fenbianlv = (TextView) viewContent.findViewById(R.id.tv_fenbianlv);
-        String screeninfo = "完整高度" +
-                SystemAppUtils.getDpi(getContext())
-                + "\n状态栏"
-                + SystemAppUtils.getStatusHeight(getContext())
-                + "\n宽度"
-                + DisplayUtil.Width(getContext())
-                + "\n内容高度"
-                + DisplayUtil.Height(getContext())
-                + "\n虚拟按键"
-                + SystemAppUtils.getBottomStatusHeight(getContext());
-        tv_fenbianlv.append(screeninfo);
         //分辨率
         mRatingbar = (RatingBar) viewContent.findViewById(R.id.ratingBar);
-        mRatingbar.setIsIndicator(false);//是否 不允许用户操作
-        mRatingbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                ToastUtil.showToast(getContext(), rating + "--" + fromUser, Toast.LENGTH_SHORT);
-            }
-        });
         //测试自定义控件（微笑进度圈，播放按钮）
         slv_loading_view = (SmileyLoadingView) viewContent.findViewById(R.id.slv_loading_view);
         pb_mine_progressbar = (ProgressBar) viewContent.findViewById(R.id.pb_mine_progressbar);
         pviv_mine_test = (PlayVideoIconView) viewContent.findViewById(R.id.pviv_mine_test);
-        pviv_mine_test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (pviv_mine_test.getPlayStatus() == PlayVideoIconView.STATUS.pause) {//暂停时
-                    pviv_mine_test.setPlayStatus(PlayVideoIconView.STATUS.playing);
-                    slv_loading_view.startSmile();
-                    DownQQMusicApk();
-                } else {//正在播放时
-                    pviv_mine_test.setPlayStatus(PlayVideoIconView.STATUS.pause);
-                    slv_loading_view.stopSmile(false);
-                }
-            }
-        });
-        initBuilderItems(viewContent);
     }
-
-    /**
-     * 初始化自定义的构造者模式的item布局
-     *
-     * @param viewContent
-     */
-    private void initBuilderItems(View viewContent) {
-        ll_mine_itemview = (LinearLayout) viewContent.findViewById(R.id.ll_mine_itemview);
-
-        builder = new DefaultImpleItemBuilder(getActivity());
-        builder.setLeftIcons(R.drawable.login_unlogin_header)
-                .setTitleText("位置")
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivityForResult(new Intent(getActivity(), MoreLevelActivity.class), 111);
-                    }
-                });
-        builder.BindParentView((ViewGroup) ll_mine_itemview);
-
-        builder = new DefaultImpleItemBuilder(getActivity());
-        builder.setLeftIcons(R.drawable.login_unlogin_header)
-                .setTitleText("地图")
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(getActivity(), BaiduMapActivity.class));
-                    }
-                });
-        builder.BindParentView((ViewGroup) ll_mine_itemview);
-
-        builder = new DefaultImpleItemBuilder(getActivity());
-        builder.setLeftIcons(R.drawable.login_unlogin_header)
-                .setTitleText("新界面")
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        FragmentManager Frmanager = getActivity().getSupportFragmentManager();
-                        Fragment mingf = Frmanager.findFragmentByTag("我");
-
-                        if (mingf != null && !mingf.isDetached()) {
-                            FragmentTransaction ft = Frmanager.beginTransaction();
-                            ft.hide(mingf);
-                            ft.add(android.R.id.tabcontent, new NewFragment(), "newfragment");
-                            ft.commit();
-                        }
-
-                    }
-                });
-        builder.BindParentView((ViewGroup) ll_mine_itemview);
-
-        builder = new DefaultImpleItemBuilder(getActivity());
-        builder.setLeftIcons(R.drawable.login_unlogin_header)
-                .setTitleText("窗帘效果界面")
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(getActivity(), CurtainActivity.class));
-                    }
-                });
-        builder.BindParentView(ll_mine_itemview);
-
-        builder = new DefaultImpleItemBuilder(getActivity());
-        builder.setLeftIcons(R.drawable.login_unlogin_header)
-                .setTitleText("各种高斯样式")
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(getActivity(), FastBlurActivity.class));
-                    }
-                });
-        builder.BindParentView(ll_mine_itemview);
-
-        builder = new DefaultImpleItemBuilder(getActivity());
-        builder.setLeftIcons(R.drawable.login_unlogin_header)
-                .setTitleText("动态模糊--")
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(getActivity(), BlurredActivity.class));
-                    }
-                });
-        builder.BindParentView(ll_mine_itemview);
-
-        builder = new DefaultImpleItemBuilder(getActivity());
-        builder.setLeftIcons(R.drawable.login_unlogin_header)
-                .setTitleText("listview单条刷新")
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), ListViewSSActivity.class);
-//                        intent.putExtra("time",5000);
-                        startActivity(intent);
-                    }
-                });
-        builder.BindParentView(ll_mine_itemview);
-
-        builder = new DefaultImpleItemBuilder(getActivity());
-        builder.setLeftIcons(R.drawable.login_unlogin_header)
-                .setTitleText("本地Gif加载")
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), LoadGifActivity.class);
-//                        intent.putExtra("time",5000);
-                        startActivity(intent);
-                    }
-                });
-        builder.BindParentView(ll_mine_itemview);
-
-        builder = new DefaultImpleItemBuilder(getActivity());
-        builder.setLeftIcons(R.drawable.login_unlogin_header)
-                .setTitleText("生成二维码")
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), QRImageActivity.class);
-                        startActivity(intent);
-                    }
-                });
-        builder.BindParentView(ll_mine_itemview);
+    private void initlistener() {
+        mRatingbar.setOnRatingBarChangeListener(this);
+        pviv_mine_test.setOnClickListener(this);
     }
-
     /**
      * 初始化自定义的构造者模式的toolbar
      *
@@ -273,6 +131,127 @@ public class Mine extends BaseFragment {
     }
 
     /**
+     * 初始化自定义的构造者模式的item布局
+     *
+     * @param viewContent
+     */
+    private void initBuilderItems(View viewContent) {
+        ll_mine_itemview = (LinearLayout) viewContent.findViewById(R.id.ll_mine_itemview);
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "位置", MoreLevelActivity.class, 111));
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "新界面", null, -1));
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "窗帘效果界面", CurtainActivity.class, -1));
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "各种高斯样式", FastBlurActivity.class, -1));
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "动态模糊", BlurredActivity.class, -1));
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "listview单条刷新", ListViewSSActivity.class, -1));
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "本地Gif加载", LoadGifActivity.class, -1));
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "生成二维码", QRImageActivity.class, -1));
+        for (int i = 0; i < itemlists.size(); i++) {
+            BuilderItemEntity entity = itemlists.get(i);
+            builder = new DefaultImpleItemBuilder(getActivity());
+            builder.setLeftIcons(entity.left_resid);
+            builder.setTitleText(entity.text);
+            builder.setOnClickListener(this).BindParentView(ll_mine_itemview);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.pviv_mine_test:
+                if (pviv_mine_test.getPlayStatus() == PlayVideoIconView.STATUS.pause) {//暂停时
+                    pviv_mine_test.setPlayStatus(PlayVideoIconView.STATUS.playing);
+                    slv_loading_view.startSmile();
+                    DownQQMusicApk();
+                } else {//正在播放时
+                    pviv_mine_test.setPlayStatus(PlayVideoIconView.STATUS.pause);
+                    slv_loading_view.stopSmile(false);
+                }
+                break;
+        }
+        if (intent == null) {
+            intent = new Intent();
+        }
+        BuilderItemEntity entity = null;
+        if (v.getTag()==null){
+            return;
+        }
+        String text = v.getTag().toString();
+        //根据text,获取BuilderItemEntity
+        for (int i = 0; i < itemlists.size(); i++) {
+            entity = itemlists.get(i);
+            if (text.equals(entity.text)) {
+                break;
+            }
+        }
+        //处理跳转逻辑
+        if (entity.classname != null) {
+            intent.setClass(getActivity(), entity.classname);
+            if (entity.requestcode == -1) {
+                startActivity(intent);
+            } else {
+                startActivityForResult(intent, entity.requestcode);
+            }
+        } else {
+            switch (entity.text){
+                case "新界面":
+                //处理非跳转逻辑
+                FragmentManager Frmanager = getActivity().getSupportFragmentManager();
+                Fragment mingf = Frmanager.findFragmentByTag("我");
+
+                if (mingf != null && !mingf.isDetached()) {
+                    FragmentTransaction ft = Frmanager.beginTransaction();
+                    ft.hide(mingf);
+                    ft.add(android.R.id.tabcontent, new NewFragment(), "newfragment");
+                    ft.commit();
+                }
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+        switch (ratingBar.getId()) {
+            case R.id.ratingBar:
+                ToastUtil.showToast(getContext(), rating + "--" + fromUser, Toast.LENGTH_SHORT);
+                break;
+        }
+    }
+
+    @Override
+    public void initData() {
+        String screeninfo = "\n完整高度" +
+                SystemAppUtils.getDpi(getContext())
+                + "\n宽度"
+                + DisplayUtil.Width(getContext())
+                + "\n状态栏"
+                + SystemAppUtils.getStatusHeight(getContext())
+                + "\n内容高度"
+                + DisplayUtil.Height(getContext())
+                + "\n虚拟按键"
+                + SystemAppUtils.getBottomStatusHeight(getContext());
+        tv_fenbianlv.append(screeninfo);
+        mRatingbar.setIsIndicator(false);//是否 不允许用户操作
+    }
+
+    /**
+     * item对象
+     */
+    private class BuilderItemEntity {
+        private int left_resid;
+        private String text;
+        private Class classname;
+        private int requestcode;
+
+        public BuilderItemEntity(int left_resid, String text, Class classname, int requestcode) {
+            this.left_resid = left_resid;
+            this.text = text;
+            this.classname = classname;
+            this.requestcode = requestcode;
+        }
+    }
+
+    /**
      * 测试下载
      */
     private RequestCall call;
@@ -295,10 +274,6 @@ public class Mine extends BaseFragment {
                 int progress_value = (int) (progress * total);
                 int total_value = (int) total;
                 setHorizontalProgressValue(total_value, progress_value);
-//                pb_mine_progressbar.setMax(progress_value);
-//                pb_mine_progressbar.setProgress(total_value);
-//                Log.i("FileCallBack", "progress: " + progress_value);
-//                Log.i("FileCallBack", "total: " + total_value);
             }
 
             @Override
