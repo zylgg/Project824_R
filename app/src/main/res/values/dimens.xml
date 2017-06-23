@@ -12,6 +12,8 @@
     <dimen name="margin_left_2_dp">2dp</dimen>
     <dimen name="margin_left_30_dp">30dp</dimen>
     <dimen name="margin_left_25_dp">25dp</dimen>
+    <dimen name="more_window_item_margin">12dp</dimen>
+
 
     <dimen name="item_essence_name_size">15sp</dimen>
 </resources>

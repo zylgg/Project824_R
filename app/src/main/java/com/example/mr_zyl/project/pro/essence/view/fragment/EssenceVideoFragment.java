@@ -12,6 +12,7 @@ import com.example.mr_zyl.project.pro.base.presenter.BasePresenter;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.base.view.refreshview.XRefreshView;
 import com.example.mr_zyl.project.pro.essence.presenter.EssenceVideoPresenter;
+import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceAdapter;
 import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceRecycleAdapter;
 import com.example.mr_zyl.project.pro.essence.view.listener.ScrollingPauseLoadManager;
 import com.example.mr_zyl.project.pro.essence.view.selfview.CustomFooterView;
@@ -34,6 +35,11 @@ public class EssenceVideoFragment extends BaseFragment {
     private RecyclerView rv_essence_one;
     private EssenceRecycleAdapter adapter;
     private EssenceVideoPresenter presenter;
+    private EssenceAdapter.ShowCloseToolbarListener listener;
+
+    public EssenceVideoFragment(EssenceAdapter.ShowCloseToolbarListener listener) {
+        this.listener = listener;
+    }
 
     public void setType(int mType) {
         this.mType = mType;
@@ -42,7 +48,8 @@ public class EssenceVideoFragment extends BaseFragment {
     public void setTitle(String title) {
         this.mTitle = title;
     }
-    private List<PostsListBean.PostList> postlists=new ArrayList<>();
+
+    private List<PostsListBean.PostList> postlists = new ArrayList<>();
 
     @Override
     public int getContentView() {
@@ -51,7 +58,7 @@ public class EssenceVideoFragment extends BaseFragment {
 
     @Override
     public MvpBasePresenter bindPresenter() {
-        presenter=new EssenceVideoPresenter(getContext());
+        presenter = new EssenceVideoPresenter(getContext());
         return presenter;
     }
 
@@ -81,12 +88,64 @@ public class EssenceVideoFragment extends BaseFragment {
         rv_essence_one = (RecyclerView) contentView.findViewById(R.id.rv_essence_one);
         rv_essence_one.setHasFixedSize(false);//设置固定大小，提高控件性能
         rv_essence_one.setLayoutManager(new LinearLayoutManager(getContext()));//设置列表管理器(LinearLayoutManager指水平或者竖直，默认数值)
-        rv_essence_one.addItemDecoration(new MyDecoration(getContext(),MyDecoration.VERTICAL_LIST));
-        rv_essence_one.addOnScrollListener(new ScrollingPauseLoadManager(getContext()));
+        rv_essence_one.addItemDecoration(new MyDecoration(getContext(), MyDecoration.VERTICAL_LIST));
+        //初始化滚动监听
+        ScrollingPauseLoadManager scrollmanager = new ScrollingPauseLoadManager(getContext());
+        scrollmanager.setOnScrollListener(new HidingScrollListener() {
+            @Override
+            public void onHide() {
+                if (listener!=null){
+                    listener.Hide();
+                }
+            }
 
+            @Override
+            public void onShow() {
+                if (listener!=null){
+                    listener.show();
+                }
+            }
+        });
+        rv_essence_one.addOnScrollListener(scrollmanager);
         adapter = new EssenceRecycleAdapter(getContext(), postlists);
         adapter.setCustomLoadMoreView(new CustomFooterView(getContext()));//Recycleview需要在底部控制添加footerview
         rv_essence_one.setAdapter(adapter);
+    }
+
+    public abstract class HidingScrollListener extends RecyclerView.OnScrollListener {
+        private static final int HIDE_THRESHOLD = 20;
+        private int scrolledDistance = 0;
+        private boolean controlsVisible = true;
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            int firstVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+            //show views if first item is first visible position and views are hidden
+            if (firstVisibleItem == 0) {
+                if (!controlsVisible) {
+                    onShow();
+                    controlsVisible = true;
+                }
+            } else {
+                if (scrolledDistance > HIDE_THRESHOLD && controlsVisible) {
+                    onHide();
+                    controlsVisible = false;
+                    scrolledDistance = 0;
+                } else if (scrolledDistance < -HIDE_THRESHOLD && !controlsVisible) {
+                    onShow();
+                    controlsVisible = true;
+                    scrolledDistance = 0;
+                }
+            }
+            if ((controlsVisible && dy > 0) || (!controlsVisible && dy < 0)) {
+                scrolledDistance += dy;
+            }
+        }
+
+        public abstract void onHide();
+
+        public abstract void onShow();
+
     }
 
     public void onEventMainThread(VideoEvents event) {
@@ -129,22 +188,23 @@ public class EssenceVideoFragment extends BaseFragment {
 
     /**
      * 加载数据
+     *
      * @param isDownRefresh 是否为下拉刷新
      */
     private void loaddata(final boolean isDownRefresh) {
         presenter.GetEssenceListData(mType, isDownRefresh, new BasePresenter.OnUiThreadListener<List<PostsListBean.PostList>>() {
             @Override
             public void OnResult(List<PostsListBean.PostList> result) {
-                if (isDownRefresh){
+                if (isDownRefresh) {
                     refreshview_id.stopRefresh();
-                }else {
+                } else {
                     refreshview_id.stopLoadMore();
                 }
-                if (result==null){
-                    ToastUtil.showToast(getContext(),"加载失败！");
-                }else{
+                if (result == null) {
+                    ToastUtil.showToast(getContext(), "加载失败！");
+                } else {
                     //刷新Ui
-                    if (isDownRefresh){
+                    if (isDownRefresh) {
                         postlists.clear();
                     }
                     postlists.addAll(result);
@@ -159,7 +219,6 @@ public class EssenceVideoFragment extends BaseFragment {
     public void initData() {
         loaddata(true);
     }
-
 
 
 }

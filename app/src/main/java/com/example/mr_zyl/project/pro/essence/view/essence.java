@@ -27,10 +27,11 @@ import me.xiaopan.sketch.cache.MemoryCache;
 /**
  * Created by Mr_Zyl on 2016/8/25.
  */
-public class essence extends BaseFragment {
+public class essence extends BaseFragment implements EssenceAdapter.ShowCloseToolbarListener {
 
     private TabLayout tab_essence;
     private ViewPager vp_essence;
+    private EssenceNavigationBuilder builder;
 
     @Override
     public int getContentView() {
@@ -49,7 +50,7 @@ public class essence extends BaseFragment {
     }
 
     private void initToolBar(View viewContent) {
-        EssenceNavigationBuilder builder = new EssenceNavigationBuilder(getContext());
+        builder = new EssenceNavigationBuilder(getContext());
         builder.setBackground(R.drawable.toolbar_backgound_essence_shape)
                 .setTitle(R.string.main_essence_text)
                 .setLeftIcon(R.drawable.main_essence_btn_selector)
@@ -70,6 +71,14 @@ public class essence extends BaseFragment {
                     }
                 }).createAndBind((ViewGroup) viewContent);
 
+    }
+
+    @Override
+    public void initData() {
+        String[] titles = getResources().getStringArray(R.array.essence_video_tab);
+        EssenceAdapter adapter =new EssenceAdapter(this,getFragmentManager(), Arrays.asList(titles));
+        this.vp_essence.setAdapter(adapter);
+        this.tab_essence.setupWithViewPager(this.vp_essence);
     }
 
     /**
@@ -127,19 +136,19 @@ public class essence extends BaseFragment {
                 .build();
         dialog.show();
     }
-
-    @Override
-    public void initData() {
-        String[] titles = getResources().getStringArray(R.array.essence_video_tab);
-        EssenceAdapter adapter =
-                new EssenceAdapter(getFragmentManager(), Arrays.asList(titles));
-        this.vp_essence.setAdapter(adapter);
-        this.tab_essence.setupWithViewPager(this.vp_essence);
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void show() {
+//        (builder.getContentView()).animate().translationY(-(builder.getContentView()).getHeight()).setInterpolator(new AccelerateInterpolator(2));
+    }
+
+    @Override
+    public void Hide() {
+//        (builder.getContentView()).animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
     }
 }

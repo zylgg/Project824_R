@@ -1,7 +1,6 @@
 package com.example.mr_zyl.project;
 
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,8 +19,8 @@ import com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost;
 import com.example.mr_zyl.project.pro.essence.view.essence;
 import com.example.mr_zyl.project.pro.mine.view.Mine;
 import com.example.mr_zyl.project.pro.newpost.view.Newpost;
-import com.example.mr_zyl.project.pro.publish.view.PlayActivity;
 import com.example.mr_zyl.project.pro.publish.view.Publish;
+import com.example.mr_zyl.project.pro.publish.view.self.MoreWindow;
 import com.example.mr_zyl.project.utils.StatusUtils;
 import com.example.mr_zyl.project.utils.SystemAppUtils;
 import com.example.mr_zyl.project.utils.ToastUtil;
@@ -29,18 +28,20 @@ import com.example.mr_zyl.project.utils.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TabHost.OnTabChangeListener {
+public class MainActivity extends AppCompatActivity implements TabHost.OnTabChangeListener, View.OnClickListener {
 
     private List<Tabitem> tablists;
     private MyFragmentTabHost fragmenttabhost;
     private TextView tv_bottomnavigation_view;
+    private long lasttime;
+    private MoreWindow mMoreWindow;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tv_bottomnavigation_view= (TextView) findViewById(R.id.tv_bottomnavigation_view);
+        tv_bottomnavigation_view = (TextView) findViewById(R.id.tv_bottomnavigation_view);
         //透明状态栏
         StatusUtils.setTransparent(this);
         //设置不填充到虚拟按键之下
@@ -53,12 +54,14 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         addBadge();
     }
 
+    private int bottomStatusHeight;
+
     private void setNoFitBottomStatus() {
-        ViewGroup contentView = (ViewGroup)findViewById(android.R.id.content);
-        final int bottomStatusHeight = SystemAppUtils.getBottomStatusHeight(this);
-        if (bottomStatusHeight>0){
+        ViewGroup contentView = (ViewGroup) findViewById(android.R.id.content);
+        bottomStatusHeight = SystemAppUtils.getBottomStatusHeight(this);
+        if (bottomStatusHeight > 0) {
 //            contentView.setPadding(0,0,0,bottomStatusHeight);
-            tv_bottomnavigation_view.getLayoutParams().height=bottomStatusHeight;
+            tv_bottomnavigation_view.getLayoutParams().height = bottomStatusHeight;
         }
     }
 
@@ -93,37 +96,39 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
             //参数1：选项卡；参数1，选项卡绑定的碎片fragment；参数3，该fragment所携带的bundle数据
             fragmenttabhost.addTab(tabSpec, tabItem.getFragmentclass(), tabItem.getBundle());
             //给我们的Tab按钮设置背景
-            fragmenttabhost.getTabWidget()
-                    .getChildAt(i)
-                    .setBackgroundColor(getResources().getColor(R.color.main_bottom_bg));
+            fragmenttabhost.getTabWidget().getChildAt(i).setBackgroundColor(getResources().getColor(R.color.main_bottom_bg));
+            fragmenttabhost.getTabWidget().getChildAt(i).setId(tabItem.getTitleid());//给每个view设置id
             //监听点击Tab
             fragmenttabhost.setOnTabChangedListener(this);
             //默认选中第一个Tab
             if (i == 0) {
                 tabItem.setChecked(true);
             }
-        }
-    }
-    private void addBadge(){
-        for (int i=0;i<tablists.size();i++){
-            Tabitem ti=tablists.get(i);
-            String titles=ti.getTitleString();
-            if (titles.equals("我")){
-                View view=ti.getview();
+            if (tabItem.getTitleid()==0){//只对非fragment跳转的tab 设置自定义监听
+                fragmenttabhost.getTabWidget().getChildTabViewAt(i).setOnClickListener(this);
             }
         }
     }
 
-    long lasttime;
+    private void addBadge() {
+        for (int i = 0; i < tablists.size(); i++) {
+            Tabitem ti = tablists.get(i);
+            String titles = ti.getTitleString();
+            if (titles.equals("我")) {
+                View view = ti.getview();
+            }
+        }
+    }
+
     @Override
     public void onBackPressed() {
-        if (System.currentTimeMillis()-lasttime<2000){
+        if (System.currentTimeMillis() - lasttime < 2000) {
             finish();
             System.exit(0);
-        }else {
-            ToastUtil.showToast(this,"再点击一次退出"+getString(R.string.app_name)+"！");
+        } else {
+            ToastUtil.showToast(this, "再点击一次退出" + getString(R.string.app_name) + "！");
         }
-        lasttime=System.currentTimeMillis();
+        lasttime = System.currentTimeMillis();
     }
 
     @Override
@@ -136,19 +141,16 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         if (newfragment != null && !newfragment.isDetached()) {
             ft.detach(newfragment);
         }
-        if (selectedfragment!=null){
-            if (selectedfragment.isHidden()){
-                ft.show( selectedfragment);
+        if (selectedfragment != null) {
+            if (selectedfragment.isHidden()) {
+                ft.show(selectedfragment);
             }
         }
         ft.commit();
 
         if (TextUtils.isEmpty(tabId)) {
-            ToastUtil.showToast(this, "不切换fragment");
-            startActivity(new Intent(this, PlayActivity.class));
-            return;
+//            startActivity(new Intent(this, PlayActivity.class));
         }
-        ToastUtil.showToast(this, tabId);
         //重置Tab样式
         for (int i = 0; i < tablists.size(); i++) {
             Tabitem tabItem = tablists.get(i);
@@ -162,6 +164,27 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case 0:
+                showMoreWindow(v);
+                break;
+        }
+    }
+
+    /**
+     * 显示更多窗口
+     *
+     * @param view
+     */
+    private void showMoreWindow(View view) {
+        if (null == mMoreWindow) {
+            mMoreWindow = new MoreWindow(this);
+            mMoreWindow.init();
+        }
+        mMoreWindow.showMoreWindow(view, bottomStatusHeight);
+    }
 
     class Tabitem {
         private int imagedefault;
@@ -187,8 +210,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
             return imagedefault;
         }
 
-        public int getImageselected()
-        {
+        public int getImageselected() {
             return imageselected;
         }
 
