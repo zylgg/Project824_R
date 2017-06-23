@@ -144,11 +144,17 @@ public class essence extends BaseFragment implements EssenceAdapter.ShowCloseToo
 
     @Override
     public void show() {
-//        (builder.getContentView()).animate().translationY(-(builder.getContentView()).getHeight()).setInterpolator(new AccelerateInterpolator(2));
+//        (builder.getLl_toolbar_essence_contentlayou())
+//                .animate()
+//                .translationY(-(builder.getLl_toolbar_essence_contentlayou()).getHeight())
+//                .setInterpolator(new AccelerateInterpolator(2));
     }
 
     @Override
     public void Hide() {
-//        (builder.getContentView()).animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+//        (builder.getLl_toolbar_essence_contentlayou())
+//                .animate()
+//                .translationY(0)
+//                .setInterpolator(new DecelerateInterpolator(2));
     }
 }

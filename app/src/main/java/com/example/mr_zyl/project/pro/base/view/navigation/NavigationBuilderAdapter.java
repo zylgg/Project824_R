@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.mr_zyl.project.R;
 
 public abstract class NavigationBuilderAdapter implements NavigationBuilder{
 
@@ -19,7 +22,7 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder{
     private int titleIconRes;
 
     private View contentView;
-
+    private LinearLayout ll_toolbar_essence_contentlayou;
     private View.OnClickListener leftIconOnClickListener;
     private View.OnClickListener rightIconOnClickListener;
 
@@ -82,6 +85,7 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder{
     @Override
     public void createAndBind(ViewGroup parent) {
         contentView = LayoutInflater.from(getContext()).inflate(getLayoutId(),parent,false);
+        ll_toolbar_essence_contentlayou= (LinearLayout) contentView.findViewById(R.id.ll_toolbar_essence_contentlayou);
         ViewGroup viewGroup = (ViewGroup)contentView.getParent();
         if (viewGroup != null){
             viewGroup.removeView(contentView);
@@ -118,6 +122,10 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder{
 
     public View getContentView() {
         return contentView;
+    }
+
+    public LinearLayout getLl_toolbar_essence_contentlayou() {
+        return ll_toolbar_essence_contentlayou;
     }
 
     public int getBackgroundIconRes() {
