@@ -49,5 +49,6 @@ public class EssenceAdapter extends FragmentStatePagerAdapter {
     public interface ShowCloseToolbarListener{
         void show();
         void Hide();
+        void onMoved(int distance);
     }
 }

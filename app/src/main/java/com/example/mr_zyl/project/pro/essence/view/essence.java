@@ -6,12 +6,15 @@ import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceAdapter;
 import com.example.mr_zyl.project.pro.essence.view.navigation.EssenceNavigationBuilder;
+import com.example.mr_zyl.project.utils.DisplayUtil;
 import com.example.mr_zyl.project.utils.Settings;
 import com.example.mr_zyl.project.utils.ToastUtil;
 
@@ -32,6 +35,7 @@ public class essence extends BaseFragment implements EssenceAdapter.ShowCloseToo
     private TabLayout tab_essence;
     private ViewPager vp_essence;
     private EssenceNavigationBuilder builder;
+    private int mToolbarHeight;
 
     @Override
     public int getContentView() {
@@ -42,6 +46,7 @@ public class essence extends BaseFragment implements EssenceAdapter.ShowCloseToo
     public void initContentView(View viewContent) {
         initToolBar(viewContent);
         initbaseview(viewContent);
+        mToolbarHeight= DisplayUtil.dip2px(Fcontext,75);
     }
 
     private void initbaseview(View viewContent) {
@@ -76,7 +81,7 @@ public class essence extends BaseFragment implements EssenceAdapter.ShowCloseToo
     @Override
     public void initData() {
         String[] titles = getResources().getStringArray(R.array.essence_video_tab);
-        EssenceAdapter adapter =new EssenceAdapter(this,getFragmentManager(), Arrays.asList(titles));
+        EssenceAdapter adapter = new EssenceAdapter(this, getFragmentManager(), Arrays.asList(titles));
         this.vp_essence.setAdapter(adapter);
         this.tab_essence.setupWithViewPager(this.vp_essence);
     }
@@ -136,6 +141,7 @@ public class essence extends BaseFragment implements EssenceAdapter.ShowCloseToo
                 .build();
         dialog.show();
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -144,17 +150,16 @@ public class essence extends BaseFragment implements EssenceAdapter.ShowCloseToo
 
     @Override
     public void show() {
-//        (builder.getLl_toolbar_essence_contentlayou())
-//                .animate()
-//                .translationY(-(builder.getLl_toolbar_essence_contentlayou()).getHeight())
-//                .setInterpolator(new AccelerateInterpolator(2));
+        builder.getLl_toolbar_essence_contentlayou().animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
     }
 
     @Override
     public void Hide() {
-//        (builder.getLl_toolbar_essence_contentlayou())
-//                .animate()
-//                .translationY(0)
-//                .setInterpolator(new DecelerateInterpolator(2));
+        builder.getLl_toolbar_essence_contentlayou().animate().translationY(-mToolbarHeight).setInterpolator(new AccelerateInterpolator(2)).start();
+    }
+
+    @Override
+    public void onMoved(int distance) {
+        builder.getLl_toolbar_essence_contentlayou().setTranslationY(-distance);
     }
 }
