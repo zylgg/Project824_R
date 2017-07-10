@@ -6,13 +6,12 @@
     <com.example.mr_zyl.project.pro.base.view.refreshview.XRefreshView
         android:id="@+id/refreshview_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:isHeightMatchParent="true"
-        app:isWidthMatchParent="true">
+        android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_essence_one"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
             ></android.support.v7.widget.RecyclerView>
 
     </com.example.mr_zyl.project.pro.base.view.refreshview.XRefreshView>

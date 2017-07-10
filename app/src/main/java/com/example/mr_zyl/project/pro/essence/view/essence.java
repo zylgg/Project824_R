@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.mr_zyl.project.R;
@@ -36,6 +37,7 @@ public class essence extends BaseFragment implements EssenceAdapter.ShowCloseToo
     private ViewPager vp_essence;
     private EssenceNavigationBuilder builder;
     private int mToolbarHeight;
+    private LinearLayout ll_essence_tabcontainer;
 
     @Override
     public int getContentView() {
@@ -44,9 +46,10 @@ public class essence extends BaseFragment implements EssenceAdapter.ShowCloseToo
 
     @Override
     public void initContentView(View viewContent) {
-        initToolBar(viewContent);
+        ll_essence_tabcontainer= (LinearLayout) viewContent.findViewById(R.id.ll_essence_tabcontainer);
+        initToolBar(ll_essence_tabcontainer);
         initbaseview(viewContent);
-        mToolbarHeight= DisplayUtil.dip2px(Fcontext,75);
+        mToolbarHeight= DisplayUtil.dip2px(Fcontext,50);
     }
 
     private void initbaseview(View viewContent) {
@@ -150,16 +153,16 @@ public class essence extends BaseFragment implements EssenceAdapter.ShowCloseToo
 
     @Override
     public void show() {
-        builder.getLl_toolbar_essence_contentlayou().animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+        ll_essence_tabcontainer.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
     }
 
     @Override
     public void Hide() {
-        builder.getLl_toolbar_essence_contentlayou().animate().translationY(-mToolbarHeight).setInterpolator(new AccelerateInterpolator(2)).start();
+        ll_essence_tabcontainer.animate().translationY(-mToolbarHeight).setInterpolator(new AccelerateInterpolator(2)).start();
     }
 
     @Override
     public void onMoved(int distance) {
-        builder.getLl_toolbar_essence_contentlayou().setTranslationY(-distance);
+        ll_essence_tabcontainer.setTranslationY(-distance);
     }
 }
