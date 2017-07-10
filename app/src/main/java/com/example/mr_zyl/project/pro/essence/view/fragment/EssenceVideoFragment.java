@@ -88,8 +88,9 @@ public class EssenceVideoFragment extends BaseFragment {
             }
         });
         rv_essence_one = (RecyclerView) contentView.findViewById(R.id.rv_essence_one);
+        rv_essence_one.setHasFixedSize(true);
         int paddingTop = DisplayUtil.dip2px(Fcontext,98);
-        rv_essence_one.setPadding(rv_essence_one.getPaddingLeft(),paddingTop,rv_essence_one.getPaddingRight(),rv_essence_one.getPaddingBottom());
+//        rv_essence_one.setPadding(rv_essence_one.getPaddingLeft(),paddingTop,rv_essence_one.getPaddingRight(),rv_essence_one.getPaddingBottom());
         rv_essence_one.setLayoutManager(new LinearLayoutManager(getContext()));//设置列表管理器(LinearLayoutManager指水平或者竖直，默认数值)
         rv_essence_one.addItemDecoration(new MyDecoration(getContext(), MyDecoration.VERTICAL_LIST));
         //初始化滚动监听
