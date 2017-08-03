@@ -4,12 +4,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <!--<TextView-->
-        <!--android:id="@+id/tv_fitssystemwindows_view"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="25dp"-->
-        <!--android:fitsSystemWindows="true"-->
-        <!--/>-->
+    <TextView
+        android:id="@+id/tv_fitssystemwindows_view"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:fitsSystemWindows="true"
+        />
 
     <LinearLayout
         android:id="@+id/ll_toolbar_essence_contentlayou"

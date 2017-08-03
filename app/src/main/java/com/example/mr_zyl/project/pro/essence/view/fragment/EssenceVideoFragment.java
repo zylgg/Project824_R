@@ -265,7 +265,7 @@ public class EssenceVideoFragment extends BaseFragment {
                     ToastUtil.showToast(getContext(), "加载失败！");
                 } else {
                     //刷新Ui
-                    if (isDownRefresh) {
+                    if (isDownRefresh) {//下拉刷新（清理一遍数据）
                         postlists.clear();
                     }
                     postlists.addAll(result);

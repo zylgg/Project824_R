@@ -26,7 +26,7 @@ public class EssenceVideoPresenter extends BasePresenter<EssenceVideoModel> {
     }
 
     public void GetEssenceListData(int type, final boolean isDownRefresh, final OnUiThreadListener<List<PostsListBean.PostList>> onhttpResultlistener){
-        if (isDownRefresh){
+        if (isDownRefresh){//下拉刷新
             maxtime=null;
         }
         getModel().getEssenceList(type,page,maxtime, new HttpUtils.OnHttpResultListener() {
