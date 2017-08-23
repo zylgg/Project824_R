@@ -5,13 +5,15 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project.R;
+import com.example.mr_zyl.project.pro.base.view.BaseActivity;
+import com.example.mr_zyl.project.utils.StatusUtils;
 
 import net.robinx.lib.blur.StackBlur;
 import net.robinx.lib.blur.utils.BlurUtils;
@@ -23,7 +25,7 @@ import net.robinx.lib.blur.widget.BlurRelativeLayout;
 //import net.qiujuer.genius.blur.StackBlur;
 
 
-public class FastBlurActivity extends AppCompatActivity {
+public class FastBlurActivity extends BaseActivity {
 
     private static final int SCALE_FACTOR = 4;
     private boolean mCompress;
@@ -32,11 +34,18 @@ public class FastBlurActivity extends AppCompatActivity {
     private ImageView iv_blue_1, mImageJava, mImageJniPixels, mImageJniBitmap, iv_blue_5, iv_bgiv;
     private BlurMaskRelativeLayout bmrl_blurmask_rl;
     private BlurRelativeLayout brl_blur_rl;
+    private Toolbar tb_fast_blur_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fast_blur);
+
+        StatusUtils.setTransparent(this);
+        tb_fast_blur_title= (Toolbar) findViewById(R.id.tb_fast_blur_title);
+        setSupportActionBar(tb_fast_blur_title);
+
+        setTitle("各种高斯模糊");
         //快速模糊jar，提供的布局
         bmrl_blurmask_rl = (BlurMaskRelativeLayout) findViewById(R.id.bmrl_blurmask_rl);
         bmrl_blurmask_rl.blurMode(BlurMode.RENDER_SCRIPT).blurRadius(10);

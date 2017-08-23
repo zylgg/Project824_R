@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.bean.PostsListBean;
@@ -13,12 +14,11 @@ import com.example.mr_zyl.project.pro.base.presenter.BasePresenter;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.base.view.refreshview.XRefreshView;
 import com.example.mr_zyl.project.pro.essence.presenter.EssenceVideoPresenter;
-import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceAdapter;
 import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceRecycleAdapter;
-import com.example.mr_zyl.project.pro.essence.view.listener.ScrollingPauseLoadManager;
 import com.example.mr_zyl.project.pro.essence.view.selfview.CustomFooterView;
 import com.example.mr_zyl.project.pro.essence.view.selfview.MyDecoration;
 import com.example.mr_zyl.project.utils.DisplayUtil;
+import com.example.mr_zyl.project.utils.SystemAppUtils;
 import com.example.mr_zyl.project.utils.ToastUtil;
 import com.example.zylsmallvideolibrary.JCVideoPlayer;
 import com.example.zylsmallvideolibrary.VideoEvents;
@@ -33,14 +33,13 @@ public class EssenceVideoFragment extends BaseFragment {
 
     private int mType = 0;
     private String mTitle;
+    private FrameLayout fl_essence_list;
     private XRefreshView refreshview_id;
     private RecyclerView rv_essence_one;
     private EssenceRecycleAdapter adapter;
     private EssenceVideoPresenter presenter;
-    private EssenceAdapter.ShowCloseToolbarListener listener;
 
-    public EssenceVideoFragment(EssenceAdapter.ShowCloseToolbarListener listener) {
-        this.listener = listener;
+    public EssenceVideoFragment() {
     }
 
     public void setType(int mType) {
@@ -67,6 +66,9 @@ public class EssenceVideoFragment extends BaseFragment {
     @Override
     public void initContentView(View contentView) {
         EventBus.getDefault().register(this);
+        int paddingTop = DisplayUtil.dip2px(Fcontext, 98) + SystemAppUtils.getStatusHeight(getContext());
+
+        fl_essence_list = (FrameLayout) contentView.findViewById(R.id.fl_essence_list);
         refreshview_id = (XRefreshView) contentView.findViewById(R.id.refreshview_id);
         refreshview_id.setPullRefreshEnable(true);
         refreshview_id.setPullLoadEnable(true);
@@ -89,35 +91,8 @@ public class EssenceVideoFragment extends BaseFragment {
         });
         rv_essence_one = (RecyclerView) contentView.findViewById(R.id.rv_essence_one);
         rv_essence_one.setHasFixedSize(true);
-        int paddingTop = DisplayUtil.dip2px(Fcontext,98);
-//        rv_essence_one.setPadding(rv_essence_one.getPaddingLeft(),paddingTop,rv_essence_one.getPaddingRight(),rv_essence_one.getPaddingBottom());
         rv_essence_one.setLayoutManager(new LinearLayoutManager(getContext()));//设置列表管理器(LinearLayoutManager指水平或者竖直，默认数值)
         rv_essence_one.addItemDecoration(new MyDecoration(getContext(), MyDecoration.VERTICAL_LIST));
-        //初始化滚动监听
-        ScrollingPauseLoadManager scrollmanager = new ScrollingPauseLoadManager(getContext());
-        scrollmanager.setOnScrollListener(new HidingScrollListener(Fcontext) {
-            @Override
-            public void onHide() {
-                if (listener!=null){
-                    listener.Hide();
-                }
-            }
-
-            @Override
-            public void onMoved(int distance) {
-                if (listener!=null){
-                    listener.onMoved(distance);
-                }
-            }
-
-            @Override
-            public void onShow() {
-                if (listener!=null){
-                    listener.show();
-                }
-            }
-        });
-        rv_essence_one.addOnScrollListener(scrollmanager);
         adapter = new EssenceRecycleAdapter(getContext(), postlists);
         adapter.setCustomLoadMoreView(new CustomFooterView(getContext()));//Recycleview需要在底部控制添加footerview
         rv_essence_one.setAdapter(adapter);
@@ -134,15 +109,15 @@ public class EssenceVideoFragment extends BaseFragment {
         private int mTotalScrolledDistance;
 
         public HidingScrollListener(Context context) {
-            mToolbarHeight = DisplayUtil.dip2px(context,50);
+            mToolbarHeight = DisplayUtil.dip2px(context, 50);
         }
 
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
 
-            if(newState == RecyclerView.SCROLL_STATE_IDLE) {
-                if(mTotalScrolledDistance < mToolbarHeight) {
+            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (mTotalScrolledDistance < mToolbarHeight) {
                     setVisible();
                 } else {
                     if (mControlsVisible) {
@@ -169,7 +144,7 @@ public class EssenceVideoFragment extends BaseFragment {
             clipToolbarOffset();
             onMoved(mToolbarOffset);
 
-            if((mToolbarOffset <mToolbarHeight && dy>0) || (mToolbarOffset >0 && dy<0)) {
+            if ((mToolbarOffset < mToolbarHeight && dy > 0) || (mToolbarOffset > 0 && dy < 0)) {
                 mToolbarOffset += dy;
             }
             if (mTotalScrolledDistance < 0) {
@@ -180,15 +155,15 @@ public class EssenceVideoFragment extends BaseFragment {
         }
 
         private void clipToolbarOffset() {
-            if(mToolbarOffset > mToolbarHeight) {
+            if (mToolbarOffset > mToolbarHeight) {
                 mToolbarOffset = mToolbarHeight;
-            } else if(mToolbarOffset < 0) {
+            } else if (mToolbarOffset < 0) {
                 mToolbarOffset = 0;
             }
         }
 
         private void setVisible() {
-            if(mToolbarOffset > 0) {
+            if (mToolbarOffset > 0) {
                 onShow();
                 mToolbarOffset = 0;
             }
@@ -196,7 +171,7 @@ public class EssenceVideoFragment extends BaseFragment {
         }
 
         private void setInvisible() {
-            if(mToolbarOffset < mToolbarHeight) {
+            if (mToolbarOffset < mToolbarHeight) {
                 onHide();
                 mToolbarOffset = mToolbarHeight;
             }
@@ -204,7 +179,9 @@ public class EssenceVideoFragment extends BaseFragment {
         }
 
         public abstract void onMoved(int distance);
+
         public abstract void onShow();
+
         public abstract void onHide();
 
     }

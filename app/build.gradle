@@ -63,5 +63,6 @@ dependencies {
     //图片加载框架
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile project(':zylsmallvideolibrary')
+    //网络请求
     compile 'com.zhy:okhttputils:2.6.2'
 }

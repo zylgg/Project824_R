@@ -21,7 +21,6 @@ import com.example.mr_zyl.project.pro.mine.view.Mine;
 import com.example.mr_zyl.project.pro.newpost.view.Newpost;
 import com.example.mr_zyl.project.pro.publish.view.Publish;
 import com.example.mr_zyl.project.pro.publish.view.self.MoreWindow;
-import com.example.mr_zyl.project.utils.StatusUtils;
 import com.example.mr_zyl.project.utils.SystemAppUtils;
 import com.example.mr_zyl.project.utils.ToastUtil;
 
@@ -42,8 +41,6 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tv_bottomnavigation_view = (TextView) findViewById(R.id.tv_bottomnavigation_view);
-        //透明状态栏
-        StatusUtils.setTransparent(this);
         //设置不填充到虚拟按键之下
         setNoFitBottomStatus();
 
@@ -123,8 +120,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     @Override
     public void onBackPressed() {
         if (System.currentTimeMillis() - lasttime < 2000) {
-            finish();
-            System.exit(0);
+            ((BaseApp) this.getApplication()).exit(0);
         } else {
             ToastUtil.showToast(this, "再点击一次退出" + getString(R.string.app_name) + "！");
         }

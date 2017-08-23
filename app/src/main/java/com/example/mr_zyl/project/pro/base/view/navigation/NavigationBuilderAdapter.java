@@ -1,6 +1,7 @@
 package com.example.mr_zyl.project.pro.base.view.navigation;
 
 import android.content.Context;
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,6 +112,14 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder{
         }else {
             textview.setText(title);
             textview.setVisibility(View.VISIBLE);
+        }
+    }
+    public void setStatusBarView(int viewid) {
+        View view = getContentView().findViewById(viewid);
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {//如果系统不支持透明状态栏
+            view.setVisibility(View.GONE);
+        } else {
+            view.setVisibility(View.VISIBLE);
         }
     }
 

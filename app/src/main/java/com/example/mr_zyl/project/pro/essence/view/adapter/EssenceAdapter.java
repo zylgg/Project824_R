@@ -16,17 +16,15 @@ public class EssenceAdapter extends FragmentStatePagerAdapter {
     public static final String TAB_TAG = "@zylmove@";
 
     private List<String> mTitles;
-    private ShowCloseToolbarListener listener;
 
-    public EssenceAdapter(ShowCloseToolbarListener listener,FragmentManager fm, List<String> titles) {
+    public EssenceAdapter(FragmentManager fm, List<String> titles) {
         super(fm);
-        this.listener=listener;
         mTitles = titles;
     }
 
     @Override
     public Fragment getItem(int position) {
-        EssenceVideoFragment fragment = new EssenceVideoFragment(listener);
+        EssenceVideoFragment fragment = new EssenceVideoFragment();
         String[] title = mTitles.get(position).split(TAB_TAG);
         fragment.setType(Integer.parseInt(title[1]));
         fragment.setTitle(title[0]);
@@ -45,10 +43,5 @@ public class EssenceAdapter extends FragmentStatePagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return mTitles.get(position).split(TAB_TAG)[0];
-    }
-    public interface ShowCloseToolbarListener{
-        void show();
-        void Hide();
-        void onMoved(int distance);
     }
 }

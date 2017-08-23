@@ -1,7 +1,7 @@
 package com.example.mr_zyl.project.pro.mine.view.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
@@ -15,7 +15,7 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.example.mr_zyl.project.R;
 
-public class BaiduMapActivity extends Activity {
+public class BaiduMapActivity extends AppCompatActivity {
 
     MapView mMapView = null;
     BaiduMap mBaiduMap;

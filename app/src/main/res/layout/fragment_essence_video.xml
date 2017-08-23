@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fl_essence_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -13,7 +14,7 @@
             android:id="@+id/rv_essence_one"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="true"
+            android:clipToPadding="false"
             ></android.support.v7.widget.RecyclerView>
 
     </com.example.mr_zyl.project.pro.base.view.refreshview.XRefreshView>

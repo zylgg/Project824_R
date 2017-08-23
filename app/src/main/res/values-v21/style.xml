@@ -1,29 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="THEME" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+
+        <!--透明状态栏-->
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <!--半透明状态栏-->
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
+
 
     <style name="TransparentTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <item name="colorPrimaryDark">@color/white</item>
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
+
+
+        <!--透明状态栏-->
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <!--半透明状态栏-->
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
-
-
-    <style name="Myratingbar" parent="Base.Widget.AppCompat.RatingBar.Indicator">
-        <item name="android:progressDrawable">@drawable/ratingbar_style</item>
-        <item name="android:minHeight">21.5dp</item>
-        <item name="android:minWidth">25dp</item>
-    </style>
-
 </resources>

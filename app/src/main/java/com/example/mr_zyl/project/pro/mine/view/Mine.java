@@ -262,7 +262,7 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
         if (!files.exists()) {
             files.mkdirs();
         }
-        //okhttputils不支持断点续传。。。
+        //okhttputils不支持断点下载。。。
         FileCallBack fileCallBack = new FileCallBack(filepath, "qqmusic.apk") {
             @Override
             public void onBefore(Request request, int id) {
