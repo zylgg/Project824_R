@@ -3,7 +3,7 @@ apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.example.mr_zyl.project824"
@@ -44,7 +44,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:support-v4:23.3.0'
     compile 'com.android.support:recyclerview-v7:23.3.0'
-    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:design:24.2.0'
     compile files('libs/BaiduLBS_Android.jar')
     compile 'org.greenrobot:greendao:3.1.0'
     //高斯模糊
@@ -65,4 +65,6 @@ dependencies {
     compile project(':zylsmallvideolibrary')
     //网络请求
     compile 'com.zhy:okhttputils:2.6.2'
+
+
 }

@@ -1,9 +1,11 @@
 <resources>
+
     <style name="THEME" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -25,5 +27,9 @@
         <item name="android:minHeight">21.5dp</item>
         <item name="android:minWidth">25dp</item>
     </style>
+
+    <style name="THEME.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="THEME.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
