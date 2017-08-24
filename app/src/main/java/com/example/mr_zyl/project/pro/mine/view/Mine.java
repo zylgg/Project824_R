@@ -17,6 +17,7 @@ import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.base.view.item.DefaultImpleItemBuilder;
 import com.example.mr_zyl.project.pro.essence.view.selfview.PlayVideoIconView;
+import com.example.mr_zyl.project.pro.mine.view.activity.BaiduMapActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.BlurredActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.CurtainActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.FastBlurActivity;
@@ -137,6 +138,7 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
      */
     private void initBuilderItems(View viewContent) {
         ll_mine_itemview = (LinearLayout) viewContent.findViewById(R.id.ll_mine_itemview);
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "地图", BaiduMapActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "位置", MoreLevelActivity.class, 111));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "新界面", null, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "窗帘效果界面", CurtainActivity.class, -1));
@@ -300,7 +302,7 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == 112) {
             String address = data.getExtras().getString("address");
-            builder.getTv_title().setText("位置:" + address);
+            ToastUtil.showToast(Fcontext,address);
         }
     }
 }
