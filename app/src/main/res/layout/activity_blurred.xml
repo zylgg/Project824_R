@@ -6,6 +6,7 @@
     android:clipToPadding="true"
     android:fitsSystemWindows="true">
 
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -54,7 +55,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
 
             <com.qiushui.blurredview.BlurredView
                 android:id="@+id/activity_main_blurredview"
@@ -96,6 +99,6 @@
 
         </RelativeLayout>
 
-    </android.support.v4.widget.NestedScrollView>
 
+    </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
