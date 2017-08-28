@@ -12,17 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         android:fitsSystemWindows="true"
-        android:orientation="vertical"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:orientation="vertical">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
+            android:clickable="true"
             app:contentScrim="@android:color/darker_gray"
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            <!--app:contentScrim - 设置当完全CollapsingToolbarLayout折叠(收缩)后的背景颜色。-->
+            <!--app:expandedTitleMarginStart - 设置扩张时候(还没有收缩时)title向左填充的距离。-->
+            <!--app:layout_scrollFlags="scroll|exitUntilCollapsed" 滚动且向上滚动时收缩View，但可以固定Toolbar一直在上面。-->
 
             <ImageView
                 android:id="@+id/imageView_bg"
@@ -31,16 +34,18 @@
                 android:contentDescription="@null"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/resource_icon"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.6" />
+            <!--parallax - 在内容滚动时，CollapsingToolbarLayout中的View（比如ImageView)也可以同时滚动，-->
+            <!--layout_collapseParallaxMultiplier(视差因子) - 设置视差滚动因子，值为：0~1。-->
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin">
-
+                <!--pin 当CollapsingToolbarLayout完全收缩后，Toolbar还可以保留在屏幕上。-->
             </android.support.v7.widget.Toolbar>
 
 
@@ -48,57 +53,46 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_blurred"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@android:color/transparent"
+        app:elevation="0dp"
+        app:borderWidth="0dp"
+        app:layout_anchor="@id/appBarLayout"
+        app:layout_anchorGravity="bottom|center_horizontal" />
+    <!--CoordinatorLayout会把悬浮视图和设置的视图绑定在一起-->
+    <!--layout_anchor 绑定一起滚动的视图-->
+    <!--layout_anchorGravity 来控制相对绑定的视图的所在位置。-->
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            >
+    <!--<android.support.v4.widget.NestedScrollView-->
+        <!--android:id="@+id/nsv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
 
-            <com.qiushui.blurredview.BlurredView
-                android:id="@+id/activity_main_blurredview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                app:move="true"
-                app:src="@drawable/bg_2" />
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
-            <LinearLayout
-                android:id="@+id/ll"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:orientation="vertical">
+            <!--<com.qiushui.blurredview.BlurredView-->
+                <!--android:id="@+id/activity_main_blurredview"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:fitsSystemWindows="true"-->
+                <!--android:scaleType="centerCrop"-->
+                <!--app:layout_collapseMode="parallax"-->
+                <!--app:layout_collapseParallaxMultiplier="0.6"-->
+                <!--app:move="true"-->
+                <!--app:src="@drawable/bg_2" />-->
 
-                <SeekBar
-                    android:id="@+id/activity_main_seekbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="@dimen/activity_vertical_margin" />
-
-                <TextView
-                    android:id="@+id/activity_main_progress_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="0"
-                    android:textSize="24sp" />
-            </LinearLayout>
-
-            <com.example.mr_zyl.project.pro.mine.view.selfview.MyListView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/lv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true" />
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-        </RelativeLayout>
-
-
-    </android.support.v4.widget.NestedScrollView>
+        <!--</RelativeLayout>-->
+    <!--</android.support.v4.widget.NestedScrollView>-->
 </android.support.design.widget.CoordinatorLayout>

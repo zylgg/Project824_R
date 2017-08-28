@@ -44,7 +44,9 @@
         <activity android:name=".pro.mine.view.activity.FastBlurActivity" />
         <activity
             android:name=".pro.mine.view.activity.BlurredActivity"
-            android:screenOrientation="portrait" />
+            android:theme="@style/THEME_trans"
+            android:launchMode="singleTop"
+            />
         <activity android:name=".pro.mine.view.activity.ListViewSSActivity" />
         <activity android:name=".pro.mine.view.activity.LoadGifActivity" />
         <activity android:name=".pro.mine.view.activity.QRImageActivity" />

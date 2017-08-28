@@ -1,17 +1,20 @@
 package com.example.mr_zyl.project.pro.mine.Adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.mr_zyl.project.R;
 
 import java.util.List;
 
 /**
  * Created by TFHR02 on 2016/11/15.
  */
-public class BlurredAdapter extends BaseAdapter {
+public class BlurredAdapter extends RecyclerView.Adapter {
     List<String> lists;
     Context context;
     public BlurredAdapter(Context context,List<String> lists) {
@@ -20,28 +23,30 @@ public class BlurredAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view= LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1,null);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof  MyViewHolder){
+            MyViewHolder holder1 = (MyViewHolder) holder;
+            holder1.textView.setText(position+"");
+        }
+    }
+
+    @Override
+    public int getItemCount() {
         return lists.size();
     }
+    class MyViewHolder extends RecyclerView.ViewHolder{
 
-    @Override
-    public Object getItem(int position) {
-        return lists.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-       if (convertView==null){
-           convertView=View.inflate(context,android.R.layout.simple_list_item_1,null);
-       }
-        TextView tv= (TextView) convertView.findViewById(android.R.id.text1);
-        tv.setText("item"+position);
-
-        return convertView;
+        public TextView textView;
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            textView= (TextView) itemView.findViewById(android.R.id.text1);
+            textView.setTextColor(R.color.red);
+        }
     }
 }
