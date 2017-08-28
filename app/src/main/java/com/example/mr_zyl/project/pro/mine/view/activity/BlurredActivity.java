@@ -25,8 +25,6 @@ import java.util.List;
 
 public class BlurredActivity extends AppCompatActivity {
 
-//    private BlurredView mBlurredView;
-
     private RecyclerView lv;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
@@ -42,8 +40,6 @@ public class BlurredActivity extends AppCompatActivity {
         initdata();
     }
 
-    boolean listview_state;
-
     /**
      * 初始化视图
      */
@@ -55,7 +51,6 @@ public class BlurredActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
-//        mBlurredView = (BlurredView) findViewById(R.id.activity_main_blurredview);
         fab_blurred = (FloatingActionButton) findViewById(R.id.fab_blurred);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayout);
         lv = (RecyclerView) findViewById(R.id.lv);
@@ -82,54 +77,7 @@ public class BlurredActivity extends AppCompatActivity {
                         .show();
             }
         });
-//        lv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int scrollState) {
-//                super.onScrollStateChanged(recyclerView, scrollState);
-//                if (scrollState == 1 || scrollState == 2) {
-//                    listview_state = true;
-//                } else {
-//                    listview_state = false;
-//                }
-//            }
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                if (listview_state) {
-//                    if (dy>100){
-//                        dy=100;
-//                    }
-//                    //设置图片上移的距离
-//                    mBlurredView.setBlurredTop(dy);
-//                    //设置模糊程度
-//                    mBlurredView.setBlurredLevel(dy);
-//                }
-//            }
-//        });
     }
-//    AbsListView.OnScrollListener scrollint= new AbsListView.OnScrollListener() {
-//        @Override
-//        public void onScrollStateChanged(AbsListView view, int scrollState) {
-//            //SCROLL_STATE_IDLE是当屏幕停止滚动时
-//            //是当用户在以触屏方式滚动屏幕并且手指仍然还在屏幕上时 ||当用户由于之前划动屏幕并抬起手指，屏产生惯性滑动时
-//            if (scrollState == SCROLL_STATE_TOUCH_SCROLL || scrollState == SCROLL_STATE_FLING) {
-//                listview_state = true;
-//            } else {
-//                listview_state = false;
-//            }
-//        }
-//
-//        @Override
-//        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//            if (listview_state) {
-//                //设置图片上移的距离
-//                mBlurredView.setBlurredTop((firstVisibleItem + 1) * 10);
-//                //设置模糊程度
-//                mBlurredView.setBlurredLevel((firstVisibleItem + 1) * 10);
-//            }
-//        }
-//    };
 
     private void initdata() {
         collapsingToolbarLayout.setTitle("滚动toolbar");
