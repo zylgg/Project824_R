@@ -82,7 +82,7 @@ public class BlurredActivity extends AppCompatActivity {
     private void initdata() {
         collapsingToolbarLayout.setTitle("滚动toolbar");
         collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE); // 设置还没收缩时状态下字体颜色
-        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE); // 设置收缩后Toolbar上字体的颜色
+        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.GREEN); // 设置收缩后Toolbar上字体的颜色
 
         List<String> lists = new ArrayList<String>();
         for (int i = 0; i < 20; i++) {

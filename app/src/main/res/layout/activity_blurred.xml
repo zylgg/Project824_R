@@ -21,7 +21,7 @@
             android:clickable="true"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/gray"
-            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleGravity="center_horizontal|bottom"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
             <!--app:contentScrim - 设置当完全CollapsingToolbarLayout折叠(收缩)后的背景颜色。-->
             <!--app:expandedTitleMarginStart - 设置扩张时候(还没有收缩时)title向左填充的距离。-->
