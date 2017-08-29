@@ -1,15 +1,12 @@
 package com.example.mr_zyl.project.pro.mine.view.activity;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
 import com.example.mr_zyl.project.R;
+import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 
-public class CurtainActivity extends AppCompatActivity {
+public class CurtainActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_curtain);
+    protected int initLayoutId() {
+        return R.layout.activity_curtain;
     }
 }

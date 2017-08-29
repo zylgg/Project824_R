@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +11,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project.pro.attention.view.Attention;
+import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost;
 import com.example.mr_zyl.project.pro.essence.view.essence;
 import com.example.mr_zyl.project.pro.mine.view.Mine;
@@ -24,20 +24,27 @@ import com.example.mr_zyl.project.utils.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TabHost.OnTabChangeListener, View.OnClickListener {
+import butterknife.BindView;
+
+public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener, View.OnClickListener {
+
+    @BindView(R.id.tv_bottomnavigation_view)
+    View tv_bottomnavigation_view;
+    @BindView(android.R.id.tabhost)
+    MyFragmentTabHost fragmenttabhost;
 
     private List<Tabitem> tablists;
-    private MyFragmentTabHost fragmenttabhost;
-    private View tv_bottomnavigation_view;
     private long lasttime;
     private MoreWindow mMoreWindow;
     private int bottomStatusHeight;
 
     @Override
+    protected int initLayoutId() {
+        return R.layout.activity_main;
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        tv_bottomnavigation_view =findViewById(R.id.tv_bottomnavigation_view);
         //设置不填充到虚拟按键之下
         setNoFitBottomStatus();
         //先初始化每个tab对象的数据
@@ -76,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     }
 
     private void initTabHost() {
-        fragmenttabhost = (MyFragmentTabHost) findViewById(android.R.id.tabhost);
         fragmenttabhost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
         fragmenttabhost.getTabWidget().setDividerDrawable(null);
         for (int i = 0; i < tablists.size(); i++) {
@@ -95,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
             if (i == 0) {
                 tabItem.setChecked(true);
             }
-            if (tabItem.getTitleid()==0){//只对非fragment跳转的tab 设置自定义监听
+            if (tabItem.getTitleid() == 0) {//只对非fragment跳转的tab 设置自定义监听
                 fragmenttabhost.getTabWidget().getChildTabViewAt(i).setOnClickListener(this);
             }
         }

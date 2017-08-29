@@ -41,9 +41,12 @@ public class BrowerActivity extends BaseActivity {
     private Context context;
 
     @Override
+    protected int initLayoutId() {
+        return R.layout.activity_brower;
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_brower);
         context = this;
         hideBottomMenu();
 
@@ -130,6 +133,7 @@ public class BrowerActivity extends BaseActivity {
             });
         }
     }
+
     /**
      * 隐藏底部虚拟按键，且全屏
      */

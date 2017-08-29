@@ -37,9 +37,12 @@ public class FastBlurActivity extends BaseActivity {
     private Toolbar tb_fast_blur_title;
 
     @Override
+    protected int initLayoutId() {
+        return R.layout.activity_fast_blur;
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fast_blur);
 
         StatusUtils.setTransparent(this);
         tb_fast_blur_title= (Toolbar) findViewById(R.id.tb_fast_blur_title);

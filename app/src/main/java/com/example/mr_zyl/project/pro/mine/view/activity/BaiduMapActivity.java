@@ -31,20 +31,9 @@ public class BaiduMapActivity extends AppCompatActivity {
         mMapView = (MapView) findViewById(R.id.bmapView);
 
         mBaiduMap = mMapView.getMap();
-//        //普通地图
-//        mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
         LatLng ll = new LatLng(39.92,116.46);
         MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
         mBaiduMap.setMapStatus(u);
-//        //卫星地图
-//        mBaiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
-//        //空白地图, 基础地图瓦片将不会被渲染。在地图类型中设置为NONE，将不会使用流量下载基础地图瓦片图层。
-//        // 使用场景：与瓦片图层一起使用，节省流量，提升自定义瓦片图下载速度。
-//        mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NONE);
-//        //开启交通图
-//        mBaiduMap.setTrafficEnabled(true);
-//        //开启r热力图
-//        mBaiduMap.setBaiduHeatMapEnabled(true);
 
         //定义Maker坐标点
         LatLng point = new LatLng(39.963175, 116.400244);
