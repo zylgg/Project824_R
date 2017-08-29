@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlurredActivity extends AppCompatActivity {
-
     private RecyclerView lv;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;

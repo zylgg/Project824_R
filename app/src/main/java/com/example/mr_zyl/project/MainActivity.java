@@ -1,7 +1,5 @@
 package com.example.mr_zyl.project;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -33,8 +31,8 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     private View tv_bottomnavigation_view;
     private long lasttime;
     private MoreWindow mMoreWindow;
+    private int bottomStatusHeight;
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,16 +40,15 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         tv_bottomnavigation_view =findViewById(R.id.tv_bottomnavigation_view);
         //设置不填充到虚拟按键之下
         setNoFitBottomStatus();
-
         //先初始化每个tab对象的数据
         initFragmentTabData();
         //再初始化TabHost控件
         initTabHost();
-        addBadge();
     }
 
-    private int bottomStatusHeight;
-
+    /**
+     * 设置底部布局填充
+     */
     private void setNoFitBottomStatus() {
         bottomStatusHeight = SystemAppUtils.getBottomStatusHeight(this);
         if (bottomStatusHeight > 0) {
@@ -60,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     }
 
     private void initFragmentTabData() {
-        this.tablists = new ArrayList<Tabitem>();
+        this.tablists = new ArrayList<>();
         //添加精华Tab
         tablists.add(new Tabitem(R.drawable.main_bottom_essence_normal
                 , R.drawable.main_bottom_essence_press, R.string.main_essence_text, essence.class));
@@ -104,20 +101,10 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         }
     }
 
-    private void addBadge() {
-        for (int i = 0; i < tablists.size(); i++) {
-            Tabitem ti = tablists.get(i);
-            String titles = ti.getTitleString();
-            if (titles.equals("我")) {
-                View view = ti.getview();
-            }
-        }
-    }
-
     @Override
     public void onBackPressed() {
         if (System.currentTimeMillis() - lasttime < 2000) {
-            ((BaseApp) this.getApplication()).exit(0);
+            ((BaseApplication) this.getApplication()).exit(0);
         } else {
             ToastUtil.showToast(this, "再点击一次退出" + getString(R.string.app_name) + "！");
         }

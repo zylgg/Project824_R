@@ -3,7 +3,7 @@ package com.example.mr_zyl.project.pro.base.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.example.mr_zyl.project.BaseApp;
+import com.example.mr_zyl.project.BaseApplication;
 import com.example.mr_zyl.project.mvp.presenter.impl.MvpBasePresenter;
 import com.example.mr_zyl.project.mvp.view.impl.MvpActivity;
 
@@ -13,8 +13,8 @@ import com.example.mr_zyl.project.mvp.view.impl.MvpActivity;
  */
 public abstract class BaseActivity<P extends  MvpBasePresenter>  extends MvpActivity<P>{
 
-    public BaseApp getMyApplication() {
-        return (BaseApp) this.getApplication();
+    public BaseApplication getMyApplication() {
+        return (BaseApplication) this.getApplication();
     }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'android-apt'//butterknife插件
 apply plugin: 'org.greenrobot.greendao'
 
 android {
@@ -56,6 +57,9 @@ dependencies {
     compile files('libs/gson-2.2.4.jar')
     // 头像
     compile 'de.hdodenhof:circleimageview:2.0.0'
+    //黄油刀注解
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
     //图片加载器，支持GIF，手势缩放以及分块显示超大图片
     compile 'me.xiaopan:sketch:2.3.0'
     //标准设计的dialog风格

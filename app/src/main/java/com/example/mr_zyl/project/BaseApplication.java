@@ -22,7 +22,7 @@ import okhttp3.OkHttpClient;
 /**
  * Created by Mr_Zyl on 2016/9/18.
  */
-public class BaseApp extends Application {
+public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();

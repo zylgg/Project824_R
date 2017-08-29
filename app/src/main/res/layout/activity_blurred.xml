@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
+        android:layout_height="@dimen/y500"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:clickable="true"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/gray"
+            app:contentScrim="@color/transparent"
             app:expandedTitleGravity="center_horizontal|bottom"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
             <!--app:contentScrim - 设置当完全CollapsingToolbarLayout折叠(收缩)后的背景颜色。-->
@@ -53,20 +53,21 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_blurred"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@android:color/transparent"
-        app:borderWidth="0dp"
-        app:elevation="0dp"
-        app:layout_anchor="@id/appBarLayout"
-        app:layout_anchorGravity="bottom|center_horizontal" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/transparent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_blurred"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:backgroundTint="@android:color/transparent"
+        app:borderWidth="0dp"
+        app:elevation="0dp"
+        app:layout_anchor="@id/appBarLayout"
+        app:layout_anchorGravity="bottom|center_horizontal" />
 </android.support.design.widget.CoordinatorLayout>
