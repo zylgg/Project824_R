@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
 
     private List<Tabitem> tablists;
     private MyFragmentTabHost fragmenttabhost;
-    private TextView tv_bottomnavigation_view;
+    private View tv_bottomnavigation_view;
     private long lasttime;
     private MoreWindow mMoreWindow;
 
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tv_bottomnavigation_view = (TextView) findViewById(R.id.tv_bottomnavigation_view);
+        tv_bottomnavigation_view =findViewById(R.id.tv_bottomnavigation_view);
         //设置不填充到虚拟按键之下
         setNoFitBottomStatus();
 
@@ -54,10 +53,8 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     private int bottomStatusHeight;
 
     private void setNoFitBottomStatus() {
-        ViewGroup contentView = (ViewGroup) findViewById(android.R.id.content);
         bottomStatusHeight = SystemAppUtils.getBottomStatusHeight(this);
         if (bottomStatusHeight > 0) {
-//            contentView.setPadding(0,0,0,bottomStatusHeight);
             tv_bottomnavigation_view.getLayoutParams().height = bottomStatusHeight;
         }
     }
