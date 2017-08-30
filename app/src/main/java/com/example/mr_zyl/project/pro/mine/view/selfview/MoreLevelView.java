@@ -3,6 +3,7 @@ package com.example.mr_zyl.project.pro.mine.view.selfview;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -31,6 +32,10 @@ public class MoreLevelView extends LinearLayout {
 
     public MoreLevelView(Context context) {
         super(context);
+        mContext = context;
+    }
+    public MoreLevelView(Context context, AttributeSet attrs) {
+        super(context, attrs);
         mContext = context;
     }
 

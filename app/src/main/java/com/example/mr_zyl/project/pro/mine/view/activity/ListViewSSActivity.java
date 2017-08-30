@@ -3,7 +3,6 @@ package com.example.mr_zyl.project.pro.mine.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,24 +13,29 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project.R;
+import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListViewSSActivity extends AppCompatActivity {
+public class ListViewSSActivity extends BaseActivity {
 
     ListView lv_listviewss;
     List<listviewbean> lists;
     listviewadapter adapter;
-    String TAG="ListViewSSActivity";
+    String TAG = "ListViewSSActivity";
+
+    @Override
+    protected int initLayoutId() {
+        return R.layout.activity_list_view_ss;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_view_ss);
-        Intent intent=getIntent();
-        int time= intent.getIntExtra("time",2000);
-        Log.i(TAG,"time:"+time);
+        Intent intent = getIntent();
+        int time = intent.getIntExtra("time", 2000);
+        Log.i(TAG, "time:" + time);
         lv_listviewss = (ListView) findViewById(R.id.lv_listviewss);
 
         lists = new ArrayList<listviewbean>();
@@ -45,18 +49,18 @@ public class ListViewSSActivity extends AppCompatActivity {
         lv_listviewss.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                updatecount=0;
-                listviewbean b=lists.get(position);
+                updatecount = 0;
+                listviewbean b = lists.get(position);
                 b.setStatus("我已经点击了！");
-                adapter.updateSingleRow(lv_listviewss,b.getName());
+                adapter.updateSingleRow(lv_listviewss, b.getName());
             }
         });
 
 
     }
 
+    int updatecount = 0;
 
-    int updatecount=0;
     class listviewadapter extends BaseAdapter {
 
         private List<listviewbean> lists2;
@@ -84,10 +88,10 @@ public class ListViewSSActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            Log.i("demo","更新次数："+(updatecount++));
+            Log.i("demo", "更新次数：" + (updatecount++));
             listviewbean beans = lists2.get(position);
             if (convertView == null) {
-                convertView = LayoutInflater.from(contexts).inflate(R.layout.listviewsss_items,parent,false);
+                convertView = LayoutInflater.from(contexts).inflate(R.layout.listviewsss_items, parent, false);
             }
             TextView names = (TextView) convertView.findViewById(R.id.tv_listviewss_name);
             TextView status = (TextView) convertView.findViewById(R.id.tv_listviewss_status);

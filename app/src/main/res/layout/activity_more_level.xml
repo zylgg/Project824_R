@@ -4,5 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".pro.mine.view.activity.MoreLevelActivity">
+    <com.example.mr_zyl.project.pro.mine.view.selfview.MoreLevelView
+        android:id="@+id/mlv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    </com.example.mr_zyl.project.pro.mine.view.selfview.MoreLevelView>
 
 </RelativeLayout>

@@ -38,7 +38,6 @@
         </activity>
         <activity android:name=".pro.publish.view.PlayActivity" />
         <activity android:name=".pro.mine.view.activity.MoreLevelActivity" />
-        <activity android:name=".pro.mine.view.activity.PuBuWaterActivity" />
         <activity android:name=".pro.mine.view.activity.BaiduMapActivity" />
         <activity android:name=".pro.mine.view.activity.CurtainActivity" />
         <activity android:name=".pro.mine.view.activity.FastBlurActivity" />

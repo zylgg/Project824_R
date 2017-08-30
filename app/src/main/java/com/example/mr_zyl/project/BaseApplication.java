@@ -3,6 +3,7 @@ package com.example.mr_zyl.project;
 import android.app.Activity;
 import android.app.Application;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -26,9 +27,10 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        //初始化百度地图
+        SDKInitializer.initialize(getApplicationContext());
         //imageloader配置
-        ImageLoaderConfiguration config=new ImageLoaderConfiguration.Builder(this)
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .writeDebugLogs()
                 .build();
         ImageLoader.getInstance().init(config);
@@ -50,7 +52,7 @@ public class BaseApplication extends Application {
         int newMemoryCacheMaxSize = (int) (Runtime.getRuntime().maxMemory() / 10);
         Configuration configuration = Sketch.with(this).getConfiguration();
 //        configuration.setMemoryCache(new LruMemoryCache(this,newMemoryCacheMaxSize));//设置最大的内存缓存
-        configuration.setDiskCache(new LruDiskCache(this,configuration, 1, 50 * 1024 * 1024));//设置最大的磁盘缓存
+        configuration.setDiskCache(new LruDiskCache(this, configuration, 1, 50 * 1024 * 1024));//设置最大的磁盘缓存
     }
 
     /**

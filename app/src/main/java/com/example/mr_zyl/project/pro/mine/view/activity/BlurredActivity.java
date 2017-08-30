@@ -9,13 +9,13 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.example.mr_zyl.project.R;
+import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project.pro.mine.Adapter.BlurredAdapter;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
@@ -23,21 +23,26 @@ import com.squareup.picasso.Transformation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlurredActivity extends AppCompatActivity {
+public class BlurredActivity extends BaseActivity {
     private RecyclerView lv;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private FloatingActionButton fab_blurred;
 
     @Override
+    protected int initLayoutId() {
+        return R.layout.activity_blurred;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blurred);
         // 初始化视图
         initViews();
         initlistener();
         initdata();
     }
+
 
     /**
      * 初始化视图

@@ -2,9 +2,10 @@ package com.example.mr_zyl.project.pro.mine.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.example.mr_zyl.project.MainActivity;
+import com.example.mr_zyl.project.R;
+import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project.pro.mine.bean.City;
 import com.example.mr_zyl.project.pro.mine.bean.Node;
 import com.example.mr_zyl.project.pro.mine.bean.Province;
@@ -14,20 +15,24 @@ import com.example.mr_zyl.project.pro.mine.view.selfview.MoreLevelView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoreLevelActivity extends AppCompatActivity {
+public class MoreLevelActivity extends BaseActivity {
     public List<Province> Prov_lists = new ArrayList<Province>();//省市级连数据表
     public List<Node> mDatas = new ArrayList<Node>();
     public List<Node> mDatasA = new ArrayList<Node>();//第一级
     public List<Node> mDatasB = new ArrayList<Node>();//第二级
     public List<Node> mDatasC = new ArrayList<Node>();//第三级
 
+
+    @Override
+    protected int initLayoutId() {
+        return R.layout.activity_more_level;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_more_level);
 //        InitData();
         initTestdata();
-        MoreLevelView mlv = new MoreLevelView(this);
+        MoreLevelView mlv = (MoreLevelView) findViewById(R.id.mlv);
 //        mlv.setdata(mDatas,Prov_lists);
         mlv.setdata(mDatas,null);
         mlv.setonThreenViewCllickListenner(new MoreLevelView.itemonclickCallBack() {
@@ -39,7 +44,6 @@ public class MoreLevelActivity extends AppCompatActivity {
                 finish();
             }
         });
-        setContentView(mlv);
     }
 
     private void InitData() {

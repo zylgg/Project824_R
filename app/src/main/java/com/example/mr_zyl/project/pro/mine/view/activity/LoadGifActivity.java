@@ -8,13 +8,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project.R;
+import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project.pro.mine.view.MediaService;
 import com.example.mr_zyl.project.utils.ImageUtils;
 
@@ -24,7 +24,7 @@ import java.io.InputStream;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
-public class LoadGifActivity extends AppCompatActivity {
+public class LoadGifActivity extends BaseActivity {
 
     private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
     private GifImageView giv_loadgifview;
@@ -32,9 +32,13 @@ public class LoadGifActivity extends AppCompatActivity {
     private NotificationManager manger;
 
     @Override
+    protected int initLayoutId() {
+        return R.layout.activity_load_gif;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_load_gif);
         manger = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         context = this;
         TextView tv_loadpic = (TextView) findViewById(R.id.tv_loadpic);
@@ -59,7 +63,6 @@ public class LoadGifActivity extends AppCompatActivity {
         });
 
     }
-
     private static  final int TYPE_Customer=1;
     private int CommandNext=2;
     private int CommandPlay=3;

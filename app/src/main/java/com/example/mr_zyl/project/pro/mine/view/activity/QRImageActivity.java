@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -12,12 +11,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.mr_zyl.project.R;
+import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project.utils.BitmapUtil;
 import com.example.mr_zyl.project.utils.DisplayUtil;
 import com.example.mr_zyl.project.utils.ToastUtil;
 import com.google.zxing.WriterException;
 
-public class QRImageActivity extends AppCompatActivity {
+public class QRImageActivity extends BaseActivity {
 
     private EditText et_qrimage_text;
     private Button b_arimage_makear;
@@ -27,9 +27,12 @@ public class QRImageActivity extends AppCompatActivity {
 
 
     @Override
+    protected int initLayoutId() {
+        return R.layout.activity_qrimage;
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qrimage);
         this.context = this;
 
         et_qrimage_text = (EditText) findViewById(R.id.et_qrimage_text);
