@@ -31,6 +31,12 @@
     <declare-styleable name="PlayVideoIconView">
         <attr name="themecolor" format="color"></attr>
     </declare-styleable>
+    <declare-styleable name="test">
+        <attr name="collapsedPadding" format="dimension" />
+        <attr name="expandedPadding" format="dimension" />
 
+        <attr name="collapsedImageSize" format="dimension" />
+        <attr name="expandedImageSize" format="dimension" />
+    </declare-styleable>
 
 </resources>

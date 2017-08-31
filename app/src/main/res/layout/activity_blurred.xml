@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y500"
+        android:layout_height="@dimen/y720"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
@@ -20,9 +20,9 @@
             android:layout_height="match_parent"
             android:clickable="true"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/transparent"
-            app:expandedTitleGravity="center_horizontal|bottom"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:contentScrim="@color/gray"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
             <!--app:contentScrim - 设置当完全CollapsingToolbarLayout折叠(收缩)后的背景颜色。-->
             <!--app:expandedTitleMarginStart - 设置扩张时候(还没有收缩时)title向左填充的距离。-->
             <!--app:layout_scrollFlags="scroll|exitUntilCollapsed" 滚动且向上滚动时收缩View，但可以固定Toolbar一直在上面。-->
@@ -31,7 +31,6 @@
                 android:id="@+id/imageView_bg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@null"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/resource_icon"
@@ -40,14 +39,34 @@
             <!--parallax - 在内容滚动时，CollapsingToolbarLayout中的View（比如ImageView)也可以同时滚动，-->
             <!--layout_collapseParallaxMultiplier(视差因子) - 设置视差滚动因子，值为：0~1。-->
 
+            <!--pin 当CollapsingToolbarLayout完全收缩后，Toolbar还可以保留在屏幕上。-->
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin">
-                <!--pin 当CollapsingToolbarLayout完全收缩后，Toolbar还可以保留在屏幕上。-->
-            </android.support.v7.widget.Toolbar>
+                app:layout_collapseMode="pin"/>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:background="@drawable/rect_shape">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_blurred"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -59,15 +78,15 @@
         android:layout_height="wrap_content"
         android:background="@color/transparent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_blurred"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:backgroundTint="@android:color/transparent"
-        app:borderWidth="0dp"
-        app:elevation="0dp"
-        app:layout_anchor="@id/appBarLayout"
-        app:layout_anchorGravity="bottom|center_horizontal" />
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:id="@+id/fab_blurred"-->
+    <!--android:layout_width="100dp"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:src="@mipmap/app_icon"-->
+    <!--android:backgroundTint="@android:color/transparent"-->
+    <!--app:borderWidth="1dp"-->
+    <!--app:elevation="0dp"-->
+    <!--app:layout_anchor="@id/appBarLayout"-->
+    <!--app:layout_anchorGravity="bottom|center_horizontal"/>-->
 </android.support.design.widget.CoordinatorLayout>

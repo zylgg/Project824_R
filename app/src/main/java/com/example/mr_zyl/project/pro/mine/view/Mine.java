@@ -143,7 +143,7 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "新界面", null, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "窗帘效果界面", CurtainActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "各种高斯样式", FastBlurActivity.class, -1));
-        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "动态模糊", BlurredActivity.class, -1));
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "协调布局", BlurredActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "listview单条刷新", ListViewSSActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "本地Gif加载", LoadGifActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "生成二维码", QRImageActivity.class, -1));
