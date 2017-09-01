@@ -19,10 +19,10 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
-    <dimen name="default_collapsed_padding">72dp</dimen>
-    <dimen name="default_expanded_padding">16dp</dimen>
-    <dimen name="default_collapsed_image_size">40dp</dimen>
-    <dimen name="default_expanded_image_size">100dp</dimen>
-    <dimen name="default_collapsed_text_size">18sp</dimen>
-    <dimen name="default_expanded_text_size">19sp</dimen>
+    <dimen name="default_collapsed_padding">@dimen/x150</dimen>
+    <dimen name="default_expanded_padding">@dimen/x660</dimen>
+
+    <dimen name="default_collapsed_image_size">56dp</dimen>
+
+    <dimen name="default_collapsed_text_size">15sp</dimen>
 </resources>

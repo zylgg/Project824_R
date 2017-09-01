@@ -50,8 +50,6 @@ dependencies {
     compile 'org.greenrobot:greendao:3.1.0'
     //高斯模糊
     compile 'net.robinx:lib.blur:1.0.1'
-    //布局模糊
-    compile 'com.qiushui:blurredview:0.8.1'
     compile files('libs/zxing.jar')
     compile files('libs/android-viewbadger(1).jar')
     compile files('libs/gson-2.2.4.jar')

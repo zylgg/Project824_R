@@ -1,11 +1,7 @@
 package com.example.mr_zyl.project.pro.mine.view.activity;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,17 +11,26 @@ import android.widget.ImageView;
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project.pro.mine.Adapter.BlurredAdapter;
+import com.example.mr_zyl.project.pro.mine.view.selfview.SlideView;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class BlurredActivity extends BaseActivity {
-    private RecyclerView lv;
-    private Toolbar toolbar;
-    private CollapsingToolbarLayout collapsingToolbarLayout;
-    private ImageView iv_blurred;
+    @BindView(R.id.imageView_bg)
+    ImageView imageView_bg;
+    @BindView(R.id.lv)
+    RecyclerView lv;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.iv_blurred)
+    CircleImageView iv_blurred;
+    @BindView(R.id.slv_image_title)
+    SlideView slv_image_title;
 
     @Override
     protected int initLayoutId() {
@@ -41,22 +46,26 @@ public class BlurredActivity extends BaseActivity {
         initdata();
     }
 
-
     /**
      * 初始化视图
      */
     private void initViews() {
-        iv_blurred = (ImageView) findViewById(R.id.iv_blurred);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {//加个返回按键
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayout);
-        lv = (RecyclerView) findViewById(R.id.lv);
+
+
         lv.setLayoutManager(new LinearLayoutManager(this));
+
+        slv_image_title.setOnRatiolistener(new SlideView.onRatioChangedListener() {
+            @Override
+            public void onRatioChanged(float expandedPercentage) {
+                imageView_bg.setAlpha(255 - (int) (100 * expandedPercentage) * 2.55f * 0.5f);
+            }
+        });
     }
 
     private void initlistener() {
@@ -66,74 +75,30 @@ public class BlurredActivity extends BaseActivity {
                 onBackPressed();
             }
         });
-//        fab_blurred.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Snackbar.make(v, "你点击了！", Snackbar.LENGTH_LONG)
-//                        .setAction("确定", new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//
-//                            }
-//                        })
-//                        .show();
-//            }
-//        });
+        iv_blurred.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v, "你点击了！", Snackbar.LENGTH_LONG)
+                        .setAction("确定", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        })
+                        .show();
+            }
+        });
     }
 
     private void initdata() {
-        collapsingToolbarLayout.setTitle("-");
-//        collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE); // 设置还没收缩时状态下字体颜色
-//        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.GREEN); // 设置收缩后Toolbar上字体的颜色
-
         List<String> lists = new ArrayList<String>();
         for (int i = 0; i < 20; i++) {
             lists.add(i + "");
         }
         lv.setAdapter(new BlurredAdapter(this, lists));
         Picasso.with(this).load(R.drawable.resource_icon)
-                .transform(new CircleTransform())
                 .error(R.drawable.transparent_corner_bg).placeholder(R.drawable.transparent_corner_bg)
                 .into(iv_blurred);
     }
 
-    /**
-     * 圆角转换
-     */
-    class CircleTransform implements Transformation {
-
-        @Override
-        public Bitmap transform(Bitmap source) {
-            int size = Math.min(source.getWidth(), source.getHeight());
-
-            int x = (source.getWidth() - size) / 2;
-            int y = (source.getHeight() - size) / 2;
-
-            Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
-            if (squaredBitmap != source) {
-                source.recycle();
-            }
-
-            Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
-
-            Canvas canvas = new Canvas(bitmap);
-            Paint paint = new Paint();
-            BitmapShader shader = new BitmapShader(squaredBitmap,
-                    BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
-            paint.setShader(shader);
-            paint.setAntiAlias(true);
-
-            float r = size / 2f;
-            canvas.drawCircle(r, r, r, paint);
-
-            squaredBitmap.recycle();
-            return bitmap;
-        }
-
-        @Override
-        public String key() {
-            return "circle";
-        }
-
-    }
 }

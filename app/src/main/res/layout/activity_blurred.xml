@@ -18,11 +18,9 @@
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clickable="true"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/gray"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:titleEnabled="false">
+            app:contentScrim="@color/transparent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
             <!--app:contentScrim - 设置当完全CollapsingToolbarLayout折叠(收缩)后的背景颜色。-->
             <!--app:expandedTitleMarginStart - 设置扩张时候(还没有收缩时)title向左填充的距离。-->
             <!--app:layout_scrollFlags="scroll|exitUntilCollapsed" 滚动且向上滚动时收缩View，但可以固定Toolbar一直在上面。-->
@@ -43,30 +41,52 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"/>
+                android:layout_height="56dp"
+                app:layout_collapseMode="pin"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                android:background="@drawable/rect_shape">
 
-                <LinearLayout
+            <com.example.mr_zyl.project.pro.mine.view.selfview.SlideView
+                android:id="@+id/slv_image_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/rect_shape"
+                android:paddingLeft="@dimen/x660"
+                app:collapsedPadding="@dimen/x150"
+                app:marginbottomoffset="@dimen/y90">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_blurred"
+                    android:layout_width="@dimen/x300"
+                    android:layout_height="@dimen/x300"
+                    android:src="@drawable/resource_icon"
+                    android:layout_gravity="center"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="@dimen/x3"/>
+
+
+            </com.example.mr_zyl.project.pro.mine.view.selfview.SlideView>
+
+            <com.example.mr_zyl.project.pro.mine.view.selfview.SlideView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/rect_shape"
+                android:paddingLeft="@dimen/x660"
+                app:collapsedPadding="@dimen/x318">
+
+                <TextView
+                    android:id="@+id/iv_title"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:layout_height="@dimen/y90"
+                    android:gravity="center"
+                    android:text="个人详情"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/x63" />
+            </com.example.mr_zyl.project.pro.mine.view.selfview.SlideView>
 
-                    <ImageView
-                        android:id="@+id/iv_blurred"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

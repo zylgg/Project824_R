@@ -7,19 +7,22 @@ package com.example.mr_zyl.project.pro.mine.view.selfview;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project.R;
+import com.example.mr_zyl.project.utils.SystemAppUtils;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChangedListener {
@@ -28,7 +31,7 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
     /**
      * 基础控件
      */
-    private View avatarView;
+    private CircleImageView avatarView;
     /**
      * 文本控件
      */
@@ -65,11 +68,15 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
     /**
      * appbar的最大移动距离
      */
-    private float expandedHeight;
-    /**
-     * appbar的最大移动距离
-     */
     private float maxOffset;
+    /**
+     * 整个控件展开时的高度
+     */
+    private float expandedTheHeight;
+    /**
+     * 控件外面距离底部距离
+     */
+    private float marginbottomoffset;
 
     public SlideView(Context context) {
         this(context, null);
@@ -79,32 +86,18 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
     public SlideView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setOrientation(HORIZONTAL);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.test);
-        try {
-            collapsedPadding = a.getDimension(R.styleable.test_collapsedPadding, -1);
-            expandedPadding = a.getDimension(R.styleable.test_expandedPadding, -1);
-
-            collapsedImageSize = a.getDimension(R.styleable.test_collapsedImageSize, -1);
-            expandedImageSize = a.getDimension(R.styleable.test_expandedImageSize, -1);
-
-        } finally {
-            a.recycle();
-        }
 
         final Resources resources = getResources();
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.test);
+        try {
+            collapsedPadding = a.getDimension(R.styleable.test_collapsedPadding, resources.getDimension(R.dimen.default_collapsed_padding));
+            expandedPadding = a.getDimension(R.styleable.test_expandedPadding, resources.getDimension(R.dimen.default_expanded_padding));
 
-        if (collapsedImageSize < 0) {
-            collapsedImageSize = resources.getDimension(R.dimen.default_collapsed_image_size);
-        }
-        if (expandedImageSize < 0) {
-            expandedImageSize = resources.getDimension(R.dimen.default_expanded_image_size);
-        }
+            collapsedImageSize = a.getDimension(R.styleable.test_collapsedImageSize, resources.getDimension(R.dimen.default_collapsed_image_size));
 
-        if (collapsedPadding < 0) {
-            collapsedPadding = resources.getDimension(R.dimen.default_collapsed_padding);
-        }
-        if (expandedPadding < 0) {
-            expandedPadding = resources.getDimension(R.dimen.default_expanded_padding);
+            marginbottomoffset = a.getDimension(R.styleable.test_marginbottomoffset, 0);
+        } finally {
+            a.recycle();
         }
     }
 
@@ -114,13 +107,13 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
         findViews();
         if (!isInEditMode()) {
             appBarLayout.addOnOffsetChangedListener(this);
-            //除去coordinatorlayout事件分发的bug
-            appBarLayout.setOnTouchListener(new OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    return true;
-                }
-            });
+            //除去design23.0.0 的 coordinatorlayout事件分发的bug
+//            appBarLayout.setOnTouchListener(new OnTouchListener() {
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    return true;
+//                }
+//            });
         } else {
             setExpandedValuesForEditMode();
         }
@@ -150,7 +143,7 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
 
     @NonNull //使用@NonNull注解修饰的参数不能为null
     private Toolbar findSiblingToolbar() {
-        ViewGroup parent = ((ViewGroup) this.getParent().getParent());
+        ViewGroup parent = ((ViewGroup) this.getParent());
         for (int i = 0, c = parent.getChildCount(); i < c; i++) {
             View child = parent.getChildAt(i);
             if (child instanceof Toolbar) {
@@ -161,10 +154,10 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
     }
 
 
-    private View findAvatar() {
-        View avatar = null;
-        if (getChildAt(0) instanceof ImageView)
-            avatar = getChildAt(0);
+    private CircleImageView findAvatar() {
+        CircleImageView avatar = null;
+        if (getChildAt(0) instanceof CircleImageView)
+            avatar = (CircleImageView) getChildAt(0);
         return avatar;
     }
 
@@ -191,15 +184,22 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
         }
         float expandedPercentage = 1 - (-offset / maxOffset);
         updateViews(expandedPercentage, offset);
+        if (onratiolistener != null) {
+            onratiolistener.onRatioChanged(1 - expandedPercentage);
+        }
     }
 
     /**
      * 计算值
      */
     private void calculateValues() {
+        expandedTheHeight = this.getHeight();
+//        Log.i(TAG, "expandedTheHeight: " + expandedTheHeight);
         toolBarHeight = toolbar.getHeight();
-        expandedHeight = appBarLayout.getHeight() - toolbar.getHeight();
-        maxOffset = expandedHeight;
+        if (avatarView != null) {
+            expandedImageSize = avatarView.getHeight();
+        }
+        maxOffset = appBarLayout.getHeight() - toolBarHeight - SystemAppUtils.getStatusHeight(getContext());
         //使控件处在居中的位置
         if (avatarView != null) {
             expandedPadding = (appBarLayout.getWidth() - expandedImageSize) / 2;
@@ -216,25 +216,36 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
         //expandedPercentage 1-0  inversePercentage 0-1
         //collapsed 折叠时的
         // expanded  展开时的，初始的
-
-        //inversePercentage 0-1
+//        Log.i(TAG, "expandedPercentage: " + expandedPercentage);
+//        Log.i(TAG, "currentOffset: " + currentOffset);
         float inversePercentage = 1 - expandedPercentage;
 
-        float translation = -currentOffset + ((float) toolbar.getHeight() * expandedPercentage);
+        float translation = -currentOffset + (maxOffset - expandedTheHeight + toolBarHeight - marginbottomoffset) * expandedPercentage;
 
         float currHeight = 0;
         if (avatarView != null) {
-            currHeight = toolBarHeight + (expandedHeight - toolBarHeight) / 4 * expandedPercentage;
+            currHeight = toolBarHeight + (expandedTheHeight - toolBarHeight) * expandedPercentage;
         } else if (titleView != null) {
-            currHeight = toolBarHeight + (expandedHeight - toolBarHeight / 2) * expandedPercentage;
+            currHeight = toolBarHeight + (expandedTheHeight - toolBarHeight) * expandedPercentage;
         }
-        float currentPadding = expandedPadding + (collapsedPadding - expandedPadding) * inversePercentage;
-        float currentImageSize = collapsedImageSize + (expandedImageSize - collapsedImageSize) * expandedPercentage;
+        float currentPadding = expandedPadding - (expandedPadding - collapsedPadding) * inversePercentage;
 
+        float currentImageSize = collapsedImageSize - (collapsedImageSize - expandedImageSize) * expandedPercentage;
+        //移动布局
         setContainerOffset(translation);
+        //设置整个高度
+//        Log.i(TAG, "currHeight: " + currHeight);
         setContainerHeight((int) currHeight);
+        //设置布局内边距
         setPadding((int) currentPadding);
+        //缩放子viewImageView的大小
         setAvatarSize((int) currentImageSize);
+        if (avatarView != null) {
+            avatarView.setBorderColor(ColorUtils.blendARGB(Color.WHITE, Color.GREEN, inversePercentage));
+        } else if (titleView != null) {
+            //颜色过渡
+            titleView.setTextColor(ColorUtils.blendARGB(Color.WHITE, Color.GREEN, inversePercentage));
+        }
     }
 
     private void setContainerOffset(float translation) {
@@ -246,7 +257,7 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
     }
 
     private void setPadding(int currentPadding) {
-        this.setPadding(currentPadding, getPaddingTop(), getPaddingRight(), getPaddingBottom());
+        this.setPadding(currentPadding, 0, 0, 0);
     }
 
     private void setAvatarSize(int currentImageSize) {
@@ -254,5 +265,15 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
             avatarView.getLayoutParams().height = currentImageSize;
             avatarView.getLayoutParams().width = currentImageSize;
         }
+    }
+
+    private onRatioChangedListener onratiolistener;
+
+    public void setOnRatiolistener(onRatioChangedListener ratiolistener) {
+        this.onratiolistener = ratiolistener;
+    }
+
+    public interface onRatioChangedListener {
+        void onRatioChanged(float expandedPercentage);
     }
 }
