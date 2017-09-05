@@ -38,6 +38,7 @@
         <attr name="collapsedImageSize" format="dimension" />
 
         <attr name="collapsed_text_size" format="dimension"></attr>
+        <attr name="expanded_text_size" format="dimension"></attr>
 
         <attr name="marginbottomoffset" format="dimension"></attr>
     </declare-styleable>

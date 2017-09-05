@@ -13,6 +13,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -78,6 +79,15 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
      */
     private float marginbottomoffset;
 
+    /**
+     * 折叠时文本大小
+     */
+    private float collapsed_text_size;
+    /**
+     * 展开时文本大小
+     */
+    private float expanded_text_size;
+
     public SlideView(Context context) {
         this(context, null);
         setOrientation(HORIZONTAL);
@@ -94,6 +104,8 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
             expandedPadding = a.getDimension(R.styleable.test_expandedPadding, resources.getDimension(R.dimen.default_expanded_padding));
 
             collapsedImageSize = a.getDimension(R.styleable.test_collapsedImageSize, resources.getDimension(R.dimen.default_collapsed_image_size));
+            collapsed_text_size=a.getDimension(R.styleable.test_collapsed_text_size,resources.getDimension(R.dimen.default_collapsed_text_size));
+            expanded_text_size=a.getDimension(R.styleable.test_expanded_text_size,resources.getDimension(R.dimen.default_expanded_text_size));
 
             marginbottomoffset = a.getDimension(R.styleable.test_marginbottomoffset, 0);
         } finally {
@@ -245,6 +257,8 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
         } else if (titleView != null) {
             //颜色过渡
             titleView.setTextColor(ColorUtils.blendARGB(Color.WHITE, Color.GREEN, inversePercentage));
+            //字体大小过度
+            titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX,expanded_text_size+(collapsed_text_size-expanded_text_size)*inversePercentage);
         }
     }
 
