@@ -22,8 +22,9 @@
     <dimen name="default_collapsed_padding">@dimen/x150</dimen>
     <dimen name="default_expanded_padding">@dimen/x660</dimen>
 
-    <dimen name="default_collapsed_image_size">56dp</dimen>
+    <dimen name="default_collapsed_image_size">@dimen/x100</dimen>
 
     <dimen name="default_collapsed_text_size">@dimen/x96</dimen>
     <dimen name="default_expanded_text_size">@dimen/x63</dimen>
+    <dimen name="default_padding">16dp</dimen>
 </resources>

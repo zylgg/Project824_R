@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_blurred"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="true"
@@ -17,7 +18,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/y600"
             android:fitsSystemWindows="true"
             app:contentScrim="@color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -26,9 +27,9 @@
             <!--app:layout_scrollFlags="scroll|exitUntilCollapsed" 滚动且向上滚动时收缩View，但可以固定Toolbar一直在上面。-->
 
             <ImageView
-                android:id="@+id/imageView_bg"
+                android:id="@+id/iv_blurred_bg"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/y600"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/resource_icon"
@@ -39,7 +40,7 @@
 
             <!--pin 当CollapsingToolbarLayout完全收缩后，Toolbar还可以保留在屏幕上。-->
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/tb_blurred_navigation"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 app:layout_collapseMode="pin"
@@ -47,57 +48,105 @@
 
 
             <com.example.mr_zyl.project.pro.mine.view.selfview.SlideView
-                android:id="@+id/slv_image_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:background="@drawable/rect_shape"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/x660"
                 app:collapsedPadding="@dimen/x150"
                 app:marginbottomoffset="@dimen/y90">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iv_blurred"
-                    android:layout_width="@dimen/x300"
-                    android:layout_height="@dimen/x300"
-                    android:src="@drawable/resource_icon"
+                    android:id="@+id/civ_blurred_head"
+                    android:layout_width="@dimen/x200"
+                    android:layout_height="@dimen/x200"
                     android:layout_gravity="center"
+                    android:src="@drawable/resource_icon"
                     app:civ_border_color="@color/white"
-                    app:civ_border_width="@dimen/x3"/>
+                    app:civ_border_width="@dimen/x3" />
 
 
             </com.example.mr_zyl.project.pro.mine.view.selfview.SlideView>
 
             <com.example.mr_zyl.project.pro.mine.view.selfview.SlideView
+                android:id="@+id/slv_image_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
                 android:background="@drawable/rect_shape"
+                android:gravity="center"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/x660"
                 app:collapsedPadding="@dimen/x318">
 
                 <TextView
-                    android:id="@+id/iv_title"
+                    android:id="@+id/iv_blurred_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="个人详情"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/x63"/>
+                    android:textSize="@dimen/x63" />
             </com.example.mr_zyl.project.pro.mine.view.selfview.SlideView>
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y120"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:id="@+id/rg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="课程介绍"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_course"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="课程表"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_teacher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="老师简介"
+                    android:textColor="#000"
+                    android:textSize="14sp" />
+            </RadioGroup>
+
+        </LinearLayout>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/lv"
+        android:id="@+id/rv_blurred_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     <!--<android.support.design.widget.FloatingActionButton-->
     <!--android:id="@+id/fab_blurred"-->
     <!--android:layout_width="100dp"-->

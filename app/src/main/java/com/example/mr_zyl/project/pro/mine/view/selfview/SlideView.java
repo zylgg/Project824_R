@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project.R;
+import com.example.mr_zyl.project.utils.DensityUtil;
 import com.example.mr_zyl.project.utils.SystemAppUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -149,7 +150,7 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
         } else if (parent.getParent().getParent() instanceof AppBarLayout) {
             return ((AppBarLayout) parent.getParent().getParent());
         } else {
-            throw new IllegalStateException("Must be inside an AppBarLayout"); //TODO actually, a collapsingtoolbar
+            throw new IllegalStateException("Must be inside an AppBarLayout");
         }
     }
 
@@ -211,7 +212,8 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
         if (avatarView != null) {
             expandedImageSize = avatarView.getHeight();
         }
-        maxOffset = appBarLayout.getHeight() - toolBarHeight - SystemAppUtils.getStatusHeight(getContext());
+        //计算滑动范围（appbar高-toolbar高-状态栏-最下面的布局高）
+        maxOffset = appBarLayout.getHeight() - toolBarHeight - SystemAppUtils.getStatusHeight(getContext())- DensityUtil.getpxByDimensize(getContext(),R.dimen.y120);
         //使控件处在居中的位置
         if (avatarView != null) {
             expandedPadding = (appBarLayout.getWidth() - expandedImageSize) / 2;
@@ -232,6 +234,7 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
 //        Log.i(TAG, "currentOffset: " + currentOffset);
         float inversePercentage = 1 - expandedPercentage;
 
+        //括号里的是：滑动控件最开始的位置（滑动的高-控件的高+toolbar高-距离底部的距离）。
         float translation = -currentOffset + (maxOffset - expandedTheHeight + toolBarHeight - marginbottomoffset) * expandedPercentage;
 
         float currHeight = 0;
