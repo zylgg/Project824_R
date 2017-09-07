@@ -10,14 +10,16 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.view.Gravity;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.example.mr_zyl.project.pro.mine.view.impl.OnActionClickListener;
 
 /**
- * MySnackbarBar is a lightweight library for showing a brief message at the top or bottom of the
+ * MySnackbarUtils is a lightweight library for showing a brief message at the top or bottom of the
  * screen. <p>
  * <pre>
- * new MySnackbarBar
+ * new MySnackbarUtils
  *      .Builder(MainActivity.this)
  *      .setTitle("TITLE")
  *      .setMessage("MESSAGE")
@@ -25,17 +27,17 @@ import com.example.mr_zyl.project.pro.mine.view.impl.OnActionClickListener;
  *      .show();
  * </pre>
  */
-public class MySnackbarBar {
+public class MySnackbarUtils {
 
-    private static final String TAG = "MySnackbarBar";
+    private static final String TAG = "MySnackbarUtils";
 
     private MySnackbar mySnackbarView;
     private Activity context;
 
-    private MySnackbarBar() {
+    private MySnackbarUtils() {
     }
 
-    private MySnackbarBar(Activity context, Params params) {
+    private MySnackbarUtils(Activity context, Params params) {
         this.context = context;
         mySnackbarView = new MySnackbar(context);
         mySnackbarView.setParams(params);
@@ -43,13 +45,14 @@ public class MySnackbarBar {
 
     public void show() {
         if (mySnackbarView != null) {
+            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             final ViewGroup decorView = (ViewGroup) context.getWindow().getDecorView();
             final ViewGroup content = (ViewGroup) decorView.findViewById(android.R.id.content);
             if (mySnackbarView.getParent() == null) {
                 if (mySnackbarView.getLayoutGravity() == Gravity.BOTTOM) {
-                    content.addView(mySnackbarView);
+                    content.addView(mySnackbarView,layoutParams);
                 } else {
-                    decorView.addView(mySnackbarView);
+                    decorView.addView(mySnackbarView,layoutParams);
                 }
             }
         }
@@ -142,13 +145,13 @@ public class MySnackbarBar {
             return this;
         }
 
-        public MySnackbarBar create() {
-            MySnackbarBar cookie = new MySnackbarBar(context, params);
+        public MySnackbarUtils create() {
+            MySnackbarUtils cookie = new MySnackbarUtils(context, params);
             return cookie;
         }
 
-        public MySnackbarBar show() {
-            final MySnackbarBar cookie = create();
+        public MySnackbarUtils show() {
+            final MySnackbarUtils cookie = create();
             cookie.show();
             return cookie;
         }

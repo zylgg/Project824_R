@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project.pro.mine.Adapter.BlurredAdapter;
-import com.example.mr_zyl.project.pro.mine.view.selfview.MySnackbarBar;
+import com.example.mr_zyl.project.pro.mine.view.selfview.MySnackbarUtils;
 import com.example.mr_zyl.project.pro.mine.view.selfview.SlideView;
 import com.example.mr_zyl.project.utils.SnackbarUtils;
 import com.squareup.picasso.Picasso;
@@ -99,7 +99,7 @@ public class BlurredActivity extends BaseActivity {
                         .show();
                 break;
             case R.id.iv_blurred_title:
-                new MySnackbarBar.Builder(BlurredActivity.this)
+                new MySnackbarUtils.Builder(BlurredActivity.this)
                         .setMessage("点击了标题！")
                         .setLayoutGravity(Gravity.BOTTOM)
                         .show();

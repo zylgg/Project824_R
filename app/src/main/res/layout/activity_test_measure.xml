@@ -9,22 +9,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.mr_zyl.project.pro.newpost.view.Activity.TestMeasureActivity">
 
-    <ImageView
-        android:id="@+id/iv_newpost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center_horizontal"
-        android:visibility="gone"
-        android:src="@drawable/bg_2"/>
 
-    <TextView
-        android:id="@+id/tv_newpost"
-        android:layout_width="@dimen/x300"
-        android:layout_height="@dimen/y300"
+    <com.example.mr_zyl.project.pro.newpost.view.DragLinearlayout
+        android:layout_width="@dimen/x720"
+        android:layout_height="@dimen/y720"
         android:layout_centerInParent="true"
-        android:layout_gravity="center_horizontal"
-        android:background="#88ff88"/>
+        android:orientation="vertical"
+        android:background="@drawable/rect_shape"
+        android:gravity="center">
 
+        <TextView
+            android:id="@+id/tv_newpost"
+            android:layout_width="@dimen/x300"
+            android:layout_height="@dimen/y300"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:background="#88ff88" />
+
+    </com.example.mr_zyl.project.pro.newpost.view.DragLinearlayout>
 
 </RelativeLayout>

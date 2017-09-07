@@ -97,42 +97,38 @@
             android:orientation="horizontal">
 
             <RadioGroup
-                android:id="@+id/rg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/rb_des"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:button="@null"
                     android:checked="true"
                     android:gravity="center"
-                    android:text="课程介绍"
+                    android:text="Tab1"
                     android:textColor="#000"
                     android:textSize="14sp" />
 
                 <RadioButton
-                    android:id="@+id/rb_course"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="课程表"
+                    android:text="Tab2"
                     android:textColor="#000"
                     android:textSize="14sp" />
 
                 <RadioButton
-                    android:id="@+id/rb_teacher"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="老师简介"
+                    android:text="Tab3"
                     android:textColor="#000"
                     android:textSize="14sp" />
             </RadioGroup>
@@ -147,15 +143,4 @@
         android:background="@color/transparent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-    <!--android:id="@+id/fab_blurred"-->
-    <!--android:layout_width="100dp"-->
-    <!--android:layout_height="100dp"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:src="@mipmap/app_icon"-->
-    <!--android:backgroundTint="@android:color/transparent"-->
-    <!--app:borderWidth="1dp"-->
-    <!--app:elevation="0dp"-->
-    <!--app:layout_anchor="@id/appBarLayout"-->
-    <!--app:layout_anchorGravity="bottom|center_horizontal"/>-->
 </android.support.design.widget.CoordinatorLayout>
