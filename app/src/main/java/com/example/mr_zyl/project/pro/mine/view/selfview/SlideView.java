@@ -256,10 +256,10 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
         //缩放子viewImageView的大小
         setAvatarSize((int) currentImageSize);
         if (avatarView != null) {
-            avatarView.setBorderColor(ColorUtils.blendARGB(Color.WHITE, Color.GREEN, inversePercentage));
+            avatarView.setBorderColor(ColorUtils.blendARGB(Color.WHITE, getResources().getColor(R.color.green), inversePercentage));
         } else if (titleView != null) {
             //颜色过渡
-            titleView.setTextColor(ColorUtils.blendARGB(Color.WHITE, Color.GREEN, inversePercentage));
+            titleView.setTextColor(ColorUtils.blendARGB(Color.WHITE, getResources().getColor(R.color.green), inversePercentage));
             //字体大小过度
             titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX,expanded_text_size+(collapsed_text_size-expanded_text_size)*inversePercentage);
         }

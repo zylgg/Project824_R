@@ -96,51 +96,31 @@
             android:layout_height="@dimen/y120"
             android:orientation="horizontal">
 
-            <RadioGroup
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tl_blurred_tablist"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                app:tabTextColor="@color/title_light"
+                app:tabSelectedTextColor="@color/green"
+                app:tabIndicatorColor="@color/green"
+                app:tabMode="fixed"
+                app:tabGravity="fill"/>
+            <!--<android.support.design.widget.TabLayout.SlidingTabStrip-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--&gt;-->
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:checked="true"
-                    android:gravity="center"
-                    android:text="Tab1"
-                    android:textColor="#000"
-                    android:textSize="14sp" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="Tab2"
-                    android:textColor="#000"
-                    android:textSize="14sp" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="Tab3"
-                    android:textColor="#000"
-                    android:textSize="14sp" />
-            </RadioGroup>
+            <!--</android.support.design.widget.TabLayout.SlidingTabStrip>-->
 
         </LinearLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_blurred_list"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_blurred_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </android.support.v4.view.ViewPager>
 
 </android.support.design.widget.CoordinatorLayout>

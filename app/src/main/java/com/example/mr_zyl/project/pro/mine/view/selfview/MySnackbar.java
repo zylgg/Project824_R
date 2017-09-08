@@ -67,10 +67,9 @@ public class MySnackbar extends LinearLayout {
 
     private void initViews(Context context) {
         setOrientation(LinearLayout.VERTICAL);
-        setGravity(Gravity.BOTTOM);
+
         inflate(getContext(), R.layout.layout_cookie, this);
         contentview = findViewById(R.id.cookie);
-
         viewDragHelper = ViewDragHelper.create(this, dragCallback);
         detectorCompat = new GestureDetectorCompat(getContext(),
                 onGestureListener);
@@ -104,6 +103,11 @@ public class MySnackbar extends LinearLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction()==MotionEvent.ACTION_DOWN){
+            removeCallbacks(DelayColseRunnable);
+        }else if (event.getAction()==MotionEvent.ACTION_UP){
+            postDelayed(DelayColseRunnable,duration);
+        }
         viewDragHelper.processTouchEvent(event);
         return true;
     }
@@ -116,15 +120,6 @@ public class MySnackbar extends LinearLayout {
         }
 
         /**
-         * 设置滑动偏移量
-         */
-//        @Override
-//        public int getViewHorizontalDragRange(View child) {
-//            horizontalDX = child.getWidth();
-//            return horizontalDX;
-//        }
-
-        /**
          * 控制滚动的范围
          */
         @Override
@@ -132,75 +127,62 @@ public class MySnackbar extends LinearLayout {
             if (left < getPaddingLeft()) {
                 return getPaddingLeft();
             }
-
-            if (left > getWidth() - child.getMeasuredWidth()) {
-                return getWidth() - child.getMeasuredWidth();
-            }
             return left;
         }
 
         @Override
         public int clampViewPositionVertical(View child, int top, int dy) {
-            //两个if主要是让view在ViewGroup中
-            if (top < getPaddingTop()) {
-                return getPaddingTop();
+            if (getLayoutGravity() == Gravity.TOP) {
+                return 0;
             }
-
-            if (top > getHeight() - child.getMeasuredHeight()) {
-                return getHeight() - child.getMeasuredHeight();
-            }
-
-            return top;
+            return getHeight() - child.getMeasuredHeight();
         }
 
         /**
          * 拖拽视图的时候，希望能够同时干一些其他事
          */
-//        @Override
-//        public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
-//            float distance = fraction(0.0f * getWidth(), 1.0f * getWidth(), left);
-//            ViewCompat.setAlpha(changedView, distance);
-//
-//            contentview.offsetLeftAndRight(dx);
-//            contentview.offsetTopAndBottom(dy);
-//
-//            invalidate();
-//        }
+        @Override
+        public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
+            float distance = fraction(1.0f * getWidth(), 0.0f * getWidth(), left);
+            ViewCompat.setAlpha(changedView, distance);
+        }
 
         /**
          * 我们拖拽手势弹起
-         //         */
-//        @Override
-//        public void onViewReleased(View releasedChild, float xvel, float yvel) {
-        // 根据速度取判断
-//            if (xvel == 0) {
-//                if (releasedChild.getLeft() > releasedChild.getWidth() * 0.5f) {
-//                    // 打开状态---打开滑动视图
-//                    close();
-//                } else {
-//                    open();
-//                }
-//            } else if (xvel > 0) {
-//                close();
-//            } else {
-//                open();
-//            }
-//            invalidate();
-//        }
+         */
+        @Override
+        public void onViewReleased(View releasedChild, float xvel, float yvel) {
+            //根据速度取判断
+            if (xvel == 0) {
+                if (releasedChild.getLeft() > releasedChild.getWidth() * 0.5f) {
+                    // 打开状态---打开滑动视图
+                    close();
+                } else {
+                    open();
+                }
+            } else if (xvel > 0) {
+                close();
+            } else {
+                open();
+            }
+
+            // 更新视图
+            invalidate();
+        }
     };
 
 
     public void close() {
         //关闭
-        if (viewDragHelper.smoothSlideViewTo(this, this.getLeft(), this.getHeight())) {
+        if (viewDragHelper.smoothSlideViewTo(contentview, this.getWidth(), contentview.getTop())) {
             ViewCompat.postInvalidateOnAnimation(this);
-//            destroy();
+            destroy();
         }
     }
 
     public void open() {
         //打开
-        if (viewDragHelper.smoothSlideViewTo(this, 0, this.getHeight())) {
+        if (viewDragHelper.smoothSlideViewTo(contentview, 0, contentview.getTop())) {
             ViewCompat.postInvalidateOnAnimation(this);
         }
     }
@@ -216,20 +198,20 @@ public class MySnackbar extends LinearLayout {
         int messageColor = ThemeResolver.getColor(context, R.attr.cookieMessageColor, Color.WHITE);
         int actionColor = ThemeResolver.getColor(context, R.attr.cookieActionColor, Color.WHITE);
         int backgroundColor = ThemeResolver.getColor(context, R.attr.cookieBackgroundColor,
-                ContextCompat.getColor(context, R.color.default_bg_color));
+                ContextCompat.getColor(context, R.color.green));
 
         tvTitle.setTextColor(titleColor);
         tvMessage.setTextColor(messageColor);
         btnAction.setTextColor(actionColor);
-//        contentview.setBackgroundColor(backgroundColor);
-        setBackgroundResource(R.drawable.rect_shape);
+        contentview.setBackgroundColor(backgroundColor);
+//        setBackgroundResource(R.drawable.rect_shape);
     }
 
     public void setParams(final MySnackbarUtils.Params params) {
         if (params != null) {
             duration = params.duration;
             layoutGravity = params.layoutGravity;
-
+            setGravity(layoutGravity);
             //Icon
             if (params.iconResId != 0) {
                 ivIcon.setVisibility(VISIBLE);
@@ -297,24 +279,18 @@ public class MySnackbar extends LinearLayout {
                 contentview.setBackgroundColor(ContextCompat.getColor(getContext(), params.backgroundColor));
             }
 
-            int padding = getContext().getResources().getDimensionPixelSize(R.dimen.default_padding);
-            if (layoutGravity == Gravity.BOTTOM) {
-                contentview.setPadding(padding, padding, padding, padding);
-            }
-
             createInAnim();
             createOutAnim();
         }
     }
 
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        if (layoutGravity == Gravity.TOP) {
-            super.onLayout(changed, l, 0, r, getMeasuredHeight());
-        } else {
-            super.onLayout(changed, l, t, r, b);
+    public void computeScroll() {
+        if (viewDragHelper.continueSettling(true)) {
+            ViewCompat.postInvalidateOnAnimation(this);
         }
     }
+
 
     private void createInAnim() {
         slideInAnimation = AnimationUtils.loadAnimation(getContext(),
@@ -326,12 +302,7 @@ public class MySnackbar extends LinearLayout {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-//                postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        dismiss();
-//                    }
-//                }, duration);
+                postDelayed(DelayColseRunnable, duration);
             }
 
             @Override
@@ -342,6 +313,14 @@ public class MySnackbar extends LinearLayout {
 
         setAnimation(slideInAnimation);
     }
+
+    //延迟关闭的线程
+    Runnable DelayColseRunnable = new Runnable() {
+        @Override
+        public void run() {
+            dismiss();
+        }
+    };
 
     private void createOutAnim() {
         slideOutAnimation = AnimationUtils.loadAnimation(getContext(),

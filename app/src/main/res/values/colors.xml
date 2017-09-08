@@ -31,8 +31,8 @@
 
     <color name="list_item_background_pressed">#33FFFFFF</color>
 
-    <color name="default_bg_color">#26a69a</color>
+    <color name="default_bg_color">@color/green</color>
     <color name="default_title_color">#ffffff</color>
     <color name="default_message_color">#ffffff</color>
-    <color name="default_action_color">#26a69a</color>
+    <color name="default_action_color">@color/green</color>
 </resources>

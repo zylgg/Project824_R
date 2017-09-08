@@ -2,8 +2,11 @@ package com.example.mr_zyl.project.pro.mine.view.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
@@ -12,14 +15,11 @@ import android.widget.TextView;
 
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseActivity;
-import com.example.mr_zyl.project.pro.mine.Adapter.BlurredAdapter;
+import com.example.mr_zyl.project.pro.mine.view.fragment.BlurredTabfragment;
 import com.example.mr_zyl.project.pro.mine.view.selfview.MySnackbarUtils;
 import com.example.mr_zyl.project.pro.mine.view.selfview.SlideView;
 import com.example.mr_zyl.project.utils.SnackbarUtils;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -28,9 +28,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class BlurredActivity extends BaseActivity {
     @BindView(R.id.iv_blurred_bg)
     ImageView iv_blurred_bg;
-
-    @BindView(R.id.rv_blurred_list)
-    RecyclerView rv_blurred_list;
 
     @BindView(R.id.tb_blurred_navigation)
     Toolbar tb_blurred_navigation;
@@ -46,6 +43,10 @@ public class BlurredActivity extends BaseActivity {
 
     @BindView(R.id.iv_blurred_title)
     TextView iv_blurred_title;
+    @BindView(R.id.vp_blurred_fragment)
+    ViewPager vp_blurred_fragment;
+    @BindView(R.id.tl_blurred_tablist)
+    TabLayout tl_blurred_tablist;
 
     @Override
     protected int initLayoutId() {
@@ -71,14 +72,14 @@ public class BlurredActivity extends BaseActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-        rv_blurred_list.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     private void initlistener() {
         slv_image_title.setOnRatiolistener(new SlideView.onRatioChangedListener() {
             @Override
             public void onRatioChanged(float expandedPercentage) {
-                iv_blurred_bg.setAlpha((int) (255 - (100 * expandedPercentage) * 2.55*0.5));
+                iv_blurred_bg.setAlpha((int) (255 - (100 * expandedPercentage) * 2.55 * 0.5));
             }
         });
         tb_blurred_navigation.setNavigationOnClickListener(new View.OnClickListener() {
@@ -101,20 +102,40 @@ public class BlurredActivity extends BaseActivity {
             case R.id.iv_blurred_title:
                 new MySnackbarUtils.Builder(BlurredActivity.this)
                         .setMessage("点击了标题！")
-                        .setLayoutGravity(Gravity.BOTTOM)
+                        .setLayoutGravity(Gravity.TOP)
                         .show();
                 break;
         }
     }
 
     private void initdata() {
-        List<String> lists = new ArrayList<String>();
-        for (int i = 0; i < 20; i++) {
-            lists.add(i + "");
-        }
-        rv_blurred_list.setAdapter(new BlurredAdapter(this, lists));
         Picasso.with(this).load(R.drawable.resource_icon)
                 .error(R.drawable.transparent_corner_bg).placeholder(R.drawable.transparent_corner_bg)
                 .into(civ_blurred_head);
+        vp_blurred_fragment.setAdapter(new VpPagerAdpater(getSupportFragmentManager()));
+        tl_blurred_tablist.setupWithViewPager(vp_blurred_fragment);
+
+    }
+
+    class VpPagerAdpater extends FragmentStatePagerAdapter {
+
+        public VpPagerAdpater(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return BlurredTabfragment.getInstance(position);
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "page" + position;
+        }
     }
 }

@@ -1,8 +1,5 @@
 package com.example.mr_zyl.project.pro.mine.view.selfview;
 
-/**
- * Created by TFHR02 on 2017/9/6.
- */
 
 import android.app.Activity;
 import android.support.annotation.ColorRes;
@@ -15,18 +12,11 @@ import android.widget.LinearLayout.LayoutParams;
 
 import com.example.mr_zyl.project.pro.mine.view.impl.OnActionClickListener;
 
+
 /**
- * MySnackbarUtils is a lightweight library for showing a brief message at the top or bottom of the
- * screen. <p>
- * <pre>
- * new MySnackbarUtils
- *      .Builder(MainActivity.this)
- *      .setTitle("TITLE")
- *      .setMessage("MESSAGE")
- *      .setAction("ACTION", new OnActionClickListener() {})
- *      .show();
- * </pre>
+ * Created by TFHR02 on 2017/9/6.
  */
+
 public class MySnackbarUtils {
 
     private static final String TAG = "MySnackbarUtils";

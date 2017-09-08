@@ -1,6 +1,7 @@
 package com.example.mr_zyl.project.pro.mine.Adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,22 +18,23 @@ import java.util.List;
 public class BlurredAdapter extends RecyclerView.Adapter {
     List<String> lists;
     Context context;
-    public BlurredAdapter(Context context,List<String> lists) {
-        this.context=context;
+
+    public BlurredAdapter(Context context, List<String> lists) {
+        this.context = context;
         this.lists = lists;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1,null);
+        View view = LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, null);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof  MyViewHolder){
+        if (holder instanceof MyViewHolder) {
             MyViewHolder holder1 = (MyViewHolder) holder;
-            holder1.textView.setText(position+"");
+            holder1.textView.setText(lists.get(position));
         }
     }
 
@@ -40,13 +42,15 @@ public class BlurredAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return lists.size();
     }
-    class MyViewHolder extends RecyclerView.ViewHolder{
+
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textView;
+
         public MyViewHolder(View itemView) {
             super(itemView);
-            textView= (TextView) itemView.findViewById(android.R.id.text1);
-            textView.setTextColor(R.color.red);
+            textView = (TextView) itemView.findViewById(android.R.id.text1);
+            textView.setTextColor(ContextCompat.getColor(context, R.color.green));
         }
     }
 }
