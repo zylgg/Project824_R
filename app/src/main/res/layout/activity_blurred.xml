@@ -100,17 +100,14 @@
                 android:id="@+id/tl_blurred_tablist"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:tabTextColor="@color/title_light"
-                app:tabSelectedTextColor="@color/green"
-                app:tabIndicatorColor="@color/green"
+                app:tabIndicatorColor="@color/colorAccent"
                 app:tabMode="fixed"
-                app:tabGravity="fill"/>
-            <!--<android.support.design.widget.TabLayout.SlidingTabStrip-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--&gt;-->
-
-            <!--</android.support.design.widget.TabLayout.SlidingTabStrip>-->
+                app:tabGravity="fill"
+                app:tabPadding="0dp"
+                app:tabPaddingBottom="0dp"
+                app:tabPaddingEnd="0dp"
+                app:tabPaddingStart="0dp"
+                app:tabPaddingTop="0dp"/>
 
         </LinearLayout>
     </android.support.design.widget.AppBarLayout>

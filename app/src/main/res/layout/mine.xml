@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -44,12 +43,27 @@
             slv:duration="2000"
             slv:strokeWidth="4dp"/>
         <com.example.mr_zyl.project.pro.essence.view.selfview.PlayVideoIconView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/pviv_mine_test"
             android:layout_width="36dp"
             android:layout_height="36dp"
             app:themecolor="@color/colorAccent"
             />
     </LinearLayout>
+
+    <com.example.mr_zyl.project.pro.mine.view.selfview.CommonTabLayout
+        xmlns:mine="http://schemas.android.com/apk/com.example.mr_zyl.project824"
+        android:id="@+id/ctl_tablist"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/gray"
+        mine:tl_iconVisible="false"
+        mine:tl_indicator_color="@color/colorAccent"
+        mine:tl_indicator_corner_radius="1.5dp"
+        mine:tl_indicator_height="3dp"
+        mine:tl_indicator_style="1"
+        mine:tl_indicator_width="10dp"
+        mine:tl_textsize="14sp"/>
     <ProgressBar
         android:id="@+id/pb_mine_progressbar"
         style="?android:attr/progressBarStyleHorizontal"

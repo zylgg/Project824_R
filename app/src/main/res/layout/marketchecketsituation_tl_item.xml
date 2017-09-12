@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_checksituationrecord_tabview"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/x120"
+    android:orientation="vertical">
+    <!--android:background="@drawable/weekplan_weekselector_shape"-->
+    <TextView
+        android:id="@+id/tv_checksituationrecord_tabtext"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y120"
+        android:gravity="center"
+        android:padding="@dimen/x30"
+        android:text="10kV负荷记录（A）"
+        android:background="@drawable/weekplan_weekselector_shape"
+        android:textColor="@drawable/weekplan_weekcolorselector_shape"
+        android:textSize="@dimen/x42" />
+</LinearLayout>

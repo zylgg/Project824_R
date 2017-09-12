@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -114,7 +115,51 @@ public class BlurredActivity extends BaseActivity {
                 .into(civ_blurred_head);
         vp_blurred_fragment.setAdapter(new VpPagerAdpater(getSupportFragmentManager()));
         tl_blurred_tablist.setupWithViewPager(vp_blurred_fragment);
+        //自定义tablayout布局
+        for (int i = 0; i < 3; i++) {
+            TabLayout.Tab tabAt = tl_blurred_tablist.getTabAt(i);
 
+            View view = LayoutInflater.from(this).inflate(R.layout.marketchecketsituation_tl_item, null, false);
+            TextView tv_checksituationrecord_tabtext = (TextView) view.findViewById(R.id.tv_checksituationrecord_tabtext);
+            tv_checksituationrecord_tabtext.setText("Custom-" + i);
+            tabAt.setCustomView(view);
+        }
+        //选中第一个tab
+        tl_blurred_tablist.getTabAt(tl_blurred_tablist.getSelectedTabPosition()).getCustomView().findViewById(R.id.tv_checksituationrecord_tabtext).setSelected(true);
+        //设置选中监听器
+        tl_blurred_tablist.addOnTabSelectedListener(new tabselectionlistener(vp_blurred_fragment));
+
+    }
+
+    /**
+     * 自定义的tablayout的切换监听
+     */
+    class tabselectionlistener extends TabLayout.ViewPagerOnTabSelectedListener {
+
+        public tabselectionlistener(ViewPager viewPager) {
+            super(viewPager);
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+            super.onTabReselected(tab);
+        }
+
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            super.onTabSelected(tab);
+            View tabview = tab.getCustomView();
+            TextView tv = (TextView) tabview.findViewById(R.id.tv_checksituationrecord_tabtext);
+            tv.setSelected(true);
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+            super.onTabUnselected(tab);
+            View tabview = tab.getCustomView();
+            TextView tv = (TextView) tabview.findViewById(R.id.tv_checksituationrecord_tabtext);
+            tv.setSelected(false);
+        }
     }
 
     class VpPagerAdpater extends FragmentStatePagerAdapter {

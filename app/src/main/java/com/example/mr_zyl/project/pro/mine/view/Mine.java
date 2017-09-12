@@ -2,9 +2,11 @@ package com.example.mr_zyl.project.pro.mine.view;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -17,6 +19,8 @@ import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.base.view.item.DefaultImpleItemBuilder;
 import com.example.mr_zyl.project.pro.essence.view.selfview.PlayVideoIconView;
+import com.example.mr_zyl.project.pro.mine.bean.CustomTabEntity;
+import com.example.mr_zyl.project.pro.mine.bean.TabEntity;
 import com.example.mr_zyl.project.pro.mine.view.activity.BaiduMapActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.BlurredActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.CurtainActivity;
@@ -26,6 +30,7 @@ import com.example.mr_zyl.project.pro.mine.view.activity.LoadGifActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.MoreLevelActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.QRImageActivity;
 import com.example.mr_zyl.project.pro.mine.view.navigation.MineNavigationBuilder;
+import com.example.mr_zyl.project.pro.mine.view.selfview.CommonTabLayout;
 import com.example.mr_zyl.project.pro.mine.view.selfview.SmileyLoadingView;
 import com.example.mr_zyl.project.utils.DisplayUtil;
 import com.example.mr_zyl.project.utils.SystemAppUtils;
@@ -38,6 +43,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import okhttp3.Call;
 import okhttp3.Request;
 
@@ -55,6 +63,9 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
      * 是否停止了进度动画
      */
     boolean is_stop = true;
+    @BindView(R.id.ctl_tablist)
+    CommonTabLayout ctl_tablist;
+    Unbinder unbinder;
     /**
      * 自定义的评分控件
      */
@@ -78,6 +89,15 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
     private List<BuilderItemEntity> itemlists = new ArrayList<>();
     private Intent intent = null;
 
+    private String[] mTitles = {"首页", "消息", "联系人", "更多"};
+    private int[] mIconUnselectIds = {
+            R.mipmap.tab_home_unselect, R.mipmap.tab_speech_unselect,
+            R.mipmap.tab_contact_unselect, R.mipmap.tab_more_unselect};
+    private int[] mIconSelectIds = {
+            R.mipmap.tab_home_select, R.mipmap.tab_speech_select,
+            R.mipmap.tab_contact_select, R.mipmap.tab_more_select};
+    private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
+
     @Override
     public int getContentView() {
         return R.layout.mine;
@@ -85,11 +105,16 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
 
     @Override
     public void initContentView(View viewContent) {
+        ButterKnife.bind(this,viewContent);
         //初始化自定义的构造者模式的toolbar
         initToolBar(viewContent);
         initview(viewContent);
         initlistener();
         initBuilderItems(viewContent);
+        for (int i = 0; i < mTitles.length; i++) {
+            mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));
+        }
+        ctl_tablist.setTabData(mTabEntities);
     }
 
     private void initview(View viewContent) {
@@ -102,10 +127,12 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
         pb_mine_progressbar = (ProgressBar) viewContent.findViewById(R.id.pb_mine_progressbar);
         pviv_mine_test = (PlayVideoIconView) viewContent.findViewById(R.id.pviv_mine_test);
     }
+
     private void initlistener() {
         mRatingbar.setOnRatingBarChangeListener(this);
         pviv_mine_test.setOnClickListener(this);
     }
+
     /**
      * 初始化自定义的构造者模式的toolbar
      *
@@ -174,7 +201,7 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
             intent = new Intent();
         }
         BuilderItemEntity entity = null;
-        if (v.getTag()==null){
+        if (v.getTag() == null) {
             return;
         }
         String text = v.getTag().toString();
@@ -194,19 +221,19 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
                 startActivityForResult(intent, entity.requestcode);
             }
         } else {
-            switch (entity.text){
+            switch (entity.text) {
                 case "新界面":
-                //处理非跳转逻辑
-                FragmentManager Frmanager = getActivity().getSupportFragmentManager();
-                Fragment mingf = Frmanager.findFragmentByTag("我");
+                    //处理非跳转逻辑
+                    FragmentManager Frmanager = getActivity().getSupportFragmentManager();
+                    Fragment mingf = Frmanager.findFragmentByTag("我");
 
-                if (mingf != null && !mingf.isDetached()) {
-                    FragmentTransaction ft = Frmanager.beginTransaction();
-                    ft.hide(mingf);
-                    ft.add(android.R.id.tabcontent, new NewFragment(), "newfragment");
-                    ft.commit();
-                }
-                break;
+                    if (mingf != null && !mingf.isDetached()) {
+                        FragmentTransaction ft = Frmanager.beginTransaction();
+                        ft.hide(mingf);
+                        ft.add(android.R.id.tabcontent, new NewFragment(), "newfragment");
+                        ft.commit();
+                    }
+                    break;
             }
         }
     }
@@ -234,6 +261,20 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
                 + SystemAppUtils.getBottomStatusHeight(getContext());
         tv_fenbianlv.append(screeninfo);
         mRatingbar.setIsIndicator(false);//是否 不允许用户操作
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     /**
@@ -302,7 +343,7 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == 112) {
             String address = data.getExtras().getString("address");
-            ToastUtil.showToast(Fcontext,address);
+            ToastUtil.showToast(Fcontext, address);
         }
     }
 }
