@@ -7,6 +7,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.view.Gravity;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
@@ -36,13 +37,17 @@ public class MySnackbarUtils {
     public void show() {
         if (mySnackbarView != null) {
             LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+
+            FrameLayout frameLayout=new FrameLayout(context);
+            frameLayout.addView(mySnackbarView,layoutParams);
+
             final ViewGroup decorView = (ViewGroup) context.getWindow().getDecorView();
             final ViewGroup content = (ViewGroup) decorView.findViewById(android.R.id.content);
-            if (mySnackbarView.getParent() == null) {
+            if (frameLayout.getParent() == null) {
                 if (mySnackbarView.getLayoutGravity() == Gravity.BOTTOM) {
-                    content.addView(mySnackbarView,layoutParams);
+                    content.addView(frameLayout,layoutParams);
                 } else {
-                    decorView.addView(mySnackbarView,layoutParams);
+                    decorView.addView(frameLayout,layoutParams);
                 }
             }
         }

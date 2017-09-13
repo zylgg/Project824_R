@@ -1,28 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipToPadding="true">
 
-    <LinearLayout
-        android:id="@+id/ll_essence_tabcontainer"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="120dp"
         android:orientation="vertical">
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_essence"
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            app:tabBackground="@color/white"
-            app:tabIndicatorColor="@color/essence_tab_text_color_press"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/essence_tab_text_color_press"
-            app:tabTextColor="@color/essence_tab_text_color_normal" /><!--指示符的顔色-->
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vp_essence"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            app:contentScrim="@color/transparent">
 
-</FrameLayout>
+            <LinearLayout
+                android:id="@+id/ll_essence_tabcontainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab_essence"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    app:tabBackground="@color/white"
+                    app:tabIndicatorColor="@color/essence_tab_text_color_press"
+                    app:tabMode="scrollable"
+                    app:tabSelectedTextColor="@color/essence_tab_text_color_press"
+                    app:tabTextColor="@color/essence_tab_text_color_normal" /><!--指示符的顔色-->
+
+            </LinearLayout>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_essence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</android.support.design.widget.CoordinatorLayout>

@@ -71,8 +71,7 @@ public class MySnackbar extends LinearLayout {
         inflate(getContext(), R.layout.layout_cookie, this);
         contentview = findViewById(R.id.cookie);
         viewDragHelper = ViewDragHelper.create(this, dragCallback);
-        detectorCompat = new GestureDetectorCompat(getContext(),
-                onGestureListener);
+        detectorCompat = new GestureDetectorCompat(getContext(),onGestureListener);
 
         tvTitle = (TextView) findViewById(R.id.tv_title);
         tvMessage = (TextView) findViewById(R.id.tv_message);
@@ -84,8 +83,7 @@ public class MySnackbar extends LinearLayout {
 
     private GestureDetector.OnGestureListener onGestureListener = new GestureDetector.SimpleOnGestureListener() {
         @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2,
-                                float distanceX, float distanceY) {
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
             return Math.abs(distanceX) >= Math.abs(distanceY);
         }
     };
@@ -351,10 +349,10 @@ public class MySnackbar extends LinearLayout {
         postDelayed(new Runnable() {
             @Override
             public void run() {
-                ViewParent parent = getParent();
+                ViewParent parent = getParent().getParent();
                 if (parent != null) {
                     MySnackbar.this.clearAnimation();
-                    ((ViewGroup) parent).removeView(MySnackbar.this);
+                    ((ViewGroup) parent).removeView((View) MySnackbar.this.getParent());
                 }
             }
         }, 200);
