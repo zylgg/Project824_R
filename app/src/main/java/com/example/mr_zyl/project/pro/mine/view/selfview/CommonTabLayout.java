@@ -161,9 +161,9 @@ public class CommonTabLayout extends FrameLayout implements ValueAnimator.Animat
     }
 
     private void obtainAttributes(Context context, AttributeSet attrs) {
-        TypedArray ta = context.getTheme().obtainStyledAttributes( R.styleable.CommonTabLayout);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CommonTabLayout);
 
-        mIndicatorStyle = ta.getInteger(R.styleable.CommonTabLayout_tl_indicator_style, 1);
+        mIndicatorStyle = ta.getInteger(R.styleable.CommonTabLayout_tl_indicator_style, 0);
         mIndicatorColor = ta.getColor(R.styleable.CommonTabLayout_tl_indicator_color, Color.parseColor(mIndicatorStyle == STYLE_BLOCK ? "#4B6A87" : "#ffffff"));
         mIndicatorHeight = ta.getDimension(R.styleable.CommonTabLayout_tl_indicator_height,
                 dp2px(mIndicatorStyle == STYLE_TRIANGLE ? 4 : (mIndicatorStyle == STYLE_BLOCK ? -1 : 2)));

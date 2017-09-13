@@ -48,34 +48,55 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_content"
+    <com.example.mr_zyl.project.pro.essence.view.selfview.ExpandableTextView
+        android:id="@+id/etv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_post_title"
+        android:gravity="left"
         android:layout_marginLeft="@dimen/margin_left_6_dp"
         android:layout_marginRight="@dimen/margin_left_6_dp"
         android:layout_marginTop="2dp"
-        android:text="做不了最好的，就做最屌的"
-        android:textColor="@color/main_bottom_text_select"
-        android:textSize="@dimen/item_essence_name_size" />
+        android:orientation="vertical"
+        app:maxCollapsedLines="4">
+
+        <TextView
+            android:id="@id/expandable_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="做不了最好的，就做最屌的"
+            android:textColor="@color/main_bottom_text_select"
+            android:textSize="@dimen/item_essence_name_size" />
+        <Button
+            android:id="@id/expand_collapse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/item_essence_name_size"
+            android:layout_marginTop="@dimen/x12"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            />
+
+    </com.example.mr_zyl.project.pro.essence.view.selfview.ExpandableTextView>
 
     <RelativeLayout
         android:id="@+id/ll_commondata"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_content"
+        android:layout_below="@+id/etv_content"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/siv_pic"
             android:layout_width="1024px"
             android:layout_height="wrap_content"
-            android:contentDescription="用于播放普通图片"
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/margin_left_6_dp"
             android:layout_marginRight="@dimen/margin_left_6_dp"
             android:layout_marginTop="@dimen/margin_left_5_dp"
+            android:contentDescription="用于播放普通图片"
             android:src="@drawable/item_essence_video_bg"
             android:visibility="gone" />
 
@@ -83,11 +104,11 @@
             android:id="@+id/siv_largepic"
             android:layout_width="1024px"
             android:layout_height="300dp"
-            android:contentDescription="用于播放大图片"
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/margin_left_6_dp"
             android:layout_marginRight="@dimen/margin_left_6_dp"
             android:layout_marginTop="@dimen/margin_left_5_dp"
+            android:contentDescription="用于播放大图片"
             android:src="@drawable/item_essence_video_bg"
             android:visibility="gone" />
 
@@ -96,40 +117,40 @@
             android:id="@+id/siv_gifpic"
             android:layout_width="1024px"
             android:layout_height="wrap_content"
-            android:contentDescription="用于播放gif图片"
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/margin_left_6_dp"
             android:layout_marginRight="@dimen/margin_left_6_dp"
             android:layout_marginTop="@dimen/margin_left_5_dp"
+            android:contentDescription="用于播放gif图片"
             android:src="@drawable/item_essence_video_bg"
             android:visibility="gone" />
+
         <com.example.zylsmallvideolibrary.JCVideoPlayer
             android:id="@+id/jcv_videopic"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:contentDescription="用于播放视频或mp3"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/margin_left_6_dp"
             android:layout_marginRight="@dimen/margin_left_6_dp"
             android:layout_marginTop="@dimen/margin_left_5_dp"
-            android:layout_centerInParent="true"
-            />
+            android:contentDescription="用于播放视频或mp3" />
 
         <com.example.mr_zyl.project.pro.essence.view.selfview.PlayVideoIconView
             android:id="@+id/pviv_video_detail"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_centerInParent="true"
-            app:themecolor="@color/colorAccent"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:themecolor="@color/colorAccent" />
 
         <com.example.mr_zyl.project.pro.essence.view.selfview.RingView
             android:id="@+id/rv_loadprogress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            app:ringtextcolor="@color/colorAccent"
+            android:visibility="gone"
             app:pecentColor="@color/colorAccent"
-            android:visibility="gone"/>
+            app:ringtextcolor="@color/colorAccent" />
 
         <TextView
             android:id="@+id/tv_commondata_detail"
@@ -139,8 +160,7 @@
             android:gravity="center"
             android:text="点击查看全图"
             android:textColor="@android:color/holo_green_dark"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
     </RelativeLayout>
 

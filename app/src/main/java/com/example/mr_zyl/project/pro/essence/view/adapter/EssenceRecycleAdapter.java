@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.bean.PostsListBean;
 import com.example.mr_zyl.project.pro.base.view.refreshview.recyclerview.BaseRecyclerAdapter;
 import com.example.mr_zyl.project.pro.essence.view.activity.BrowerActivity;
+import com.example.mr_zyl.project.pro.essence.view.selfview.ExpandableTextView;
 import com.example.mr_zyl.project.pro.essence.view.selfview.PlayVideoIconView;
 import com.example.mr_zyl.project.pro.essence.view.selfview.RingView;
 import com.example.mr_zyl.project.utils.DateUtils;
@@ -47,10 +49,12 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
     private Context context;
     private int itemtype = 0;//0,pic;1,bigpic;2,gif;3,视频;4,音乐
     private float view_w = 0.0f;
+    private SparseBooleanArray sparseBooleanArray;
 
     public EssenceRecycleAdapter(Context context, List<PostsListBean.PostList> lists) {
         this.context = context;
         this.lists = lists;
+        this.sparseBooleanArray=new SparseBooleanArray();
     }
 
     /**
@@ -86,17 +90,17 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
             if (postList.getVideouri() != null && postList.getVideouri().endsWith("mp4")) {//如果是视频
                 postList.setIs_video(true);
                 postList.setIs_showvideotag(View.VISIBLE);
-                if (img_h*scale>DisplayUtil.dip2px(context, 300)){//以300为基准
+                if (img_h * scale > DisplayUtil.dip2px(context, 300)) {//以300为基准
                     postList.setView_maxheight(DisplayUtil.dip2px(context, 300));
-                }else{
-                    postList.setView_maxheight((int)(img_h*scale));
+                } else {
+                    postList.setView_maxheight((int) (img_h * scale));
                 }
             } else if (postList.getVoiceuri() != null && postList.getVoiceuri().endsWith("mp3")) {//如果是mp3
                 postList.setIs_showvideotag(View.GONE);
                 postList.setIs_mp3(true);
-                if (img_h*scale<=img_w){//如果缩放后高<宽
+                if (img_h * scale <= img_w) {//如果缩放后高<宽
                     postList.setView_maxheight((int) (img_h * scale));
-                }else{
+                } else {
                     postList.setView_maxheight(DisplayUtil.dip2px(context, 300));
                 }
             } else {
@@ -187,7 +191,7 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
         holder.tv_name.setText(postList.getName());
         holder.tv_time.setText(DateUtils.parseDate(postList.getCreate_time()));
         //设置内容
-        holder.tv_content.setText(postList.getText());
+        holder.etv_content.setText(postList.getText(),sparseBooleanArray,position);
         //是否显示数据详情标记(针对gif的)
         holder.tv_commondata_detail.setVisibility(postList.getIs_showOnClickBrowerView());
         //是否显示视频标记
@@ -261,14 +265,14 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
         //video视频
         if (holder.itemtype == 3) {
             holder.jcv_videopic.setVisibility(View.VISIBLE);
-            holder.jcv_videopic.getLayoutParams().width= (int) view_w;
+            holder.jcv_videopic.getLayoutParams().width = (int) view_w;
             holder.jcv_videopic.getLayoutParams().height = postList.getView_maxheight();
             holder.jcv_videopic.setUp(postList.getVideouri(), postList.getBimageuri(), postList.getText(), false);
         }
         //voice声音
         if (holder.itemtype == 4) {
             holder.jcv_videopic.setVisibility(View.VISIBLE);
-            holder.jcv_videopic.getLayoutParams().width= (int) view_w;
+            holder.jcv_videopic.getLayoutParams().width = (int) view_w;
             holder.jcv_videopic.getLayoutParams().height = postList.getView_maxheight();
             holder.jcv_videopic.setUp(postList.getVoiceuri(), postList.getBimageuri(), postList.getText(), false);
         }
@@ -328,7 +332,7 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
         public CircleImageView iv_header;
         public TextView tv_name;
         public TextView tv_time;
-        public TextView tv_content;
+        public ExpandableTextView etv_content;
         public ImageView iv_pic;
         public SketchImageView siv_largepic, siv_gifpic;
         public TextView tv_commondata_detail;
@@ -352,44 +356,28 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
         public EssenceViewHolders(View itemView, boolean isItem) {
             super(itemView);
             if (isItem) {
-                iv_header = (CircleImageView) itemView
-                        .findViewById(R.id.iv_header);
-                tv_name = (TextView) itemView
-                        .findViewById(R.id.tv_name);
-                tv_time = (TextView) itemView
-                        .findViewById(R.id.tv_time);
+                iv_header = (CircleImageView) itemView.findViewById(R.id.iv_header);
+                tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+                tv_time = (TextView) itemView.findViewById(R.id.tv_time);
                 rv_loadprogress = (RingView) itemView.findViewById(R.id.rv_loadprogress);
-                tv_content = (TextView) itemView
-                        .findViewById(R.id.tv_content);
-                iv_pic = (ImageView) itemView
-                        .findViewById(R.id.siv_pic);
-                siv_largepic = (SketchImageView) itemView
-                        .findViewById(R.id.siv_largepic);
-                siv_gifpic = (SketchImageView) itemView
-                        .findViewById(R.id.siv_gifpic);
+                etv_content = (ExpandableTextView) itemView.findViewById(R.id.etv_content);
+                iv_pic = (ImageView) itemView.findViewById(R.id.siv_pic);
+                siv_largepic = (SketchImageView) itemView.findViewById(R.id.siv_largepic);
+                siv_gifpic = (SketchImageView) itemView.findViewById(R.id.siv_gifpic);
                 jcv_videopic = (JCVideoPlayer) itemView.findViewById(R.id.jcv_videopic);
-                tv_commondata_detail = (TextView) itemView
-                        .findViewById(R.id.tv_commondata_detail);
+                tv_commondata_detail = (TextView) itemView.findViewById(R.id.tv_commondata_detail);
 
-                ll_like = (LinearLayout) itemView
-                        .findViewById(R.id.ll_like);
-                tv_like = (TextView) itemView
-                        .findViewById(R.id.tv_like);
+                ll_like = (LinearLayout) itemView.findViewById(R.id.ll_like);
+                tv_like = (TextView) itemView.findViewById(R.id.tv_like);
 
-                ll_dislike = (LinearLayout) itemView
-                        .findViewById(R.id.ll_dislike);
-                tv_dislike = (TextView) itemView
-                        .findViewById(R.id.tv_dislike);
+                ll_dislike = (LinearLayout) itemView.findViewById(R.id.ll_dislike);
+                tv_dislike = (TextView) itemView.findViewById(R.id.tv_dislike);
 
-                ll_forword = (LinearLayout) itemView
-                        .findViewById(R.id.ll_forword);
-                tv_forword = (TextView) itemView
-                        .findViewById(R.id.tv_forword);
+                ll_forword = (LinearLayout) itemView.findViewById(R.id.ll_forword);
+                tv_forword = (TextView) itemView.findViewById(R.id.tv_forword);
 
-                ll_comment = (LinearLayout) itemView
-                        .findViewById(R.id.ll_comment);
-                tv_comment = (TextView) itemView
-                        .findViewById(R.id.tv_comment);
+                ll_comment = (LinearLayout) itemView.findViewById(R.id.ll_comment);
+                tv_comment = (TextView) itemView.findViewById(R.id.tv_comment);
 
                 pviv_video_detail = (PlayVideoIconView) itemView.findViewById(R.id.pviv_video_detail);
             }
