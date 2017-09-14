@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".BaseApplication"
@@ -43,14 +44,14 @@
         <activity android:name=".pro.mine.view.activity.FastBlurActivity" />
         <activity
             android:name=".pro.mine.view.activity.BlurredActivity"
-            android:theme="@style/THEME_trans"
             android:launchMode="singleTop"
-            />
+            android:theme="@style/THEME_trans" />
         <activity android:name=".pro.mine.view.activity.ListViewSSActivity" />
         <activity android:name=".pro.mine.view.activity.LoadGifActivity" />
         <activity android:name=".pro.mine.view.activity.QRImageActivity" />
         <activity android:name=".pro.newpost.view.Activity.TestMeasureActivity" />
         <activity android:name=".pro.essence.view.activity.BrowerActivity" />
+        <activity android:name=".pro.newpost.view.Activity.TreeViewActivity"></activity>
     </application>
 
 </manifest>

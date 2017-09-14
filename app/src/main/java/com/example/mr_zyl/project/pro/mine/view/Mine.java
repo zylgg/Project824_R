@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mr_zyl.project.R;
+import com.example.mr_zyl.project.bean.BuilderItemEntity;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.base.view.item.DefaultImpleItemBuilder;
 import com.example.mr_zyl.project.pro.essence.view.selfview.PlayVideoIconView;
@@ -275,23 +276,6 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    /**
-     * item对象
-     */
-    private class BuilderItemEntity {
-        private int left_resid;
-        private String text;
-        private Class classname;
-        private int requestcode;
-
-        public BuilderItemEntity(int left_resid, String text, Class classname, int requestcode) {
-            this.left_resid = left_resid;
-            this.text = text;
-            this.classname = classname;
-            this.requestcode = requestcode;
-        }
     }
 
     /**

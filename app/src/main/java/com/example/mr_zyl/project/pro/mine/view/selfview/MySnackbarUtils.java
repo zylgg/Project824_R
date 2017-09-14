@@ -2,12 +2,13 @@ package com.example.mr_zyl.project.pro.mine.view.selfview;
 
 
 import android.app.Activity;
+import android.graphics.PixelFormat;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.view.Gravity;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
@@ -25,32 +26,50 @@ public class MySnackbarUtils {
     private MySnackbar mySnackbarView;
     private Activity context;
 
+    private WindowManager windowManager = null;
+
     private MySnackbarUtils() {
     }
 
     private MySnackbarUtils(Activity context, Params params) {
         this.context = context;
-        mySnackbarView = new MySnackbar(context);
+        mySnackbarView = new MySnackbar(context,this);
         mySnackbarView.setParams(params);
+        windowManager = context.getWindowManager();
     }
 
     public void show() {
         if (mySnackbarView != null) {
-            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.TYPE_SYSTEM_ERROR,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                            | WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    PixelFormat.TRANSLUCENT);
 
-            FrameLayout frameLayout=new FrameLayout(context);
-            frameLayout.addView(mySnackbarView,layoutParams);
+            params.gravity = Gravity.TOP | Gravity.LEFT;
+            params.y = 0;
+            params.x = 0;
 
             final ViewGroup decorView = (ViewGroup) context.getWindow().getDecorView();
             final ViewGroup content = (ViewGroup) decorView.findViewById(android.R.id.content);
-            if (frameLayout.getParent() == null) {
+
+
+            if (mySnackbarView.getParent() == null) {
                 if (mySnackbarView.getLayoutGravity() == Gravity.BOTTOM) {
-                    content.addView(frameLayout,layoutParams);
+                    content.addView(mySnackbarView, layoutParams);
                 } else {
-                    decorView.addView(frameLayout,layoutParams);
+//                    windowManager.addView(mySnackbarView, params);
+                    decorView.addView(mySnackbarView, layoutParams);
                 }
             }
         }
+    }
+
+    public void dismiss() {
+        windowManager.removeViewImmediate(mySnackbarView);
     }
 
     public static class Builder {

@@ -45,14 +45,16 @@ public class MySnackbar extends LinearLayout {
     private GestureDetectorCompat detectorCompat;
 
     private int horizontalDX;
+    private MySnackbarUtils mySnackbarUtils;
 
 
     public MySnackbar(@NonNull final Context context) {
         this(context, null);
     }
 
-    public MySnackbar(@NonNull final Context context, @Nullable final AttributeSet attrs) {
-        this(context, attrs, 0);
+    public MySnackbar(@NonNull final Context context ,MySnackbarUtils mySnackbarUtils) {
+        this(context, null, 0);
+        this.mySnackbarUtils=mySnackbarUtils;
     }
 
     public MySnackbar(@NonNull final Context context, @Nullable final AttributeSet attrs,
@@ -71,7 +73,7 @@ public class MySnackbar extends LinearLayout {
         inflate(getContext(), R.layout.layout_cookie, this);
         contentview = findViewById(R.id.cookie);
         viewDragHelper = ViewDragHelper.create(this, dragCallback);
-        detectorCompat = new GestureDetectorCompat(getContext(),onGestureListener);
+        detectorCompat = new GestureDetectorCompat(getContext(), onGestureListener);
 
         tvTitle = (TextView) findViewById(R.id.tv_title);
         tvMessage = (TextView) findViewById(R.id.tv_message);
@@ -101,10 +103,10 @@ public class MySnackbar extends LinearLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction()==MotionEvent.ACTION_DOWN){
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             removeCallbacks(DelayColseRunnable);
-        }else if (event.getAction()==MotionEvent.ACTION_UP){
-            postDelayed(DelayColseRunnable,duration);
+        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            postDelayed(DelayColseRunnable, duration);
         }
         viewDragHelper.processTouchEvent(event);
         return true;
@@ -349,11 +351,15 @@ public class MySnackbar extends LinearLayout {
         postDelayed(new Runnable() {
             @Override
             public void run() {
-                ViewParent parent = getParent().getParent();
-                if (parent != null) {
-                    MySnackbar.this.clearAnimation();
-                    ((ViewGroup) parent).removeView((View) MySnackbar.this.getParent());
-                }
+//                if (getLayoutGravity() == Gravity.BOTTOM) {
+                    ViewParent parent = getParent();
+                    if (parent != null) {
+                        MySnackbar.this.clearAnimation();
+                        ((ViewGroup) parent).removeView( MySnackbar.this);
+                    }
+//                }else{
+//                    mySnackbarUtils.dismiss();
+//                }
             }
         }, 200);
     }
