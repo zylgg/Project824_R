@@ -7,7 +7,9 @@ import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project.pro.newpost.bean.Tree;
 import com.example.mr_zyl.project.pro.newpost.view.selfview.TreeGroup;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -41,16 +43,24 @@ public class TreeViewActivity extends BaseActivity {
         TreeDatas.add(new Tree(10, 6, -2, "b-吹风机"));
 
         //给每个tree设置父元素
-        for (int i=0;i<TreeDatas.size();i++){
+        for (int i = 0; i < TreeDatas.size(); i++) {
             Tree tree = TreeDatas.get(i);
-            int pid=tree.getPid();
-            if (pid!=-1){
+            int pid = tree.getPid();
+            if (pid != -1) {
 
-                for (int j=0;j<TreeDatas.size();j++){
+                for (int j = 0; j < TreeDatas.size(); j++) {
                     Tree tree2 = TreeDatas.get(j);
-                    int id=tree2.getId();
-                    if (id==pid){
+                    int id = tree2.getId();
+                    if (id == pid) {
                         tree.setParent(tree2);
+
+                        List<Tree> sons = tree2.getSons();
+                        if (sons==null){
+                            sons=new ArrayList<>();
+                        }
+                        sons.add(tree);
+
+                        tree2.setSons(sons);
                     }
                 }
             }
