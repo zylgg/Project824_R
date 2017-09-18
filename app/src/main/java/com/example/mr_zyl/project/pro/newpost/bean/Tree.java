@@ -1,7 +1,5 @@
 package com.example.mr_zyl.project.pro.newpost.bean;
 
-import java.util.List;
-
 /**
  * Created by TFHR02 on 2017/9/14.
  */
@@ -11,7 +9,6 @@ public class Tree {
 
     private int level;//当前的级别
     private Tree parent;//父节点
-    private List<Tree> sons;
 
     private int resid;
     private String text;
@@ -38,14 +35,6 @@ public class Tree {
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public List<Tree> getSons() {
-        return sons;
-    }
-
-    public void setSons(List<Tree> sons) {
-        this.sons = sons;
     }
 
     public int getId() {

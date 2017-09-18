@@ -7,9 +7,7 @@ import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project.pro.newpost.bean.Tree;
 import com.example.mr_zyl.project.pro.newpost.view.selfview.TreeGroup;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -53,14 +51,6 @@ public class TreeViewActivity extends BaseActivity {
                     int id = tree2.getId();
                     if (id == pid) {
                         tree.setParent(tree2);
-
-                        List<Tree> sons = tree2.getSons();
-                        if (sons==null){
-                            sons=new ArrayList<>();
-                        }
-                        sons.add(tree);
-
-                        tree2.setSons(sons);
                     }
                 }
             }
