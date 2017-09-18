@@ -58,7 +58,7 @@
         android:layout_marginRight="@dimen/margin_left_6_dp"
         android:layout_marginTop="2dp"
         android:orientation="vertical"
-        app:maxCollapsedLines="4">
+        app:maxCollapsedLines="6">
 
         <TextView
             android:id="@id/expandable_text"
@@ -191,7 +191,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_left_2_dp"
-                android:text="709" />
+                android:text="999" />
 
         </LinearLayout>
 
@@ -215,7 +215,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_left_2_dp"
-                android:text="709" />
+                android:text="999" />
 
         </LinearLayout>
 
@@ -239,7 +239,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_left_2_dp"
-                android:text="709" />
+                android:text="999" />
 
         </LinearLayout>
 
@@ -263,7 +263,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_left_2_dp"
-                android:text="709" />
+                android:text="999" />
 
         </LinearLayout>
     </LinearLayout>
