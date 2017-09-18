@@ -2,22 +2,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     >
 
     <ImageView
         android:id="@+id/tv_fitssystemwindows_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="25dp"
         android:layout_alignParentTop="true"
-        android:background="#FFFFFF"
-        android:fitsSystemWindows="true" />
+        android:background="@color/transparent"/>
 
     <RelativeLayout
         android:id="@+id/rl_menu_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true">
+        android:background="@color/white"
+        android:layout_below="@+id/tv_fitssystemwindows_view">
 
         <TextView
             android:id="@+id/more_window_local"
