@@ -24,5 +24,6 @@ public class NewpostNavigationBuilder extends NavigationBuilderAdapter{
         super.createAndBind(parent);
         getContentView().setBackgroundResource(getBackgroundIconRes());
         setTextViewStyle(R.id.tv_default_title);
+        setStatusBarView(R.id.tv_fitssystemwindows_view);
     }
 }
