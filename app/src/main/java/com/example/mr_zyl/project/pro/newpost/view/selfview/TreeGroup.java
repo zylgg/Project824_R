@@ -192,7 +192,7 @@ public class TreeGroup extends View {
             //画圆
             mPaint.setColor(getResources().getColor(R.color.green));
             mPaint.setStrokeWidth(cellStrokeWidth);
-            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStyle(point.is_selected?Paint.Style.FILL:Paint.Style.STROKE);
             canvas.drawCircle(point.x, point.y, cellWidth / 2, mPaint);
             //画文本
             mPaint.setStrokeWidth(cellStrokeWidth);
@@ -200,15 +200,8 @@ public class TreeGroup extends View {
             String text = point.text;
             Rect textrect = new Rect();
             mPaint.getTextBounds(text, 0, text.length(), textrect);//测量文本
-            mPaint.setColor(point.is_selected ? Color.RED : getResources().getColor(R.color.green));//选中的字体为红色
+            mPaint.setColor(point.is_selected ? Color.WHITE : getResources().getColor(R.color.green));//选中的字体为红色
             canvas.drawText(text, point.x - textrect.width() / 2, point.y + textrect.height() / 2, mPaint);
-            //画连线(当前圆 和 子结点圆相连线)
-            List<cellPoint> childpoints = getChildTreesById(i);  //获取所有的子节点圆
-            for (int c = 0; c < childpoints.size(); c++) {
-                cellPoint child_point = childpoints.get(c);
-
-                draw_nocross_ciclecenter_lines(canvas, point, child_point, mPaint);
-            }
 
             //画选中的分支线
             if (point.is_selected) {
@@ -217,13 +210,13 @@ public class TreeGroup extends View {
                     return;
                 }
                 for (int k = 0; k < getMaxLevel(); k++) {
-
+                    //到达顶层了不作处理
                     if (tree.getParent() == null) {
                         break;
                     }
                     int parent_id = tree.getParent().getId();
                     int the_id = tree.getId();
-                    mPaint.setColor(Color.RED);
+                    mPaint.setColor(getResources().getColor(R.color.green));
                     draw_nocross_ciclecenter_lines(canvas, cellDATAS.get(parent_id), cellDATAS.get(the_id), mPaint);
                     tree = tree.getParent();
                 }
