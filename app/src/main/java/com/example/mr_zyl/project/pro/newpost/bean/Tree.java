@@ -10,14 +10,14 @@ public class Tree {
     private int level;//当前的级别
     private Tree parent;//父节点
 
-    private int resid;
+    private String url;
     private String text;
 
     public Tree(){}
-    public Tree(int id, int pid, int resid, String text) {
+    public Tree(int id, int pid, String  url, String text) {
         this.id = id;
         this.pid = pid;
-        this.resid = resid;
+        this.url = url;
         this.text = text;
     }
 
@@ -53,12 +53,12 @@ public class Tree {
         this.pid = pid;
     }
 
-    public int getResid() {
-        return resid;
+    public String getUrl() {
+        return url;
     }
 
-    public void setResid(int resid) {
-        this.resid = resid;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getText() {

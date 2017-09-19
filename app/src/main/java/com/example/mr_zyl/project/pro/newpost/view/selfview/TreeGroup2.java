@@ -5,34 +5,42 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Scroller;
+import android.widget.TextView;
 
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.newpost.bean.Tree;
 import com.example.mr_zyl.project.utils.DensityUtil;
 import com.example.mr_zyl.project.utils.DisplayUtil;
 import com.example.mr_zyl.project.utils.GeometryUtil;
+import com.example.mr_zyl.project.utils.SystemAppUtils;
+import com.example.mr_zyl.project.utils.ToastUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
- * Created by TFHR02 on 2017/9/14.
+ * Created by TFHR02 on 2017/9/19.
  */
-public class TreeGroup extends View {
+public class TreeGroup2 extends ViewGroup {
+
     private static final String TAG = "TreeGroup";
     private List<Tree> treeDatas;
     private Context context;
-    private float cellWidth, cellHeight;
+    private float itemWidth, itemHeight;
     private float cellStrokeWidth;
     private Paint mPaint;
     private int width, height;
@@ -62,23 +70,30 @@ public class TreeGroup extends View {
      * 是不是第一次绘制
      */
     boolean is_firstdraw = true;
-    private int minX, maxX;
+    private int minX = 0, maxX = 0;
 
-    private int minY, maxY;
+    private int minY = 0, maxY = 0;
     /**
      * 滚动计算器
      */
     private Scroller scroller;
 
-    /**
-     * 上一个被选中的项的下标
-     */
-    private int last_selected_index;
-
-    public TreeGroup(Context context, AttributeSet attrs) {
+    public TreeGroup2(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
+        //设置默认参
+        itemWidth = DensityUtil.getpxByDimensize(context, R.dimen.x120);
+        itemHeight = DensityUtil.getpxByDimensize(context, R.dimen.x120);
+        cellStrokeWidth = DensityUtil.getpxByDimensize(context, R.dimen.x6);
+        cellVerticalDistance = cellHorizontalDistance = DensityUtil.getpxByDimensize(context, R.dimen.y500);
+
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+        mPaint.setColor(getResources().getColor(R.color.green));
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setTextSize(45);
         scroller = new Scroller(context);
+
         gesture = new GestureDetectorCompat(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
@@ -100,26 +115,17 @@ public class TreeGroup extends View {
             public boolean onDown(MotionEvent e) {
                 //强制结束本次滑屏操作
                 scroller.forceFinished(true);
-                ViewCompat.postInvalidateOnAnimation(TreeGroup.this);
+                ViewCompat.postInvalidateOnAnimation(TreeGroup2.this);
                 return true;
             }
 
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 scroller.fling((int) getTranslateX(), (int) getTranslateY(), (int) velocityX, (int) velocityY, minX, maxX, minY, maxY);
-                ViewCompat.postInvalidateOnAnimation(TreeGroup.this);
+                ViewCompat.postInvalidateOnAnimation(TreeGroup2.this);
                 return false;
             }
         });
-        cellWidth = cellHeight = DensityUtil.getpxByDimensize(context, R.dimen.x180);
-        cellStrokeWidth = DensityUtil.getpxByDimensize(context, R.dimen.x6);
-        cellVerticalDistance = cellHorizontalDistance = DensityUtil.getpxByDimensize(context, R.dimen.y450);
-
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setColor(getResources().getColor(R.color.green));
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setTextSize(45);
     }
 
     @Override
@@ -148,22 +154,43 @@ public class TreeGroup extends View {
         return translateY;
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (treeDatas == null) {
-            width = getDefaultSize(DisplayUtil.Width(context), widthMeasureSpec);
-            height = getDefaultSize(DisplayUtil.Height(context), heightMeasureSpec);
-        } else {
-            int maxlevel = getMaxLevel();
-            height = (int) (cellHeight * (maxlevel + 1) + cellVerticalDistance * maxlevel + cellStrokeWidth * 2);
-        }
-        setMeasuredDimension(width, height);
-    }
-
     public void setData(LinkedList<Tree> Datas) {
         this.treeDatas = Datas;
         this.is_firstdraw = true;
-        cellDATAS = new ArrayList<>();
+
+        LayoutInflater layoutinflater = LayoutInflater.from(context);
+        for (int i = 0; i < treeDatas.size(); i++) {
+            Tree tree = treeDatas.get(i);
+
+            //添加view
+            View view = layoutinflater.inflate(R.layout.newpost_treegroup_item, null);
+
+            CircleImageView civ_newpost_treegroup = (CircleImageView) view.findViewById(R.id.civ_newpost_treegroup);
+            TextView tv_newpost_treegroup = (TextView) view.findViewById(R.id.tv_newpost_treegroup);
+            if (tree.getUrl() != null) {
+                Picasso.with(context).load(tree.getUrl()).into(civ_newpost_treegroup);
+            } else {
+                Picasso.with(context).load(R.mipmap.ic_launcher).into(civ_newpost_treegroup);
+            }
+            tv_newpost_treegroup.setText(tree.getText());
+            addView(view);
+        }
+    }
+
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
+        if (treeDatas == null || treeDatas.size() == 0) {
+            width = getDefaultSize(DisplayUtil.Width(context), widthMeasureSpec);
+            height = getDefaultSize(DisplayUtil.Height(context), heightMeasureSpec);
+            setMeasuredDimension(width, height);
+            return;
+        }
+        //测量子view
+        measureChildren(widthMeasureSpec, heightMeasureSpec);
+        itemWidth = getChildAt(0).getMeasuredWidth();
+        itemHeight = getChildAt(0).getMeasuredHeight();
 
         //获取水平方向最多有多少圆
         int level_maxcount = 0;
@@ -173,9 +200,14 @@ public class TreeGroup extends View {
             int level_count = getcountByLevel(level);
             level_maxcount = level_count > level_maxcount ? level_count : level_maxcount;
         }
+        //设置屏幕宽高
+        width = (int) (itemWidth * level_maxcount + cellHorizontalDistance * (level_maxcount - 1) + cellStrokeWidth * 2);
+        int maxlevel = getMaxLevel();
+        height = (int) (itemHeight * (maxlevel + 1) + cellVerticalDistance * maxlevel + cellStrokeWidth * 2);
+        setMeasuredDimension(width, height);
 
-        width = (int) (cellWidth * level_maxcount + cellHorizontalDistance * (level_maxcount - 1) + cellStrokeWidth * 2);
-
+        //获取每个item中心点
+        cellDATAS = new ArrayList<>();
         for (int i = 0; i < treeDatas.size(); i++) {
             Tree tree = treeDatas.get(i);
             //计算当前圆左边有多少个圆，left_count
@@ -186,55 +218,63 @@ public class TreeGroup extends View {
             int level_count = getcountByLevel(tree.getLevel());
             //x:左边内边距+当前圆距离左边界距离+圆一半
             cellPoint point = new cellPoint(i,
-                    (width - level_count * cellWidth - (level_count - 1) * cellHorizontalDistance) / 2
-                            + (cellWidth + cellHorizontalDistance) * left_count
-                            + cellWidth / 2
+                    (width - level_count * itemWidth - (level_count - 1) * cellHorizontalDistance) / 2
+                            + (itemWidth + cellHorizontalDistance) * left_count
+                            + itemWidth / 2
                     ,
                     cellStrokeWidth
-                            + (cellWidth + cellVerticalDistance) * top_count
-                            + cellHeight / 2, tree.getText(), false);
+                            + (itemHeight + cellVerticalDistance) * top_count
+                            + itemHeight / 2, tree.getText(), false);
             cellDATAS.add(point);
         }
-        requestLayout();
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        for (int i = 0; i < getChildCount(); i++) {
+            View childAt = getChildAt(i);
+            int childW = childAt.getMeasuredWidth();
+            int childH = childAt.getMeasuredHeight();
+
+            cellPoint point = cellDATAS.get(i);
+            int left = (int) (point.x - childW / 2);
+            int top = (int) (point.y - childH / 2);
+            int right = left + childW;
+            int bottom = top + childH;
+            childAt.layout(left, top, right, bottom);
+        }
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
         if (is_firstdraw) {
-            minX = -(width - DisplayUtil.Width(context)) / 2;
+            if (width > DisplayUtil.Width(context)) {
+                minX = -(width - DisplayUtil.Width(context)) / 2;
+            }
+            if (height > DisplayUtil.Height(context)) {
+                minY = -(height - DisplayUtil.Height(context) + SystemAppUtils.getStatusHeight(context)) / 2;
+            }
             maxX = (width - DisplayUtil.Width(context)) / 2;
+            maxY = (height - DisplayUtil.Height(context) + SystemAppUtils.getStatusHeight(context)) / 2;
 
-            minY = -(height - DisplayUtil.Width(context)) / 2;
-            maxY = (height - DisplayUtil.Width(context)) / 2;
+            maxX = maxX < 0 ? 0 : maxX;
+            maxY = maxY < 0 ? 0 : maxY;
 
             this.translateX = maxX;
             this.translateY = maxY;
             is_firstdraw = false;
         }
         canvas.translate(getTranslateX(), getTranslateY());
+
         for (int i = 0; i < cellDATAS.size(); i++) {
             cellPoint point = cellDATAS.get(i);
-            //画圆
-            mPaint.setStrokeWidth(cellStrokeWidth);
-            mPaint.setStyle(Paint.Style.STROKE);
-            mPaint.setColor(getResources().getColor(R.color.green));
-            canvas.drawCircle(point.x, point.y, cellWidth / 2, mPaint);
-            //画图标
-            String url = treeDatas.get(i).getUrl();
-            if (url != null) {
-            }
-            //画文本
-            mPaint.setStrokeWidth(cellStrokeWidth);
-            mPaint.setStyle(Paint.Style.FILL);
-            String text = point.text;
-            Rect textrect = new Rect();
-            mPaint.getTextBounds(text, 0, text.length(), textrect);//测量文本
-            mPaint.setColor(point.is_selected ? Color.RED : getResources().getColor(R.color.green));//选中的字体为红色
-            canvas.drawText(text, point.x - textrect.width() / 2, point.y + textrect.height() / 2, mPaint);
             //画连线(当前圆 和 子结点圆相连线)
             List<cellPoint> childpoints = getChildTreesById(i);  //获取所有的子节点圆
             for (int c = 0; c < childpoints.size(); c++) {
                 cellPoint child_point = childpoints.get(c);
+                mPaint.setStrokeWidth(cellStrokeWidth);
                 mPaint.setColor(getResources().getColor(R.color.green));
                 draw_nocross_ciclecenter_lines(canvas, point, child_point, mPaint);
             }
@@ -259,9 +299,9 @@ public class TreeGroup extends View {
 
             }
         }
-
-
     }
+
+    private int last_selected_index;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -269,15 +309,16 @@ public class TreeGroup extends View {
             case MotionEvent.ACTION_DOWN:
                 float x = event.getX();
                 float y = event.getY();
-
                 //把之前的选中的设置不选中
                 cellDATAS.get(last_selected_index).is_selected = false;
                 //在设置选中
                 for (int i = 0; i < cellDATAS.size(); i++) {
                     cellPoint cellPoint = cellDATAS.get(i);
                     float distance = GeometryUtil.getDistanceBetween2Points(new PointF(cellPoint.x, cellPoint.y), new PointF(x - translateX, y - translateY));
-                    if (distance < cellWidth / 2) {
+                    if (distance < itemWidth / 2) {
+
                         cellPoint.is_selected = true;
+                        ToastUtil.showToast(context, cellPoint.text);
                         last_selected_index = i;
                         break;
                     }
@@ -292,7 +333,6 @@ public class TreeGroup extends View {
         return gesture.onTouchEvent(event);
     }
 
-
     /**
      * 是否有子节点被选中
      *
@@ -305,7 +345,6 @@ public class TreeGroup extends View {
 
         return is_has;
     }
-
 
     /**
      * 绘制，不过圆心的两点连线
@@ -322,14 +361,14 @@ public class TreeGroup extends View {
         double tan = (p1.y - p2.y) / (p1.x - p2.x);
 
         //下个圆圆心与当前圆圆心连线直线 与 当前圆的交点
-        PointF[] rectF1 = GeometryUtil.getIntersectionPoints(new PointF(p1.x, p1.y), cellWidth / 2, 1 / tan);
+        PointF[] rectF1 = GeometryUtil.getIntersectionPoints(new PointF(p1.x, p1.y), itemHeight / 2, 1 / tan);
         if (tan > 0) {
             start_point = rectF1[1];
         } else {
             start_point = rectF1[0];
         }
         //下个圆圆心与当前圆圆心连线直线 与 下个圆的交点
-        PointF[] rectF2 = GeometryUtil.getIntersectionPoints(new PointF(p2.x, p2.y), cellWidth / 2, 1 / tan);
+        PointF[] rectF2 = GeometryUtil.getIntersectionPoints(new PointF(p2.x, p2.y), itemHeight / 2, 1 / tan);
         if (tan > 0) {
             end_point = rectF2[0];
         } else {

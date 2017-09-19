@@ -1,12 +1,14 @@
 package com.example.mr_zyl.project.pro.essence.view;
 
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.mr_zyl.project.R;
@@ -18,6 +20,8 @@ import com.example.mr_zyl.project.utils.ToastUtil;
 
 import java.util.Arrays;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import me.xiaopan.sketch.Configuration;
 import me.xiaopan.sketch.Sketch;
@@ -30,10 +34,15 @@ import me.xiaopan.sketch.cache.MemoryCache;
  */
 public class essence extends BaseFragment {
 
-    private TabLayout tab_essence;
-    private ViewPager vp_essence;
+    @BindView(R.id.tv_fitssystemwindows_view)
+    TextView tv_fitssystemwindows_view;
+    @BindView(R.id.ll_essence_tabcontainer)
+    LinearLayout ll_essence_tabcontainer;
+    @BindView(R.id.tab_essence)
+    TabLayout tab_essence;
+    @BindView(R.id.vp_essence)
+    ViewPager vp_essence;
     private EssenceNavigationBuilder builder;
-    private LinearLayout ll_essence_tabcontainer;
 
     @Override
     public int getContentView() {
@@ -42,14 +51,20 @@ public class essence extends BaseFragment {
 
     @Override
     public void initContentView(View viewContent) {
-        ll_essence_tabcontainer= (LinearLayout) viewContent.findViewById(R.id.ll_essence_tabcontainer);
+        ButterKnife.bind(this, viewContent);
+
+        tv_fitssystemwindows_view.setBackgroundResource(R.drawable.toolbar_backgound_essence_shape);
+        setStatusBarView(tv_fitssystemwindows_view);
         initToolBar(ll_essence_tabcontainer);
-        initbaseview(viewContent);
+
     }
 
-    private void initbaseview(View viewContent) {
-        this.tab_essence = (TabLayout) viewContent.findViewById(R.id.tab_essence);
-        this.vp_essence = (ViewPager) viewContent.findViewById(R.id.vp_essence);
+    public void setStatusBarView(View view) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {//如果系统不支持透明状态栏
+            view.setVisibility(View.GONE);
+        } else {
+            view.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initToolBar(View viewContent) {
