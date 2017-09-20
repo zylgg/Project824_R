@@ -315,6 +315,7 @@ public class TreeGroup extends View {
      * @param p2     第二个点
      */
     private void draw_nocross_ciclecenter_lines(Canvas canvas, cellPoint p1, cellPoint p2, Paint mpaint) {
+        boolean is_direction_bottom=p2.y>p1.y?true:false;
         //当前圆圆心
         PointF start_point, end_point;
 
@@ -322,14 +323,14 @@ public class TreeGroup extends View {
         double tan = (p1.y - p2.y) / (p1.x - p2.x);
 
         //下个圆圆心与当前圆圆心连线直线 与 当前圆的交点
-        PointF[] rectF1 = GeometryUtil.getIntersectionPoints(new PointF(p1.x, p1.y), cellWidth / 2, 1 / tan);
+        PointF[] rectF1 = GeometryUtil.getIntersectionPoints(new PointF(p1.x, p1.y), cellWidth / 2, 1 / tan,is_direction_bottom);
         if (tan > 0) {
             start_point = rectF1[1];
         } else {
             start_point = rectF1[0];
         }
         //下个圆圆心与当前圆圆心连线直线 与 下个圆的交点
-        PointF[] rectF2 = GeometryUtil.getIntersectionPoints(new PointF(p2.x, p2.y), cellWidth / 2, 1 / tan);
+        PointF[] rectF2 = GeometryUtil.getIntersectionPoints(new PointF(p2.x, p2.y), cellWidth / 2, 1 / tan,is_direction_bottom);
         if (tan > 0) {
             end_point = rectF2[0];
         } else {

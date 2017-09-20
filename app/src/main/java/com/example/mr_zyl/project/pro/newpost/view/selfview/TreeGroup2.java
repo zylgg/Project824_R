@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Scroller;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.newpost.bean.Tree;
@@ -85,7 +86,7 @@ public class TreeGroup2 extends ViewGroup {
         itemWidth = DensityUtil.getpxByDimensize(context, R.dimen.x120);
         itemHeight = DensityUtil.getpxByDimensize(context, R.dimen.x120);
         cellStrokeWidth = DensityUtil.getpxByDimensize(context, R.dimen.x6);
-        cellVerticalDistance = cellHorizontalDistance = DensityUtil.getpxByDimensize(context, R.dimen.y500);
+        cellVerticalDistance = cellHorizontalDistance = DensityUtil.getpxByDimensize(context, R.dimen.y300);
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -206,26 +207,28 @@ public class TreeGroup2 extends ViewGroup {
         height = (int) (itemHeight * (maxlevel + 1) + cellVerticalDistance * maxlevel + cellStrokeWidth * 2);
         setMeasuredDimension(width, height);
 
-        //获取每个item中心点
-        cellDATAS = new ArrayList<>();
-        for (int i = 0; i < treeDatas.size(); i++) {
-            Tree tree = treeDatas.get(i);
-            //计算当前圆左边有多少个圆，left_count
-            int left_count = getleft_cells(tree.getId(), tree.getLevel());
-            //计算当前圆上边有多少个圆，top_count
-            int top_count = tree.getLevel();
+        if (is_firstdraw) {
+            //获取每个item中心点
+            cellDATAS = new ArrayList<>();
+            for (int i = 0; i < treeDatas.size(); i++) {
+                Tree tree = treeDatas.get(i);
+                //计算当前圆左边有多少个圆，left_count
+                int left_count = getleft_cells(tree.getId(), tree.getLevel());
+                //计算当前圆上边有多少个圆，top_count
+                int top_count = tree.getLevel();
 
-            int level_count = getcountByLevel(tree.getLevel());
-            //x:左边内边距+当前圆距离左边界距离+圆一半
-            cellPoint point = new cellPoint(i,
-                    (width - level_count * itemWidth - (level_count - 1) * cellHorizontalDistance) / 2
-                            + (itemWidth + cellHorizontalDistance) * left_count
-                            + itemWidth / 2
-                    ,
-                    cellStrokeWidth
-                            + (itemHeight + cellVerticalDistance) * top_count
-                            + itemHeight / 2, tree.getText(), false);
-            cellDATAS.add(point);
+                int level_count = getcountByLevel(tree.getLevel());
+                //x:左边内边距+当前圆距离左边界距离+圆一半
+                cellPoint point = new cellPoint(i,
+                        (width - level_count * itemWidth - (level_count - 1) * cellHorizontalDistance) / 2
+                                + (itemWidth + cellHorizontalDistance) * left_count
+                                + itemWidth / 2
+                        ,
+                        cellStrokeWidth
+                                + (itemHeight + cellVerticalDistance) * top_count
+                                + itemHeight / 2, tree.getText(), false);
+                cellDATAS.add(point);
+            }
         }
     }
 
@@ -244,6 +247,108 @@ public class TreeGroup2 extends ViewGroup {
             childAt.layout(left, top, right, bottom);
         }
 
+    }
+
+    /**
+     * 上一个被选中的下标
+     */
+    private int last_selected_index;
+
+    private float last_move_x, last_move_y;
+
+    /**
+     * 按下是否选中某个圆
+     */
+    boolean is_down_selected = false;
+    /**
+     * 记录是否有滑动，处理点击事件
+     */
+    private boolean is_has_move = false;
+    /**
+     * 选中的子线绘制方式；0，向上；1，向下；
+     */
+    private int child_line_draw_way = -1;
+
+    public void setChild_line_draw_way(int child_line_draw_way) {
+        this.child_line_draw_way = child_line_draw_way;
+        invalidate();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                is_has_move = false;
+
+                last_move_x = event.getX();
+                last_move_y = event.getY();
+                //把之前的选中的设置不选中
+                cellDATAS.get(last_selected_index).is_selected = false;
+                //在设置选中
+                for (int i = 0; i < cellDATAS.size(); i++) {
+                    cellPoint cellPoint = cellDATAS.get(i);
+                    float distance = GeometryUtil.getDistanceBetween2Points(new PointF(cellPoint.x, cellPoint.y), new PointF(last_move_x - translateX, last_move_y - translateY));
+                    if (distance < itemHeight / 2) {
+                        //按下已选中
+                        is_down_selected = true;
+                        last_selected_index = i;
+                        break;
+                    } else {
+                        is_down_selected = false;
+                    }
+                }
+                requestDisallowInterceptTouchEvent(false);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                float move_x = event.getX();
+                float move_y = event.getY();
+
+                float xx = move_x - last_move_x;
+                float yy = move_y - last_move_y;
+
+                //有选中，而且达到滑动条件
+                if (is_down_selected && (Math.abs(xx) > 8 || Math.abs(yy) > 8)) {
+                    is_has_move = true;
+                    cellPoint cellPoint = cellDATAS.get(last_selected_index);
+                    cellPoint.x = cellPoint.x + xx;
+                    cellPoint.y = cellPoint.y + yy;
+
+                    last_move_x = move_x;
+                    last_move_y = move_y;
+                }
+                if (is_down_selected) {
+                    requestLayout();
+                    invalidate();
+                    return true;
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                float up_x = event.getX();
+                float up_y = event.getY();
+                if (is_down_selected) {
+                    //抬起后响应选中的item
+                    if (!is_has_move) {//按下抬起，过程中没有滑动
+                        for (int i = 0; i < cellDATAS.size(); i++) {
+                            cellPoint cellPoint = cellDATAS.get(i);
+                            float distance = GeometryUtil.getDistanceBetween2Points(new PointF(cellPoint.x, cellPoint.y), new PointF(up_x - translateX, up_y - translateY));
+                            if (distance < itemHeight / 2) {
+                                cellPoint.is_selected = true;
+                                if (itemClickListener != null) {
+                                    itemClickListener.OnTreeItemClick(itemWidth, cellPoint.x + translateX, cellPoint.y + translateY);
+                                }
+                                ToastUtil.showToast(context, cellPoint.text, Toast.LENGTH_SHORT);
+                                break;
+                            }
+                        }
+                        invalidate();
+                    }
+
+                    is_down_selected = false;
+                }
+                break;
+        }
+
+        return gesture.onTouchEvent(event);
     }
 
     @Override
@@ -279,14 +384,18 @@ public class TreeGroup2 extends ViewGroup {
                 draw_nocross_ciclecenter_lines(canvas, point, child_point, mPaint);
             }
 
-            //画选中的分支线
-            if (point.is_selected) {
-                Tree tree = treeDatas.get(point.pos);
-                if (tree == null) {
-                    return;
-                }
-                for (int k = 0; k < getMaxLevel(); k++) {
+        }
 
+        //对选中的点，处理菜单逻辑
+        cellPoint selected_point = cellDATAS.get(last_selected_index);
+        if (selected_point.is_selected) {
+            Tree tree = treeDatas.get(selected_point.pos);
+            if (tree == null) {
+                return;
+            }
+            if (child_line_draw_way == 0) {
+                //一层一层向上找圆，绘制两者连线
+                for (int k = 0; k < getMaxLevel(); k++) {
                     if (tree.getParent() == null) {
                         break;
                     }
@@ -296,41 +405,58 @@ public class TreeGroup2 extends ViewGroup {
                     draw_nocross_ciclecenter_lines(canvas, cellDATAS.get(parent_id), cellDATAS.get(the_id), mPaint);
                     tree = tree.getParent();
                 }
-
+            } else if (child_line_draw_way == 1) {
+                //一层一层向下找子子子..结点，绘制两者连线
+                List<Tree> downchildtrees = getDrawDownChild(tree, canvas);
+                for (int i=0;i<downchildtrees.size();i++){
+                    Tree childtree = downchildtrees.get(i);
+                    mPaint.setColor(Color.RED);
+                    draw_nocross_ciclecenter_lines(canvas, cellDATAS.get(childtree.getParent().getId()), cellDATAS.get(childtree.getId()), mPaint);
+                }
             }
         }
     }
 
-    private int last_selected_index;
+    private List<Tree> getDrawDownChild(Tree tree, Canvas canvas) {
+        List<Tree> AllChildTrees = new ArrayList<>();
+        //第一层循环得到的结点，
+        Tree cache_tree;
+        //一层一层向下找圆，绘制两者连线
+        for (int i = 0; i < treeDatas.size(); i++) {
+            Tree tree1 = treeDatas.get(i);
+            cache_tree = treeDatas.get(i);
+            //如果是顶层，跳过；
+            if (tree1.getParent() == null) {
+                continue;
+            }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                float x = event.getX();
-                float y = event.getY();
-                //把之前的选中的设置不选中
-                cellDATAS.get(last_selected_index).is_selected = false;
-                //在设置选中
-                for (int i = 0; i < cellDATAS.size(); i++) {
-                    cellPoint cellPoint = cellDATAS.get(i);
-                    float distance = GeometryUtil.getDistanceBetween2Points(new PointF(cellPoint.x, cellPoint.y), new PointF(x - translateX, y - translateY));
-                    if (distance < itemWidth / 2) {
-
-                        cellPoint.is_selected = true;
-                        ToastUtil.showToast(context, cellPoint.text);
-                        last_selected_index = i;
-                        break;
-                    }
+            for (int k = 0; k < getMaxLevel(); k++) {
+                //如果找到一个 父结点为顶层的，则终止当前循环；
+                if (tree1.getParent() == null) {
+                    break;
                 }
-                break;
-            case MotionEvent.ACTION_MOVE:
-                break;
-            case MotionEvent.ACTION_UP:
-                break;
+                int p_id = tree1.getPid();
+                if (p_id == tree.getId()) {
+                    AllChildTrees.add(cache_tree);
+                    break;
+                }
+                tree1 = tree1.getParent();
+            }
         }
+        return AllChildTrees;
+    }
 
-        return gesture.onTouchEvent(event);
+    /**
+     * item单击时间接口
+     */
+    public interface OnTreeItemClickListener {
+        void OnTreeItemClick(float itemWidth, float x, float y);
+    }
+
+    public OnTreeItemClickListener itemClickListener;
+
+    public void setOnTreeItemClickListener(OnTreeItemClickListener listener) {
+        this.itemClickListener = listener;
     }
 
     /**
@@ -354,6 +480,7 @@ public class TreeGroup2 extends ViewGroup {
      * @param p2     第二个点
      */
     private void draw_nocross_ciclecenter_lines(Canvas canvas, cellPoint p1, cellPoint p2, Paint mpaint) {
+        boolean is_direction_bottom = p2.y > p1.y ? true : false;
         //当前圆圆心
         PointF start_point, end_point;
 
@@ -361,14 +488,14 @@ public class TreeGroup2 extends ViewGroup {
         double tan = (p1.y - p2.y) / (p1.x - p2.x);
 
         //下个圆圆心与当前圆圆心连线直线 与 当前圆的交点
-        PointF[] rectF1 = GeometryUtil.getIntersectionPoints(new PointF(p1.x, p1.y), itemHeight / 2, 1 / tan);
+        PointF[] rectF1 = GeometryUtil.getIntersectionPoints(new PointF(p1.x, p1.y), itemHeight / 2, 1 / tan, is_direction_bottom);
         if (tan > 0) {
             start_point = rectF1[1];
         } else {
             start_point = rectF1[0];
         }
         //下个圆圆心与当前圆圆心连线直线 与 下个圆的交点
-        PointF[] rectF2 = GeometryUtil.getIntersectionPoints(new PointF(p2.x, p2.y), itemHeight / 2, 1 / tan);
+        PointF[] rectF2 = GeometryUtil.getIntersectionPoints(new PointF(p2.x, p2.y), itemHeight / 2, 1 / tan, is_direction_bottom);
         if (tan > 0) {
             end_point = rectF2[0];
         } else {

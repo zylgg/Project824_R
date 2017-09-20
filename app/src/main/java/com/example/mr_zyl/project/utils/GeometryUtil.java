@@ -70,7 +70,7 @@ public class GeometryUtil {
      * @return
      */
     public static PointF[] getIntersectionPoints(PointF pMiddle, float radius,
-                                                 Double lineK) {
+                                                 Double lineK,boolean direction_bottom) {
         PointF[] points = new PointF[2];
 
         float radian, xOffset = 0, yOffset = 0;
@@ -86,15 +86,23 @@ public class GeometryUtil {
             xOffset = radius;
             yOffset = 0;
         }
-        if (lineK > 0) {
-            points[0] = new PointF(pMiddle.x - xOffset, pMiddle.y - yOffset);
-            points[1] = new PointF(pMiddle.x + xOffset, pMiddle.y + yOffset);
+        if (direction_bottom){
+            if (lineK > 0) {
+                points[0] = new PointF(pMiddle.x - xOffset, pMiddle.y - yOffset);
+                points[1] = new PointF(pMiddle.x + xOffset, pMiddle.y + yOffset);
+            }else{
+                points[0] = new PointF(pMiddle.x + xOffset, pMiddle.y + yOffset);
+                points[1] = new PointF(pMiddle.x - xOffset, pMiddle.y - yOffset);
+            }
         }else{
-            points[0] = new PointF(pMiddle.x + xOffset, pMiddle.y + yOffset);
-            points[1] = new PointF(pMiddle.x - xOffset, pMiddle.y - yOffset);
+            if (lineK > 0) {
+                points[0] = new PointF(pMiddle.x + xOffset, pMiddle.y + yOffset);
+                points[1] = new PointF(pMiddle.x - xOffset, pMiddle.y - yOffset);
+            }else{
+                points[0] = new PointF(pMiddle.x - xOffset, pMiddle.y - yOffset);
+                points[1] = new PointF(pMiddle.x + xOffset, pMiddle.y + yOffset);
+            }
         }
-
-
 
         return points;
     }
