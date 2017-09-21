@@ -2,19 +2,24 @@ package com.example.mr_zyl.project.pro.essence.view;
 
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
+import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceAdapter;
 import com.example.mr_zyl.project.pro.essence.view.navigation.EssenceNavigationBuilder;
+import com.example.mr_zyl.project.utils.DensityUtil;
 import com.example.mr_zyl.project.utils.Settings;
 import com.example.mr_zyl.project.utils.ToastUtil;
 
@@ -22,6 +27,7 @@ import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import de.greenrobot.event.EventBus;
 import me.xiaopan.sketch.Configuration;
 import me.xiaopan.sketch.Sketch;
@@ -34,6 +40,7 @@ import me.xiaopan.sketch.cache.MemoryCache;
  */
 public class essence extends BaseFragment {
 
+    private static final String TAG ="essence" ;
     @BindView(R.id.tv_fitssystemwindows_view)
     TextView tv_fitssystemwindows_view;
     @BindView(R.id.ll_essence_tabcontainer)
@@ -42,7 +49,11 @@ public class essence extends BaseFragment {
     TabLayout tab_essence;
     @BindView(R.id.vp_essence)
     ViewPager vp_essence;
+    @BindView(R.id.abl_essence)
+    AppBarLayout abl_essence;
+    Unbinder unbinder;
     private EssenceNavigationBuilder builder;
+    private int mToolbarHeight;
 
     @Override
     public int getContentView() {
@@ -51,11 +62,24 @@ public class essence extends BaseFragment {
 
     @Override
     public void initContentView(View viewContent) {
-        ButterKnife.bind(this, viewContent);
+        ButterKnife.bind(this,viewContent);
 
         tv_fitssystemwindows_view.setBackgroundResource(R.drawable.toolbar_backgound_essence_shape);
         setStatusBarView(tv_fitssystemwindows_view);
         initToolBar(ll_essence_tabcontainer);
+        mToolbarHeight = DensityUtil.dip2px(Fcontext, 50);
+        abl_essence.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                refreshEvent event=new refreshEvent();
+                if (verticalOffset==0){//完全展开
+                    event.setCan(true);
+                }else{//有折叠
+                    event.setCan(false);
+                }
+                EventBus.getDefault().post(event);
+            }
+        });
 
     }
 
@@ -94,9 +118,34 @@ public class essence extends BaseFragment {
     @Override
     public void initData() {
         String[] titles = getResources().getStringArray(R.array.essence_video_tab);
-        EssenceAdapter adapter = new EssenceAdapter(getFragmentManager(), Arrays.asList(titles));
+        ScrollHideListener scrollHideListener = new ScrollHideListener() {
+
+            @Override
+            public void onMoved(int distance) {
+                ll_essence_tabcontainer.setTranslationY(-distance);
+            }
+
+            @Override
+            public void onShow() {
+                ll_essence_tabcontainer.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+            }
+
+            @Override
+            public void onHide() {
+                ll_essence_tabcontainer.animate().translationY(-mToolbarHeight).setInterpolator(new AccelerateInterpolator(2)).start();
+            }
+        };
+        EssenceAdapter adapter = new EssenceAdapter(getFragmentManager(), Arrays.asList(titles), null);
         this.vp_essence.setAdapter(adapter);
         this.tab_essence.setupWithViewPager(this.vp_essence);
+    }
+
+    public interface ScrollHideListener {
+        void onMoved(int distance);
+
+        void onShow();
+
+        void onHide();
     }
 
     /**

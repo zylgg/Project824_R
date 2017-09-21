@@ -9,6 +9,7 @@ import android.support.annotation.LayoutRes;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,6 +32,7 @@ import java.util.Calendar;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class XRefreshView extends LinearLayout {
+    private static final String TAG = "XRefreshView";
     // -- header view
     private View mHeaderView;
 
@@ -394,6 +396,9 @@ public class XRefreshView extends LinearLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (mIsIntercept){
+            return super.dispatchTouchEvent(ev);
+        }
         final int action = ev.getAction();
         int deltaY = 0;
         int deltaX = 0;
@@ -408,7 +413,7 @@ public class XRefreshView extends LinearLayout {
                 break;
             case MotionEvent.ACTION_MOVE:
                 mLastMoveEvent = ev;
-                if (/*!enablePullUp ||*/ mStopingRefresh || !isEnabled() || mIsIntercept) {
+                if (/*!enablePullUp ||*/ mStopingRefresh || !isEnabled()) {
                     return super.dispatchTouchEvent(ev);
                 }
                 if ((mPullLoading || mPullRefreshing) && mIsPinnedContentWhenRefreshing) {
@@ -417,8 +422,14 @@ public class XRefreshView extends LinearLayout {
                 }
                 int currentY = (int) ev.getRawY();
                 int currentX = (int) ev.getRawX();
+
+                Log.i(TAG, "currentY: "+currentY);
+                //如果没有按下的操作，而直接执行拖动mLastY=-1。。。造成header高度设置错误。
+                Log.i(TAG, "mLastY: "+mLastY);
+
                 deltaY = currentY - mLastY;
                 deltaX = currentX - mLastX;
+
                 mLastY = currentY;
                 mLastX = currentX;
                 // intercept the MotionEvent only when user is not scrolling
@@ -444,12 +455,14 @@ public class XRefreshView extends LinearLayout {
                 } else {
                     return super.dispatchTouchEvent(ev);
                 }
+                Log.i(TAG, "dispatchTouchEvent: "+deltaY);
                 if (!mPullLoading && !mReleaseToLoadMore && mContentView.isTop() && (deltaY > 0 || (deltaY < 0 && mHolder.hasHeaderPullDown()))) {
                     sendCancelEvent();
                     updateHeaderHeight(currentY, deltaY);
                 } else if (!mPullRefreshing && mContentView.isBottom()
                         && (deltaY < 0 || deltaY > 0 && mHolder.hasFooterPullUp())) {
                     sendCancelEvent();
+
                     updateFooterHeight(deltaY);
                 } else if (deltaY != 0 && (mContentView.isTop() && !mHolder.hasHeaderPullDown()
                         || mContentView.isBottom() && !mHolder.hasFooterPullUp())) {

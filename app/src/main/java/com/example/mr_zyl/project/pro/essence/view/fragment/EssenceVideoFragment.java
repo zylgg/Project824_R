@@ -14,7 +14,10 @@ import com.example.mr_zyl.project.pro.base.presenter.BasePresenter;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.base.view.refreshview.XRefreshView;
 import com.example.mr_zyl.project.pro.essence.presenter.EssenceVideoPresenter;
+import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceRecycleAdapter;
+import com.example.mr_zyl.project.pro.essence.view.essence;
+import com.example.mr_zyl.project.pro.essence.view.listener.ScrollingPauseLoadManager;
 import com.example.mr_zyl.project.pro.essence.view.selfview.CustomFooterView;
 import com.example.mr_zyl.project.pro.essence.view.selfview.MyDecoration;
 import com.example.mr_zyl.project.utils.DisplayUtil;
@@ -31,6 +34,7 @@ import de.greenrobot.event.EventBus;
 
 public class EssenceVideoFragment extends BaseFragment {
 
+    private static final String TAG ="EssenceVideoFragment" ;
     private int mType = 0;
     private String mTitle;
     private FrameLayout fl_essence_list;
@@ -38,8 +42,10 @@ public class EssenceVideoFragment extends BaseFragment {
     private RecyclerView rv_essence_one;
     private EssenceRecycleAdapter adapter;
     private EssenceVideoPresenter presenter;
+    private essence.ScrollHideListener listener;
 
-    public EssenceVideoFragment() {
+    public EssenceVideoFragment(essence.ScrollHideListener listener) {
+        this.listener = listener;
     }
 
     public void setType(int mType) {
@@ -73,6 +79,7 @@ public class EssenceVideoFragment extends BaseFragment {
         refreshview_id.setPullRefreshEnable(true);
         refreshview_id.setPullLoadEnable(true);
         refreshview_id.setPinnedTime(1000);
+        refreshview_id.setDampingRatio(1.0f);
         refreshview_id.setAutoLoadMore(false);
         refreshview_id.enableReleaseToLoadMore(false);//到达底部后让其点击加载asdf
         refreshview_id.enableRecyclerViewPullUp(false);//不让Recycleview到达底部继续上啦
@@ -93,9 +100,45 @@ public class EssenceVideoFragment extends BaseFragment {
         rv_essence_one.setHasFixedSize(true);
         rv_essence_one.setLayoutManager(new LinearLayoutManager(getContext()));//设置列表管理器(LinearLayoutManager指水平或者竖直，默认数值)
         rv_essence_one.addItemDecoration(new MyDecoration(getContext(), MyDecoration.VERTICAL_LIST));
+
+        ScrollingPauseLoadManager loadManager = new ScrollingPauseLoadManager(getContext());
+        loadManager.setOnScrollListener(new HidingScrollListener(Fcontext) {
+            @Override
+            public void onMoved(int distance) {
+                if (listener!=null){
+                    listener.onMoved(distance);
+                }
+            }
+
+            @Override
+            public void onShow() {
+                if (listener!=null){
+                    listener.onShow();
+                }
+            }
+
+            @Override
+            public void onHide() {
+                if (listener!=null){
+                    listener.onHide();
+                }
+            }
+        });
+        rv_essence_one.addOnScrollListener(loadManager);
+
         adapter = new EssenceRecycleAdapter(getContext(), postlists);
         adapter.setCustomLoadMoreView(new CustomFooterView(getContext()));//Recycleview需要在底部控制添加footerview
+
         rv_essence_one.setAdapter(adapter);
+    }
+
+    /**
+     *  设置是否支持下拉刷新
+     * @param can
+     */
+    public void setPullRefresh(boolean can){
+        //设置是否拦截子view，
+        refreshview_id.disallowInterceptTouchEvent(!can);
     }
 
     public abstract class HidingScrollListener extends RecyclerView.OnScrollListener {
@@ -184,6 +227,10 @@ public class EssenceVideoFragment extends BaseFragment {
 
         public abstract void onHide();
 
+    }
+
+    public void onEventMainThread(refreshEvent event){
+        setPullRefresh(event.isCan());
     }
 
     public void onEventMainThread(VideoEvents event) {
