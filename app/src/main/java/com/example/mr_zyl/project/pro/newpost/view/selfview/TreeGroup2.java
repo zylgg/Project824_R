@@ -88,7 +88,8 @@ public class TreeGroup2 extends ViewGroup {
         itemWidth = DensityUtil.getpxByDimensize(context, R.dimen.x120);
         itemHeight = DensityUtil.getpxByDimensize(context, R.dimen.x120);
         cellStrokeWidth = DensityUtil.getpxByDimensize(context, R.dimen.x6);
-        cellVerticalDistance = cellHorizontalDistance = DensityUtil.getpxByDimensize(context, R.dimen.y300);
+        cellVerticalDistance  = DensityUtil.getpxByDimensize(context, R.dimen.y120);
+        cellHorizontalDistance = DensityUtil.getpxByDimensize(context, R.dimen.x120);
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -339,11 +340,17 @@ public class TreeGroup2 extends ViewGroup {
 
                 float xx = move_x - last_move_x;
                 float yy = move_y - last_move_y;
-
-                //有选中，而且达到滑动条件
+                //有选中、达到产生滑动的条件、没有移动边界外
                 if (is_down_selected && (Math.abs(xx) > 8 || Math.abs(yy) > 8)) {
                     is_has_move = true;
                     cellPoint cellPoint = cellDATAS.get(last_selected_index);
+                    //判断是否移动到边界外
+                    if ((cellPoint.x + xx)>(width-itemWidth/2)||(cellPoint.x + xx)<(itemWidth/2)){
+                        xx=0;
+                    }
+                    if ((cellPoint.y + yy)>(height-itemHeight/2)||(cellPoint.y + yy)<(itemHeight/2)){
+                        yy=0;
+                    }
                     cellPoint.x = cellPoint.x + xx;
                     cellPoint.y = cellPoint.y + yy;
 
