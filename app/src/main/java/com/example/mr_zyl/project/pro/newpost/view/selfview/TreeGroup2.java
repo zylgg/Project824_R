@@ -78,6 +78,8 @@ public class TreeGroup2 extends ViewGroup {
      * 滚动计算器
      */
     private Scroller scroller;
+    //view宽高是否满屏幕宽高
+    private boolean is_NoFullScreenHeight, is_NoFullScreenWidth;
 
     public TreeGroup2(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -98,18 +100,43 @@ public class TreeGroup2 extends ViewGroup {
         gesture = new GestureDetectorCompat(context, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                getParent().requestDisallowInterceptTouchEvent(true);
                 Log.i(TAG, "onScroll: " + distanceX);
+
                 float transx = translateX - 1.5f * distanceX;
                 float transy = translateY - 1.5f * distanceY;
-                if (transx < minX || transx > maxX) {
-                    return false;
+
+                if (is_NoFullScreenHeight) {
+                    getParent().requestDisallowInterceptTouchEvent(true);
+                    if (transx < minX || transx > maxX) {
+                        return false;
+                    }
+                    if (Math.abs(distanceX / distanceY) > 1) {
+                        moveTo((int) transx, (int) getTranslateY());
+                        return true;
+                    }
                 }
-                if (transy < minY || transy > maxY) {
-                    return false;
+                if (is_NoFullScreenWidth) {
+                    getParent().requestDisallowInterceptTouchEvent(true);
+                    if (transy < minY || transy > maxY) {
+                        return false;
+                    }
+                    if (Math.abs(distanceY / distanceX) > 1) {
+                        moveTo((int) getTranslateX(), (int) transy);
+                        return true;
+                    }
                 }
-                moveTo((int) transx, (int) transy);
-                return true;
+                if (!is_NoFullScreenHeight && !is_NoFullScreenWidth) {
+                    getParent().requestDisallowInterceptTouchEvent(true);
+                    if (transx < minX || transx > maxX) {
+                        return false;
+                    }
+                    if (transy < minY || transy > maxY) {
+                        return false;
+                    }
+                    moveTo((int) transx, (int) transy);
+                    return true;
+                }
+                return false;
             }
 
             @Override
@@ -181,7 +208,8 @@ public class TreeGroup2 extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
+        is_NoFullScreenWidth = false;
+        is_NoFullScreenHeight = false;
         if (treeDatas == null || treeDatas.size() == 0) {
             width = getDefaultSize(DisplayUtil.Width(context), widthMeasureSpec);
             height = getDefaultSize(DisplayUtil.Height(context), heightMeasureSpec);
@@ -205,6 +233,12 @@ public class TreeGroup2 extends ViewGroup {
         width = (int) (itemWidth * level_maxcount + cellHorizontalDistance * (level_maxcount - 1) + cellStrokeWidth * 2);
         int maxlevel = getMaxLevel();
         height = (int) (itemHeight * (maxlevel + 1) + cellVerticalDistance * maxlevel + cellStrokeWidth * 2);
+        if (width < DisplayUtil.Width(context)) {
+            is_NoFullScreenWidth = true;
+        }
+        if (height < DisplayUtil.Height(context)) {
+            is_NoFullScreenHeight = true;
+        }
         setMeasuredDimension(width, height);
 
         if (is_firstdraw) {
@@ -408,7 +442,7 @@ public class TreeGroup2 extends ViewGroup {
             } else if (child_line_draw_way == 1) {
                 //一层一层向下找子子子..结点，绘制两者连线
                 List<Tree> downchildtrees = getDrawDownChild(tree, canvas);
-                for (int i=0;i<downchildtrees.size();i++){
+                for (int i = 0; i < downchildtrees.size(); i++) {
                     Tree childtree = downchildtrees.get(i);
                     mPaint.setColor(Color.RED);
                     draw_nocross_ciclecenter_lines(canvas, cellDATAS.get(childtree.getParent().getId()), cellDATAS.get(childtree.getId()), mPaint);

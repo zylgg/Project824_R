@@ -11,10 +11,11 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/x44"
         android:padding="@dimen/x20"
-        android:text="向上画线" />
+        android:text="向上画线"
+        android:textColor="@drawable/treegroup_item_colorselector"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x2"
+        android:layout_height="1px"
         android:background="@color/gray"
         android:layout_marginLeft="@dimen/x20"
         android:layout_marginRight="@dimen/x20"/>
@@ -25,6 +26,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/x44"
         android:padding="@dimen/x20"
-        android:text="向下画线" />
+        android:text="向下画线"
+        android:textColor="@drawable/treegroup_item_colorselector"/>
 
 </LinearLayout>
