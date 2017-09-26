@@ -41,8 +41,7 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/tab_essence"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                app:tabBackground="@color/white"
+                android:layout_height="40dp"
                 app:tabIndicatorColor="@color/essence_tab_text_color_press"
                 app:tabMode="scrollable"
                 app:tabSelectedTextColor="@color/essence_tab_text_color_press"

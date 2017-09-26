@@ -63,10 +63,12 @@ public class essence extends BaseFragment {
     @Override
     public void initContentView(View viewContent) {
         ButterKnife.bind(this,viewContent);
-
-        tv_fitssystemwindows_view.setBackgroundResource(R.drawable.toolbar_backgound_essence_shape);
         setStatusBarView(tv_fitssystemwindows_view);
         initToolBar(ll_essence_tabcontainer);
+
+        tv_fitssystemwindows_view.setBackgroundResource(R.drawable.toolbar_backgound_essence_shape);
+        tab_essence.setBackgroundResource(R.drawable.toolbar_backgound_essence_shape);
+
         mToolbarHeight = DensityUtil.dip2px(Fcontext, 50);
         abl_essence.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override

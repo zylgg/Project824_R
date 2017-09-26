@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -56,7 +57,7 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
     }
 
     public void showMoreWindow(View anchor, int bottomMargin) {
-        final RelativeLayout layout = (RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.center_music_more_window, null);
+        final LinearLayout layout = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.center_music_more_window, null);
         setContentView(layout);
 
         ImageView close = (ImageView) layout.findViewById(R.id.center_music_window_close);

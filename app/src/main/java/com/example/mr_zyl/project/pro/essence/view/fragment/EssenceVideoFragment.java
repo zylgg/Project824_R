@@ -79,7 +79,6 @@ public class EssenceVideoFragment extends BaseFragment {
         refreshview_id.setPullRefreshEnable(true);
         refreshview_id.setPullLoadEnable(true);
         refreshview_id.setPinnedTime(1000);
-        refreshview_id.setDampingRatio(1.0f);
         refreshview_id.setAutoLoadMore(false);
         refreshview_id.enableReleaseToLoadMore(false);//到达底部后让其点击加载asdf
         refreshview_id.enableRecyclerViewPullUp(false);//不让Recycleview到达底部继续上啦

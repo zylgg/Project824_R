@@ -394,6 +394,14 @@ public class XRefreshView extends LinearLayout {
         }
     }
 
+    /**
+     * 是否跳过了按下事件
+     */
+    private boolean is_jump_DownEvent=true;
+    /**
+     * 跳过了按下操作时，move事件被调用的次数
+     */
+    private int  jumped_down_count=0;
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (mIsIntercept){
@@ -405,6 +413,8 @@ public class XRefreshView extends LinearLayout {
         updateTouchAction(ev);
         switch (action) {
             case MotionEvent.ACTION_DOWN:
+                //按下就没有跳过
+                is_jump_DownEvent=false;
                 mHasSendCancelEvent = false;
                 mHasSendDownEvent = false;
                 mLastY = (int) ev.getRawY();
@@ -412,6 +422,17 @@ public class XRefreshView extends LinearLayout {
                 mInitialMotionY = mLastY;
                 break;
             case MotionEvent.ACTION_MOVE:
+                if (is_jump_DownEvent&&jumped_down_count==0){
+
+                    is_jump_DownEvent=false;
+                    mHasSendCancelEvent = false;
+                    mHasSendDownEvent = false;
+                    mLastY = (int) ev.getRawY();
+                    mLastX = (int) ev.getRawX();
+                    mInitialMotionY = mLastY;
+                    jumped_down_count=jumped_down_count+1;
+                }
+
                 mLastMoveEvent = ev;
                 if (/*!enablePullUp ||*/ mStopingRefresh || !isEnabled()) {
                     return super.dispatchTouchEvent(ev);
@@ -424,6 +445,7 @@ public class XRefreshView extends LinearLayout {
                 int currentX = (int) ev.getRawX();
 
                 Log.i(TAG, "currentY: "+currentY);
+
                 //如果没有按下的操作，而直接执行拖动mLastY=-1。。。造成header高度设置错误。
                 Log.i(TAG, "mLastY: "+mLastY);
 
@@ -504,6 +526,9 @@ public class XRefreshView extends LinearLayout {
                 mInitialMotionY = 0;
                 isIntercepted = false;
                 mMoveForHorizontal = false;
+                //抬起后重置
+                is_jump_DownEvent=true;
+                jumped_down_count=0;
                 break;
         }
         return super.dispatchTouchEvent(ev);
