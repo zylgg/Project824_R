@@ -169,7 +169,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         tv_title.setText(title);//设置标题文字
         iv_start.setVisibility(View.VISIBLE);//设置 控制播放 按钮打开
         ll_bottom_control.setVisibility(View.INVISIBLE);//默认隐藏底部控制按钮
-        pb_main_progressbar.setVisibility(View.VISIBLE);//显示主要的进度条
+        pb_main_progressbar.setVisibility(View.INVISIBLE);//显示主要的进度条
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
 
@@ -267,7 +267,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             iv_start.setVisibility(View.VISIBLE);
             iv_mp4cover.setVisibility(View.VISIBLE);
             ll_bottom_control.setVisibility(View.INVISIBLE);
-            pb_main_progressbar.setVisibility(View.VISIBLE);
+            pb_main_progressbar.setVisibility(View.INVISIBLE);
             iv_mp3cover.setVisibility(View.VISIBLE);
             setTitleVisibility(View.VISIBLE);
             updateStartImage();
@@ -284,7 +284,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             iv_mp4cover.setVisibility(View.VISIBLE);
             iv_start.setVisibility(View.VISIBLE);
             ll_bottom_control.setVisibility(View.INVISIBLE);//默认隐藏底部控制按钮
-            pb_main_progressbar.setVisibility(View.VISIBLE);//显示主要的进度条
+            pb_main_progressbar.setVisibility(View.INVISIBLE);//显示主要的进度条
 //            JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
             //TODO 这里要将背景置黑，
 //            sv_surfaceView.setBackgroundColor(R.color.black_a10_color);
@@ -477,7 +477,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         if (CURRENT_STATE == CURRENT_STATE_PREPAREING) {
             if (ll_bottom_control.getVisibility() == View.VISIBLE) {
                 ll_bottom_control.setVisibility(View.INVISIBLE);
-                pb_main_progressbar.setVisibility(View.VISIBLE);
+                pb_main_progressbar.setVisibility(View.INVISIBLE);
                 setTitleVisibility(View.INVISIBLE);
             } else {
                 ll_bottom_control.setVisibility(View.VISIBLE);

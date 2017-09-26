@@ -5,8 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.Formatter;
 import java.util.Locale;
@@ -17,13 +15,13 @@ public class Utils {
     public static DisplayImageOptions getDefaultDisplayImageOption() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(new ColorDrawable(Color.parseColor("#f0f0f0")))
-                .resetViewBeforeLoading(true)
+//                .resetViewBeforeLoading(true)
                 .cacheInMemory(true)
                 .cacheOnDisk(true)
-                .considerExifParams(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+//                .considerExifParams(true)
+//                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)
-                .displayer(new FadeInBitmapDisplayer(500)) // 设置图片渐显的时间
+//                .displayer(new FadeInBitmapDisplayer(500)) // 设置图片渐显的时间
 //                .delayBeforeLoading(300)  // 下载前的延迟时间
                 .build();
         return options;

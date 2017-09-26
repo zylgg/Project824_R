@@ -116,7 +116,7 @@ public class BlurredActivity extends BaseActivity {
         vp_blurred_fragment.setAdapter(new VpPagerAdpater(getSupportFragmentManager()));
         tl_blurred_tablist.setupWithViewPager(vp_blurred_fragment);
         //自定义tablayout布局
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             TabLayout.Tab tabAt = tl_blurred_tablist.getTabAt(i);
 
             View view = LayoutInflater.from(this).inflate(R.layout.marketchecketsituation_tl_item, null, false);
@@ -175,7 +175,7 @@ public class BlurredActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override

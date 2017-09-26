@@ -27,7 +27,6 @@ import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import de.greenrobot.event.EventBus;
 import me.xiaopan.sketch.Configuration;
 import me.xiaopan.sketch.Sketch;
@@ -51,7 +50,6 @@ public class essence extends BaseFragment {
     ViewPager vp_essence;
     @BindView(R.id.abl_essence)
     AppBarLayout abl_essence;
-    Unbinder unbinder;
     private EssenceNavigationBuilder builder;
     private int mToolbarHeight;
 
