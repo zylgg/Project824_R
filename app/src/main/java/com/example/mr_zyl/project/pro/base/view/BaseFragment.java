@@ -1,9 +1,9 @@
 package com.example.mr_zyl.project.pro.base.view;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +22,18 @@ public abstract class BaseFragment<P extends MvpBasePresenter> extends MvpFragme
     //我们自己的Fragment需要缓存试图
     private View viewContent;
     private boolean isinit;
-    public Context Fcontext;
+    public BaseActivity Fcontext;
     private MyProgressDialog mProgressDialog, mProgressDialog_HORIZONTAL;
     public static String FilePath=Environment.getExternalStorageDirectory()+"/"+ R.string.app_name;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Fcontext= (BaseActivity) getActivity();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Fcontext=getContext();
         if (viewContent == null) {
             viewContent = inflater.inflate(getContentView(), container, false);
             initContentView(viewContent);

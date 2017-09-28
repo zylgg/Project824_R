@@ -33,8 +33,13 @@ public class MyDecoration extends RecyclerView.ItemDecoration {
         ta.recycle();
         setOrientation(orientation);
     }
-
-
+    public MyDecoration(Context context, int orientation, int resid) {
+        this.mContext = context;
+        final TypedArray ta = context.obtainStyledAttributes(ATRRS);
+        this.mDivider = context.getResources().getDrawable(resid,null);
+        ta.recycle();
+        setOrientation(orientation);
+    }
 
     //设置屏幕的方向
     public void setOrientation(int orientation) {
@@ -92,11 +97,11 @@ public class MyDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         if (mOrientation == HORIZONTAL_LIST) {
-            //画横线，就是往下偏移一个分割线的高度
-            outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
-        } else {
             //画竖线，就是往右偏移一个分割线的宽度
             outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
+        } else {
+            //画横线，就是往下偏移一个分割线的高度
+            outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
         }
     }
 }

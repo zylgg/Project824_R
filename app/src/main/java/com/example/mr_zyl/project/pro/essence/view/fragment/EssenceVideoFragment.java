@@ -2,10 +2,10 @@ package com.example.mr_zyl.project.pro.essence.view.fragment;
 
 
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.bean.PostsListBean;
@@ -29,20 +29,26 @@ import com.example.zylsmallvideolibrary.VideoEvents;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 
-public class EssenceVideoFragment extends BaseFragment {
+public class EssenceVideoFragment extends BaseFragment implements View.OnClickListener {
 
     private static final String TAG ="EssenceVideoFragment" ;
     private int mType = 0;
     private String mTitle;
-    private FrameLayout fl_essence_list;
-    private XRefreshView refreshview_id;
-    private RecyclerView rv_essence_one;
     private EssenceRecycleAdapter adapter;
     private EssenceVideoPresenter presenter;
     private essence.ScrollHideListener listener;
+
+    @BindView(R.id.refreshview_id)
+    XRefreshView refreshview_id;
+    @BindView(R.id.rv_essence_one)
+    RecyclerView rv_essence_one;
+    @BindView(R.id.fab_scrollTop)
+    FloatingActionButton fab_scrollTop;
 
     public EssenceVideoFragment(essence.ScrollHideListener listener) {
         this.listener = listener;
@@ -57,6 +63,9 @@ public class EssenceVideoFragment extends BaseFragment {
     }
 
     private List<PostsListBean.PostList> postlists = new ArrayList<>();
+    private RecyclerView.OnScrollListener scrollListener;
+    private RecyclerView.OnScrollListener scrollHideListener;
+    private XRefreshView.XRefreshViewListener xRefreshListener;
 
     @Override
     public int getContentView() {
@@ -71,11 +80,12 @@ public class EssenceVideoFragment extends BaseFragment {
 
     @Override
     public void initContentView(View contentView) {
+        ButterKnife.bind(this,contentView);
         EventBus.getDefault().register(this);
-        int paddingTop = DisplayUtil.dip2px(Fcontext, 98) + SystemAppUtils.getStatusHeight(getContext());
+        initListener();
+        fab_scrollTop.setOnClickListener(this);
+        fab_scrollTop.setVisibility(View.GONE);
 
-        fl_essence_list = (FrameLayout) contentView.findViewById(R.id.fl_essence_list);
-        refreshview_id = (XRefreshView) contentView.findViewById(R.id.refreshview_id);
         refreshview_id.setPullRefreshEnable(true);
         refreshview_id.setPullLoadEnable(true);
         refreshview_id.setPinnedTime(1000);
@@ -83,25 +93,43 @@ public class EssenceVideoFragment extends BaseFragment {
         refreshview_id.enableReleaseToLoadMore(false);//到达底部后让其点击加载asdf
         refreshview_id.enableRecyclerViewPullUp(false);//不让Recycleview到达底部继续上啦
         refreshview_id.setPreLoadCount(0);//预加载数量
+        int paddingTop = DisplayUtil.dip2px(Fcontext, 98) + SystemAppUtils.getStatusHeight(getContext());
+        refreshview_id.setXRefreshViewListener(xRefreshListener);
 
-        refreshview_id.setXRefreshViewListener(new XRefreshView.SimpleXRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loaddata(true);
-            }
+        adapter = new EssenceRecycleAdapter(getContext(), postlists);
+        adapter.setCustomLoadMoreView(new CustomFooterView(getContext()));//Recycleview需要在底部控制添加footerview
 
-            @Override
-            public void onLoadMore(boolean isSlience) {
-                loaddata(false);
-            }
-        });
-        rv_essence_one = (RecyclerView) contentView.findViewById(R.id.rv_essence_one);
         rv_essence_one.setHasFixedSize(true);
         rv_essence_one.setLayoutManager(new LinearLayoutManager(getContext()));//设置列表管理器(LinearLayoutManager指水平或者竖直，默认数值)
         rv_essence_one.addItemDecoration(new MyDecoration(getContext(), MyDecoration.VERTICAL_LIST));
-
         ScrollingPauseLoadManager loadManager = new ScrollingPauseLoadManager(getContext());
-        loadManager.setOnScrollListener(new HidingScrollListener(Fcontext) {
+        loadManager.setOnScrollListener(scrollHideListener);
+        rv_essence_one.addOnScrollListener(loadManager);
+        rv_essence_one.addOnScrollListener(scrollListener);
+        rv_essence_one.setAdapter(adapter);
+    }
+    private void initListener(){
+        scrollListener=new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                LinearLayoutManager layoutManager = (LinearLayoutManager) rv_essence_one.getLayoutManager();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+                View firstview = layoutManager.findViewByPosition(firstVisibleItemPosition);
+                if (firstVisibleItemPosition==0&&firstview.getTop()==0){
+                    fab_scrollTop.setVisibility(View.GONE);
+                }else{
+                    fab_scrollTop.setVisibility(View.VISIBLE);
+                }
+            }
+        };
+        scrollHideListener=new HidingScrollListener(Fcontext) {
             @Override
             public void onMoved(int distance) {
                 if (listener!=null){
@@ -122,13 +150,18 @@ public class EssenceVideoFragment extends BaseFragment {
                     listener.onHide();
                 }
             }
-        });
-        rv_essence_one.addOnScrollListener(loadManager);
+        };
+        xRefreshListener= new XRefreshView.SimpleXRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loaddata(true);
+            }
 
-        adapter = new EssenceRecycleAdapter(getContext(), postlists);
-        adapter.setCustomLoadMoreView(new CustomFooterView(getContext()));//Recycleview需要在底部控制添加footerview
-
-        rv_essence_one.setAdapter(adapter);
+            @Override
+            public void onLoadMore(boolean isSlience) {
+                loaddata(false);
+            }
+        };
     }
 
     /**
@@ -138,6 +171,15 @@ public class EssenceVideoFragment extends BaseFragment {
     public void setPullRefresh(boolean can){
         //设置是否拦截子view，
         refreshview_id.disallowInterceptTouchEvent(!can);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.fab_scrollTop:
+                rv_essence_one.smoothScrollToPosition(0);
+            break;
+        }
     }
 
     public abstract class HidingScrollListener extends RecyclerView.OnScrollListener {

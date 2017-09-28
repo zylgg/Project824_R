@@ -39,7 +39,6 @@ public class LaunchActivity extends AppCompatActivity {
         iv_hai = (ImageView) findViewById(R.id.iv_hai);
         ImageLoader.getInstance().displayImage("drawable://" + R.drawable.hai, iv_hai, new AnimateFirstDisplayListener());
 
-
     }
     /**
      * 隐藏底部虚拟按键，且全屏

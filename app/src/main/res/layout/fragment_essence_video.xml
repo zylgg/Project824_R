@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fl_essence_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,5 +19,15 @@
             ></android.support.v7.widget.RecyclerView>
 
     </com.example.mr_zyl.project.pro.base.view.refreshview.XRefreshView>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_scrollTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/x45"
+        android:layout_marginBottom="?attr/actionBarSize"
+        app:fabSize="mini"
+        android:src="@drawable/to_top_arrow"/>
 
-</FrameLayout>
+</RelativeLayout>
