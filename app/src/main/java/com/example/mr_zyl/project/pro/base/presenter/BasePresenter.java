@@ -47,6 +47,10 @@ public abstract class BasePresenter<M extends BaseModel> extends MvpBasePresente
     public abstract M bindModel();
 
     public interface OnUiThreadListener<T> {
+        public void OnBefore();
+
         public void OnResult(T result);
+
+        public void OnAfter();
     }
 }

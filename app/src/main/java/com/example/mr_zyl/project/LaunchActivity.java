@@ -1,21 +1,20 @@
 package com.example.mr_zyl.project;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
@@ -23,23 +22,31 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class LaunchActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.OnClick;
 
-    ImageView iv_hai;
-    ObjectAnimator objectAnimator;
+public class LaunchActivity extends BaseActivity {
+
+    @BindView(R.id.iv_launch_hai)
+    ImageView iv_launch_hai;
+    @BindView(R.id.tv_remainingTime)
+    TextView tv_remainingTime;
+
+    @Override
+    protected int initLayoutId() {
+        return R.layout.activity_launch;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launch);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);  //全屏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);  //全屏
         hideBottomMenu();
+        timers.start();
 //        ToastUtil.showToast(this,"2*2="+ MathKit.square(2));
-        iv_hai = (ImageView) findViewById(R.id.iv_hai);
-        ImageLoader.getInstance().displayImage("drawable://" + R.drawable.hai, iv_hai, new AnimateFirstDisplayListener());
-
+        ImageLoader.getInstance().displayImage("drawable://" + R.drawable.hai, iv_launch_hai, new AnimateFirstDisplayListener());
     }
+
     /**
      * 隐藏底部虚拟按键，且全屏
      */
@@ -57,6 +64,14 @@ public class LaunchActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.tv_remainingTime)
+    public void onViewClicked() {
+        timers.cancel();
+        timers=null;
+        startActivity(new Intent(LaunchActivity.this, MainActivity.class));
+        finish();
+    }
+
     /**
      * 图片加载监听事件
      **/
@@ -70,13 +85,32 @@ public class LaunchActivity extends AppCompatActivity {
                 ImageView imageView = (ImageView) view;
                 boolean firstDisplay = !displayedImages.contains(imageUri);
                 if (firstDisplay) {
-                    animate(imageView, 2000); // 设置image隐藏动画500ms
+//                    animate(imageView, 2000); // 设置image隐藏动画500ms
                     displayedImages.add(imageUri); // 将图片uri添加到集合中
                 }
 
             }
         }
     }
+
+    CountDownTimer timers = new CountDownTimer(4000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            tv_remainingTime.setText("跳过（" + (millisUntilFinished-1000) / 1000 + "）");
+        }
+
+        @Override
+        public void onFinish() {
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(LaunchActivity.this,
+                            MainActivity.class));
+                    finish();
+                }
+            });
+        }
+    };
 
     public void animate(View imageView, int durationMillis) {
         if (imageView != null) {
@@ -91,14 +125,7 @@ public class LaunchActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            startActivity(new Intent(LaunchActivity.this,
-                                    MainActivity.class));
-                            finish();
-                        }
-                    });
+
                 }
 
                 @Override
@@ -109,23 +136,6 @@ public class LaunchActivity extends AppCompatActivity {
             imageView.startAnimation(fadeImage);
 
         }
-    }
-
-    private void setImageViewAnimation(View view) {
-        objectAnimator = ObjectAnimator.ofFloat(view, "alpha",
-                0.1f, 1.0f);
-        objectAnimator.setDuration(2000);
-        objectAnimator.addListener(new AnimatorListenerAdapter() {
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                startActivity(new Intent(LaunchActivity.this,
-                        MainActivity.class));
-                finish();
-            }
-        });
-        objectAnimator.start();
     }
 
     @Override

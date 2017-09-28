@@ -84,16 +84,15 @@ public abstract class BaseFragment<P extends MvpBasePresenter> extends MvpFragme
      * 显示加载进度dialog
      *
      * @param message
-     * @param canceledOntouchOut
      */
-    protected void showProgressDialog(String message, boolean canceledOntouchOut, int Style) {
+    protected void showProgressDialog(String message, int Style) {
         if (null == mProgressDialog_HORIZONTAL) {
             mProgressDialog_HORIZONTAL = new MyProgressDialog(getContext(), 0, message);
             mProgressDialog_HORIZONTAL.setProgressStyle(Style);
             mProgressDialog_HORIZONTAL.setProgressNumberFormat("%1s m/%2s m");
             mProgressDialog_HORIZONTAL.setMax(100);
         }
-        mProgressDialog_HORIZONTAL.setCanceledOnTouchOutside(canceledOntouchOut);
+        mProgressDialog_HORIZONTAL.setCanceledOnTouchOutside(false);
         mProgressDialog_HORIZONTAL.setCancelable(false);
         mProgressDialog_HORIZONTAL.show();
     }
@@ -107,24 +106,17 @@ public abstract class BaseFragment<P extends MvpBasePresenter> extends MvpFragme
             mProgressDialog_HORIZONTAL.setProgress(value);
         }
     }
-    protected MyProgressDialog getHORIZONTALProgressDialog(){
-        if (null != mProgressDialog_HORIZONTAL) {
-            return mProgressDialog_HORIZONTAL;
-        }
-        return null;
-    }
 
     /**
      * 显示加载进度dialog
      *
      * @param message
-     * @param canceledOntouchOut
      */
-    protected void showProgressDialog(String message, boolean canceledOntouchOut) {
+    protected void showProgressDialog(String message) {
         if (null == mProgressDialog) {
             mProgressDialog = new MyProgressDialog(getContext(), 0, message);
         }
-        mProgressDialog.setCanceledOnTouchOutside(canceledOntouchOut);
+        mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.setCancelable(false);
         mProgressDialog.show();
     }

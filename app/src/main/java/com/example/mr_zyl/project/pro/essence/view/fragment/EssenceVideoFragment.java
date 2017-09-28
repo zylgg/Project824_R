@@ -10,7 +10,7 @@ import android.view.View;
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.bean.PostsListBean;
 import com.example.mr_zyl.project.mvp.presenter.impl.MvpBasePresenter;
-import com.example.mr_zyl.project.pro.base.presenter.BasePresenter;
+import com.example.mr_zyl.project.pro.base.presenter.SimpleOnUiThreadListener;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.base.view.refreshview.XRefreshView;
 import com.example.mr_zyl.project.pro.essence.presenter.EssenceVideoPresenter;
@@ -36,7 +36,7 @@ import de.greenrobot.event.EventBus;
 
 public class EssenceVideoFragment extends BaseFragment implements View.OnClickListener {
 
-    private static final String TAG ="EssenceVideoFragment" ;
+    private static final String TAG = "EssenceVideoFragment";
     private int mType = 0;
     private String mTitle;
     private EssenceRecycleAdapter adapter;
@@ -66,6 +66,7 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
     private RecyclerView.OnScrollListener scrollListener;
     private RecyclerView.OnScrollListener scrollHideListener;
     private XRefreshView.XRefreshViewListener xRefreshListener;
+    private boolean is_firstCreate=true;
 
     @Override
     public int getContentView() {
@@ -80,7 +81,7 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void initContentView(View contentView) {
-        ButterKnife.bind(this,contentView);
+        ButterKnife.bind(this, contentView);
         EventBus.getDefault().register(this);
         initListener();
         fab_scrollTop.setOnClickListener(this);
@@ -108,8 +109,9 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
         rv_essence_one.addOnScrollListener(scrollListener);
         rv_essence_one.setAdapter(adapter);
     }
-    private void initListener(){
-        scrollListener=new RecyclerView.OnScrollListener() {
+
+    private void initListener() {
+        scrollListener = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -122,36 +124,36 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
                 LinearLayoutManager layoutManager = (LinearLayoutManager) rv_essence_one.getLayoutManager();
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
                 View firstview = layoutManager.findViewByPosition(firstVisibleItemPosition);
-                if (firstVisibleItemPosition==0&&firstview.getTop()==0){
+                if (firstVisibleItemPosition == 0 && firstview.getTop() == 0) {
                     fab_scrollTop.setVisibility(View.GONE);
-                }else{
+                } else {
                     fab_scrollTop.setVisibility(View.VISIBLE);
                 }
             }
         };
-        scrollHideListener=new HidingScrollListener(Fcontext) {
+        scrollHideListener = new HidingScrollListener(Fcontext) {
             @Override
             public void onMoved(int distance) {
-                if (listener!=null){
+                if (listener != null) {
                     listener.onMoved(distance);
                 }
             }
 
             @Override
             public void onShow() {
-                if (listener!=null){
+                if (listener != null) {
                     listener.onShow();
                 }
             }
 
             @Override
             public void onHide() {
-                if (listener!=null){
+                if (listener != null) {
                     listener.onHide();
                 }
             }
         };
-        xRefreshListener= new XRefreshView.SimpleXRefreshListener() {
+        xRefreshListener = new XRefreshView.SimpleXRefreshListener() {
             @Override
             public void onRefresh() {
                 loaddata(true);
@@ -165,20 +167,21 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
     }
 
     /**
-     *  设置是否支持下拉刷新
+     * 设置是否支持下拉刷新
+     *
      * @param can
      */
-    public void setPullRefresh(boolean can){
+    public void setPullRefresh(boolean can) {
         //设置是否拦截子view，
         refreshview_id.disallowInterceptTouchEvent(!can);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.fab_scrollTop:
                 rv_essence_one.smoothScrollToPosition(0);
-            break;
+                break;
         }
     }
 
@@ -270,7 +273,52 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
 
     }
 
-    public void onEventMainThread(refreshEvent event){
+    @Override
+    public void initData() {
+        loaddata(true);
+    }
+
+    /**
+     * 加载数据
+     *
+     * @param isDownRefresh 是否为下拉刷新
+     */
+    private void loaddata(final boolean isDownRefresh) {
+        presenter.GetEssenceListData(mType, isDownRefresh, new SimpleOnUiThreadListener<List<PostsListBean.PostList>>() {
+            @Override
+            public void OnBefore() {
+                if (is_firstCreate) showProgressDialog("加载中...");
+            }
+
+            @Override
+            public void OnResult(List<PostsListBean.PostList> result) {
+                if (isDownRefresh) {
+                    refreshview_id.stopRefresh();
+                } else {
+                    refreshview_id.stopLoadMore();
+                }
+                if (result == null) {
+                    ToastUtil.showToast(getContext(), "加载失败！");
+                } else {
+                    //刷新Ui
+                    if (isDownRefresh) {//下拉刷新（清理一遍数据）
+                        postlists.clear();
+                    }
+                    postlists.addAll(result);
+                    adapter.RefreshData(postlists);
+                }
+            }
+
+            @Override
+            public void OnAfter() {
+                if (is_firstCreate) dismissProgressDialog();
+                is_firstCreate=false;
+            }
+        });
+    }
+
+
+    public void onEventMainThread(refreshEvent event) {
         setPullRefresh(event.isCan());
     }
 
@@ -311,40 +359,5 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
         super.onPause();
         JCVideoPlayer.releaseAllVideos();
     }
-
-    /**
-     * 加载数据
-     *
-     * @param isDownRefresh 是否为下拉刷新
-     */
-    private void loaddata(final boolean isDownRefresh) {
-        presenter.GetEssenceListData(mType, isDownRefresh, new BasePresenter.OnUiThreadListener<List<PostsListBean.PostList>>() {
-            @Override
-            public void OnResult(List<PostsListBean.PostList> result) {
-                if (isDownRefresh) {
-                    refreshview_id.stopRefresh();
-                } else {
-                    refreshview_id.stopLoadMore();
-                }
-                if (result == null) {
-                    ToastUtil.showToast(getContext(), "加载失败！");
-                } else {
-                    //刷新Ui
-                    if (isDownRefresh) {//下拉刷新（清理一遍数据）
-                        postlists.clear();
-                    }
-                    postlists.addAll(result);
-                    adapter.RefreshData(postlists);
-                }
-            }
-        });
-
-    }
-
-    @Override
-    public void initData() {
-        loaddata(true);
-    }
-
 
 }

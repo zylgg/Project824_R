@@ -88,6 +88,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     private static boolean isFromFullScreenBackHere = false;//如果是true表示这个正在不是全屏，并且全屏刚推出，总之进入过全屏
     public static boolean isClickFullscreen = false;
     private String TAG = "JCVideoPlayer";
+    private RelativeLayout ll_videoinfo_container;
+    private TextView tv_playcount,tv_videotime;
 
     public JCVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -98,6 +100,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     private void init(Context context) {
         View.inflate(context, R.layout.video_control_view, this);
+        ll_videoinfo_container= (RelativeLayout) findViewById(R.id.ll_videoinfo_container);
+        tv_playcount= (TextView) findViewById(R.id.tv_playcount);
+        tv_videotime= (TextView) findViewById(R.id.tv_videotime);
         iv_start = (ImageView) findViewById(R.id.iv_start);
         pb_loading = (ProgressBar) findViewById(R.id.pb_loading);
         pb_main_progressbar = (ProgressBar) findViewById(R.id.pb_main_progressbar);
@@ -139,7 +144,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * @param title 标题 | title
      */
     public void setUp(String url, String url2, String title) {
-        setUp(url, url2, title, true);
+        setUp(url, url2, title, true,"0",0);
     }
 
     /**
@@ -150,7 +155,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * @param title       标题 | title
      * @param ifShowTitle 是否在非全屏下显示标题 | The title is displayed in full-screen under
      */
-    public void setUp(String url, String url2, String title, boolean ifShowTitle) {
+    public void setUp(String url, String url2, String title, boolean ifShowTitle,String playcount,int videotime) {
         setSkin();//设置皮肤
         setIfShowTitle(ifShowTitle);//处理是否显示 标题
         if ((System.currentTimeMillis() - clickfullscreentime) < FULL_SCREEN_NORMAL_DELAY) {//全屏正常的延时 小于5s时，返回
@@ -170,6 +175,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         iv_start.setVisibility(View.VISIBLE);//设置 控制播放 按钮打开
         ll_bottom_control.setVisibility(View.INVISIBLE);//默认隐藏底部控制按钮
         pb_main_progressbar.setVisibility(View.INVISIBLE);//显示主要的进度条
+        ll_videoinfo_container.setVisibility(View.VISIBLE);
+        tv_playcount.setText("播放次数："+playcount);
+        tv_videotime.setText(Utils.stringForTime(videotime));
+
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
 
@@ -484,6 +493,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 pb_main_progressbar.setVisibility(View.INVISIBLE);
                 setTitleVisibility(View.VISIBLE);
             }
+
             iv_start.setVisibility(View.INVISIBLE);
             pb_loading.setVisibility(View.VISIBLE);
         } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
@@ -499,6 +509,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 pb_main_progressbar.setVisibility(View.INVISIBLE);
                 setTitleVisibility(View.VISIBLE);
             }
+            ll_videoinfo_container.setVisibility(View.INVISIBLE);
             pb_loading.setVisibility(View.INVISIBLE);
         } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
             if (ll_bottom_control.getVisibility() == View.VISIBLE) {

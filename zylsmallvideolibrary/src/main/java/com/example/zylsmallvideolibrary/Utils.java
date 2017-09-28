@@ -31,7 +31,7 @@ public class Utils {
         if (timeMs <= 0 || timeMs >= 24 * 60 * 60 * 1000) {
             return "00:00";
         }
-        int totalSeconds = timeMs / 1000;
+        int totalSeconds = timeMs ;
         int seconds = totalSeconds % 60;
         int minutes = (totalSeconds / 60) % 60;
         int hours = totalSeconds / 3600;

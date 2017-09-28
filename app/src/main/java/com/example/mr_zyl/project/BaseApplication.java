@@ -39,8 +39,8 @@ public class BaseApplication extends Application {
         CookieJarImpl cookieJar = new CookieJarImpl(new PersistentCookieStore(getApplicationContext()));
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new LoggerInterceptor("OkhttpClient"))
-                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
-                .readTimeout(10000L, TimeUnit.MILLISECONDS)
+                .connectTimeout(20*1000L, TimeUnit.MILLISECONDS)
+                .readTimeout(20*1000L, TimeUnit.MILLISECONDS)
                 .cookieJar(cookieJar)
                 .build();
         OkHttpUtils.initClient(okHttpClient);

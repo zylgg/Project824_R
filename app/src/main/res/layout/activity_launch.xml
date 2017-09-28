@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,8 +7,22 @@
     tools:context="com.example.mr_zyl.project.LaunchActivity">
 
     <ImageView
+        android:id="@+id/iv_launch_hai"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/iv_hai"
         android:scaleType="fitXY"/>
-</LinearLayout>
+    <TextView
+        android:id="@+id/tv_remainingTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/y120"
+        android:layout_marginRight="@dimen/x90"
+        android:padding="@dimen/x12"
+        android:text="秒"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/x42"
+        android:background="@drawable/circle_radius_shape"
+        />
+</RelativeLayout>

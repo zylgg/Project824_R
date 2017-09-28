@@ -130,6 +130,32 @@
             android:textColor="@android:color/white"
             android:textSize="18sp" />
     </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/ll_videoinfo_container"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/title_gradient_bg2"
+        android:layout_alignParentBottom="true"
+        android:contentDescription="视屏信息"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_playcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_back_white"
+            android:text="播放次数"/>
+
+        <TextView
+            android:id="@+id/tv_videotime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="时长"/>
+    </RelativeLayout>
 
 
     <ImageView

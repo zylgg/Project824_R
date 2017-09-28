@@ -105,6 +105,7 @@ public class PostsListBean {
         private String videotime;
         private String original_pid;
         private int cache_version;
+        private String playcount;
         private String cai;
         private Object top_cmt;
         private String weixin_url;
@@ -538,6 +539,14 @@ public class PostsListBean {
 
         public void setThemes(Object themes) {
             this.themes = themes;
+        }
+
+        public String getPlaycount() {
+            return playcount;
+        }
+
+        public void setPlaycount(String playcount) {
+            this.playcount = playcount;
         }
     }
 

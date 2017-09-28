@@ -169,7 +169,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             mMoreWindow = new MoreWindow(this);
             mMoreWindow.init();
         }
-        mMoreWindow.showMoreWindow(view, bottomStatusHeight);
+        mMoreWindow.showMoreWindow(fragmenttabhost, bottomStatusHeight);
     }
 
     class Tabitem {

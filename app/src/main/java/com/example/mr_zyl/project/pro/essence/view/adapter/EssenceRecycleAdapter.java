@@ -26,7 +26,7 @@ import com.example.mr_zyl.project.pro.essence.view.activity.BrowerActivity;
 import com.example.mr_zyl.project.pro.essence.view.selfview.ExpandableTextView;
 import com.example.mr_zyl.project.pro.essence.view.selfview.PlayVideoIconView;
 import com.example.mr_zyl.project.pro.essence.view.selfview.RingView;
-import com.example.mr_zyl.project.utils.DateUtils;
+import com.example.mr_zyl.project.utils.MyDateUtils;
 import com.example.mr_zyl.project.utils.DisplayUtil;
 import com.example.zylsmallvideolibrary.JCVideoPlayer;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -189,7 +189,7 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
         ImageLoader.getInstance().displayImage(postList.getProfile_image(), holder.iv_header);
 
         holder.tv_name.setText(postList.getName());
-        holder.tv_time.setText(DateUtils.parseDate(postList.getCreate_time()));
+        holder.tv_time.setText(MyDateUtils.parseDate(postList.getCreate_time()));
         //设置内容
         holder.etv_content.setText(postList.getText(),sparseBooleanArray,position);
         //是否显示数据详情标记(针对gif的)
@@ -267,14 +267,14 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
             holder.jcv_videopic.setVisibility(View.VISIBLE);
             holder.jcv_videopic.getLayoutParams().width = (int) view_w;
             holder.jcv_videopic.getLayoutParams().height = postList.getView_maxheight();
-            holder.jcv_videopic.setUp(postList.getVideouri(), postList.getBimageuri(), postList.getText(), false);
+            holder.jcv_videopic.setUp(postList.getVideouri(), postList.getBimageuri(), postList.getText(), false,postList.getPlaycount(),Integer.valueOf(postList.getVideotime()));
         }
         //voice声音
         if (holder.itemtype == 4) {
             holder.jcv_videopic.setVisibility(View.VISIBLE);
             holder.jcv_videopic.getLayoutParams().width = (int) view_w;
             holder.jcv_videopic.getLayoutParams().height = postList.getView_maxheight();
-            holder.jcv_videopic.setUp(postList.getVoiceuri(), postList.getBimageuri(), postList.getText(), false);
+            holder.jcv_videopic.setUp(postList.getVoiceuri(), postList.getBimageuri(), postList.getText(), false,postList.getPlaycount(),Integer.valueOf(postList.getVideotime()));
         }
         holder.tv_like.setText(postList.getDing());
         holder.tv_dislike.setText(postList.getCai());

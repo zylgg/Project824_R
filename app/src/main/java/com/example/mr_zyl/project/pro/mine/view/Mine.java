@@ -293,7 +293,7 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
         FileCallBack fileCallBack = new FileCallBack(filepath, "qqmusic.apk") {
             @Override
             public void onBefore(Request request, int id) {
-                showProgressDialog("下载中。。。", false, ProgressDialog.STYLE_HORIZONTAL);
+                showProgressDialog("下载中。。。", ProgressDialog.STYLE_HORIZONTAL);
             }
 
             @Override

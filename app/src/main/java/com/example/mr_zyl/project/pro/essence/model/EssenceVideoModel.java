@@ -8,11 +8,16 @@ import com.example.mr_zyl.project.http.impl.SystemHttpCommand;
 import com.example.mr_zyl.project.http.utils.HttpTask;
 import com.example.mr_zyl.project.http.utils.HttpUtils;
 import com.example.mr_zyl.project.pro.base.model.BaseModel;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.Callback;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by TFHR02 on 2017/2/22.
  * M层:数据层
- * <p/>
+ * <p>
  * 请求网络数据
  * 加载本地数据库缓存数据
  * 加载SD卡数据等等......
@@ -28,7 +33,8 @@ public class EssenceVideoModel extends BaseModel {
 
     /**
      * 获取精华列表
-     * @param type---数据类型(例如:图片  视频  音频  妹子等等)
+     *
+     * @param type---数据类型(例如:图片             视频  音频  段子等等)
      * @param page---页码
      * @param maxtime--用户加载更多
      * @param onhttpResultlistener---数据回调监听
@@ -45,7 +51,18 @@ public class EssenceVideoModel extends BaseModel {
         //发送请求
         HttpTask task = new HttpTask(getUrl(), param, new SystemHttpCommand(), onhttpResultlistener);
         task.execute();
+    }
 
+    public void getEssenceListByOkHttp(int type, int page, String maxtime, Callback callback) {
+        Map<String, String> param = new HashMap();
+        param.put("a", "list");
+        param.put("c", "data");
+        param.put("type", "" + type);
+        param.put("page", "" + page);
+        if (!TextUtils.isEmpty(maxtime)) {
+            param.put("maxtime", maxtime);
+        }
+        OkHttpUtils.post().url(getUrl()).params(param).build().execute(callback);
     }
 
 }

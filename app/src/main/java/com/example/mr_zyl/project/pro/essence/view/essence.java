@@ -180,7 +180,7 @@ public class essence extends BaseFragment {
                         new AsyncTask<Integer, Integer, Integer>() {
                             @Override
                             protected void onPreExecute() {
-                                showProgressDialog("清理中...", false);
+                                showProgressDialog("清理中...");
                             }
 
                             @Override

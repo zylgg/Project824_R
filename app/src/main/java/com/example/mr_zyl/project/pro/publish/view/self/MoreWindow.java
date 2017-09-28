@@ -6,10 +6,8 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +22,7 @@ import android.widget.TextView;
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.publish.animation.KickBackAnimator;
 import com.example.mr_zyl.project.utils.DisplayUtil;
+import com.example.mr_zyl.project.utils.SystemAppUtils;
 import com.example.mr_zyl.project.utils.ToastUtil;
 
 public class MoreWindow extends PopupWindow implements OnClickListener {
@@ -32,7 +31,6 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
     Activity mContext;
     private int mWidth;
     private int mHeight;
-    private int statusBarHeight;
     private Bitmap mBitmap = null;
     private Bitmap overlay = null;
 
@@ -43,17 +41,11 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
     }
 
     public void init() {
-        Rect frame = new Rect();
-        mContext.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
-        statusBarHeight = frame.top;
-        DisplayMetrics metrics = new DisplayMetrics();
-        mContext.getWindowManager().getDefaultDisplay()
-                .getMetrics(metrics);
-        mWidth = metrics.widthPixels;
-        mHeight = metrics.heightPixels;
+        mWidth = LinearLayout.LayoutParams.MATCH_PARENT;
+        mHeight = LinearLayout.LayoutParams.MATCH_PARENT;
 
         setWidth(mWidth);
-        setHeight(mHeight);
+        setHeight(DisplayUtil.Height(mContext)- SystemAppUtils.getStatusHeight(mContext));
     }
 
     public void showMoreWindow(View anchor, int bottomMargin) {
