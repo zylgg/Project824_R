@@ -274,7 +274,7 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
             holder.jcv_videopic.setVisibility(View.VISIBLE);
             holder.jcv_videopic.getLayoutParams().width = (int) view_w;
             holder.jcv_videopic.getLayoutParams().height = postList.getView_maxheight();
-            holder.jcv_videopic.setUp(postList.getVoiceuri(), postList.getBimageuri(), postList.getText(), false,postList.getPlaycount(),Integer.valueOf(postList.getVideotime()));
+            holder.jcv_videopic.setUp(postList.getVoiceuri(), postList.getBimageuri(), postList.getText(), false,postList.getPlaycount(),Integer.valueOf(postList.getVoicetime()));
         }
         holder.tv_like.setText(postList.getDing());
         holder.tv_dislike.setText(postList.getCai());

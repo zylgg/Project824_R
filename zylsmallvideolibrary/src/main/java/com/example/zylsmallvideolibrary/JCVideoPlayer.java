@@ -176,8 +176,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         ll_bottom_control.setVisibility(View.INVISIBLE);//默认隐藏底部控制按钮
         pb_main_progressbar.setVisibility(View.INVISIBLE);//显示主要的进度条
         ll_videoinfo_container.setVisibility(View.VISIBLE);
-        tv_playcount.setText("播放次数："+playcount);
-        tv_videotime.setText(Utils.stringForTime(videotime));
+        tv_playcount.setText(playcount+"次播放");
+        tv_videotime.setText(Utils.stringForTime2(videotime));
 
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
@@ -292,6 +292,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             iv_start.setImageResource(R.drawable.click_video_play_selector);
             iv_mp4cover.setVisibility(View.VISIBLE);
             iv_start.setVisibility(View.VISIBLE);
+            ll_videoinfo_container.setVisibility(View.VISIBLE);
             ll_bottom_control.setVisibility(View.INVISIBLE);//默认隐藏底部控制按钮
             pb_main_progressbar.setVisibility(View.INVISIBLE);//显示主要的进度条
 //            JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
@@ -382,6 +383,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 iv_mp4cover.setVisibility(View.VISIBLE);//音频缩略图 设置显示
                 iv_mp3cover.setVisibility(View.VISIBLE);//音乐缩略图 设置显示
                 pb_loading.setVisibility(View.VISIBLE);//加载进度圈 设置显示
+                ll_videoinfo_container.setVisibility(View.INVISIBLE);
 
                 setProgressAndTime(0, 0, 0);//初始化进度
                 setProgressBuffered(0);//初始化缓存进度
@@ -509,7 +511,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 pb_main_progressbar.setVisibility(View.INVISIBLE);
                 setTitleVisibility(View.VISIBLE);
             }
-            ll_videoinfo_container.setVisibility(View.INVISIBLE);
             pb_loading.setVisibility(View.INVISIBLE);
         } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
             if (ll_bottom_control.getVisibility() == View.VISIBLE) {

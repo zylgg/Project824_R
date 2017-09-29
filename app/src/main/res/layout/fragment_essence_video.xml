@@ -16,6 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
+            android:scrollbars="vertical"
+            android:scrollbarStyle="insideInset"
             ></android.support.v7.widget.RecyclerView>
 
     </com.example.mr_zyl.project.pro.base.view.refreshview.XRefreshView>
