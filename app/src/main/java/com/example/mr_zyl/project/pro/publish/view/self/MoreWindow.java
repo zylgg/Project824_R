@@ -25,6 +25,9 @@ import com.example.mr_zyl.project.utils.DisplayUtil;
 import com.example.mr_zyl.project.utils.SystemAppUtils;
 import com.example.mr_zyl.project.utils.ToastUtil;
 
+import net.robinx.lib.blur.widget.BlurMaskRelativeLayout;
+import net.robinx.lib.blur.widget.BlurMode;
+
 public class MoreWindow extends PopupWindow implements OnClickListener {
 
     private String TAG = MoreWindow.class.getSimpleName();
@@ -33,6 +36,7 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
     private int mHeight;
     private Bitmap mBitmap = null;
     private Bitmap overlay = null;
+    private BlurMaskRelativeLayout bmrl_main_poplayout;
 
     private Handler mHandler = new Handler();
 
@@ -49,27 +53,25 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
     }
 
     public void showMoreWindow(View anchor, int bottomMargin) {
-        final LinearLayout layout = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.center_music_more_window, null);
-        setContentView(layout);
-
-        ImageView close = (ImageView) layout.findViewById(R.id.center_music_window_close);
-        final RelativeLayout rl_menu_layout = (RelativeLayout) layout.findViewById(R.id.rl_menu_layout);
-
+        final View view = LayoutInflater.from(mContext).inflate(R.layout.center_music_more_window, null);
+        setContentView(view);
+        bmrl_main_poplayout= (BlurMaskRelativeLayout) view.findViewById(R.id.bmrl_main_poplayout);
+        bmrl_main_poplayout.blurMode(BlurMode.RENDER_SCRIPT).blurRadius(10);
+        ImageView close = (ImageView) view.findViewById(R.id.center_music_window_close);
+        final RelativeLayout rl_menu_layout = (RelativeLayout) view.findViewById(R.id.rl_menu_layout);
         close.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 if (isShowing()) {
                     closeAnimation(rl_menu_layout);
                 }
             }
-
         });
         showAnimation(rl_menu_layout);
         setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), (Bitmap) null));
 //		setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), blur()));
         setOutsideTouchable(true);
-        setFocusable(true);
+        setFocusable(false);
         showAtLocation(anchor, Gravity.BOTTOM, 0, bottomMargin);
     }
 

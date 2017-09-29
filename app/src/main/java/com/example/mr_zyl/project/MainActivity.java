@@ -42,6 +42,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     protected int initLayoutId() {
         return R.layout.activity_main;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +110,9 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void onBackPressed() {
+        if (mMoreWindow.isShowing()){
+            return;
+        }
         if (System.currentTimeMillis() - lasttime < 2000) {
             ((BaseApplication) this.getApplication()).exit(0);
         } else {
@@ -169,6 +173,12 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             mMoreWindow = new MoreWindow(this);
             mMoreWindow.init();
         }
+//        mMoreWindow.setTouchInterceptor(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return false;
+//            }
+//        });
         mMoreWindow.showMoreWindow(fragmenttabhost, bottomStatusHeight);
     }
 
