@@ -231,7 +231,9 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
             holder.siv_largepic.setDownloadProgressListener(new DownloadProgressListener() {
                 @Override
                 public void onUpdateDownloadProgress(int totalLength, int completedLength) {
-                    holder.rv_loadprogress.setVisibility(View.VISIBLE);
+                    if (holder.rv_loadprogress.getVisibility()!=View.VISIBLE){
+                        holder.rv_loadprogress.setVisibility(View.VISIBLE);
+                    }
                     float angle = (Float.valueOf(completedLength) / Float.valueOf(totalLength)) * 360;
                     holder.rv_loadprogress.setAngle(angle);
                 }
@@ -253,7 +255,9 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
             holder.siv_gifpic.setDownloadProgressListener(new DownloadProgressListener() {
                 @Override
                 public void onUpdateDownloadProgress(int totalLength, int completedLength) {
-                    holder.rv_loadprogress.setVisibility(View.VISIBLE);
+                    if (holder.rv_loadprogress.getVisibility()!=View.VISIBLE){
+                        holder.rv_loadprogress.setVisibility(View.VISIBLE);
+                    }
                     float angle = (Float.valueOf(completedLength) / Float.valueOf(totalLength)) * 360;
                     holder.rv_loadprogress.setAngle(angle);
                 }

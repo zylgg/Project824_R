@@ -160,7 +160,10 @@
             android:gravity="center"
             android:text="点击查看全图"
             android:textColor="@android:color/holo_green_dark"
-            android:visibility="gone" />
+            android:background="@drawable/title_gradient_bg2"
+            android:paddingTop="@dimen/y12"
+            android:paddingBottom="@dimen/y12"
+            android:visibility="visible" />
 
     </RelativeLayout>
 

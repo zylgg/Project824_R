@@ -47,7 +47,7 @@ public class RingView extends View {
     /**
      * 完成扇形角度
      */
-    private static final float startAngle = 360;
+    private static final float startAngle = 90;
     /**
      * 扇形中心点X轴
      */
@@ -160,7 +160,7 @@ public class RingView extends View {
         path.addCircle(content_X, content_Y, smallRadius, Path.Direction.CCW);
         path.close();
         canvas.drawPath(path, paint);
-        getSectorClip(canvas, startAngle);
+        getSectorClip(canvas);
 
 
         //覆盖扇形区域的中间那一个小圆
@@ -187,9 +187,8 @@ public class RingView extends View {
      * 返回一个扇形的剪裁区
      *
      * @param canvas     //画笔
-     * @param startAngle //起始角度
      */
-    private void getSectorClip(Canvas canvas, float startAngle) {
+    private void getSectorClip(Canvas canvas) {
         paint.setColor(PecentColor);//进度的颜色  
         Path path = new Path();
         // 下面是获得一个三角形的剪裁区  
@@ -207,18 +206,18 @@ public class RingView extends View {
         RectF rectF = new RectF(content_X - bigRadius, content_Y - bigRadius, content_X + bigRadius,
                 content_Y + bigRadius);
         // 下面是获得弧形剪裁区的方法  （参数2，开始角度；参数3，所要扫过的角度）
-        path.addArc(rectF, startAngle, SweepAngle - startAngle);
+        path.addArc(rectF, startAngle, SweepAngle);
         canvas.drawPath(path, paint);
 
     }
 
     /**
-     * @param startAngle 开始角度
+     * @param Angle 角度
      */
-    public void setAngle(float startAngle) {
+    public void setAngle(float Angle) {
         DecimalFormat format = new DecimalFormat("#");
-        float text = (startAngle / 360f) * 100;
-        SweepAngle = (360 - startAngle);
+        float text = (Angle / 360f) * 100;
+        SweepAngle = (360 - Angle);
         setText(format.format(text) + "%");
 
         invalidate();

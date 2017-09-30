@@ -27,8 +27,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:theme="@style/THEME_trans"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/THEME_trans" />
         <activity
             android:name=".LaunchActivity"
             android:theme="@style/TransparentTheme">
@@ -43,14 +43,16 @@
         <activity android:name=".pro.mine.view.activity.BaiduMapActivity" />
         <activity android:name=".pro.mine.view.activity.CurtainActivity" />
         <activity android:name=".pro.mine.view.activity.FastBlurActivity" />
-        <activity android:name=".pro.mine.view.activity.BlurredActivity"
-            android:theme="@style/BlurredAppTheme"/>
+        <activity
+            android:name=".pro.mine.view.activity.BlurredActivity"
+            android:theme="@style/BlurredAppTheme" />
         <activity android:name=".pro.mine.view.activity.ListViewSSActivity" />
         <activity android:name=".pro.mine.view.activity.LoadGifActivity" />
         <activity android:name=".pro.mine.view.activity.QRImageActivity" />
         <activity android:name=".pro.newpost.view.Activity.TestMeasureActivity" />
         <activity android:name=".pro.essence.view.activity.BrowerActivity" />
-        <activity android:name=".pro.newpost.view.Activity.TreeViewActivity"></activity>
+        <activity android:name=".pro.newpost.view.Activity.TreeViewActivity" />
+        <activity android:name=".pro.publish.view.SimpleTakePhotoActivity"></activity>
     </application>
 
 </manifest>

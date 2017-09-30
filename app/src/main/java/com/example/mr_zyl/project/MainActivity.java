@@ -1,10 +1,12 @@
 package com.example.mr_zyl.project;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
@@ -17,9 +19,14 @@ import com.example.mr_zyl.project.pro.essence.view.essence;
 import com.example.mr_zyl.project.pro.mine.view.Mine;
 import com.example.mr_zyl.project.pro.newpost.view.Newpost;
 import com.example.mr_zyl.project.pro.publish.view.Publish;
+import com.example.mr_zyl.project.pro.publish.view.SimpleTakePhotoActivity;
 import com.example.mr_zyl.project.pro.publish.view.self.MoreWindow;
 import com.example.mr_zyl.project.utils.SystemAppUtils;
 import com.example.mr_zyl.project.utils.ToastUtil;
+import com.lqr.imagepicker.ImagePicker;
+import com.lqr.imagepicker.bean.ImageItem;
+import com.lqr.imagepicker.ui.ImageGridActivity;
+import com.lqr.imagepicker.ui.ImagePreviewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +117,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void onBackPressed() {
-        if (mMoreWindow.isShowing()){
+        if (mMoreWindow!=null&&mMoreWindow.isShowing()){
             return;
         }
         if (System.currentTimeMillis() - lasttime < 2000) {
@@ -162,6 +169,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                 break;
         }
     }
+    public static final int IMAGE_PICKER = 100;
 
     /**
      * 显示更多窗口
@@ -170,16 +178,40 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
      */
     private void showMoreWindow(View view) {
         if (null == mMoreWindow) {
-            mMoreWindow = new MoreWindow(this);
+            mMoreWindow = new MoreWindow(this, new MoreWindow.MenuOnclickListener() {
+                @Override
+                public void selectPhoto() {
+                    Intent intent=new Intent(MainActivity.this, ImageGridActivity.class);
+                    startActivityForResult(intent,IMAGE_PICKER);
+                }
+            });
             mMoreWindow.init();
         }
-//        mMoreWindow.setTouchInterceptor(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                return false;
-//            }
-//        });
         mMoreWindow.showMoreWindow(fragmenttabhost, bottomStatusHeight);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==IMAGE_PICKER){
+            switch (resultCode){
+                case ImagePicker.RESULT_CODE_ITEMS:
+                    if (data != null) {
+                        //是否发送原图
+                        boolean isOrig = data.getBooleanExtra(ImagePreviewActivity.ISORIGIN, false);
+                        ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+
+                        Log.e("CSDN_LQR", isOrig ? "发原图" : "不发原图");//若不发原图的话，需要在自己在项目中做好压缩图片算法
+                        for (ImageItem imageItem : images) {
+                            Log.e("CSDN_LQR", imageItem.path);
+                        }
+                        Intent intent=new Intent(MainActivity.this, SimpleTakePhotoActivity.class);
+                        intent.putExtra("imagepaths",images);
+                        startActivity(intent);
+                    }
+                break;
+            }
+        }
     }
 
     class Tabitem {

@@ -39,6 +39,7 @@ android {
     }
 }
 
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
@@ -69,4 +70,6 @@ dependencies {
     compile 'com.zhy:okhttputils:2.6.2'
     //图片加载
     compile 'com.squareup.picasso:picasso:2.5.2'
+    //图片浏览处理框架
+    compile 'com.lqr.imagepicker:library:1.0.0'
 }

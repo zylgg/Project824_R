@@ -1,4 +1,4 @@
-<net.robinx.lib.blur.widget.BlurMaskRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.mr_zyl.project.pro.publish.view.self.BlurRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bmrl_main_poplayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,7 +17,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/more_window_local"
+                android:id="@+id/more_window_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="42dp"
@@ -30,12 +30,12 @@
                 android:text="文字" />
 
             <TextView
-                android:id="@+id/more_window_online"
+                android:id="@+id/more_window_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="30dip"
                 android:layout_marginTop="@dimen/y540"
-                android:layout_toRightOf="@+id/more_window_local"
+                android:layout_toRightOf="@+id/more_window_language"
                 android:clickable="true"
                 android:drawableTop="@drawable/tabbar_compose_photo"
                 android:gravity="center_horizontal"
@@ -43,11 +43,11 @@
                 android:text="相册" />
 
             <TextView
-                android:id="@+id/more_window_delete"
+                android:id="@+id/more_window_take"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/y540"
-                android:layout_toRightOf="@+id/more_window_online"
+                android:layout_toRightOf="@+id/more_window_photo"
                 android:clickable="true"
                 android:drawableTop="@drawable/tabbar_compose_camera"
                 android:gravity="center_horizontal"
@@ -55,10 +55,10 @@
                 android:text="拍摄" />
 
             <TextView
-                android:id="@+id/more_window_collect"
+                android:id="@+id/more_window_signin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/more_window_local"
+                android:layout_below="@+id/more_window_language"
                 android:layout_marginLeft="42dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="15dp"
@@ -72,10 +72,10 @@
                 android:id="@+id/more_window_auto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/more_window_online"
+                android:layout_below="@+id/more_window_take"
                 android:layout_marginRight="30dip"
                 android:layout_marginTop="15dp"
-                android:layout_toRightOf="@+id/more_window_collect"
+                android:layout_toRightOf="@+id/more_window_signin"
                 android:clickable="true"
                 android:drawableTop="@drawable/tabbar_compose_review"
                 android:gravity="center_horizontal"
@@ -83,10 +83,10 @@
                 android:text="点评" />
 
             <TextView
-                android:id="@+id/more_window_external"
+                android:id="@+id/more_window_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/more_window_delete"
+                android:layout_below="@+id/more_window_take"
                 android:layout_marginTop="15dp"
                 android:layout_toRightOf="@+id/more_window_auto"
                 android:clickable="true"
@@ -106,4 +106,4 @@
             android:src="@drawable/tabbar_compose_background_icon_close" />
 
     </LinearLayout>
-</net.robinx.lib.blur.widget.BlurMaskRelativeLayout>
+</com.example.mr_zyl.project.pro.publish.view.self.BlurRelativeLayout>

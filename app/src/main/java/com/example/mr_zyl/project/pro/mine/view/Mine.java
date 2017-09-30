@@ -2,11 +2,11 @@ package com.example.mr_zyl.project.pro.mine.view;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -20,6 +20,7 @@ import com.example.mr_zyl.project.bean.BuilderItemEntity;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.base.view.item.DefaultImpleItemBuilder;
 import com.example.mr_zyl.project.pro.essence.view.selfview.PlayVideoIconView;
+import com.example.mr_zyl.project.pro.essence.view.selfview.RingView;
 import com.example.mr_zyl.project.pro.mine.bean.CustomTabEntity;
 import com.example.mr_zyl.project.pro.mine.bean.TabEntity;
 import com.example.mr_zyl.project.pro.mine.view.activity.BaiduMapActivity;
@@ -46,7 +47,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import okhttp3.Call;
 import okhttp3.Request;
 
@@ -66,7 +66,8 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
     boolean is_stop = true;
     @BindView(R.id.ctl_tablist)
     CommonTabLayout ctl_tablist;
-    Unbinder unbinder;
+    @BindView(R.id.rv_mine_loadprogress)
+    RingView rv_mine_loadprogress;
     /**
      * 自定义的评分控件
      */
@@ -106,7 +107,7 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
 
     @Override
     public void initContentView(View viewContent) {
-        ButterKnife.bind(this,viewContent);
+        ButterKnife.bind(this, viewContent);
         //初始化自定义的构造者模式的toolbar
         initToolBar(viewContent);
         initview(viewContent);
@@ -184,6 +185,18 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
         }
     }
 
+    int progress = 0;
+    private Handler handler = new Handler() {
+        @Override
+        public boolean sendMessageAtTime(Message msg, long uptimeMillis) {
+            progress = progress + 36;
+            if (progress <= 360) {
+                rv_mine_loadprogress.setAngle(progress);
+            }
+            return true;
+        }
+    };
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -191,7 +204,8 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
                 if (pviv_mine_test.getPlayStatus() == PlayVideoIconView.STATUS.pause) {//暂停时
                     pviv_mine_test.setPlayStatus(PlayVideoIconView.STATUS.playing);
                     slv_loading_view.startSmile();
-                    DownQQMusicApk();
+//                    DownQQMusicApk();
+                    handler.sendEmptyMessage(0);
                 } else {//正在播放时
                     pviv_mine_test.setPlayStatus(PlayVideoIconView.STATUS.pause);
                     slv_loading_view.stopSmile(false);
@@ -262,20 +276,6 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
                 + SystemAppUtils.getBottomStatusHeight(getContext());
         tv_fenbianlv.append(screeninfo);
         mRatingbar.setIsIndicator(false);//是否 不允许用户操作
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     /**

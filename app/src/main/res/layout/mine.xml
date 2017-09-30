@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <TextView
@@ -49,6 +50,13 @@
             android:layout_height="36dp"
             app:themecolor="@color/colorAccent"
             />
+        <com.example.mr_zyl.project.pro.essence.view.selfview.RingView
+            android:id="@+id/rv_mine_loadprogress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:pecentColor="@color/colorAccent"
+            app:ringtextcolor="@color/colorAccent" />
     </LinearLayout>
 
     <com.example.mr_zyl.project.pro.mine.view.selfview.CommonTabLayout

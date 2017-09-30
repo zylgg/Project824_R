@@ -25,7 +25,6 @@ import com.example.mr_zyl.project.utils.DisplayUtil;
 import com.example.mr_zyl.project.utils.SystemAppUtils;
 import com.example.mr_zyl.project.utils.ToastUtil;
 
-import net.robinx.lib.blur.widget.BlurMaskRelativeLayout;
 import net.robinx.lib.blur.widget.BlurMode;
 
 public class MoreWindow extends PopupWindow implements OnClickListener {
@@ -36,12 +35,14 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
     private int mHeight;
     private Bitmap mBitmap = null;
     private Bitmap overlay = null;
-    private BlurMaskRelativeLayout bmrl_main_poplayout;
+    private BlurRelativeLayout bmrl_main_poplayout;
 
     private Handler mHandler = new Handler();
+    private MenuOnclickListener menuListener;
 
-    public MoreWindow(Activity context) {
-        mContext = context;
+    public MoreWindow(Activity context,MenuOnclickListener menuListener) {
+        this.mContext = context;
+        this.menuListener=menuListener;
     }
 
     public void init() {
@@ -55,7 +56,7 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
     public void showMoreWindow(View anchor, int bottomMargin) {
         final View view = LayoutInflater.from(mContext).inflate(R.layout.center_music_more_window, null);
         setContentView(view);
-        bmrl_main_poplayout= (BlurMaskRelativeLayout) view.findViewById(R.id.bmrl_main_poplayout);
+        bmrl_main_poplayout= (BlurRelativeLayout) view.findViewById(R.id.bmrl_main_poplayout);
         bmrl_main_poplayout.blurMode(BlurMode.RENDER_SCRIPT).blurRadius(10);
         ImageView close = (ImageView) view.findViewById(R.id.center_music_window_close);
         final RelativeLayout rl_menu_layout = (RelativeLayout) view.findViewById(R.id.rl_menu_layout);
@@ -73,6 +74,12 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
         setOutsideTouchable(true);
         setFocusable(false);
         showAtLocation(anchor, Gravity.BOTTOM, 0, bottomMargin);
+        setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                destroy();
+            }
+        });
     }
 
     private void showAnimation(ViewGroup layout) {
@@ -140,7 +147,7 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
                 }
             }, (layout.getChildCount() - i - 1) * 50);
 
-            if (child.getId() == R.id.more_window_local) {
+            if (child.getId() == R.id.more_window_language) {
                 mHandler.postDelayed(new Runnable() {
 
                     @Override
@@ -156,17 +163,18 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.more_window_local:
+            case R.id.more_window_language:
                 break;
-            case R.id.more_window_online:
+            case R.id.more_window_photo:
+                menuListener.selectPhoto();
                 break;
-            case R.id.more_window_delete:
+            case R.id.more_window_take:
                 break;
-            case R.id.more_window_collect:
+            case R.id.more_window_signin:
                 break;
             case R.id.more_window_auto:
                 break;
-            case R.id.more_window_external:
+            case R.id.more_window_more:
                 break;
         }
         ToastUtil.showToast(mContext,((TextView)v).getText().toString());
@@ -176,13 +184,17 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
         if (null != overlay) {
             overlay.recycle();
             overlay = null;
-            System.gc();
         }
         if (null != mBitmap) {
             mBitmap.recycle();
             mBitmap = null;
-            System.gc();
         }
+        bmrl_main_poplayout.clearCatchView();
+        System.gc();
+    }
+
+    public interface MenuOnclickListener {
+        void selectPhoto();
     }
 
 }

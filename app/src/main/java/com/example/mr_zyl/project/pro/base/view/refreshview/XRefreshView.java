@@ -124,6 +124,7 @@ public class XRefreshView extends LinearLayout {
 
         initWithContext(context, attrs);
         setOrientation(VERTICAL);
+        setBackgroundResource(R.color.white);
     }
 
     /**

@@ -30,6 +30,6 @@
         android:layout_marginRight="@dimen/x45"
         android:layout_marginBottom="?attr/actionBarSize"
         app:fabSize="mini"
-        android:src="@drawable/to_top_arrow"/>
+        android:src="@drawable/to_top_arrow2"/>
 
 </RelativeLayout>

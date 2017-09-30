@@ -180,7 +180,15 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fab_scrollTop:
-                rv_essence_one.smoothScrollToPosition(0);
+                LinearLayoutManager layoutManager = (LinearLayoutManager) rv_essence_one.getLayoutManager();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+
+                ToastUtil.showToast(getContext(),"firstVisibleItemPosition:"+firstVisibleItemPosition);
+                if (firstVisibleItemPosition>20-1){
+                    rv_essence_one.scrollToPosition(0);
+                }else {
+                    rv_essence_one.smoothScrollToPosition(0);
+                }
                 break;
         }
     }
