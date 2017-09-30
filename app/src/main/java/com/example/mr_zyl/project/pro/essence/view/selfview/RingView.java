@@ -47,7 +47,7 @@ public class RingView extends View {
     /**
      * 完成扇形角度
      */
-    private static final float startAngle = 90;
+    private static final float startAngle = 270;
     /**
      * 扇形中心点X轴
      */
@@ -142,37 +142,21 @@ public class RingView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         //终点角度小于等于0是不绘制
-        if (SweepAngle <= 0) {
-            return;
+        if (SweepAngle <= 0||SweepAngle==360) {
+            setVisibility(INVISIBLE);
+        }else{
+            setVisibility(VISIBLE);
         }
-        paint.setColor(RingColor);//ring的颜色
-        Path path = new Path();
-        //绘制大圆
-        path.reset();  
-        /*画圆   Path.Direction.CCW 逆时针 Path.Direction.CW 顺时针*/
-        path.addCircle(content_X, content_Y, bigRadius, Path.Direction.CCW);
-        path.close();
-        canvas.drawPath(path, paint);
-
-        //绘制小圆
-        path.reset();
-        paint.setColor(Color.WHITE);
-        path.addCircle(content_X, content_Y, smallRadius, Path.Direction.CCW);
-        path.close();
-        canvas.drawPath(path, paint);
         getSectorClip(canvas);
 
-
         //覆盖扇形区域的中间那一个小圆
-        path.reset();
-        paint.setColor(Color.WHITE);
-        path.addCircle(content_X, content_Y, smallRadius, Path.Direction.CCW);
-        path.close();
-        canvas.drawPath(path, paint);
+//        paint.setColor(Color.WHITE);
+//        canvas.drawCircle(content_X, content_Y, smallRadius,paint);
 
         //绘制进度数值
         if (text != null) {
             paint.setColor(ringtextcolor);
+            paint.setStyle(Style.FILL);
             paint.setFakeBoldText(true);
             paint.setTextSize(TEXTSIZE);
 
@@ -189,25 +173,23 @@ public class RingView extends View {
      * @param canvas     //画笔
      */
     private void getSectorClip(Canvas canvas) {
-        paint.setColor(PecentColor);//进度的颜色  
-        Path path = new Path();
-        // 下面是获得一个三角形的剪裁区  
-        path.moveTo(content_X, content_Y); // 圆心  
-        path.lineTo(
-                (float) (content_X + bigRadius * Math.cos(startAngle * Math.PI / 180)), // 起始点角度在圆上对应的横坐标;  startAngle，Math.cos(a)里面a的单位是弧度。
 
-                (float) (content_Y + bigRadius * Math.sin(startAngle * Math.PI / 180))); // 起始点角度在圆上对应的纵坐标  
-        path.lineTo(
-                (float) (content_X + bigRadius * Math.cos(SweepAngle * Math.PI / 180)), // 终点角度在圆上对应的横坐标  
-
-                (float) (content_Y + bigRadius * Math.sin(SweepAngle * Math.PI / 180))); // 终点点角度在圆上对应的纵坐标  
-        path.close();
+        paint.setStrokeWidth(ring_width);
+        paint.setStyle(Style.STROKE);
         //设置一个正方形-圆外接正方形
-        RectF rectF = new RectF(content_X - bigRadius, content_Y - bigRadius, content_X + bigRadius,
-                content_Y + bigRadius);
+        RectF rectF = new RectF(ring_width/2,ring_width/2,width-ring_width/2,height-ring_width/2);
+
+        Path path = new Path();
+        paint.setColor(Color.GRAY);//进度的颜色
         // 下面是获得弧形剪裁区的方法  （参数2，开始角度；参数3，所要扫过的角度）
-        path.addArc(rectF, startAngle, SweepAngle);
+        path.addArc(rectF, 0, 360);
         canvas.drawPath(path, paint);
+
+        Path path2 = new Path();
+        paint.setColor(PecentColor);//进度的颜色
+        // 下面是获得弧形剪裁区的方法  （参数2，开始角度；参数3，所要扫过的角度）
+        path2.addArc(rectF, startAngle, SweepAngle);
+        canvas.drawPath(path2, paint);
 
     }
 
@@ -217,7 +199,7 @@ public class RingView extends View {
     public void setAngle(float Angle) {
         DecimalFormat format = new DecimalFormat("#");
         float text = (Angle / 360f) * 100;
-        SweepAngle = (360 - Angle);
+        SweepAngle = Angle;
         setText(format.format(text) + "%");
 
         invalidate();

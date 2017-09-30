@@ -53,7 +53,7 @@ public class EssenceMyLvFragment extends BaseFragment {
         if (adapter == null) {
             adapter = new MyRefreshLv_Adapter(lists, getActivity());
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             lists.add("item:" + (i + 1));
         }
         prl_s.setAdapter(adapter);

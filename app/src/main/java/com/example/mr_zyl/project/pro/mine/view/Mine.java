@@ -34,6 +34,7 @@ import com.example.mr_zyl.project.pro.mine.view.activity.QRImageActivity;
 import com.example.mr_zyl.project.pro.mine.view.navigation.MineNavigationBuilder;
 import com.example.mr_zyl.project.pro.mine.view.selfview.CommonTabLayout;
 import com.example.mr_zyl.project.pro.mine.view.selfview.SmileyLoadingView;
+import com.example.mr_zyl.project.utils.AutoRefresh;
 import com.example.mr_zyl.project.utils.DisplayUtil;
 import com.example.mr_zyl.project.utils.SystemAppUtils;
 import com.example.mr_zyl.project.utils.ToastUtil;
@@ -188,12 +189,16 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
     int progress = 0;
     private Handler handler = new Handler() {
         @Override
-        public boolean sendMessageAtTime(Message msg, long uptimeMillis) {
+        public void handleMessage(Message msg) {
             progress = progress + 36;
             if (progress <= 360) {
+                if (rv_mine_loadprogress.getVisibility()!=View.VISIBLE){
+                    rv_mine_loadprogress.setVisibility(View.VISIBLE);
+                }
                 rv_mine_loadprogress.setAngle(progress);
+            } else {
+                AutoRefresh.stop(1);
             }
-            return true;
         }
     };
 
@@ -205,7 +210,8 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
                     pviv_mine_test.setPlayStatus(PlayVideoIconView.STATUS.playing);
                     slv_loading_view.startSmile();
 //                    DownQQMusicApk();
-                    handler.sendEmptyMessage(0);
+                    progress=0;
+                    AutoRefresh.start(handler, 1);
                 } else {//正在播放时
                     pviv_mine_test.setPlayStatus(PlayVideoIconView.STATUS.pause);
                     slv_loading_view.stopSmile(false);
