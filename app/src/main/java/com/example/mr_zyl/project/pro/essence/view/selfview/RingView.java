@@ -142,8 +142,15 @@ public class RingView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         //终点角度小于等于0是不绘制
-        if (SweepAngle <= 0||SweepAngle==360) {
+        if (SweepAngle <= 0) {
             setVisibility(INVISIBLE);
+        }else if(SweepAngle==360){
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    setVisibility(INVISIBLE);
+                }
+            },300);
         }else{
             setVisibility(VISIBLE);
         }
