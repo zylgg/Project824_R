@@ -137,6 +137,7 @@ public class essence extends BaseFragment {
         };
         EssenceAdapter adapter = new EssenceAdapter(getFragmentManager(), Arrays.asList(titles), null);
         this.vp_essence.setAdapter(adapter);
+        this.vp_essence.setCurrentItem(4);
         this.tab_essence.setupWithViewPager(this.vp_essence);
     }
 

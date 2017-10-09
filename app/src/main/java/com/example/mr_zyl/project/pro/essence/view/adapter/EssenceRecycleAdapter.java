@@ -200,85 +200,82 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
         holder.rv_loadprogress.setVisibility(View.GONE);
         //默认不显示视频播放控件
         holder.jcv_videopic.setVisibility(View.GONE);
-        // 普通图
-        if (holder.itemtype == 0) {
-            holder.iv_pic.getLayoutParams().height = postList.getView_maxheight();
-            ImageLoader.getInstance().displayImage(postList.getCdn_img(), holder.iv_pic, options, null, new ImageLoadingProgressListener() {
-                @Override
-                public void onProgressUpdate(String imageUri, View view, int current, int total) {
-                    holder.rv_loadprogress.setVisibility(View.VISIBLE);
-                    float angle = (Float.valueOf(current) / Float.valueOf(total)) * 360;
-                    holder.rv_loadprogress.setAngle(angle);
-                }
-            });
-            holder.iv_pic.setOnClickListener(new pic_onclicklistener(postList.getCdn_img(), postList.is_largepic(), postList.getVideouri()));
-        }
-        //大图
-        if (holder.itemtype == 1) {
-            holder.siv_largepic.getOptions()
-                    .setImageDisplayer(new DefaultImageDisplayer())
+        switch (holder.itemtype){
+            case 0:// 普通图
+                holder.iv_pic.getLayoutParams().height = postList.getView_maxheight();
+                ImageLoader.getInstance().displayImage(postList.getCdn_img(), holder.iv_pic, options, null, new ImageLoadingProgressListener() {
+                    @Override
+                    public void onProgressUpdate(String imageUri, View view, int current, int total) {
+                        holder.rv_loadprogress.setVisibility(View.VISIBLE);
+                        float angle = (Float.valueOf(current) / Float.valueOf(total)) * 360;
+                        holder.rv_loadprogress.setAngle(angle);
+                    }
+                });
+                holder.iv_pic.setOnClickListener(new pic_onclicklistener(postList.getCdn_img(), postList.is_largepic(), postList.getVideouri()));
+            break;
+            case 1://大图
+                holder.siv_largepic.getOptions()
+                        .setImageDisplayer(new DefaultImageDisplayer())
 //                    .setCacheProcessedImageInDisk(true)// 为了加快速度，将经过ImageProcessor、resize或thumbnailMode处理过或者读取时inSampleSize大于等于8的图片保存到磁盘缓存中，下次就直接读取
-                    .setCacheInMemoryDisabled(true);// 禁用内存缓存
-            holder.siv_largepic.setSupportZoom(true);//大图才支持缩放
-            holder.siv_largepic.setSupportLargeImage(true);//支持大图
-            holder.siv_largepic.getImageZoomer().zoom(postList.getLargeimg_zoom());//放大n倍 （2：需要自定义）
-            holder.siv_largepic.getImageZoomer().setReadMode(true);//开启阅读模式
-            holder.siv_largepic.getImageZoomer().setZoomable(false);//禁用手势缩放
+                        .setCacheInMemoryDisabled(true);// 禁用内存缓存
+                holder.siv_largepic.setSupportZoom(true);//大图才支持缩放
+                holder.siv_largepic.setSupportLargeImage(true);//支持大图
+                holder.siv_largepic.getImageZoomer().zoom(postList.getLargeimg_zoom());//放大n倍 （2：需要自定义）
+                holder.siv_largepic.getImageZoomer().setReadMode(true);//开启阅读模式
+                holder.siv_largepic.getImageZoomer().setZoomable(false);//禁用手势缩放
 
-            holder.siv_largepic.setDownloadProgressColor(Color.TRANSPARENT);
-            holder.siv_largepic.setShowDownloadProgress(true);
+                holder.siv_largepic.setDownloadProgressColor(Color.TRANSPARENT);
+                holder.siv_largepic.setShowDownloadProgress(true);
 
-            holder.siv_largepic.setDownloadProgressListener(new DownloadProgressListener() {
-                @Override
-                public void onUpdateDownloadProgress(int totalLength, int completedLength) {
-                    if (holder.rv_loadprogress.getVisibility()!=View.VISIBLE){
-                        holder.rv_loadprogress.setVisibility(View.VISIBLE);
+                holder.siv_largepic.setDownloadProgressListener(new DownloadProgressListener() {
+                    @Override
+                    public void onUpdateDownloadProgress(int totalLength, int completedLength) {
+                        if (holder.rv_loadprogress.getVisibility()!=View.VISIBLE){
+                            holder.rv_loadprogress.setVisibility(View.VISIBLE);
+                        }
+                        float angle = (Float.valueOf(completedLength) / Float.valueOf(totalLength)) * 360;
+                        holder.rv_loadprogress.setAngle(angle);
                     }
-                    float angle = (Float.valueOf(completedLength) / Float.valueOf(totalLength)) * 360;
-                    holder.rv_loadprogress.setAngle(angle);
-                }
-            });
+                });
 
-            holder.siv_largepic.displayImage(postList.getCdn_img());
-            holder.siv_largepic.setOnClickListener(new pic_onclicklistener(postList.getCdn_img(), postList.is_largepic(), postList.getVideouri()));
-        }
-        //gif图片
-        if (holder.itemtype == 2) {
-            holder.siv_gifpic.getLayoutParams().width = (int) view_w;
-            holder.siv_gifpic.getLayoutParams().height = postList.getView_maxheight();
-            holder.siv_gifpic.getOptions()
-                    .setImageDisplayer(new FadeInImageDisplayer())
-                    .setDecodeGifImage(true);//支持加载gif图
+                holder.siv_largepic.displayImage(postList.getCdn_img());
+                holder.siv_largepic.setOnClickListener(new pic_onclicklistener(postList.getCdn_img(), postList.is_largepic(), postList.getVideouri()));
+                break;
+            case 2: //gif图片
+                holder.siv_gifpic.getLayoutParams().width = (int) view_w;
+                holder.siv_gifpic.getLayoutParams().height = postList.getView_maxheight();
+                holder.siv_gifpic.getOptions()
+                        .setImageDisplayer(new FadeInImageDisplayer())
+                        .setDecodeGifImage(true);//支持加载gif图
 
-            holder.siv_gifpic.setDownloadProgressColor(Color.TRANSPARENT);
-            holder.siv_gifpic.setShowDownloadProgress(true);
-            holder.siv_gifpic.setDownloadProgressListener(new DownloadProgressListener() {
-                @Override
-                public void onUpdateDownloadProgress(int totalLength, int completedLength) {
-                    if (holder.rv_loadprogress.getVisibility()!=View.VISIBLE){
-                        holder.rv_loadprogress.setVisibility(View.VISIBLE);
+                holder.siv_gifpic.setDownloadProgressColor(Color.TRANSPARENT);
+                holder.siv_gifpic.setShowDownloadProgress(true);
+                holder.siv_gifpic.setDownloadProgressListener(new DownloadProgressListener() {
+                    @Override
+                    public void onUpdateDownloadProgress(int totalLength, int completedLength) {
+                        if (holder.rv_loadprogress.getVisibility()!=View.VISIBLE){
+                            holder.rv_loadprogress.setVisibility(View.VISIBLE);
+                        }
+                        float angle = (Float.valueOf(completedLength) / Float.valueOf(totalLength)) * 360;
+                        holder.rv_loadprogress.setAngle(angle);
                     }
-                    float angle = (Float.valueOf(completedLength) / Float.valueOf(totalLength)) * 360;
-                    holder.rv_loadprogress.setAngle(angle);
-                }
-            });
+                });
 
-            holder.siv_gifpic.displayImage(postList.getCdn_img());
-            holder.siv_gifpic.setOnClickListener(new pic_onclicklistener(postList.getCdn_img(), postList.is_largepic(), postList.getVideouri()));
-        }
-        //video视频
-        if (holder.itemtype == 3) {
-            holder.jcv_videopic.setVisibility(View.VISIBLE);
-            holder.jcv_videopic.getLayoutParams().width = (int) view_w;
-            holder.jcv_videopic.getLayoutParams().height = postList.getView_maxheight();
-            holder.jcv_videopic.setUp(postList.getVideouri(), postList.getBimageuri(), postList.getText(), false,postList.getPlaycount(),Integer.valueOf(postList.getVideotime()));
-        }
-        //voice声音
-        if (holder.itemtype == 4) {
-            holder.jcv_videopic.setVisibility(View.VISIBLE);
-            holder.jcv_videopic.getLayoutParams().width = (int) view_w;
-            holder.jcv_videopic.getLayoutParams().height = postList.getView_maxheight();
-            holder.jcv_videopic.setUp(postList.getVoiceuri(), postList.getBimageuri(), postList.getText(), false,postList.getPlaycount(),Integer.valueOf(postList.getVoicetime()));
+                holder.siv_gifpic.displayImage(postList.getCdn_img());
+                holder.siv_gifpic.setOnClickListener(new pic_onclicklistener(postList.getCdn_img(), postList.is_largepic(), postList.getVideouri()));
+                break;
+            case 3: //video视频
+                holder.jcv_videopic.setVisibility(View.VISIBLE);
+                holder.jcv_videopic.getLayoutParams().width = (int) view_w;
+                holder.jcv_videopic.getLayoutParams().height = postList.getView_maxheight();
+                holder.jcv_videopic.setUp(postList.getVideouri(), postList.getBimageuri(), postList.getText(), false,postList.getPlaycount(),Integer.valueOf(postList.getVideotime()));
+                break;
+            case 4://voice声音
+                holder.jcv_videopic.setVisibility(View.VISIBLE);
+                holder.jcv_videopic.getLayoutParams().width = (int) view_w;
+                holder.jcv_videopic.getLayoutParams().height = postList.getView_maxheight();
+                holder.jcv_videopic.setUp(postList.getVoiceuri(), postList.getBimageuri(), postList.getText(), false,postList.getPlaycount(),Integer.valueOf(postList.getVoicetime()));
+                break;
         }
         holder.tv_like.setText(postList.getDing());
         holder.tv_dislike.setText(postList.getCai());

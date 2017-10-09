@@ -52,7 +52,8 @@
         <activity android:name=".pro.newpost.view.Activity.TestMeasureActivity" />
         <activity android:name=".pro.essence.view.activity.BrowerActivity" />
         <activity android:name=".pro.newpost.view.Activity.TreeViewActivity" />
-        <activity android:name=".pro.publish.view.SimpleTakePhotoActivity"></activity>
+        <activity android:name=".pro.publish.view.SimpleTakePhotoActivity" />
+        <activity android:name=".pro.newpost.view.Activity.FontsActivity"></activity>
     </application>
 
 </manifest>

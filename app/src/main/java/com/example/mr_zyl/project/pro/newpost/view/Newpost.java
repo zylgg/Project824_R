@@ -10,6 +10,7 @@ import com.example.mr_zyl.project.bean.BuilderItemEntity;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.base.view.item.DefaultImpleItemBuilder;
 import com.example.mr_zyl.project.pro.newpost.natvigation.NewpostNavigationBuilder;
+import com.example.mr_zyl.project.pro.newpost.view.Activity.FontsActivity;
 import com.example.mr_zyl.project.pro.newpost.view.Activity.TestMeasureActivity;
 import com.example.mr_zyl.project.pro.newpost.view.Activity.TreeViewActivity;
 
@@ -36,6 +37,7 @@ public class Newpost extends BaseFragment implements View.OnClickListener {
 
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "测试页面", TestMeasureActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "拓扑图", TreeViewActivity.class, -1));
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "全局修改字体", FontsActivity.class, -1));
         initItemLayout(viewContent);
     }
 
