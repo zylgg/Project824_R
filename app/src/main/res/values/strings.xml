@@ -40,6 +40,9 @@
     <string name="xrefreshview_refresh_days_ago">%1s天之前刷新</string>
 
 
+    <string name="call">取消</string>
+    <string name="delete">删除</string>
+
     <array name="essence_video_tab">
         <item>全部@zylmove@1</item>
         <item>视频@zylmove@41</item>
