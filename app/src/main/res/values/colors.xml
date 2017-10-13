@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/gray</color>
+    <!--默认状态栏是透明色-->
     <color name="colorPrimaryDark">@android:color/transparent</color>
+    <color name="colorPrimary">@color/gray</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorAccent0">#FF68a8</color>
 

@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseActivity;
-import com.example.mr_zyl.project.utils.StatusUtils;
 
 import net.robinx.lib.blur.StackBlur;
 import net.robinx.lib.blur.utils.BlurUtils;
@@ -43,8 +42,6 @@ public class FastBlurActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        StatusUtils.setTransparent(this);
         tb_fast_blur_title= (Toolbar) findViewById(R.id.tb_fast_blur_title);
         setSupportActionBar(tb_fast_blur_title);
 
