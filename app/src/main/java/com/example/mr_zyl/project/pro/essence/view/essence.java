@@ -20,7 +20,6 @@ import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceAdapter;
 import com.example.mr_zyl.project.pro.essence.view.navigation.EssenceNavigationBuilder;
 import com.example.mr_zyl.project.utils.DensityUtil;
-import com.example.mr_zyl.project.utils.Settings;
 import com.example.mr_zyl.project.utils.ToastUtil;
 
 import java.util.Arrays;
@@ -39,7 +38,7 @@ import me.xiaopan.sketch.cache.MemoryCache;
  */
 public class essence extends BaseFragment {
 
-    private static final String TAG ="essence" ;
+    private static final String TAG = "essence";
     @BindView(R.id.tv_fitssystemwindows_view)
     TextView tv_fitssystemwindows_view;
     @BindView(R.id.ll_essence_tabcontainer)
@@ -60,7 +59,7 @@ public class essence extends BaseFragment {
 
     @Override
     public void initContentView(View viewContent) {
-        ButterKnife.bind(this,viewContent);
+        ButterKnife.bind(this, viewContent);
         setStatusBarView(tv_fitssystemwindows_view);
         initToolBar(ll_essence_tabcontainer);
 
@@ -71,10 +70,10 @@ public class essence extends BaseFragment {
         abl_essence.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                refreshEvent event=new refreshEvent();
-                if (verticalOffset==0){//完全展开
+                refreshEvent event = new refreshEvent();
+                if (verticalOffset == 0) {//完全展开
                     event.setCan(true);
-                }else{//有折叠
+                } else {//有折叠
                     event.setCan(false);
                 }
                 EventBus.getDefault().post(event);
@@ -106,10 +105,12 @@ public class essence extends BaseFragment {
                 .setRightIconOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        boolean is_load = Settings.getBoolean(getContext(), Settings.PREFERENCE_SCROLLING_PAUSE_LOAD);
+//                        boolean is_load = Settings.getBoolean(getContext(), Settings.PREFERENCE_SCROLLING_PAUSE_LOAD);
 
-                        Settings.putBoolean(getContext(), Settings.PREFERENCE_SCROLLING_PAUSE_LOAD, !is_load);
-                        ToastUtil.showToast(getContext(), is_load ? "滑动时加载！" : "滑动时不加载！", 0);
+//                        Settings.putBoolean(getContext(), Settings.PREFERENCE_SCROLLING_PAUSE_LOAD, !is_load);
+
+//                        boolean is_load2 = Settings.getBoolean(getContext(), Settings.PREFERENCE_SCROLLING_PAUSE_LOAD);
+//                        ToastUtil.showToast(getContext(), is_load2 ? "滑动时不加载！" : "滑动时加载！", 0);
                     }
                 }).createAndBind((ViewGroup) viewContent);
 

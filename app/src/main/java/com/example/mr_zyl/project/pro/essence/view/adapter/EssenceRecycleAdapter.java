@@ -54,7 +54,7 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
     public EssenceRecycleAdapter(Context context, List<PostsListBean.PostList> lists) {
         this.context = context;
         this.lists = lists;
-        this.sparseBooleanArray=new SparseBooleanArray();
+        this.sparseBooleanArray = new SparseBooleanArray();
     }
 
     /**
@@ -181,6 +181,12 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
         return holders;
     }
 
+    private DisplayImageOptions options = new DisplayImageOptions.Builder()
+            .showImageOnFail(R.drawable.item_essence_video_bg)//加载失败时的图片
+            .cacheInMemory(true)
+            .cacheOnDisk(true)
+            .bitmapConfig(Bitmap.Config.RGB_565)
+            .build();
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override
@@ -191,7 +197,7 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
         holder.tv_name.setText(postList.getName());
         holder.tv_time.setText(MyDateUtils.parseDate(postList.getCreate_time()));
         //设置内容
-        holder.etv_content.setText(postList.getText(),sparseBooleanArray,position);
+        holder.etv_content.setText(postList.getText(), sparseBooleanArray, position);
         //是否显示数据详情标记(针对gif的)
         holder.tv_commondata_detail.setVisibility(postList.getIs_showOnClickBrowerView());
         //是否显示视频标记
@@ -200,7 +206,7 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
         holder.rv_loadprogress.setVisibility(View.GONE);
         //默认不显示视频播放控件
         holder.jcv_videopic.setVisibility(View.GONE);
-        switch (holder.itemtype){
+        switch (holder.itemtype) {
             case 0:// 普通图
                 holder.iv_pic.getLayoutParams().height = postList.getView_maxheight();
                 ImageLoader.getInstance().displayImage(postList.getCdn_img(), holder.iv_pic, options, null, new ImageLoadingProgressListener() {
@@ -212,12 +218,12 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
                     }
                 });
                 holder.iv_pic.setOnClickListener(new pic_onclicklistener(postList.getCdn_img(), postList.is_largepic(), postList.getVideouri()));
-            break;
+                break;
             case 1://大图
                 holder.siv_largepic.getOptions()
-                        .setImageDisplayer(new DefaultImageDisplayer())
+                        .setErrorImage(R.drawable.item_essence_video_bg)
+                        .setImageDisplayer(new DefaultImageDisplayer());
 //                    .setCacheProcessedImageInDisk(true)// 为了加快速度，将经过ImageProcessor、resize或thumbnailMode处理过或者读取时inSampleSize大于等于8的图片保存到磁盘缓存中，下次就直接读取
-                        .setCacheInMemoryDisabled(true);// 禁用内存缓存
                 holder.siv_largepic.setSupportZoom(true);//大图才支持缩放
                 holder.siv_largepic.setSupportLargeImage(true);//支持大图
                 holder.siv_largepic.getImageZoomer().zoom(postList.getLargeimg_zoom());//放大n倍 （2：需要自定义）
@@ -230,7 +236,7 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
                 holder.siv_largepic.setDownloadProgressListener(new DownloadProgressListener() {
                     @Override
                     public void onUpdateDownloadProgress(int totalLength, int completedLength) {
-                        if (holder.rv_loadprogress.getVisibility()!=View.VISIBLE){
+                        if (holder.rv_loadprogress.getVisibility() != View.VISIBLE) {
                             holder.rv_loadprogress.setVisibility(View.VISIBLE);
                         }
                         float angle = (Float.valueOf(completedLength) / Float.valueOf(totalLength)) * 360;
@@ -245,15 +251,15 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
                 holder.siv_gifpic.getLayoutParams().width = (int) view_w;
                 holder.siv_gifpic.getLayoutParams().height = postList.getView_maxheight();
                 holder.siv_gifpic.getOptions()
+                        .setErrorImage(R.drawable.item_essence_video_bg)
                         .setImageDisplayer(new FadeInImageDisplayer())
                         .setDecodeGifImage(true);//支持加载gif图
-
                 holder.siv_gifpic.setDownloadProgressColor(Color.TRANSPARENT);
                 holder.siv_gifpic.setShowDownloadProgress(true);
                 holder.siv_gifpic.setDownloadProgressListener(new DownloadProgressListener() {
                     @Override
                     public void onUpdateDownloadProgress(int totalLength, int completedLength) {
-                        if (holder.rv_loadprogress.getVisibility()!=View.VISIBLE){
+                        if (holder.rv_loadprogress.getVisibility() != View.VISIBLE) {
                             holder.rv_loadprogress.setVisibility(View.VISIBLE);
                         }
                         float angle = (Float.valueOf(completedLength) / Float.valueOf(totalLength)) * 360;
@@ -268,13 +274,13 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
                 holder.jcv_videopic.setVisibility(View.VISIBLE);
                 holder.jcv_videopic.getLayoutParams().width = (int) view_w;
                 holder.jcv_videopic.getLayoutParams().height = postList.getView_maxheight();
-                holder.jcv_videopic.setUp(postList.getVideouri(), postList.getBimageuri(), postList.getText(), false,postList.getPlaycount(),Integer.valueOf(postList.getVideotime()));
+                holder.jcv_videopic.setUp(postList.getVideouri(), postList.getBimageuri(), postList.getText(), false, postList.getPlaycount(), Integer.valueOf(postList.getVideotime()));
                 break;
             case 4://voice声音
                 holder.jcv_videopic.setVisibility(View.VISIBLE);
                 holder.jcv_videopic.getLayoutParams().width = (int) view_w;
                 holder.jcv_videopic.getLayoutParams().height = postList.getView_maxheight();
-                holder.jcv_videopic.setUp(postList.getVoiceuri(), postList.getBimageuri(), postList.getText(), false,postList.getPlaycount(),Integer.valueOf(postList.getVoicetime()));
+                holder.jcv_videopic.setUp(postList.getVoiceuri(), postList.getBimageuri(), postList.getText(), false, postList.getPlaycount(), Integer.valueOf(postList.getVoicetime()));
                 break;
         }
         holder.tv_like.setText(postList.getDing());
@@ -316,13 +322,6 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
         }
     }
 
-    private DisplayImageOptions options = new DisplayImageOptions.Builder()
-            .showImageOnLoading(R.drawable.item_essence_video_bg)//正在加载时的图片
-            .showImageOnFail(R.drawable.item_essence_video_bg)//加载失败时的图片
-            .cacheInMemory(true)
-            .cacheOnDisk(true)
-            .bitmapConfig(Bitmap.Config.RGB_565)
-            .build();
 
     @Override
     public int getAdapterItemCount() {

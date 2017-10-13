@@ -17,7 +17,6 @@ import com.example.mr_zyl.project.pro.essence.presenter.EssenceVideoPresenter;
 import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceRecycleAdapter;
 import com.example.mr_zyl.project.pro.essence.view.essence;
-import com.example.mr_zyl.project.pro.essence.view.listener.ScrollingPauseLoadManager;
 import com.example.mr_zyl.project.pro.essence.view.selfview.CustomFooterView;
 import com.example.mr_zyl.project.pro.essence.view.selfview.MyDecoration;
 import com.example.mr_zyl.project.utils.DisplayUtil;
@@ -103,9 +102,9 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
         rv_essence_one.setHasFixedSize(true);
         rv_essence_one.setLayoutManager(new LinearLayoutManager(getContext()));//设置列表管理器(LinearLayoutManager指水平或者竖直，默认数值)
         rv_essence_one.addItemDecoration(new MyDecoration(getContext(), MyDecoration.VERTICAL_LIST));
-        ScrollingPauseLoadManager loadManager = new ScrollingPauseLoadManager(getContext());
-        loadManager.setOnScrollListener(scrollHideListener);
-        rv_essence_one.addOnScrollListener(loadManager);
+//        ScrollingPauseLoadManager loadManager = new ScrollingPauseLoadManager(getContext());
+//        loadManager.setOnScrollListener(scrollHideListener);
+//        rv_essence_one.addOnScrollListener(loadManager);
         rv_essence_one.addOnScrollListener(scrollListener);
         rv_essence_one.setAdapter(adapter);
     }

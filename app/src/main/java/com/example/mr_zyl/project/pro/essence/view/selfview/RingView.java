@@ -150,7 +150,7 @@ public class RingView extends View {
                 public void run() {
                     setVisibility(INVISIBLE);
                 }
-            },300);
+            },200);
         }else{
             setVisibility(VISIBLE);
         }

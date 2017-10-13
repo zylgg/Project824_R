@@ -52,7 +52,7 @@ public class BaseApplication extends Application {
         OkHttpUtils.initClient(okHttpClient);
 
         Sketch.with(this).getConfiguration().getDiskCache().setDisabled(true);//允许使用磁盘缓存
-        Sketch.with(this).getConfiguration().getMemoryCache().setDisabled(false);//不允许使用内存缓存
+        Sketch.with(this).getConfiguration().getMemoryCache().setDisabled(true);//允许使用内存缓存
         Sketch.with(this).getConfiguration().getBitmapPool().setDisabled(true);//允许使用bitmappool缓存
         // 最大容量为APP最大可用内存的十分之一
         int newMemoryCacheMaxSize = (int) (Runtime.getRuntime().maxMemory() / 10);
