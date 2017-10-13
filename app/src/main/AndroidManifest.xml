@@ -31,7 +31,7 @@
             android:theme="@style/THEME_trans" />
         <activity
             android:name=".LaunchActivity"
-            android:theme="@style/TransparentTheme">
+            android:theme="@style/LaunchTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -45,7 +45,7 @@
         <activity android:name=".pro.mine.view.activity.FastBlurActivity" />
         <activity
             android:name=".pro.mine.view.activity.BlurredActivity"
-            android:theme="@style/BlurredAppTheme" />
+            android:theme="@style/BlurredTheme" />
         <activity android:name=".pro.mine.view.activity.ListViewSSActivity" />
         <activity android:name=".pro.mine.view.activity.LoadGifActivity" />
         <activity android:name=".pro.mine.view.activity.QRImageActivity" />

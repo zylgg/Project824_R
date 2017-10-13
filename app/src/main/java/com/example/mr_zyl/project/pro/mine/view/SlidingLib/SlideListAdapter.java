@@ -75,7 +75,7 @@ public class SlideListAdapter extends BaseAdapter {
 
 		// 14、第一个问题处理：当滑动视图处于打开状态，点击条目之外其他的位置需要将原来条目关闭？
 		// 解决方案：需要在Adapter中给每一个Item绑定点击事件
-		SlidingItemLayout view = (SlidingItemLayout) convertView;
+		final SlidingItemLayout view = (SlidingItemLayout) convertView;
 		//默认关闭
 		view.closeSlidingLayout(false, false);
 		
@@ -91,6 +91,20 @@ public class SlideListAdapter extends BaseAdapter {
 					return;
 				}
 				slideManager.closeAllLayout();
+			}
+		});
+		mHolder.mCancelCall.setOnClickListener(new View.OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				view.close();
+			}
+		});
+		mHolder.mDeleteCell.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				lists2.remove(position);
+				notifyDataSetChanged();
 			}
 		});
 		return view;

@@ -54,7 +54,7 @@ public class MoreLevelView extends LinearLayout {
         rootLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         itemLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         dividerLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, 1);
-        itemLayoutParams_80 = new LayoutParams(LayoutParams.MATCH_PARENT, drawable_close.getMinimumHeight() * 6 / 10);
+        itemLayoutParams_80 = new LayoutParams(LayoutParams.MATCH_PARENT, drawable_close.getMinimumHeight());
 
         addView(initview());
     }
@@ -145,7 +145,7 @@ public class MoreLevelView extends LinearLayout {
         if (nodes.getLevel() != 0) {//已经是顶层了
             GetAllNodeName(nodes.getParent());
         }
-        return sb.toString();
+        return sb.toString().substring(0,sb.length()-1);
     }
 
     private View add_divder() {
