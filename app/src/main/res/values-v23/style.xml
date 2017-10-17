@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">@color/gray</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--亮色状态栏模式:true表示状态栏背景色浅，字体就为深色-->
         <item name="android:windowLightStatusBar">false</item>
     </style>
     <style name="THEME_trans" parent="Theme.AppCompat.Light.NoActionBar">
@@ -16,14 +17,12 @@
         <!--半透明状态栏-->
         <!--<item name="android:windowTranslucentStatus">true</item>-->
         <item name="android:windowTranslucentNavigation">true</item>
-        <!--亮色状态栏模式:true表示状态栏背景色浅，字体就为深色-->
-        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="BlurredTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">

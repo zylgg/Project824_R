@@ -9,7 +9,6 @@ import android.support.annotation.LayoutRes;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -445,10 +444,10 @@ public class XRefreshView extends LinearLayout {
                 int currentY = (int) ev.getRawY();
                 int currentX = (int) ev.getRawX();
 
-                Log.i(TAG, "currentY: "+currentY);
+//                Log.i(TAG, "currentY: "+currentY);
 
                 //如果没有按下的操作，而直接执行拖动mLastY=-1。。。造成header高度设置错误。
-                Log.i(TAG, "mLastY: "+mLastY);
+//                Log.i(TAG, "mLastY: "+mLastY);
 
                 deltaY = currentY - mLastY;
                 deltaX = currentX - mLastX;
@@ -478,7 +477,7 @@ public class XRefreshView extends LinearLayout {
                 } else {
                     return super.dispatchTouchEvent(ev);
                 }
-                Log.i(TAG, "dispatchTouchEvent: "+deltaY);
+//                Log.i(TAG, "dispatchTouchEvent: "+deltaY);
                 if (!mPullLoading && !mReleaseToLoadMore && mContentView.isTop() && (deltaY > 0 || (deltaY < 0 && mHolder.hasHeaderPullDown()))) {
                     sendCancelEvent();
                     updateHeaderHeight(currentY, deltaY);

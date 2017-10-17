@@ -23,7 +23,7 @@ public abstract class BaseFragment<P extends MvpBasePresenter> extends MvpFragme
     private View viewContent;
     private boolean isinit;
     public BaseActivity Fcontext;
-    private MyProgressDialog mProgressDialog, mProgressDialog_HORIZONTAL;
+    public MyProgressDialog mProgressDialog, mProgressDialog_HORIZONTAL;
     public static String FilePath=Environment.getExternalStorageDirectory()+"/"+ R.string.app_name;
 
     @Override

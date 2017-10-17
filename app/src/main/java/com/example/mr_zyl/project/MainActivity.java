@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -35,6 +36,8 @@ import butterknife.BindView;
 
 public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener, View.OnClickListener {
 
+    @BindView(R.id.ll_main_content)
+    LinearLayout ll_main_content;
     @BindView(R.id.tv_bottomnavigation_view)
     View tv_bottomnavigation_view;
     @BindView(android.R.id.tabhost)
@@ -165,10 +168,37 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     public void onClick(View v) {
         switch (v.getId()) {
             case 0:
+//                OpenPopupWindow();
                 showMoreWindow(v);
                 break;
         }
     }
+
+    private void OpenPopupWindow() {
+//        Dialog dialog = new Dialog(this,R.style.DialogTheme);
+//        dialog.setCanceledOnTouchOutside(true);
+//
+//        FrameLayout frameLayout=new FrameLayout(this);
+//        frameLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,400));
+//
+//
+//        LinearLayout linearLayout=new LinearLayout(this);
+//        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,400));
+//        linearLayout.setBackgroundColor(Color.RED);
+//
+//        TextView textView = new TextView(this);
+//        textView.setTextColor(R.color.white);
+//        textView.setText("当前消息加载-1");
+//        linearLayout.addView(textView);
+//        frameLayout.addView(linearLayout);
+//
+//        dialog.setContentView(frameLayout);
+//        dialog.getWindow().getAttributes().width=ViewGroup.LayoutParams.MATCH_PARENT;
+//        dialog.getWindow().getAttributes().verticalMargin=0;
+//        dialog.getWindow().getAttributes().gravity= Gravity.TOP;
+//        dialog.show();
+    }
+
     public static final int IMAGE_PICKER = 100;
 
     /**
@@ -214,7 +244,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         }
     }
 
-    class Tabitem {
+    public class Tabitem {
         private int imagedefault;
         private int imageselected;
         private int titleid;

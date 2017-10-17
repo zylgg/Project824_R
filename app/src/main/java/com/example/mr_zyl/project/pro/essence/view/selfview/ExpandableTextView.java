@@ -34,10 +34,10 @@ public class ExpandableTextView extends LinearLayout implements View.OnClickList
     private static final int MAX_COLLAPSED_LINES = 8;
 
     /* The default animation duration */
-    private static final int DEFAULT_ANIM_DURATION = 300;
+    private static final int DEFAULT_ANIM_DURATION = 100;
 
     /* The default alpha value when the animation starts */
-    private static final float DEFAULT_ANIM_ALPHA_START = 0.7f;
+    private static final float DEFAULT_ANIM_ALPHA_START = 1.0f;
 
     protected TextView mTv;
 
@@ -187,7 +187,7 @@ public class ExpandableTextView extends LinearLayout implements View.OnClickList
 
     private void findViews() {
         mTv = (TextView) findViewById(R.id.expandable_text);
-        mTv.setOnClickListener(this);
+//        mTv.setOnClickListener(this);
         mButton = (Button) findViewById(R.id.expand_collapse);
 //        mButton.setImageDrawable(mCollapsed ? mExpandDrawable : mCollapseDrawable);
         mButton.setText(mCollapsed ? "全文" : "收起");

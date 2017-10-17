@@ -63,6 +63,7 @@ public class BlurredActivity extends BaseActivity {
         initdata();
     }
 
+
     /**
      * 初始化视图
      */
@@ -73,7 +74,6 @@ public class BlurredActivity extends BaseActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
-
     }
 
     private void initlistener() {

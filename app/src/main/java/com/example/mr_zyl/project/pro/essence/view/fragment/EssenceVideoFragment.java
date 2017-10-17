@@ -65,7 +65,6 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
     private RecyclerView.OnScrollListener scrollListener;
     private RecyclerView.OnScrollListener scrollHideListener;
     private XRefreshView.XRefreshViewListener xRefreshListener;
-    private boolean is_firstCreate=true;
 
     @Override
     public int getContentView() {
@@ -294,7 +293,6 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
         presenter.GetEssenceListData(mType, isDownRefresh, new SimpleOnUiThreadListener<List<PostsListBean.PostList>>() {
             @Override
             public void OnBefore() {
-                if (is_firstCreate) showProgressDialog("加载中...");
             }
 
             @Override
@@ -318,8 +316,6 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
 
             @Override
             public void OnAfter() {
-                if (is_firstCreate) dismissProgressDialog();
-                is_firstCreate=false;
             }
         });
     }
