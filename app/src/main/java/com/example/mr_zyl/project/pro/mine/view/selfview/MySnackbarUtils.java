@@ -22,18 +22,18 @@ import com.example.mr_zyl.project.pro.mine.view.impl.OnActionClickListener;
 public class MySnackbarUtils {
 
     private static final String TAG = "MySnackbarUtils";
-
     private MySnackbar mySnackbarView;
     private Activity context;
-
     private WindowManager windowManager = null;
+    private boolean isCoverStatusBar;
 
     private MySnackbarUtils() {
     }
 
-    private MySnackbarUtils(Activity context, Params params) {
+    private MySnackbarUtils(Activity context, Params params, boolean isCoverStatusBar) {
         this.context = context;
-        mySnackbarView = new MySnackbar(context,this);
+        this.isCoverStatusBar = isCoverStatusBar;
+        mySnackbarView = new MySnackbar(context, this);
         mySnackbarView.setParams(params);
         windowManager = context.getWindowManager();
     }
@@ -45,31 +45,31 @@ public class MySnackbarUtils {
                     WindowManager.LayoutParams.MATCH_PARENT,
                     WindowManager.LayoutParams.WRAP_CONTENT,
                     WindowManager.LayoutParams.TYPE_SYSTEM_ERROR,
-                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-                            | WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                     PixelFormat.TRANSLUCENT);
-
             params.gravity = Gravity.TOP | Gravity.LEFT;
+            params.windowAnimations = android.R.style.Animation_Toast;
             params.y = 0;
             params.x = 0;
 
             final ViewGroup decorView = (ViewGroup) context.getWindow().getDecorView();
             final ViewGroup content = (ViewGroup) decorView.findViewById(android.R.id.content);
-
-
             if (mySnackbarView.getParent() == null) {
                 if (mySnackbarView.getLayoutGravity() == Gravity.BOTTOM) {
                     content.addView(mySnackbarView, layoutParams);
                 } else {
-//                    windowManager.addView(mySnackbarView, params);
-                    decorView.addView(mySnackbarView, layoutParams);
+                    if (isCoverStatusBar) {
+                        windowManager.addView(mySnackbarView, params);
+                    } else {
+                        decorView.addView(mySnackbarView, layoutParams);
+                    }
                 }
             }
         }
     }
 
     public void dismiss() {
-        windowManager.removeViewImmediate(mySnackbarView);
+        windowManager.removeView(mySnackbarView);
     }
 
     public static class Builder {
@@ -135,6 +135,11 @@ public class MySnackbarUtils {
             return this;
         }
 
+        public Builder setCoverStatusBar(boolean coverStatusBar) {
+            params.isCoverStatusBar = coverStatusBar;
+            return this;
+        }
+
         public Builder setAction(String action, OnActionClickListener onActionClickListener) {
             params.action = action;
             params.onActionClickListener = onActionClickListener;
@@ -147,20 +152,24 @@ public class MySnackbarUtils {
             return this;
         }
 
-        public Builder setActionWithIcon(@DrawableRes int resId,
-                                         OnActionClickListener onActionClickListener) {
+        public Builder setActionWithIcon(@DrawableRes int resId, OnActionClickListener onActionClickListener) {
             params.actionIcon = resId;
             params.onActionClickListener = onActionClickListener;
             return this;
         }
 
+        /**
+         * 只对 不覆盖状态栏时有效
+         * @param layoutGravity
+         * @return
+         */
         public Builder setLayoutGravity(int layoutGravity) {
             params.layoutGravity = layoutGravity;
             return this;
         }
 
         public MySnackbarUtils create() {
-            MySnackbarUtils cookie = new MySnackbarUtils(context, params);
+            MySnackbarUtils cookie = new MySnackbarUtils(context, params, params.isCoverStatusBar);
             return cookie;
         }
 
@@ -172,6 +181,8 @@ public class MySnackbarUtils {
     }
 
     final static class Params {
+
+        boolean isCoverStatusBar;
 
         public String title;
 

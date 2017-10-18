@@ -102,8 +102,12 @@ public class BlurredActivity extends BaseActivity {
                 break;
             case R.id.iv_blurred_title:
                 new MySnackbarUtils.Builder(BlurredActivity.this)
-                        .setMessage("点击了标题！")
+                        .setCoverStatusBar(true)
                         .setLayoutGravity(Gravity.TOP)
+                        .setIcon(R.mipmap.ic_launcher)
+                        .setMessage("点击了标题！")
+                        .setMessageColor(R.color.default_bg_color)
+                        .setBackgroundColor(R.color.white)
                         .show();
                 break;
         }

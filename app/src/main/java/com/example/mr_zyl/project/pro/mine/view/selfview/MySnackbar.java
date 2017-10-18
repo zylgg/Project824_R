@@ -40,6 +40,7 @@ public class MySnackbar extends LinearLayout {
     private TextView btnAction;
     private ImageView btnActionWithIcon;
     private long duration = 2000;
+    private boolean isCoverStatusBar;
     private int layoutGravity = Gravity.BOTTOM;
     private ViewDragHelper viewDragHelper;
     private GestureDetectorCompat detectorCompat;
@@ -52,9 +53,9 @@ public class MySnackbar extends LinearLayout {
         this(context, null);
     }
 
-    public MySnackbar(@NonNull final Context context ,MySnackbarUtils mySnackbarUtils) {
+    public MySnackbar(@NonNull final Context context, MySnackbarUtils mySnackbarUtils) {
         this(context, null, 0);
-        this.mySnackbarUtils=mySnackbarUtils;
+        this.mySnackbarUtils = mySnackbarUtils;
     }
 
     public MySnackbar(@NonNull final Context context, @Nullable final AttributeSet attrs,
@@ -65,6 +66,10 @@ public class MySnackbar extends LinearLayout {
 
     public int getLayoutGravity() {
         return layoutGravity;
+    }
+
+    public boolean isCoverStatusBar() {
+        return isCoverStatusBar;
     }
 
     private void initViews(Context context) {
@@ -211,6 +216,7 @@ public class MySnackbar extends LinearLayout {
         if (params != null) {
             duration = params.duration;
             layoutGravity = params.layoutGravity;
+            isCoverStatusBar = params.isCoverStatusBar;
             setGravity(layoutGravity);
             //Icon
             if (params.iconResId != 0) {
@@ -279,7 +285,11 @@ public class MySnackbar extends LinearLayout {
                 contentview.setBackgroundColor(ContextCompat.getColor(getContext(), params.backgroundColor));
             }
 
-            createInAnim();
+            if (isCoverStatusBar()){
+                postDelayed(DelayColseRunnable, duration);
+            }else{
+                createInAnim();
+            }
             createOutAnim();
         }
     }
@@ -310,7 +320,6 @@ public class MySnackbar extends LinearLayout {
 
             }
         });
-
         setAnimation(slideInAnimation);
     }
 
@@ -344,22 +353,26 @@ public class MySnackbar extends LinearLayout {
     }
 
     private void dismiss() {
-        startAnimation(slideOutAnimation);
+        if (isCoverStatusBar()){
+            destroy();
+        }else{
+            startAnimation(slideOutAnimation);
+        }
     }
 
     private void destroy() {
         postDelayed(new Runnable() {
             @Override
             public void run() {
-//                if (getLayoutGravity() == Gravity.BOTTOM) {
+                if (isCoverStatusBar()) {
+                    mySnackbarUtils.dismiss();
+                } else {
                     ViewParent parent = getParent();
                     if (parent != null) {
                         MySnackbar.this.clearAnimation();
-                        ((ViewGroup) parent).removeView( MySnackbar.this);
+                        ((ViewGroup) parent).removeView(MySnackbar.this);
                     }
-//                }else{
-//                    mySnackbarUtils.dismiss();
-//                }
+                }
             }
         }, 200);
     }
