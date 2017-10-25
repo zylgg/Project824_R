@@ -69,7 +69,10 @@ public class MySnackbarUtils {
     }
 
     public void dismiss() {
-        windowManager.removeView(mySnackbarView);
+        if (mySnackbarView!=null&&mySnackbarView.getParent()!=null){
+            windowManager.removeView(mySnackbarView);
+        }
+//        windowManager.removeView(mySnackbarView);
     }
 
     public static class Builder {

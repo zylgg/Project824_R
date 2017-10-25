@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.graphics.ColorUtils;
@@ -213,12 +214,20 @@ public class SlideView extends LinearLayout implements AppBarLayout.OnOffsetChan
             expandedImageSize = avatarView.getHeight();
         }
         //计算滑动范围（appbar高-toolbar高-状态栏-最下面的布局高）
-        maxOffset = appBarLayout.getHeight() - toolBarHeight - SystemAppUtils.getStatusHeight(getContext())- DensityUtil.getpxByDimensize(getContext(),R.dimen.y120);
+
+        maxOffset = appBarLayout.getHeight() - toolBarHeight - (isStatusBarView()?SystemAppUtils.getStatusHeight(getContext()):0)- DensityUtil.getpxByDimensize(getContext(),R.dimen.y120);
         //使控件处在居中的位置
         if (avatarView != null) {
             expandedPadding = (appBarLayout.getWidth() - expandedImageSize) / 2;
         } else if (titleView != null) {
             expandedPadding = (appBarLayout.getWidth() - titleView.getWidth()) / 2;
+        }
+    }
+    public boolean isStatusBarView() {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {//如果系统不支持透明状态栏
+            return false;
+        } else {
+            return true;
         }
     }
 
