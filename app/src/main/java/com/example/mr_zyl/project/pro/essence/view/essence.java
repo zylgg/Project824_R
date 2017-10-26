@@ -8,8 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,7 +17,6 @@ import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceAdapter;
 import com.example.mr_zyl.project.pro.essence.view.navigation.EssenceNavigationBuilder;
-import com.example.mr_zyl.project.utils.DensityUtil;
 import com.example.mr_zyl.project.utils.ToastUtil;
 
 import java.util.Arrays;
@@ -50,7 +47,6 @@ public class essence extends BaseFragment {
     @BindView(R.id.abl_essence)
     AppBarLayout abl_essence;
     private EssenceNavigationBuilder builder;
-    private int mToolbarHeight;
 
     @Override
     public int getContentView() {
@@ -66,7 +62,6 @@ public class essence extends BaseFragment {
         tv_fitssystemwindows_view.setBackgroundResource(R.drawable.toolbar_backgound_essence_shape);
         tab_essence.setBackgroundResource(R.drawable.toolbar_backgound_essence_shape);
 
-        mToolbarHeight = DensityUtil.dip2px(Fcontext, 50);
         abl_essence.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -105,12 +100,6 @@ public class essence extends BaseFragment {
                 .setRightIconOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        boolean is_load = Settings.getBoolean(getContext(), Settings.PREFERENCE_SCROLLING_PAUSE_LOAD);
-
-//                        Settings.putBoolean(getContext(), Settings.PREFERENCE_SCROLLING_PAUSE_LOAD, !is_load);
-
-//                        boolean is_load2 = Settings.getBoolean(getContext(), Settings.PREFERENCE_SCROLLING_PAUSE_LOAD);
-//                        ToastUtil.showToast(getContext(), is_load2 ? "滑动时不加载！" : "滑动时加载！", 0);
                     }
                 }).createAndBind((ViewGroup) viewContent);
 
@@ -119,36 +108,11 @@ public class essence extends BaseFragment {
     @Override
     public void initData() {
         String[] titles = getResources().getStringArray(R.array.essence_video_tab);
-        ScrollHideListener scrollHideListener = new ScrollHideListener() {
-
-            @Override
-            public void onMoved(int distance) {
-                ll_essence_tabcontainer.setTranslationY(-distance);
-            }
-
-            @Override
-            public void onShow() {
-                ll_essence_tabcontainer.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-            }
-
-            @Override
-            public void onHide() {
-                ll_essence_tabcontainer.animate().translationY(-mToolbarHeight).setInterpolator(new AccelerateInterpolator(2)).start();
-            }
-        };
         EssenceAdapter adapter = new EssenceAdapter(getFragmentManager(), Arrays.asList(titles), null);
         this.vp_essence.setAdapter(adapter);
 //        this.vp_essence.setCurrentItem(4);
-        this.vp_essence.setOffscreenPageLimit(2);
+        this.vp_essence.setOffscreenPageLimit(1);
         this.tab_essence.setupWithViewPager(this.vp_essence);
-    }
-
-    public interface ScrollHideListener {
-        void onMoved(int distance);
-
-        void onShow();
-
-        void onHide();
     }
 
     /**
