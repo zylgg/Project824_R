@@ -15,7 +15,6 @@ import com.example.mr_zyl.project.pro.base.view.refreshview.XRefreshView;
 import com.example.mr_zyl.project.pro.essence.presenter.EssenceVideoPresenter;
 import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceRecycleAdapter;
-import com.example.mr_zyl.project.pro.essence.view.essence;
 import com.example.mr_zyl.project.pro.essence.view.selfview.CustomFooterView;
 import com.example.mr_zyl.project.pro.essence.view.selfview.MyDecoration;
 import com.example.mr_zyl.project.utils.DisplayUtil;
@@ -39,7 +38,6 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
     private String mTitle;
     private EssenceRecycleAdapter adapter;
     private EssenceVideoPresenter presenter;
-    private essence.ScrollHideListener listener;
 
     @BindView(R.id.refreshview_id)
     XRefreshView refreshview_id;
@@ -48,8 +46,7 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
     @BindView(R.id.fab_scrollTop)
     FloatingActionButton fab_scrollTop;
 
-    public EssenceVideoFragment(essence.ScrollHideListener listener) {
-        this.listener = listener;
+    public EssenceVideoFragment() {
     }
 
     public void setType(int mType) {

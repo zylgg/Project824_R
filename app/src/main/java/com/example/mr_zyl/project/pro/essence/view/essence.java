@@ -108,7 +108,7 @@ public class essence extends BaseFragment {
     @Override
     public void initData() {
         String[] titles = getResources().getStringArray(R.array.essence_video_tab);
-        EssenceAdapter adapter = new EssenceAdapter(getFragmentManager(), Arrays.asList(titles), null);
+        EssenceAdapter adapter = new EssenceAdapter(getFragmentManager(), Arrays.asList(titles));
         this.vp_essence.setAdapter(adapter);
 //        this.vp_essence.setCurrentItem(4);
         this.vp_essence.setOffscreenPageLimit(1);
