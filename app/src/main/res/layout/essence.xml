@@ -44,6 +44,7 @@
                 android:layout_height="40dp"
                 app:tabIndicatorColor="@color/essence_tab_text_color_press"
                 app:tabMode="scrollable"
+                app:tabTextAppearance="@style/TabLayoutTextStyle"
                 app:tabSelectedTextColor="@color/essence_tab_text_color_press"
                 app:tabTextColor="@color/essence_tab_text_color_normal" /><!--指示符的顔色-->
         </android.support.design.widget.AppBarLayout>

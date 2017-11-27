@@ -28,7 +28,8 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/THEME_trans" />
+            android:theme="@style/THEME_trans" >
+        </activity>
         <activity
             android:name=".LaunchActivity"
             android:theme="@style/LaunchTheme">

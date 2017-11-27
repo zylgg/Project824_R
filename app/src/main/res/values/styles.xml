@@ -47,6 +47,9 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">12dp</item>
+    </style>
     <style name="Myratingbar" parent="Base.Widget.AppCompat.RatingBar.Indicator">
         <item name="android:progressDrawable">@drawable/ratingbar_style</item>
         <item name="android:minHeight">21.5dp</item>

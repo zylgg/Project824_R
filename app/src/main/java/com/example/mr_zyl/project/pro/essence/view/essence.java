@@ -61,7 +61,6 @@ public class essence extends BaseFragment {
 
         tv_fitssystemwindows_view.setBackgroundResource(R.drawable.toolbar_backgound_essence_shape);
         tab_essence.setBackgroundResource(R.drawable.toolbar_backgound_essence_shape);
-
         abl_essence.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
