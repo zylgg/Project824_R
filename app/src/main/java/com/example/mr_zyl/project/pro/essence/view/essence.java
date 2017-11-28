@@ -1,11 +1,14 @@
 package com.example.mr_zyl.project.pro.essence.view;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -104,6 +107,7 @@ public class essence extends BaseFragment {
 
     }
 
+    public static final String TAB_TAG = "@zylmove@";
     @Override
     public void initData() {
         String[] titles = getResources().getStringArray(R.array.essence_video_tab);
@@ -112,6 +116,38 @@ public class essence extends BaseFragment {
 //        this.vp_essence.setCurrentItem(4);
         this.vp_essence.setOffscreenPageLimit(1);
         this.tab_essence.setupWithViewPager(this.vp_essence);
+
+        for (int i = 0; i < titles.length; i++) {
+            String title = titles[i];
+            TabLayout.Tab tabAt = this.tab_essence.getTabAt(i);
+            View tab_view = LayoutInflater.from(Fcontext).inflate(R.layout.essence_tablayout_item_layout, null);
+            TextView tv_essence_tablayout_item_text = (TextView) tab_view.findViewById(R.id.tv_essence_tablayout_item_text);
+            String[] split = title.split(TAB_TAG);
+            String text_content = split[0];
+            tv_essence_tablayout_item_text.setText(text_content);
+            tabAt.setCustomView(tab_view);
+        }
+
+        int selectedTabPosition = this.tab_essence.getSelectedTabPosition();
+        TextView text = (TextView) this.tab_essence.getTabAt(selectedTabPosition).getCustomView().findViewById(R.id.tv_essence_tablayout_item_text);
+        text.setTextSize(TypedValue.COMPLEX_UNIT_SP,25);
+        text.setTextColor(Color.WHITE);
+        this.tab_essence.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(this.vp_essence) {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                super.onTabSelected(tab);
+                TextView text = (TextView) tab.getCustomView().findViewById(R.id.tv_essence_tablayout_item_text);
+                text.setTextSize(TypedValue.COMPLEX_UNIT_SP,25);
+                text.setTextColor(Color.WHITE);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                TextView text = (TextView) tab.getCustomView().findViewById(R.id.tv_essence_tablayout_item_text);
+                text.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
+                text.setTextColor(Fcontext.getResources().getColor(R.color.essence_tab_text_color_normal));
+            }
+        });
     }
 
     /**

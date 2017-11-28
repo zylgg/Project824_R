@@ -17,8 +17,6 @@ import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceRecycleAdapter;
 import com.example.mr_zyl.project.pro.essence.view.selfview.CustomFooterView;
 import com.example.mr_zyl.project.pro.essence.view.selfview.MyDecoration;
-import com.example.mr_zyl.project.utils.DisplayUtil;
-import com.example.mr_zyl.project.utils.SystemAppUtils;
 import com.example.mr_zyl.project.utils.ToastUtil;
 import com.example.zylsmallvideolibrary.JCVideoPlayer;
 import com.example.zylsmallvideolibrary.VideoEvents;
@@ -77,6 +75,7 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
         ButterKnife.bind(this, contentView);
         EventBus.getDefault().register(this);
         initListener();
+
         fab_scrollTop.setOnClickListener(this);
         fab_scrollTop.setVisibility(View.GONE);
 
@@ -87,18 +86,14 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
         refreshview_id.enableReleaseToLoadMore(false);//到达底部后让其点击加载asdf
         refreshview_id.enableRecyclerViewPullUp(false);//不让Recycleview到达底部继续上啦
         refreshview_id.setPreLoadCount(0);//预加载数量
-        int paddingTop = DisplayUtil.dip2px(Fcontext, 98) + SystemAppUtils.getStatusHeight(getContext());
         refreshview_id.setXRefreshViewListener(xRefreshListener);
 
         adapter = new EssenceRecycleAdapter(getContext(), postlists);
         adapter.setCustomLoadMoreView(new CustomFooterView(getContext()));//Recycleview需要在底部控制添加footerview
 
+        rv_essence_one.addItemDecoration(new MyDecoration(Fcontext,MyDecoration.VERTICAL_LIST));
         rv_essence_one.setHasFixedSize(true);
         rv_essence_one.setLayoutManager(new LinearLayoutManager(getContext()));//设置列表管理器(LinearLayoutManager指水平或者竖直，默认数值)
-        rv_essence_one.addItemDecoration(new MyDecoration(getContext(), MyDecoration.VERTICAL_LIST));
-//        ScrollingPauseLoadManager loadManager = new ScrollingPauseLoadManager(getContext());
-//        loadManager.setOnScrollListener(scrollHideListener);
-//        rv_essence_one.addOnScrollListener(loadManager);
         rv_essence_one.addOnScrollListener(scrollListener);
         rv_essence_one.setAdapter(adapter);
     }
@@ -154,7 +149,7 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
                 LinearLayoutManager layoutManager = (LinearLayoutManager) rv_essence_one.getLayoutManager();
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
 
-                ToastUtil.showToast(getContext(),"firstVisibleItemPosition:"+firstVisibleItemPosition);
+//                ToastUtil.showToast(getContext(),"firstVisibleItemPosition:"+firstVisibleItemPosition);
                 if (firstVisibleItemPosition>20-1){
                     rv_essence_one.scrollToPosition(0);
                 }else {

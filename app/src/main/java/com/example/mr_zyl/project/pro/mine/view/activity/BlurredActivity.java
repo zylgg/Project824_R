@@ -1,16 +1,20 @@
 package com.example.mr_zyl.project.pro.mine.view.activity;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,7 +52,7 @@ public class BlurredActivity extends BaseActivity {
     ViewPager vp_blurred_fragment;
     @BindView(R.id.tl_blurred_tablist)
     TabLayout tl_blurred_tablist;
-
+    Window mwindow;
     @Override
     protected int initLayoutId() {
         return R.layout.activity_blurred;
@@ -58,6 +62,7 @@ public class BlurredActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 初始化视图
+        mwindow=getWindow();
         initViews();
         initlistener();
         initdata();
@@ -81,6 +86,15 @@ public class BlurredActivity extends BaseActivity {
             @Override
             public void onRatioChanged(float expandedPercentage) {
                 iv_blurred_bg.setAlpha((int) (255 - (100 * expandedPercentage) * 2.55 * 0.5));
+                if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+                    mwindow.setStatusBarColor(ColorUtils.blendARGB(Color.TRANSPARENT,Color.WHITE,expandedPercentage));
+                    if (expandedPercentage==1){
+                        mwindow.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                    }else{
+                        mwindow.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                    }
+                }
+                tb_blurred_navigation.setBackgroundColor(ColorUtils.blendARGB(Color.TRANSPARENT,Color.WHITE,expandedPercentage));
             }
         });
         tb_blurred_navigation.setNavigationOnClickListener(new View.OnClickListener() {

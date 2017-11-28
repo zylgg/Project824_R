@@ -96,6 +96,7 @@ public class RippleView extends RelativeLayout {
         zoomScale = typedArray.getFloat(R.styleable.RippleView_rv_zoomScale, 1.03f);
         zoomDuration = typedArray.getInt(R.styleable.RippleView_rv_zoomDuration, 200);
         typedArray.recycle();
+
         paint = new Paint();
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.FILL);
@@ -138,14 +139,17 @@ public class RippleView extends RelativeLayout {
                 canvas.save();
                 canvas.restore();
                 invalidate();
-                if (onCompletionListener != null) onCompletionListener.onComplete(this);
+                if (onCompletionListener != null) {
+                    onCompletionListener.onComplete(this);
+                }
                 return;
-            } else
+            } else {
                 canvasHandler.postDelayed(runnable, frameRate);
+            }
 
-            if (timer == 0)
+            if (timer == 0) {
                 canvas.save();
-
+            }
 
             canvas.drawCircle(x, y, (radiusMax * (((float) timer * frameRate) / rippleDuration)), paint);
 
@@ -154,7 +158,6 @@ public class RippleView extends RelativeLayout {
             if (rippleType == 1 && originBitmap != null && (((float) timer * frameRate) / rippleDuration) > 0.4f) {
                 if (durationEmpty == -1)
                     durationEmpty = rippleDuration - timer * frameRate;
-
                 timerEmpty++;
                 final Bitmap tmpBitmap = getCircleBitmap((int) ((radiusMax) * (((float) timerEmpty * frameRate) / (durationEmpty))));
                 canvas.drawBitmap(tmpBitmap, 0, 0, paint);
@@ -164,12 +167,15 @@ public class RippleView extends RelativeLayout {
             paint.setColor(rippleColor);
 
             if (rippleType == 1) {
-                if ((((float) timer * frameRate) / rippleDuration) > 0.6f)
+                if ((((float) timer * frameRate) / rippleDuration) > 0.6f) {
                     paint.setAlpha((int) (rippleAlpha - ((rippleAlpha) * (((float) timerEmpty * frameRate) / (durationEmpty)))));
-                else
+                } else {
                     paint.setAlpha(rippleAlpha);
-            } else
+                }
+            } else {
                 paint.setAlpha((int) (rippleAlpha - ((rippleAlpha) * (((float) timer * frameRate) / rippleDuration))));
+            }
+
 
             timer++;
         }
