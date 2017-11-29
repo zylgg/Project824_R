@@ -25,7 +25,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -343,10 +342,10 @@ public class MyFragmentTabHost extends TabHost
                 ft = mFragmentManager.beginTransaction();
             }
             if (mLastTab != null) {
-                Log.i("demo","Oldtabtag:"+mLastTab.tag);
+//                Log.i("demo","Oldtabtag:"+mLastTab.tag);
                 if (mLastTab.fragment != null) {
                     ft.detach(mLastTab.fragment);
-                    Log.i("demo","Detached");
+//                    Log.i("demo","Detached");
                 }
             }
             if (newTab != null) {

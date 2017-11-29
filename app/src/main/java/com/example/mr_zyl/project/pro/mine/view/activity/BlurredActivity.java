@@ -88,6 +88,7 @@ public class BlurredActivity extends BaseActivity {
                 iv_blurred_bg.setAlpha((int) (255 - (100 * expandedPercentage) * 2.55 * 0.5));
                 if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
                     mwindow.setStatusBarColor(ColorUtils.blendARGB(Color.TRANSPARENT,Color.WHITE,expandedPercentage));
+//                    mwindow.setNavigationBarColor(ColorUtils.blendARGB(Color.TRANSPARENT,Color.WHITE,expandedPercentage));
                     if (expandedPercentage==1){
                         mwindow.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                     }else{
@@ -196,9 +197,9 @@ public class BlurredActivity extends BaseActivity {
             return 4;
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return "page" + position;
-        }
+//        @Override
+//        public CharSequence getPageTitle(int position) {
+//            return "Custom-" + position;
+//        }
     }
 }

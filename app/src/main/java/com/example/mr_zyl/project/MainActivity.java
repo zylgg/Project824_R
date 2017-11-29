@@ -16,14 +16,15 @@ import android.widget.TextView;
 import com.example.mr_zyl.project.pro.attention.view.Attention;
 import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost;
+import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.essence;
 import com.example.mr_zyl.project.pro.mine.view.Mine;
+import com.example.mr_zyl.project.pro.mine.view.selfview.MySnackbarUtils;
 import com.example.mr_zyl.project.pro.newpost.view.Newpost;
 import com.example.mr_zyl.project.pro.publish.view.Publish;
 import com.example.mr_zyl.project.pro.publish.view.SimpleTakePhotoActivity;
 import com.example.mr_zyl.project.pro.publish.view.self.MoreWindow;
 import com.example.mr_zyl.project.utils.SystemAppUtils;
-import com.example.mr_zyl.project.utils.ToastUtil;
 import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.bean.ImageItem;
 import com.lqr.imagepicker.ui.ImageGridActivity;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import de.greenrobot.event.EventBus;
 
 public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener, View.OnClickListener {
 
@@ -92,7 +94,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         tablists.add(new Tabitem(R.drawable.main_bottom_mine_normal
                 , R.drawable.main_bottom_mine_press, R.string.main_mine_text, Mine.class));
     }
-
+    private String currenttabtag;
     private void initTabHost() {
         fragmenttabhost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
         fragmenttabhost.getTabWidget().setDividerDrawable(null);
@@ -111,9 +113,14 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             //默认选中第一个Tab
             if (i == 0) {
                 tabItem.setChecked(true);
+                currenttabtag=tabItem.getTitleString();
             }
+
+            View view=fragmenttabhost.getTabWidget().getChildTabViewAt(i);
+            View ll_tab_indicator_content = view.findViewById(R.id.ll_tab_indicator_content);
+            ll_tab_indicator_content.setOnClickListener(this);
             if (tabItem.getTitleid() == 0) {//只对非fragment跳转的tab 设置自定义监听
-                fragmenttabhost.getTabWidget().getChildTabViewAt(i).setOnClickListener(this);
+                view.setOnClickListener(this);
             }
         }
     }
@@ -126,11 +133,16 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         if (System.currentTimeMillis() - lasttime < 2000) {
             ((BaseApplication) this.getApplication()).exit(0);
         } else {
-            ToastUtil.showToast(this, "再点击一次退出" + getString(R.string.app_name) + "！");
+            new MySnackbarUtils.Builder(this)
+                    .setCoverStatusBar(true)
+                    .setMessage("再点击一次退出" + getString(R.string.app_name))
+                    .setMessageColor(R.color.colorAccent)
+                    .setBackgroundColor(R.color.white)
+                    .show();
+//            ToastUtil.showToast(this, "再点击一次退出" + getString(R.string.app_name) + "！");
         }
         lasttime = System.currentTimeMillis();
     }
-
     @Override
     public void onTabChanged(String tabId) {
         FragmentManager Frmanager = getSupportFragmentManager();
@@ -166,11 +178,18 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case 0:
-                showMoreWindow(v);
-                break;
+        if (v.getId()==0){
+            showMoreWindow(v);
+            return;
         }
+        if (currenttabtag.equals(v.getTag())){
+//            Log.i("TAG", "又一次点击：currenttabtag: "+currenttabtag);
+            //可执行刷新数据等操作：
+            refreshEvent event=new refreshEvent();
+            event.setIs_RefreshCurrent(true);
+            EventBus.getDefault().post(event);
+        }
+        currenttabtag=v.getTag().toString();
     }
 
     public static final int IMAGE_PICKER = 100;
@@ -292,6 +311,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         public View getview() {
             if (this.view == null) {
                 this.view = getLayoutInflater().inflate(R.layout.view_tab_indicator, null);
+                View ll_tab_indicator_content = view.findViewById(R.id.ll_tab_indicator_content);
+                ll_tab_indicator_content.setTag(getTitleString());
                 this.imageView = (ImageView) this.view.findViewById(R.id.iv_tab);
                 this.textView = (TextView) this.view.findViewById(R.id.tv_tab);
                 if (this.titleid == 0) {//目前只针对那个（加号tab）文字隐藏，以后。。
@@ -305,5 +326,9 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             return this.view;
         }
 
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

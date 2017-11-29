@@ -59,6 +59,7 @@ public class essence extends BaseFragment {
     @Override
     public void initContentView(View viewContent) {
         ButterKnife.bind(this, viewContent);
+
         setStatusBarView(tv_fitssystemwindows_view);
         initToolBar(ll_essence_tabcontainer);
 
@@ -206,9 +207,4 @@ public class essence extends BaseFragment {
         dialog.show();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
 }

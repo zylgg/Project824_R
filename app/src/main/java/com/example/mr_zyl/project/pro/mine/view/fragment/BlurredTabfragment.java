@@ -48,7 +48,7 @@ public class BlurredTabfragment extends BaseFragment {
         int POS = arguments.getInt(POSITION_KEY);
         List<String> lists = new ArrayList<String>();
         for (int i = 0; i < 20; i++) {
-            lists.add(i + "-page" + POS);
+            lists.add(i + "-Custom" + POS);
         }
         rv_blurred_list.setAdapter(new BlurredAdapter(Fcontext, lists));
     }

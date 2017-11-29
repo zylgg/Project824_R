@@ -169,7 +169,7 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
     private void initBuilderItems(View viewContent) {
         ll_mine_itemview = (LinearLayout) viewContent.findViewById(R.id.ll_mine_itemview);
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "地图", BaiduMapActivity.class, -1));
-        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "位置", MoreLevelActivity.class, 111));
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "分类", MoreLevelActivity.class, 111));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "新界面", null, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "窗帘效果界面", CurtainActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "各种高斯样式", FastBlurActivity.class, -1));

@@ -77,16 +77,21 @@ public class MoreLevelView extends LinearLayout {
         this.listenner = listenner;
     }
 
+    /**
+     * @param ll_son
+     * @param id
+     * @return
+     */
     private View addchildview(LinearLayout ll_son, final int id) {
         LinearLayout LL_root = null;
-        if (ll_son == null) {
+        if (ll_son == null) {//如果是第一层菜单
             LL_root = new LinearLayout(mContext);
         } else {
             LL_root = ll_son;
         }
         LL_root.setLayoutParams(rootLayoutParams);
         LL_root.setOrientation(LinearLayout.VERTICAL);
-        List<Node> lists_0 = getListByPid(id);//*********id如果为二级节点的id，怎么得到子view的数据?????????
+        List<Node> lists_0 = getListByPid(id);
         for (int i = 0; i < lists_0.size(); i++) {
             final Node nodes = lists_0.get(i);
             nodes.setParent(getNodeByid(id));
@@ -96,15 +101,19 @@ public class MoreLevelView extends LinearLayout {
             tv_start.setId(nodes.getId());
             tv_start.setText(nodes.getName());
             tv_start.setTextColor(new Color().BLACK);
-            tv_start.setPadding(60 * nodes.getLevel(), 0, 0, 0);
-            tv_start.setCompoundDrawables(drawable_close, null, null, null);
+            if (getListByPid(nodes.getId()).size()==0){ //如果没有子元素
+                tv_start.setPadding(drawable_close.getMinimumWidth() * (nodes.getLevel()+1), 0, 0, 0);
+            }else{
+                tv_start.setPadding(drawable_close.getMinimumWidth() * nodes.getLevel(), 0, 0, 0);
+                tv_start.setCompoundDrawables(drawable_close, null, null, null);
+            }
             tv_start.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
             tv_start.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     LinearLayout ll_son = (LinearLayout) v.getTag();
-                    //如果点击的是第三级view---直接返回
-                    if (getListByPid(nodes.getId()).size() == 0) {//没有子元素，就回调
+                    //没有子元素，就回调
+                    if (getListByPid(nodes.getId()).size() == 0) {
                         //响应回调监听
                         listenner.setonItemClick(GetAllNodeName(nodes));
                         return;
@@ -131,7 +140,7 @@ public class MoreLevelView extends LinearLayout {
             ll_end.setLayoutParams(itemLayoutParams);
             ll_end.setOrientation(LinearLayout.VERTICAL);
             ll_end.setGravity(View.GONE);
-            tv_start.setTag(ll_end);//菜单的标记为子view
+            tv_start.setTag(ll_end);//子LinearLayout标记在上级菜单tv上
 
             LL_root.addView(ll_end);
         }
@@ -202,7 +211,7 @@ public class MoreLevelView extends LinearLayout {
     }
 
     /**
-     * 根据id得到对象
+     * 根据id得到对象(获取父元素)
      *
      * @param id
      * @return

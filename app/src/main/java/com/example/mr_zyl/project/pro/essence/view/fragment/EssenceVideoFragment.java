@@ -82,6 +82,7 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
         refreshview_id.setPullRefreshEnable(true);
         refreshview_id.setPullLoadEnable(true);
         refreshview_id.setPinnedTime(1000);
+        refreshview_id.setAutoRefresh(true);
         refreshview_id.setAutoLoadMore(false);
         refreshview_id.enableReleaseToLoadMore(false);//到达底部后让其点击加载asdf
         refreshview_id.enableRecyclerViewPullUp(false);//不让Recycleview到达底部继续上啦
@@ -161,7 +162,7 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void initData() {
-        loaddata(true);
+//        loaddata(true);
     }
 
     /**
@@ -202,6 +203,13 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
 
 
     public void onEventMainThread(refreshEvent event) {
+        //点击菜单，刷新当前tab分类
+        boolean refreshCurrent = event.is_RefreshCurrent();
+        if (refreshCurrent){
+            refreshview_id.startRefresh();
+            return;
+        }
+        // 接受essence协调布局监听器 发送的消息：判断是否可以下拉rv
         setPullRefresh(event.isCan());
     }
 
@@ -241,6 +249,11 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
     public void onPause() {
         super.onPause();
         JCVideoPlayer.releaseAllVideos();
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
 }
