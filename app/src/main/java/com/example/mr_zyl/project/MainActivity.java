@@ -136,8 +136,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             new MySnackbarUtils.Builder(this)
                     .setCoverStatusBar(true)
                     .setMessage("再点击一次退出" + getString(R.string.app_name))
-                    .setMessageColor(R.color.colorAccent)
-                    .setBackgroundColor(R.color.white)
+                    .setMessageColor(R.color.white)
                     .show();
 //            ToastUtil.showToast(this, "再点击一次退出" + getString(R.string.app_name) + "！");
         }
