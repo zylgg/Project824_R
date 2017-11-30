@@ -12,14 +12,14 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         defaultConfig {
             renderscriptTargetApi 23
             renderscriptSupportModeEnabled true
         }
         ndk {
             moduleName "mathkitso"
-            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
+            abiFilters "arm64-v8a","armeabi", "armeabi-v7a", "x86", "mips","x86_64"
         }
     }
     buildTypes {
@@ -74,4 +74,5 @@ dependencies {
     compile 'com.lqr.imagepicker:library:1.0.0'
     //代替cardview边角和阴影色自定义
     compile 'com.loopeer.lib:shadow:0.0.3'
+    compile files('libs/AMap3DMap_5.6.0_AMapNavi_5.4.0_AMapSearch_5.5.0_AMapLocation_3.6.1_20171128.jar')
 }

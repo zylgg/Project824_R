@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mr_zyl.project">
-
+    <!--允许程序打开网络套接字-->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--允许程序获取网络状态-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!--允许程序读写手机状态和身份-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--允许程序访问WiFi网络信息-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <!--允许程序设置内置sd卡的写权限-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!--用于申请调用A-GPS模块-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
+    <!--用于申请获取蓝牙信息进行室内定位-->
+    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
 
     <application
         android:name=".BaseApplication"
@@ -24,12 +38,14 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="sGz75rp7TClWy47XIqHZ46dvvYmhACKK" />
-
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="344b86f465522f54c699202e0c9ac4e9" />
+        <service android:name="com.amap.api.location.APSService"></service>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/THEME_trans" >
-        </activity>
+            android:theme="@style/THEME_trans"></activity>
         <activity
             android:name=".LaunchActivity"
             android:theme="@style/LaunchTheme">
@@ -56,7 +72,8 @@
         <activity android:name=".pro.essence.view.activity.BrowerActivity" />
         <activity android:name=".pro.newpost.view.Activity.TreeViewActivity" />
         <activity android:name=".pro.publish.view.SimpleTakePhotoActivity" />
-        <activity android:name=".pro.newpost.view.Activity.FontsActivity"></activity>
+        <activity android:name=".pro.newpost.view.Activity.FontsActivity" />
+        <activity android:name=".pro.mine.view.activity.GMapActivity"></activity>
     </application>
 
 </manifest>

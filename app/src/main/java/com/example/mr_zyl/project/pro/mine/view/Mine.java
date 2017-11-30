@@ -27,6 +27,7 @@ import com.example.mr_zyl.project.pro.mine.view.activity.BaiduMapActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.BlurredActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.CurtainActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.FastBlurActivity;
+import com.example.mr_zyl.project.pro.mine.view.activity.GMapActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.ListViewSSActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.LoadGifActivity;
 import com.example.mr_zyl.project.pro.mine.view.activity.MoreLevelActivity;
@@ -168,7 +169,8 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
      */
     private void initBuilderItems(View viewContent) {
         ll_mine_itemview = (LinearLayout) viewContent.findViewById(R.id.ll_mine_itemview);
-        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "地图", BaiduMapActivity.class, -1));
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "高德地图", GMapActivity.class, -1));
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "百度地图", BaiduMapActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "分类", MoreLevelActivity.class, 111));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "新界面", null, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "窗帘效果界面", CurtainActivity.class, -1));
