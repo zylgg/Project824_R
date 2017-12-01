@@ -35,12 +35,12 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="sGz75rp7TClWy47XIqHZ46dvvYmhACKK" />
+        <!--<meta-data-->
+            <!--android:name="com.baidu.lbsapi.API_KEY"-->
+            <!--android:value="sGz75rp7TClWy47XIqHZ46dvvYmhACKK" />-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="344b86f465522f54c699202e0c9ac4e9" />
+            android:value="43898fd97ccdad6f5dee63d81d243508" />
         <service android:name="com.amap.api.location.APSService"></service>
         <activity
             android:name=".MainActivity"
