@@ -16,118 +16,124 @@ import java.util.List;
 
 public class SlideListAdapter extends BaseAdapter {
 
-	private Context mContext;
-	private LayoutInflater mInflater;
-	
-	private SlideManager slideManager;
+    private static final String TAG = "SlideListAdapter";
+    private Context mContext;
+    private LayoutInflater mInflater;
 
-	private List<listviewbean> lists2;
+    private SlideManager slideManager;
 
-	public SlideListAdapter(Context mContext,List<listviewbean> lists) {
-		super();
-		this.mContext = mContext;
-		this.lists2=lists;
-		mInflater = LayoutInflater.from(mContext);
-		slideManager = new SlideManager();
-	}
-	
-	public SlideManager getSlideManager() {
-		return slideManager;
-	}
+    private List<listviewbean> lists2;
 
-	@Override
-	public int getCount() {
-		return lists2.size();
-	}
+    public SlideListAdapter(Context mContext, List<listviewbean> lists) {
+        super();
+        this.mContext = mContext;
+        this.lists2 = lists;
+        mInflater = LayoutInflater.from(mContext);
+        slideManager = new SlideManager();
+    }
 
-	@Override
-	public Object getItem(int position) {
-		return lists2.get(position);
-	}
+    public SlideManager getSlideManager() {
+        return slideManager;
+    }
 
-	@Override
-	public long getItemId(int position) {
-		return position;
-	}
-	private SlidingContentView.OnItemClickListener itemClickListener;
+    @Override
+    public int getCount() {
+        return lists2.size();
+    }
 
-	public void setOnItemClickListener(SlidingContentView.OnItemClickListener itemClickListener) {
-		this.itemClickListener = itemClickListener;
-	}
+    @Override
+    public Object getItem(int position) {
+        return lists2.get(position);
+    }
 
-	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
-		ViewHolder mHolder;
-		listviewbean beans = lists2.get(position);
-		if (convertView == null) {
-			mHolder = new ViewHolder();
-			convertView = mInflater.inflate(R.layout.list_item, null, false);
-			mHolder.mCancelCall = (Button) convertView.findViewById(R.id.bt_call);
-			mHolder.mDeleteCell = (Button) convertView.findViewById(R.id.bt_delete);
-			mHolder.tv_listviewss_name= (TextView) convertView.findViewById(R.id.tv_listviewss_name);
-			mHolder.tv_listviewss_status= (TextView) convertView.findViewById(R.id.tv_listviewss_status);
-			convertView.setTag(mHolder);
-		} else {
-			mHolder = (ViewHolder) convertView.getTag();
-		}
-		mHolder.tv_listviewss_name.setText(beans.getName());
-		mHolder.tv_listviewss_status.setText(beans.getStatus());
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
-		// 14、第一个问题处理：当滑动视图处于打开状态，点击条目之外其他的位置需要将原来条目关闭？
-		// 解决方案：需要在Adapter中给每一个Item绑定点击事件
-		final SlidingItemLayout view = (SlidingItemLayout) convertView;
-		//默认关闭
-		view.closeSlidingLayout(false, false);
-		
-		//给我们的滑动视图绑定回调监听（监听生命周期）
-		view.setOnSlideItemListener(slideManager.getOnSlideItemListener());
-		//一旦你点击了contentView我们立马将原来的已打开的视图关闭
-		view.getContentView().setOnClickListener(new View.OnClickListener() {
+    private SlidingContentView.OnItemClickListener itemClickListener;
 
-			@Override
-			public void onClick(View v) {
-				if (slideManager.getUnClosedCount()==0){
-					itemClickListener.onItemClick(position);
-					return;
-				}
-				slideManager.closeAllLayout();
-			}
-		});
-		mHolder.mCancelCall.setOnClickListener(new View.OnClickListener(){
+    public void setOnItemClickListener(SlidingContentView.OnItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
 
-			@Override
-			public void onClick(View v) {
-				view.close();
-			}
-		});
-		mHolder.mDeleteCell.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				lists2.remove(position);
-				notifyDataSetChanged();
-			}
-		});
-		return view;
-	}
-	//单行更新，
-	public void updateSingleRow(ListView listView, String name) {
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        ViewHolder mHolder;
+        listviewbean beans = lists2.get(position);
+        if (convertView == null) {
+            mHolder = new ViewHolder();
+            convertView = mInflater.inflate(R.layout.list_item, null, false);
+            mHolder.mCancelCall = (Button) convertView.findViewById(R.id.bt_call);
+            mHolder.mDeleteCell = (Button) convertView.findViewById(R.id.bt_delete);
+            mHolder.tv_listviewss_name = (TextView) convertView.findViewById(R.id.tv_listviewss_name);
+            mHolder.tv_listviewss_status = (TextView) convertView.findViewById(R.id.tv_listviewss_status);
+            convertView.setTag(mHolder);
+        } else {
+            mHolder = (ViewHolder) convertView.getTag();
+        }
+        mHolder.tv_listviewss_name.setText(beans.getName());
+        mHolder.tv_listviewss_status.setText(beans.getStatus());
 
-		if (listView != null) {
-			int start = listView.getFirstVisiblePosition();
-			for (int i = start, j = listView.getLastVisiblePosition(); i <= j; i++)
-				if (name == ((listviewbean) listView.getItemAtPosition(i)).getName()) {
-					View view = listView.getChildAt(i - start);
-					getView(i, view, listView);
-					break;
-				}
-		}
-	}
+        // 14、第一个问题处理：当滑动视图处于打开状态，点击条目之外其他的位置需要将原来条目关闭？
+        // 解决方案：需要在Adapter中给每一个Item绑定点击事件
+        final SlidingItemLayout view = (SlidingItemLayout) convertView;
+        //默认关闭
+        view.closeSlidingLayout(false, false);
 
-	class ViewHolder {
-		private TextView tv_listviewss_name;
-		private TextView tv_listviewss_status;
-		public Button mCancelCall;
-		public Button mDeleteCell;
-	}
+        //给我们的滑动视图绑定回调监听（监听生命周期）
+        view.setOnSlideItemListener(slideManager.getOnSlideItemListener());
+        //一旦你点击了contentView我们立马将原来的已打开的视图关闭
+        view.getContentView().setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (slideManager.getUnClosedCount() == 0) {
+                    itemClickListener.onItemClick(position);
+                    return;
+                }
+                slideManager.closeAllLayout();
+            }
+        });
+        mHolder.mCancelCall.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                view.close();
+            }
+        });
+        mHolder.mDeleteCell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lists2.remove(position);
+                notifyDataSetChanged();
+            }
+        });
+        return view;
+    }
+
+    //单行更新，
+    public void updateSingleRow(ListView listView, String name) {
+        if (listView != null) {
+            int start = listView.getFirstVisiblePosition()+1;
+            int j = listView.getLastVisiblePosition();
+//            Log.i(TAG, "updateSingleRow: " + start + "," + j);
+            for (int i = start; i <= j; i++) {
+//                Log.i(TAG, "updateSingleRow: " + listView.getItemAtPosition(i));
+                if (name == ((listviewbean) listView.getItemAtPosition(i)).getName()) {
+                    View view = listView.getChildAt(i - start+1);
+                    getView(i-1, view, listView);
+                    break;
+                }
+            }
+        }
+    }
+
+    class ViewHolder {
+        private TextView tv_listviewss_name;
+        private TextView tv_listviewss_status;
+        public Button mCancelCall;
+        public Button mDeleteCell;
+    }
 
 }

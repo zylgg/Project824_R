@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project.R;
-import com.example.mr_zyl.project.pro.essence.view.adapter.MyRefreshLv_Adapter;
+import com.example.mr_zyl.project.pro.mine.view.SlidingLib.SlideListAdapter;
 
 import java.util.Date;
 
@@ -340,9 +340,8 @@ public class PullDownRefresh_ListView extends ListView implements OnScrollListen
 		}
 	}
 
-	public void setAdapter(MyRefreshLv_Adapter adapter) {
+	public void setAdapters(SlideListAdapter adapter) {
 		lvHeaderLastUpdatedTv.setText("最近更新:" + new Date().toLocaleString());
 		super.setAdapter(adapter);
 	}
-
 }

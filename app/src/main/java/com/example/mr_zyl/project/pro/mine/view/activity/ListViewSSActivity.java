@@ -33,14 +33,14 @@ public class ListViewSSActivity extends BaseActivity {
         lv_listviewss = (PullDownRefresh_ListView) findViewById(R.id.lv_listviewss);
 
         lists = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 6; i++) {
             lists.add(new listviewbean("item" + i, "点击"));
         }
         adapter = new SlideListAdapter(this, lists);
         adapter.setOnItemClickListener(new SlidingContentView.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                ToastUtil.showToast(ListViewSSActivity.this, "我点击了");
+                ToastUtil.showToast(ListViewSSActivity.this, position+"我点击了");
                 listviewbean b = lists.get(position);
                 b.setStatus("我已经点击了！");
                 adapter.updateSingleRow(lv_listviewss, b.getName());
@@ -57,7 +57,7 @@ public class ListViewSSActivity extends BaseActivity {
                 }, 2000);
             }
         });
-        lv_listviewss.setAdapter(adapter);
+        lv_listviewss.setAdapters(adapter);
         lv_listviewss.setOnScrollListener(new AbsListView.OnScrollListener() {
 
             @Override
