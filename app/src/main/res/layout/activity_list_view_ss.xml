@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".pro.mine.view.activity.ListViewSSActivity">
 
-    <ListView
+    <com.example.mr_zyl.project.pro.essence.view.selfview.PullDownRefresh_ListView
         android:id="@+id/lv_listviewss"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

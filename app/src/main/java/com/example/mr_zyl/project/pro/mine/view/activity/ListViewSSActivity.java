@@ -1,11 +1,12 @@
 package com.example.mr_zyl.project.pro.mine.view.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.AbsListView;
-import android.widget.ListView;
 
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseActivity;
+import com.example.mr_zyl.project.pro.essence.view.selfview.PullDownRefresh_ListView;
 import com.example.mr_zyl.project.pro.mine.view.SlidingLib.SlideListAdapter;
 import com.example.mr_zyl.project.pro.mine.view.SlidingLib.SlidingContentView;
 import com.example.mr_zyl.project.pro.mine.view.SlidingLib.listviewbean;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class ListViewSSActivity extends BaseActivity {
 
-    ListView lv_listviewss;
+    PullDownRefresh_ListView lv_listviewss;
     List<listviewbean> lists;
     SlideListAdapter adapter;
     String TAG = "ListViewSSActivity";
@@ -29,7 +30,7 @@ public class ListViewSSActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        lv_listviewss = (ListView) findViewById(R.id.lv_listviewss);
+        lv_listviewss = (PullDownRefresh_ListView) findViewById(R.id.lv_listviewss);
 
         lists = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
@@ -43,6 +44,17 @@ public class ListViewSSActivity extends BaseActivity {
                 listviewbean b = lists.get(position);
                 b.setStatus("我已经点击了！");
                 adapter.updateSingleRow(lv_listviewss, b.getName());
+            }
+        });
+        lv_listviewss.setonRefreshListener(new PullDownRefresh_ListView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        lv_listviewss.onRefreshComplete();
+                    }
+                }, 2000);
             }
         });
         lv_listviewss.setAdapter(adapter);
