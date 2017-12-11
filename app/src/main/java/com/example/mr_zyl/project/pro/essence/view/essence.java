@@ -131,14 +131,14 @@ public class essence extends BaseFragment {
 
         int selectedTabPosition = this.tab_essence.getSelectedTabPosition();
         TextView text = (TextView) this.tab_essence.getTabAt(selectedTabPosition).getCustomView().findViewById(R.id.tv_essence_tablayout_item_text);
-        text.setTextSize(TypedValue.COMPLEX_UNIT_SP,25);
+        text.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
         text.setTextColor(Color.WHITE);
         this.tab_essence.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(this.vp_essence) {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 super.onTabSelected(tab);
                 TextView text = (TextView) tab.getCustomView().findViewById(R.id.tv_essence_tablayout_item_text);
-                text.setTextSize(TypedValue.COMPLEX_UNIT_SP,25);
+                text.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
                 text.setTextColor(Color.WHITE);
             }
 
