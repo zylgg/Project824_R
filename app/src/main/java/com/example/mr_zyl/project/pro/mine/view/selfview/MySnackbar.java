@@ -221,7 +221,7 @@ public class MySnackbar extends LinearLayout {
             //Icon
             if (params.iconResId != 0) {
                 ivIcon.setVisibility(VISIBLE);
-                ivIcon.setBackgroundResource(params.iconResId);
+                ivIcon.setImageResource(params.iconResId);
             }
 
             //Title

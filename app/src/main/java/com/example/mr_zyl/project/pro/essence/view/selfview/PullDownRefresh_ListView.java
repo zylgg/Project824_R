@@ -140,6 +140,12 @@ public class PullDownRefresh_ListView extends ListView implements OnScrollListen
    int move_deal=0;
 	@Override
 	public boolean onTouchEvent(MotionEvent ev) {
+		int firstVisiblePosition = getFirstVisiblePosition();
+		if (firstVisiblePosition == 0) {
+			isRefreshable = true;
+		} else {
+			isRefreshable = false;
+		}
 		if (isRefreshable) {
 			switch (ev.getAction()) {
 			case MotionEvent.ACTION_DOWN:

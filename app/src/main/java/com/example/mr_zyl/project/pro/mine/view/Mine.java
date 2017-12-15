@@ -171,12 +171,12 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
         ll_mine_itemview = (LinearLayout) viewContent.findViewById(R.id.ll_mine_itemview);
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "高德地图", GMapActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "百度地图", BaiduMapActivity.class, -1));
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "LV侧滑删除", ListViewSSActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "分类", MoreLevelActivity.class, 111));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "新界面", null, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "窗帘效果界面", CurtainActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "各种高斯样式", FastBlurActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "协调布局", BlurredActivity.class, -1));
-        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "LV侧滑删除", ListViewSSActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "本地Gif加载", LoadGifActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "生成二维码", QRImageActivity.class, -1));
         for (int i = 0; i < itemlists.size(); i++) {

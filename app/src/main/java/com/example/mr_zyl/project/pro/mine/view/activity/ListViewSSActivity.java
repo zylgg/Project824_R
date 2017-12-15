@@ -33,7 +33,7 @@ public class ListViewSSActivity extends BaseActivity {
         lv_listviewss = (PullDownRefresh_ListView) findViewById(R.id.lv_listviewss);
 
         lists = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 26; i++) {
             lists.add(new listviewbean("item" + i, "点击"));
         }
         adapter = new SlideListAdapter(this, lists);

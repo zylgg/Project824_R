@@ -41,7 +41,14 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="43898fd97ccdad6f5dee63d81d243508" />
+
         <service android:name="com.amap.api.location.APSService"></service>
+        <receiver android:name=".pro.base.view.NetBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"></action>
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"

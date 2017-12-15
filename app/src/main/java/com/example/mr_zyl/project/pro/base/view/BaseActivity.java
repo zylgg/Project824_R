@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import com.example.mr_zyl.project.BaseApplication;
 import com.example.mr_zyl.project.mvp.presenter.impl.MvpBasePresenter;
 import com.example.mr_zyl.project.mvp.view.impl.MvpActivity;
+import com.example.mr_zyl.project.utils.NetUtils;
 
 import butterknife.ButterKnife;
 
@@ -15,14 +16,23 @@ import butterknife.ButterKnife;
  * BaseActivity是我们的项目的Activity
  * Created by Mr_Zyl on 2016/8/24.
  */
-public abstract class BaseActivity<P extends  MvpBasePresenter>  extends MvpActivity<P>{
+public abstract class BaseActivity<P extends MvpBasePresenter> extends MvpActivity<P> implements NetBroadcastReceiver.NetEvevt {
+
+    public static NetBroadcastReceiver.NetEvevt netEvevt;
+    /**
+     * 网络类型
+     */
+    private int netMobile;
 
     public BaseApplication getMyApplication() {
         return (BaseApplication) this.getApplication();
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        netEvevt = this;
+        initNetType();
         //设置布局
         setContentView(initLayoutId());
         //记录当前的activity
@@ -30,14 +40,21 @@ public abstract class BaseActivity<P extends  MvpBasePresenter>  extends MvpActi
         //初始化butterknife注解
         ButterKnife.bind(this);
     }
+
+    private boolean initNetType() {
+        this.netMobile = NetUtils.getNetWorkState(this);
+        return isNetConnect(this.netMobile);
+    }
+
     protected abstract int initLayoutId();
+
     @Override
     protected void onResume() {
         /**
          * 设置为横屏
          * android:configChanges="orientation|screenSize" 切屏不重走oncreate（）方法
          */
-        if(getRequestedOrientation()!= ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+        if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
         //自动调节输入法区域
@@ -51,8 +68,32 @@ public abstract class BaseActivity<P extends  MvpBasePresenter>  extends MvpActi
     }
 
     @Override
+    public void onNetChange(int netMobile) {
+        this.netMobile=netMobile;
+//        isNetConnect(this.netMobile);
+    }
+
+    /**
+     * 判断有无网络 。
+     *
+     * @return true 有网, false 没有网络.
+     */
+    public boolean isNetConnect(int state) {
+        if (state == 1) {//wifi
+            return true;
+        } else if (state == 0) {//mobile
+            return true;
+        } else if (state == -1) {//没网
+            return false;
+        }
+        return false;
+    }
+
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         getMyApplication().removeActivity(this);
     }
+
 }

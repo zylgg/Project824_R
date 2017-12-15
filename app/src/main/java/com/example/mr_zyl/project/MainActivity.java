@@ -94,7 +94,12 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         tablists.add(new Tabitem(R.drawable.main_bottom_mine_normal
                 , R.drawable.main_bottom_mine_press, R.string.main_mine_text, Mine.class));
     }
+
+    /**
+     * 当前选中的tab标题
+     */
     private String currenttabtag;
+
     private void initTabHost() {
         fragmenttabhost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
         fragmenttabhost.getTabWidget().setDividerDrawable(null);
@@ -113,10 +118,10 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             //默认选中第一个Tab
             if (i == 0) {
                 tabItem.setChecked(true);
-                currenttabtag=tabItem.getTitleString();
+                currenttabtag = tabItem.getTitleString();
             }
 
-            View view=fragmenttabhost.getTabWidget().getChildTabViewAt(i);
+            View view = fragmenttabhost.getTabWidget().getChildTabViewAt(i);
             View ll_tab_indicator_content = view.findViewById(R.id.ll_tab_indicator_content);
             ll_tab_indicator_content.setOnClickListener(this);
             if (tabItem.getTitleid() == 0) {//只对非fragment跳转的tab 设置自定义监听
@@ -127,7 +132,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void onBackPressed() {
-        if (mMoreWindow!=null&&mMoreWindow.isShowing()){
+        if (mMoreWindow != null && mMoreWindow.isShowing()) {
             return;
         }
         if (System.currentTimeMillis() - lasttime < 2000) {
@@ -142,6 +147,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         }
         lasttime = System.currentTimeMillis();
     }
+
     @Override
     public void onTabChanged(String tabId) {
         FragmentManager Frmanager = getSupportFragmentManager();
@@ -177,20 +183,38 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void onClick(View v) {
-        if (v.getId()==0){
+        if (v.getId() == 0) {
             showMoreWindow(v);
             return;
         }
-        if (currenttabtag.equals(v.getTag())){
+        if (currenttabtag.equals(v.getTag())) {
 //            Log.i("TAG", "又一次点击：currenttabtag: "+currenttabtag);
             //可执行刷新数据等操作：
-            refreshEvent event=new refreshEvent();
+            refreshEvent event = new refreshEvent();
             event.setIs_RefreshCurrent(true);
             EventBus.getDefault().post(event);
         }
-        currenttabtag=v.getTag().toString();
+        currenttabtag = v.getTag().toString();
     }
 
+    @Override
+    public void onNetChange(int netMobile) {
+        super.onNetChange(netMobile);
+        boolean netConnect = isNetConnect(netMobile);
+        if (!netConnect)
+//            ToastUtil.showToast(this,"当前网络状态不可用，请检查你的网络设置！");
+        new MySnackbarUtils.Builder(this)
+                .setCoverStatusBar(true)
+                .setIcon(R.drawable.red_log)
+                .setBackgroundColor(R.color.white)
+                .setMessage("当前网络状态不可用，请检查你的网络设置！")
+                .setMessageColor(R.color.black)
+                .show();
+    }
+
+    /**
+     * 图片选择器请求码
+     */
     public static final int IMAGE_PICKER = 100;
 
     /**
@@ -203,8 +227,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             mMoreWindow = new MoreWindow(this, new MoreWindow.MenuOnclickListener() {
                 @Override
                 public void selectPhoto() {
-                    Intent intent=new Intent(MainActivity.this, ImageGridActivity.class);
-                    startActivityForResult(intent,IMAGE_PICKER);
+                    Intent intent = new Intent(MainActivity.this, ImageGridActivity.class);
+                    startActivityForResult(intent, IMAGE_PICKER);
                 }
             });
             mMoreWindow.init();
@@ -215,8 +239,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==IMAGE_PICKER){
-            switch (resultCode){
+        if (requestCode == IMAGE_PICKER) {
+            switch (resultCode) {
                 case ImagePicker.RESULT_CODE_ITEMS:
                     if (data != null) {
                         //是否发送原图
@@ -227,11 +251,11 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                         for (ImageItem imageItem : images) {
                             Log.e("CSDN_LQR", imageItem.path);
                         }
-                        Intent intent=new Intent(MainActivity.this, SimpleTakePhotoActivity.class);
-                        intent.putExtra("imagepaths",images);
+                        Intent intent = new Intent(MainActivity.this, SimpleTakePhotoActivity.class);
+                        intent.putExtra("imagepaths", images);
                         startActivity(intent);
                     }
-                break;
+                    break;
             }
         }
     }
@@ -326,6 +350,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         }
 
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
