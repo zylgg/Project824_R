@@ -4,6 +4,7 @@ package com.example.mr_zyl.project.pro.essence.view.fragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.example.mr_zyl.project.R;
@@ -20,6 +21,7 @@ import com.example.mr_zyl.project.pro.essence.view.selfview.MyDecoration;
 import com.example.mr_zyl.project.utils.ToastUtil;
 import com.example.zylsmallvideolibrary.JCVideoPlayer;
 import com.example.zylsmallvideolibrary.VideoEvents;
+import com.loopeer.shadow.ShadowView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,8 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
     RecyclerView rv_essence_one;
     @BindView(R.id.fab_scrollTop)
     FloatingActionButton fab_scrollTop;
+    @BindView(R.id.sv_bottom_menu)
+    ShadowView sv_bottom_menu;
 
     public EssenceVideoFragment() {
     }
@@ -99,21 +103,39 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
         rv_essence_one.setAdapter(adapter);
     }
 
+    int distanceY;
     private void initListener() {
         scrollListener = new RecyclerView.OnScrollListener() {
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
+                Log.i(TAG, "lastVisibleItemPosition: "+lastVisibleItemPosition);
+
+                if (lastVisibleItemPosition==layoutManager.getItemCount()-2){//从倒数第一个开始(因为rv里有加载更多view，so减2)计算距离
+                    distanceY=distanceY+dy;
+                    View childAt = layoutManager.findViewByPosition(lastVisibleItemPosition);
+                    Log.i(TAG, "childAt: "+childAt);
+                    int height = childAt.getHeight();
+                    //此时判断滑动的距离，距离底部的距离
+                    int distanceBottom=height-distanceY;
+//                    distanceBottom=distanceBottom/2;
+//                    sv_bottom_menu.setShadowMargin(distanceBottom,distanceBottom,distanceBottom,distanceBottom);
+//                    sv_bottom_menu.setCornerRadius(distanceBottom,distanceBottom,distanceBottom,distanceBottom);
+
+                }
+
             }
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-
-                LinearLayoutManager layoutManager = (LinearLayoutManager) rv_essence_one.getLayoutManager();
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
                 View firstview = layoutManager.findViewByPosition(firstVisibleItemPosition);
-                if (firstVisibleItemPosition == 0 && firstview.getTop() == 0) {
+                if (firstVisibleItemPosition == 0 && firstview.getTop() == 0) {//到达顶部了
                     fab_scrollTop.setVisibility(View.GONE);
                 } else {
                     fab_scrollTop.setVisibility(View.VISIBLE);
