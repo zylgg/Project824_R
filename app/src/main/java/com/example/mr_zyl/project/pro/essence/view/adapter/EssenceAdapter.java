@@ -32,7 +32,7 @@ public class EssenceAdapter extends FragmentStatePagerAdapter {
             return new EssenceMyLvFragment();
         }else if (position==6){
             EssenceMyTestFragment fragment2 = new EssenceMyTestFragment();
-            String[] title2 = mTitles.get(3).split(TAB_TAG);
+            String[] title2 = mTitles.get(4).split(TAB_TAG);
             fragment2.setType(Integer.parseInt(title2[1]));
             fragment2.setTitle(title2[0]);
             return fragment2;

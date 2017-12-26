@@ -8,7 +8,6 @@
         android:id="@+id/refreshview_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/y120"
         app:isHeightMatchParent="true"
         app:isWidthMatchParent="true">
 
@@ -40,14 +39,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:backgroundColor="@color/material_blue_500"
-        app:cornerRadius="@dimen/x30"
-        app:shadowMargin="@dimen/x30">
+        app:cornerRadius="@dimen/x180"
+        app:shadowMargin="@dimen/x60">
 
         <LinearLayout
             android:id="@+id/ll_bottom_menu"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y120"
-            android:padding="@dimen/x15"
+            android:layout_height="@dimen/y180"
+            android:padding="@dimen/x50"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 

@@ -61,22 +61,19 @@ public class EssenceMyTestFragment extends BaseFragment implements View.OnClickL
         presenter = new EssenceVideoPresenter(getContext());
         return presenter;
     }
-    /**
-     * ShadowVie最大内间距和圆角值
-     */
-    private int maxMargin =0;
 
     XRefreshView refreshview_id;
     RecyclerView rv_essence_one;
     FloatingActionButton fab_scrollTop;
     ShadowView sv_bottom_menu;
+
     @Override
     public void initContentView(View contentView) {
         EventBus.getDefault().register(this);
-        refreshview_id= ButterKnife.findById(contentView,R.id.refreshview_id);
-        rv_essence_one= ButterKnife.findById(contentView,R.id.rv_essence_one);
-        fab_scrollTop= ButterKnife.findById(contentView,R.id.fab_scrollTop);
-        sv_bottom_menu= ButterKnife.findById(contentView,R.id.sv_bottom_menu);
+        refreshview_id = ButterKnife.findById(contentView, R.id.refreshview_id);
+        rv_essence_one = ButterKnife.findById(contentView, R.id.rv_essence_one);
+        fab_scrollTop = ButterKnife.findById(contentView, R.id.fab_scrollTop);
+        sv_bottom_menu = ButterKnife.findById(contentView, R.id.sv_bottom_menu);
 
         initListener();
 
@@ -94,7 +91,7 @@ public class EssenceMyTestFragment extends BaseFragment implements View.OnClickL
 
         adapter = new EssenceRecycleAdapter(getContext(), postlists);
 
-        rv_essence_one.addItemDecoration(new MyDecoration(Fcontext,MyDecoration.VERTICAL_LIST));
+        rv_essence_one.addItemDecoration(new MyDecoration(Fcontext, MyDecoration.VERTICAL_LIST));
         rv_essence_one.setHasFixedSize(true);
         rv_essence_one.setLayoutManager(new LinearLayoutManager(getContext()));//设置列表管理器(LinearLayoutManager指水平或者竖直，默认数值)
         rv_essence_one.addOnScrollListener(scrollListener);
@@ -102,10 +99,22 @@ public class EssenceMyTestFragment extends BaseFragment implements View.OnClickL
     }
 
 
-    private boolean is_firstDeal=false;
-    private int  scollYFirstDistance;
+    private boolean is_firstDeal = false;
+    private int scollYFirstDistance;
+    /**
+     * ShadowVie最大圆角
+     */
+    private int maxRadius = 0;
+    /**
+     * ShadowVie最大内间距
+     */
+    private int maxMargin = 0;
+
+
     private void initListener() {
-        maxMargin= DensityUtil.getpxByDimensize(Fcontext, R.dimen.x30);
+        maxRadius = DensityUtil.getpxByDimensize(Fcontext, R.dimen.x180);
+        maxMargin = DensityUtil.getpxByDimensize(Fcontext, R.dimen.x60);
+
         scrollListener = new RecyclerView.OnScrollListener() {
 
             @Override
@@ -113,32 +122,31 @@ public class EssenceMyTestFragment extends BaseFragment implements View.OnClickL
                 super.onScrolled(recyclerView, dx, dy);
                 LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-                Log.i(TAG, "lastVisibleItemPosition: "+lastVisibleItemPosition);
 
-                if (lastVisibleItemPosition==layoutManager.getItemCount()-1){//从倒数第一个开始(因为rv里有加载更多view，so减2)计算距离
+                if (lastVisibleItemPosition == layoutManager.getItemCount() - 1) {//从倒数第一个开始(因为rv里有加载更多view，so减2)计算距离
                     View childAt = layoutManager.findViewByPosition(lastVisibleItemPosition);
                     int height = childAt.getHeight();
 
-                    if (!is_firstDeal){
+                    if (!is_firstDeal) {
                         scollYFirstDistance = getScollYDistance(layoutManager);
-                        is_firstDeal=true;
+                        is_firstDeal = true;
                     }
-                    Log.i(TAG, "onScrolled: "+getScollYDistance(layoutManager));
                     int distance = getScollYDistance(layoutManager) - scollYFirstDistance;
-                    Log.i(TAG, "height: "+height);
-                    Log.i(TAG, "distanceY: "+distance);
                     //此时判断滑动的距离，距离底部的距离
                     float distanceBottom = height - Math.abs(distance);
 
-                    if (distanceBottom<0){
+                    if (distanceBottom < 0) {
                         return;
                     }
+                    Log.i(TAG, "distanceBottom: "+distanceBottom);
                     float scale = distanceBottom / height;
-
+                    Log.i(TAG, "scale: "+scale);
                     int margin = (int) (maxMargin * scale);
-                    Log.i(TAG, "margin: " + margin);
+                    Log.i(TAG, "margin: "+margin);
+                    int radius = (int) (maxRadius * scale);
+
                     sv_bottom_menu.setShadowMargin(margin, margin, margin, margin);
-                    sv_bottom_menu.setCornerRadius(margin,margin,margin,margin);
+                    sv_bottom_menu.setCornerRadius(radius, radius, radius, radius);
                 }
             }
 
@@ -154,6 +162,7 @@ public class EssenceMyTestFragment extends BaseFragment implements View.OnClickL
                     fab_scrollTop.setVisibility(View.VISIBLE);
                 }
             }
+
             public int getScollYDistance(LinearLayoutManager layoutManager) {
                 int position = layoutManager.findFirstVisibleItemPosition();
                 View firstVisiableChildView = layoutManager.findViewByPosition(position);
@@ -188,9 +197,9 @@ public class EssenceMyTestFragment extends BaseFragment implements View.OnClickL
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
 
 //                ToastUtil.showToast(getContext(),"firstVisibleItemPosition:"+firstVisibleItemPosition);
-                if (firstVisibleItemPosition>20-1){
+                if (firstVisibleItemPosition > 20 - 1) {
                     rv_essence_one.scrollToPosition(0);
-                }else {
+                } else {
                     rv_essence_one.smoothScrollToPosition(0);
                 }
                 break;
@@ -225,7 +234,6 @@ public class EssenceMyTestFragment extends BaseFragment implements View.OnClickL
                     if (isDownRefresh) {//下拉刷新（清理一遍数据）
                         postlists.clear();
                     }
-                    Log.i(TAG, "OnResult: "+result.size());
                     postlists.addAll(result);
                     adapter.RefreshData(postlists);
                 }
@@ -241,7 +249,7 @@ public class EssenceMyTestFragment extends BaseFragment implements View.OnClickL
     public void onEventMainThread(refreshEvent event) {
         //点击菜单，刷新当前tab分类
         boolean refreshCurrent = event.is_RefreshCurrent();
-        if (refreshCurrent){
+        if (refreshCurrent) {
             refreshview_id.startRefresh();
             return;
         }
@@ -286,6 +294,7 @@ public class EssenceMyTestFragment extends BaseFragment implements View.OnClickL
         super.onPause();
         JCVideoPlayer.releaseAllVideos();
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
