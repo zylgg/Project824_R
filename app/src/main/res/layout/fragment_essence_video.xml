@@ -8,7 +8,6 @@
         android:id="@+id/refreshview_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/y120"
         app:isHeightMatchParent="true"
         app:isWidthMatchParent="true">
 
@@ -27,46 +26,11 @@
         android:id="@+id/fab_scrollTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/sv_bottom_menu"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="?attr/actionBarSize"
         android:layout_marginRight="@dimen/x45"
         android:src="@drawable/to_top_arrow2"
         app:fabSize="mini" />
 
-    <com.loopeer.shadow.ShadowView
-        android:id="@+id/sv_bottom_menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:cornerRadius="@dimen/x30"
-        app:backgroundColor="@color/material_blue_500"
-        app:shadowMargin="@dimen/x30">
-
-        <LinearLayout
-            android:id="@+id/ll_bottom_menu"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/y120"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="按钮1" />
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="按钮2" />
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="按钮3" />
-        </LinearLayout>
-
-    </com.loopeer.shadow.ShadowView>
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.example.mr_zyl.project.pro.essence.presenter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.mr_zyl.project.bean.PostsListBean;
 import com.example.mr_zyl.project.http.utils.HttpUtils;
@@ -19,6 +20,7 @@ import okhttp3.Request;
  * Created by TFHR02 on 2017/2/22.
  */
 public class EssenceVideoPresenter extends BasePresenter<EssenceVideoModel> {
+    private static final String TAG = "EssenceVideoPresenter";
     private int page = 0;
     private String maxtime = null;
 
@@ -38,6 +40,7 @@ public class EssenceVideoPresenter extends BasePresenter<EssenceVideoModel> {
         getModel().getEssenceList(type, page, maxtime, new HttpUtils.OnHttpResultListener() {
             @Override
             public void onResult(String result) {
+                Log.i(TAG, "onResult: "+result);
                 if (TextUtils.isEmpty(result)) {
                     //等于空---通知UI线程---刷新UI界面
                     onhttpResultlistener.OnResult(null);
