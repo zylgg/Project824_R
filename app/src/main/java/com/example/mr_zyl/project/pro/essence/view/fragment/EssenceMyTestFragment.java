@@ -3,7 +3,6 @@ package com.example.mr_zyl.project.pro.essence.view.fragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.example.mr_zyl.project.R;
@@ -16,11 +15,9 @@ import com.example.mr_zyl.project.pro.essence.presenter.EssenceVideoPresenter;
 import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceRecycleAdapter;
 import com.example.mr_zyl.project.pro.essence.view.selfview.MyDecoration;
-import com.example.mr_zyl.project.utils.DensityUtil;
 import com.example.mr_zyl.project.utils.ToastUtil;
 import com.example.zylsmallvideolibrary.JCVideoPlayer;
 import com.example.zylsmallvideolibrary.VideoEvents;
-import com.loopeer.shadow.ShadowView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +62,6 @@ public class EssenceMyTestFragment extends BaseFragment implements View.OnClickL
     XRefreshView refreshview_id;
     RecyclerView rv_essence_one;
     FloatingActionButton fab_scrollTop;
-    ShadowView sv_bottom_menu;
 
     @Override
     public void initContentView(View contentView) {
@@ -73,9 +69,6 @@ public class EssenceMyTestFragment extends BaseFragment implements View.OnClickL
         refreshview_id = ButterKnife.findById(contentView, R.id.refreshview_id);
         rv_essence_one = ButterKnife.findById(contentView, R.id.rv_essence_one);
         fab_scrollTop = ButterKnife.findById(contentView, R.id.fab_scrollTop);
-        sv_bottom_menu = ButterKnife.findById(contentView, R.id.sv_bottom_menu);
-
-        initListener();
 
         fab_scrollTop.setOnClickListener(this);
         fab_scrollTop.setVisibility(View.GONE);
@@ -96,87 +89,6 @@ public class EssenceMyTestFragment extends BaseFragment implements View.OnClickL
         rv_essence_one.setLayoutManager(new LinearLayoutManager(getContext()));//设置列表管理器(LinearLayoutManager指水平或者竖直，默认数值)
         rv_essence_one.addOnScrollListener(scrollListener);
         rv_essence_one.setAdapter(adapter);
-    }
-
-
-    private boolean is_firstDeal = false;
-    private int scollYFirstDistance;
-    /**
-     * ShadowVie最大圆角
-     */
-    private int maxRadius = 0;
-    /**
-     * ShadowVie最大内间距
-     */
-    private int maxMargin = 0;
-
-
-    private void initListener() {
-        maxRadius = DensityUtil.getpxByDimensize(Fcontext, R.dimen.x180);
-        maxMargin = DensityUtil.getpxByDimensize(Fcontext, R.dimen.x60);
-
-        scrollListener = new RecyclerView.OnScrollListener() {
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-
-                if (lastVisibleItemPosition == layoutManager.getItemCount() - 1) {//从倒数第一个开始(因为rv里有加载更多view，so减2)计算距离
-                    View childAt = layoutManager.findViewByPosition(lastVisibleItemPosition);
-                    int height = childAt.getHeight();
-
-                    if (!is_firstDeal) {
-                        scollYFirstDistance = getScollYDistance(layoutManager);
-                        is_firstDeal = true;
-                    }
-                    int distance = getScollYDistance(layoutManager) - scollYFirstDistance;
-                    //此时判断滑动的距离，距离底部的距离
-                    float distanceBottom = height - Math.abs(distance);
-
-                    if (distanceBottom < 0) {
-                        return;
-                    }
-                    Log.i(TAG, "distanceBottom: "+distanceBottom);
-                    float scale = distanceBottom / height;
-                    Log.i(TAG, "scale: "+scale);
-                    int margin = (int) (maxMargin * scale);
-                    Log.i(TAG, "margin: "+margin);
-                    int radius = (int) (maxRadius * scale);
-
-                    sv_bottom_menu.setShadowMargin(margin, margin, margin, margin);
-                    sv_bottom_menu.setCornerRadius(radius, radius, radius, radius);
-                }
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
-                View firstview = layoutManager.findViewByPosition(firstVisibleItemPosition);
-                if (firstVisibleItemPosition == 0 && firstview.getTop() == 0) {//到达顶部了
-                    fab_scrollTop.setVisibility(View.GONE);
-                } else {
-                    fab_scrollTop.setVisibility(View.VISIBLE);
-                }
-            }
-
-            public int getScollYDistance(LinearLayoutManager layoutManager) {
-                int position = layoutManager.findFirstVisibleItemPosition();
-                View firstVisiableChildView = layoutManager.findViewByPosition(position);
-                int itemHeight = firstVisiableChildView.getHeight();
-                return (position) * itemHeight - firstVisiableChildView.getTop();
-            }
-        };
-
-        xRefreshListener = new XRefreshView.SimpleXRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loaddata(true);
-            }
-        };
     }
 
     /**
