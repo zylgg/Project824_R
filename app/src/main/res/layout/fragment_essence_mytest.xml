@@ -4,12 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.mr_zyl.project.pro.base.view.refreshview.XRefreshView
-        android:id="@+id/refreshview_id"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:isHeightMatchParent="true"
-        app:isWidthMatchParent="true">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_essence_one"
@@ -19,16 +13,48 @@
             android:scrollbarStyle="insideInset"
             android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
 
-    </com.example.mr_zyl.project.pro.base.view.refreshview.XRefreshView>
 
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_scrollTop"
-        android:layout_width="wrap_content"
+    <com.loopeer.shadow.ShadowView
+        android:id="@+id/sv_bottom_menu"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="?attr/actionBarSize"
-        android:layout_marginRight="@dimen/x45"
-        android:src="@drawable/to_top_arrow2"
-        app:fabSize="mini" />
+        android:layout_alignParentBottom="true"
+        app:backgroundColor="@color/material_blue_500"
+        app:cornerRadius="@dimen/x90"
+        app:shadowMargin="@dimen/x45">
+
+        <LinearLayout
+            android:id="@+id/ll_bottom_menu"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y180"
+            android:padding="@dimen/x45"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/item_build_default_style"
+                android:layout_weight="1"
+                android:text="按钮1" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/item_build_default_style"
+                android:layout_weight="1"
+                android:text="按钮2" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/item_build_default_style"
+                android:layout_weight="1"
+                android:text="按钮3" />
+        </LinearLayout>
+
+    </com.loopeer.shadow.ShadowView>
 </RelativeLayout>
