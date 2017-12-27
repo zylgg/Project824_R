@@ -96,8 +96,6 @@ public class EssenceMyTestFragment extends BaseFragment  {
                 LinearLayoutManager layoutManager = (LinearLayoutManager) rv_essence_one.getLayoutManager();
                 int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
 
-
-
                 if (lastVisibleItemPosition == layoutManager.getItemCount() - 1) {//从倒数第一个开始
 
                     View lastVisiableChildView = layoutManager.findViewByPosition(lastVisibleItemPosition);

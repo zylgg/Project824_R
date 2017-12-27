@@ -8,6 +8,7 @@
     app:rv_centered="true"
     app:rv_color="@color/main_bottom_text_select"
     app:rv_framerate="12"
+    app:rv_alpha="255"
     app:rv_rippleDuration="300">
     <LinearLayout
         android:id="@+id/ll_tab_indicator_content"
