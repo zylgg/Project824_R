@@ -80,7 +80,7 @@ public class FastBlurActivity extends BaseActivity {
         tv_blurdrawable.setBackgroundDrawable(blurDrawable);
         // 找到图片
         mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.img_bj);
-        img_bgbitmap = BitmapFactory.decodeResource(getResources(), R.drawable.mainfragmentbg);
+        img_bgbitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
         mTime = (TextView) findViewById(R.id.text_blur_time);
 
         // Init src image

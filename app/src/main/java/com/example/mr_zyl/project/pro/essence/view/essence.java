@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.mr_zyl.project.MainActivity;
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.essence.refreshEvent;
@@ -92,23 +93,35 @@ public class essence extends BaseFragment {
         builder = new EssenceNavigationBuilder(getContext());
         builder.setBackground(R.drawable.toolbar_backgound_essence_shape)
                 .setTitle(R.string.main_essence_text)
-                .setLeftIcon(R.drawable.main_essence_btn_selector)
-                .setRightIcon(R.drawable.main_essence_btn_more_selector)
+                .setLeftIcon(R.drawable.ic_head)
+                .setRightIcon(R.drawable.ic_cleancache)
                 .setLeftIconOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ClearMemoryCache();
+                        MainActivity activity = (MainActivity) getActivity();
+                        boolean openedSliding = activity.isOpenedSliding();
+
+                        slidingEvent event = new slidingEvent();
+                        if (openedSliding){
+                            event.setDone(false);
+                        }else{
+                            event.setDone(true);
+                        }
+                        EventBus.getDefault().post(event);
+
                     }
                 })
                 .setRightIconOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        ClearMemoryCache();
                     }
                 }).createAndBind((ViewGroup) viewContent);
 
     }
 
     public static final String TAB_TAG = "@zylmove@";
+
     @Override
     public void initData() {
         String[] titles = getResources().getStringArray(R.array.essence_video_tab);
@@ -131,21 +144,21 @@ public class essence extends BaseFragment {
 
         int selectedTabPosition = this.tab_essence.getSelectedTabPosition();
         TextView text = (TextView) this.tab_essence.getTabAt(selectedTabPosition).getCustomView().findViewById(R.id.tv_essence_tablayout_item_text);
-        text.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
+        text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         text.setTextColor(Color.WHITE);
         this.tab_essence.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(this.vp_essence) {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 super.onTabSelected(tab);
                 TextView text = (TextView) tab.getCustomView().findViewById(R.id.tv_essence_tablayout_item_text);
-                text.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
+                text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
                 text.setTextColor(Color.WHITE);
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 TextView text = (TextView) tab.getCustomView().findViewById(R.id.tv_essence_tablayout_item_text);
-                text.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
+                text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
                 text.setTextColor(Fcontext.getResources().getColor(R.color.essence_tab_text_color_normal));
             }
         });

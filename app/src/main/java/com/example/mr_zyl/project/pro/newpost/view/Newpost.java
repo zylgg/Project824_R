@@ -35,7 +35,7 @@ public class Newpost extends BaseFragment implements View.OnClickListener {
     public void initContentView(View viewContent) {
         initToolBar(viewContent);
 
-        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "测试页面", TestMeasureActivity.class, -1));
+        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "滑动页面", TestMeasureActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "拓扑图", TreeViewActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "全局修改字体", FontsActivity.class, -1));
         initItemLayout(viewContent);

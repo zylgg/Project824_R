@@ -5,36 +5,67 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost
-        android:id="@android:id/tabhost"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/dl_main"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
+
+        <com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost
+            android:id="@android:id/tabhost"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:id="@android:id/tabcontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"></FrameLayout>
+
+                <TabWidget
+                    android:id="@android:id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_gravity="bottom"
+                    android:background="#F6F2F5"></TabWidget>
+            </LinearLayout>
+
+
+        </com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost>
 
         <LinearLayout
+            android:id="@+id/ll_left_menu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:background="@color/white"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@android:id/tabcontent"
+            <ImageView
+                android:id="@+id/iv_main_headImg"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"></FrameLayout>
+                android:layout_height="@dimen/y480"
+                android:scaleType="centerCrop"
+                android:src="@drawable/resource_icon" />
 
-            <TabWidget
-                android:id="@android:id/tabs"
+            <ListView
+                android:id="@+id/lv_main_leftmenu"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_gravity="bottom"
-                android:background="#F6F2F5"></TabWidget>
+                android:layout_height="wrap_content">
+
+            </ListView>
+
         </LinearLayout>
 
-    </com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost>
+    </android.support.v4.widget.DrawerLayout>
+
     <View
         android:id="@+id/tv_bottomnavigation_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/black"
-        />
+        android:background="@color/black" />
 </LinearLayout>

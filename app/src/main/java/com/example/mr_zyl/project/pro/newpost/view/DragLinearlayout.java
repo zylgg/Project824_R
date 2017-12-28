@@ -36,7 +36,9 @@ public class DragLinearlayout extends LinearLayout {
     }
 
     private void init() {
-        mViewDragHelper = ViewDragHelper.create(this,1f,new ViewDragCallBack());
+        mViewDragHelper = ViewDragHelper.create(this,3f,new ViewDragCallBack());
+        View childAt = getChildAt(0);
+
     }
 
     private class ViewDragCallBack extends  ViewDragHelper.Callback{
