@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v4.widget.DrawerLayout
+    <com.example.mr_zyl.project.pro.base.view.MyDrawerLayout
         android:id="@+id/dl_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -61,7 +61,7 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.DrawerLayout>
+    </com.example.mr_zyl.project.pro.base.view.MyDrawerLayout>
 
     <View
         android:id="@+id/tv_bottomnavigation_view"

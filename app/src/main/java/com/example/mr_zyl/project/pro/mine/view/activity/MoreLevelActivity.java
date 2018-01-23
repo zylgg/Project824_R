@@ -83,7 +83,6 @@ public class MoreLevelActivity extends BaseActivity {
     }
 
     private void initTestdata() {
-
         // id , pid , label , 其他属性
         mDatas.add(new Node(1, 0, "游戏"));
         mDatas.add(new Node(2, 0, "文档"));

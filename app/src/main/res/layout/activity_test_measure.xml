@@ -20,7 +20,9 @@
             android:layout_height="@dimen/y300"
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
-            android:background="#88ff88" />
+            android:gravity="center"
+            android:background="@drawable/test"
+            android:text="测试textView"/>
 
     </com.example.mr_zyl.project.pro.newpost.view.DragLinearlayout>
 

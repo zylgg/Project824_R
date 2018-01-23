@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.mr_zyl.project.pro.attention.view.Attention;
 import com.example.mr_zyl.project.pro.base.view.BaseActivity;
+import com.example.mr_zyl.project.pro.base.view.MyDrawerLayout;
 import com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost;
 import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.essence;
@@ -54,7 +54,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     @BindView(R.id.lv_main_leftmenu)
     ListView lv_main_leftmenu;
     @BindView(R.id.dl_main)
-    DrawerLayout dl_main;
+    MyDrawerLayout dl_main;
 
     private List<Tabitem> tablists;
     private long lasttime;
@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         //再初始化TabHost控件
         initTabHost();
 
-        dl_main.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+        dl_main.addDrawerListener(new MyDrawerLayout.SimpleDrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
