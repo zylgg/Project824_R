@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,8 +18,9 @@ import android.widget.TextView;
 
 import com.example.mr_zyl.project.pro.attention.view.Attention;
 import com.example.mr_zyl.project.pro.base.view.BaseActivity;
-import com.example.mr_zyl.project.pro.base.view.MyDrawerLayout;
 import com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost;
+import com.example.mr_zyl.project.pro.base.view.MyLinearLayout;
+import com.example.mr_zyl.project.pro.base.view.SlidingMenu;
 import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.essence;
 import com.example.mr_zyl.project.pro.essence.view.slidingEvent;
@@ -30,6 +30,7 @@ import com.example.mr_zyl.project.pro.newpost.view.Newpost;
 import com.example.mr_zyl.project.pro.publish.view.Publish;
 import com.example.mr_zyl.project.pro.publish.view.SimpleTakePhotoActivity;
 import com.example.mr_zyl.project.pro.publish.view.self.MoreWindow;
+import com.example.mr_zyl.project.utils.DisplayUtil;
 import com.example.mr_zyl.project.utils.SystemAppUtils;
 import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.bean.ImageItem;
@@ -54,7 +55,9 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     @BindView(R.id.lv_main_leftmenu)
     ListView lv_main_leftmenu;
     @BindView(R.id.dl_main)
-    MyDrawerLayout dl_main;
+    SlidingMenu dl_main;
+    @BindView(R.id.ll_left_menu)
+    MyLinearLayout ll_left_menu;
 
     private List<Tabitem> tablists;
     private long lasttime;
@@ -76,17 +79,19 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         initFragmentTabData();
         //再初始化TabHost控件
         initTabHost();
-
-        dl_main.addDrawerListener(new MyDrawerLayout.SimpleDrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                super.onDrawerSlide(drawerView, slideOffset);
-                View contentView = dl_main.getChildAt(0);
-                float trans = drawerView.getWidth() * slideOffset;
-                //让内容跟着滑动
-                contentView.setTranslationX(trans);
-            }
-        });
+        //菜单默认不展开所以拦截掉事件
+        ll_left_menu.setIntercept(true);
+        ll_left_menu.getLayoutParams().width= (int) (DisplayUtil.Width(this)*0.8f);
+//        dl_main.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+//            @Override
+//            public void onDrawerSlide(View drawerView, float slideOffset) {
+//                super.onDrawerSlide(drawerView, slideOffset);
+//                View contentView = dl_main.getChildAt(0);
+//                float trans = drawerView.getWidth() * slideOffset;
+//                //让内容跟着滑动
+//                contentView.setTranslationX(trans);
+//            }
+//        });
         List<String> lists = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             lists.add("menu:" + (i + 1));
@@ -102,24 +107,12 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     }
 
     /**
-     * @return
-     */
-    public boolean isOpenedSliding() {
-        return dl_main.isDrawerOpen(Gravity.LEFT);
-    }
-
-
-    /**
      * 滑动回调
      *
      * @param event
      */
     public void onEventMainThread(slidingEvent event) {
-        if (event.isDone()) {
-            dl_main.openDrawer(Gravity.LEFT);
-        } else {
-            dl_main.closeDrawer(Gravity.LEFT);
-        }
+        dl_main.toggle();
     }
 
     /**

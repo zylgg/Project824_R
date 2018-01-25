@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.example.mr_zyl.project.MainActivity;
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project.pro.essence.refreshEvent;
@@ -98,17 +97,8 @@ public class essence extends BaseFragment {
                 .setLeftIconOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity activity = (MainActivity) getActivity();
-                        boolean openedSliding = activity.isOpenedSliding();
-
                         slidingEvent event = new slidingEvent();
-                        if (openedSliding){
-                            event.setDone(false);
-                        }else{
-                            event.setDone(true);
-                        }
                         EventBus.getDefault().post(event);
-
                     }
                 })
                 .setRightIconOnClickListener(new View.OnClickListener() {
