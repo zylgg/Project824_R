@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -98,12 +97,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         }
         ArrayAdapter<String> leftmenuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lists);
         lv_main_leftmenu.setAdapter(leftmenuAdapter);
-        fragmenttabhost.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
     }
 
     /**
@@ -112,7 +105,9 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
      * @param event
      */
     public void onEventMainThread(slidingEvent event) {
-        dl_main.toggle();
+        if (event!=null&&event.isDone()){
+            dl_main.toggle();
+        }
     }
 
     /**

@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
@@ -49,6 +50,8 @@ public class essence extends BaseFragment {
     ViewPager vp_essence;
     @BindView(R.id.abl_essence)
     AppBarLayout abl_essence;
+    @BindView(R.id.cl_essence)
+    CoordinatorLayout cl_essence;
     private EssenceNavigationBuilder builder;
 
     @Override
@@ -77,7 +80,12 @@ public class essence extends BaseFragment {
                 EventBus.getDefault().post(event);
             }
         });
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     public void setStatusBarView(View view) {
@@ -98,6 +106,7 @@ public class essence extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         slidingEvent event = new slidingEvent();
+                        event.setDone(true);
                         EventBus.getDefault().post(event);
                     }
                 })

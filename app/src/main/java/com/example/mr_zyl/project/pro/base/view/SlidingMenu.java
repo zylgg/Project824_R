@@ -114,7 +114,7 @@ public class SlidingMenu extends FrameLayout {
             moveContentLeft = fixContentSlidRange(moveContentLeft);
             mContent.layout(moveContentLeft, 0, moveContentLeft + mContent.getWidth(), mContent.getHeight());
 
-//            animShow(moveContentLeft);// 菜单打开时，一些动画
+            animShow(moveContentLeft);// 菜单打开时，一些动画
 
             invalidate();// 重绘界面，兼容低版本
         }
@@ -156,7 +156,7 @@ public class SlidingMenu extends FrameLayout {
         ViewHelper.setTranslationX(mMenu, evaluate(percent, -mRange / 1.2f, 0));// 位移动画
 //        ViewHelper.setScaleX(mMenu, evaluate(percent, 0.6f, 1.0f));// 缩放动画
 //        ViewHelper.setScaleY(mMenu, evaluate(percent, 0.6f, 1.0f));
-//        ViewHelper.setAlpha(mMenu, evaluate(percent, 0.1f, 1.0f));// 渐变动画
+        ViewHelper.setAlpha(mMenu, evaluate(percent, 0.1f, 1.0f));// 渐变动画
 
 //        ViewHelper.setPivotX(mContent, 0);// 缩放中心
 //        ViewHelper.setPivotY(mContent, mHeight / 2);
