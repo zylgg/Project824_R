@@ -8,6 +8,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -128,6 +129,24 @@ public class essence extends BaseFragment {
         this.vp_essence.setAdapter(adapter);
 //        this.vp_essence.setCurrentItem(4);
         this.vp_essence.setOffscreenPageLimit(1);
+        this.vp_essence.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.i(TAG, "position: "+position);
+                Log.i(TAG, "positionOffset: "+positionOffset);
+                Log.i(TAG, "positionOffsetPixels: "+positionOffsetPixels);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         this.tab_essence.setupWithViewPager(this.vp_essence);
 
         for (int i = 0; i < titles.length; i++) {

@@ -41,8 +41,7 @@
         <com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost
             android:id="@android:id/tabhost"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/gray2"/>
+                    android:background="@color/gray2" />
 
                 <TabWidget
                     android:id="@android:id/tabs"
@@ -63,7 +62,6 @@
                     android:layout_gravity="bottom"
                     android:background="#F6F2F5" />
             </LinearLayout>
-
 
         </com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost>
 

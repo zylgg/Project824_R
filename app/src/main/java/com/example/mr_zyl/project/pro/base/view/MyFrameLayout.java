@@ -2,7 +2,6 @@ package com.example.mr_zyl.project.pro.base.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
@@ -27,10 +26,6 @@ public class MyFrameLayout extends FrameLayout {
         top = DensityUtil.dip2px(getContext(), 12.5f+25);
         right = DensityUtil.dip2px(getContext(), 37);
         bottom = DensityUtil.dip2px(getContext(), 37.5f+25);
-        Log.i(TAG, "left: "+left);
-        Log.i(TAG, "top: "+top);
-        Log.i(TAG, "right: "+right);
-        Log.i(TAG, "bottom: "+bottom);
     }
 
     public boolean isIntercept = false;
@@ -47,14 +42,12 @@ public class MyFrameLayout extends FrameLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        Log.i(TAG, "onInterceptTouchEvent:x " + ev.getX());
-        Log.i(TAG, "onInterceptTouchEvent:y " + ev.getY());
-
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 downX = ev.getX();
                 downy = ev.getY();
-                if (downX > left && downX <right&&downy>top&&downy<bottom) {
+                //处理头像事件
+                if (downX > left && downX <right&&downy>top&&downy<bottom&&isIntercept) {
                     is_downSuccess = true;
                     return false;
                 }
@@ -63,6 +56,7 @@ public class MyFrameLayout extends FrameLayout {
 
             break;
             case MotionEvent.ACTION_UP:
+                //处理头像事件
                 if (downX > left && downX <right&&downy>top&&downy<bottom && is_downSuccess) {
                     is_downSuccess = false;
                     slidingEvent event = new slidingEvent();
