@@ -65,6 +65,11 @@ public class SlidingMenu extends FrameLayout {
         mWidth = getMeasuredWidth();
         mRange = (int) (mWidth * 0.8);
     }
+//
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        return mViewDragHelper.shouldInterceptTouchEvent(ev);
+//    }
 
     @Override
     public boolean onInterceptHoverEvent(MotionEvent event) {
@@ -144,7 +149,9 @@ public class SlidingMenu extends FrameLayout {
         return left;
     }
 
-    /** 伴随动画 */
+    /**
+     * 伴随动画
+     */
     private void animShow(int moveContentLeft) {
         float percent = moveContentLeft * 1.0f / mRange;// 0~1
         /**
@@ -166,13 +173,17 @@ public class SlidingMenu extends FrameLayout {
 //        getBackground().setColorFilter((Integer)(colorEvaluate(percent, Color.BLACK, Color.TRANSPARENT)), PorterDuff.Mode.SRC_OVER);// 亮度变化
     }
 
-    /** 估值器，根据开始数字和结束数字，随着百分比的变化得到一个数值，详情见FloatEvaluator */
+    /**
+     * 估值器，根据开始数字和结束数字，随着百分比的变化得到一个数值，详情见FloatEvaluator
+     */
     private Float evaluate(float fraction, Number startValue, Number endValue) {
         float startFloat = startValue.floatValue();
         return startFloat + fraction * (endValue.floatValue() - startFloat);
     }
 
-    /** 颜色取值，根据初始颜色和结束颜色，随着百分的变化取出不同的颜色，详情见ArgbEvaluator */
+    /**
+     * 颜色取值，根据初始颜色和结束颜色，随着百分的变化取出不同的颜色，详情见ArgbEvaluator
+     */
     private Object colorEvaluate(float fraction, Object startValue, Object endValue) {
         int startInt = (Integer) startValue;
         int startA = (startInt >> 24) & 0xff;
@@ -186,14 +197,17 @@ public class SlidingMenu extends FrameLayout {
         int endG = (endInt >> 8) & 0xff;
         int endB = endInt & 0xff;
 
-        return (int)((startA + (int)(fraction * (endA - startA))) << 24) |
-                (int)((startR + (int)(fraction * (endR - startR))) << 16) |
-                (int)((startG + (int)(fraction * (endG - startG))) << 8) |
-                (int)((startB + (int)(fraction * (endB - startB))));
+        return (int) ((startA + (int) (fraction * (endA - startA))) << 24) |
+                (int) ((startR + (int) (fraction * (endR - startR))) << 16) |
+                (int) ((startG + (int) (fraction * (endG - startG))) << 8) |
+                (int) ((startB + (int) (fraction * (endB - startB))));
     }
-    /** 菜单切换 */
+
+    /**
+     * 菜单切换
+     */
     public void toggle() {
-        if(isOpen) {
+        if (isOpen) {
             close();
         } else {
             open();
@@ -225,12 +239,12 @@ public class SlidingMenu extends FrameLayout {
         super.computeScroll();
         if (mViewDragHelper.continueSettling(true)) {// 持续执行动画，如果返回则表示动画还没有执行完
             ViewCompat.postInvalidateOnAnimation(this);
-            if (isOpen){
+            if (isOpen) {
                 MyLinearLayout mMenu = (MyLinearLayout) this.mMenu;
                 mMenu.setIntercept(false);
                 MyFrameLayout viewById = (MyFrameLayout) mContent.findViewById(android.R.id.tabcontent);
                 viewById.setIntercept(true);
-            }else{
+            } else {
                 MyLinearLayout mMenu = (MyLinearLayout) this.mMenu;
                 mMenu.setIntercept(true);
                 MyFrameLayout viewById = (MyFrameLayout) mContent.findViewById(android.R.id.tabcontent);
