@@ -77,4 +77,5 @@ dependencies {
     compile 'com.loopeer.lib:shadow:0.0.3'
     compile files('libs/AMap3DMap_5.6.0_AMapNavi_5.4.0_AMapSearch_5.5.0_AMapLocation_3.6.1_20171128.jar')
     compile files('libs/nineoldandroids-2.4.0.jar')
+    compile files('libs/volley.jar')
 }
