@@ -34,7 +34,7 @@ public class BaseApplication extends Application {
         SDKInitializer.initialize(getApplicationContext());
         //imageloader配置
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
-                .writeDebugLogs()
+//                .writeDebugLogs()
                 .build();
         ImageLoader.getInstance().init(config);
 

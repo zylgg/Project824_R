@@ -14,6 +14,10 @@ public class BaseModel implements MvpModel {
         this.context = context;
     }
 
+    public Context getContext() {
+        return context;
+    }
+
     public String getServerUrl() {
         return "http://api.budejie.com";
     }

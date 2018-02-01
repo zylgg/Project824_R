@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/ll_left_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <!--android:layout_gravity="left"-->
+
+        <ImageView
+            android:id="@+id/iv_main_headImg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y480"
+            android:scaleType="centerCrop"
+            android:src="@drawable/resource_icon" />
+
+        <ListView
+            android:id="@+id/lv_main_leftmenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
+
+    </LinearLayout>
+</LinearLayout>

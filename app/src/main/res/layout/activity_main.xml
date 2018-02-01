@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -9,34 +8,11 @@
     <!--android:id="@+id/dl_main"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent">-->
-    <com.example.mr_zyl.project.pro.base.view.SlidingMenu
-        android:id="@+id/dl_main"
+    <LinearLayout
+        android:id="@+id/ll_main_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.example.mr_zyl.project.pro.base.view.MyLinearLayout
-            android:id="@+id/ll_left_menu"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
-            <!--android:layout_gravity="left"-->
-
-            <ImageView
-                android:id="@+id/iv_main_headImg"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/y480"
-                android:scaleType="centerCrop"
-                android:src="@drawable/resource_icon" />
-
-            <ListView
-                android:id="@+id/lv_main_leftmenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </ListView>
-
-        </com.example.mr_zyl.project.pro.base.view.MyLinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost
             android:id="@android:id/tabhost"
@@ -48,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.example.mr_zyl.project.pro.base.view.MyFrameLayout
+                <FrameLayout
                     android:id="@android:id/tabcontent"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -66,12 +42,12 @@
         </com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost>
 
 
-    </com.example.mr_zyl.project.pro.base.view.SlidingMenu>
-    <!--</android.support.v4.widget.DrawerLayout>-->
+        <!--</android.support.v4.widget.DrawerLayout>-->
 
-    <View
-        android:id="@+id/tv_bottomnavigation_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/black" />
+        <View
+            android:id="@+id/tv_bottomnavigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/black" />
+    </LinearLayout>
 </LinearLayout>

@@ -8,28 +8,23 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project.pro.attention.view.Attention;
 import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost;
-import com.example.mr_zyl.project.pro.base.view.MyLinearLayout;
-import com.example.mr_zyl.project.pro.base.view.SlidingMenu;
+import com.example.mr_zyl.project.pro.base.view.residemenu.ResideMenu;
 import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.essence;
-import com.example.mr_zyl.project.pro.essence.view.slidingEvent;
 import com.example.mr_zyl.project.pro.mine.view.Mine;
 import com.example.mr_zyl.project.pro.mine.view.selfview.MySnackbarUtils;
 import com.example.mr_zyl.project.pro.newpost.view.Newpost;
 import com.example.mr_zyl.project.pro.publish.view.Publish;
 import com.example.mr_zyl.project.pro.publish.view.SimpleTakePhotoActivity;
 import com.example.mr_zyl.project.pro.publish.view.self.MoreWindow;
-import com.example.mr_zyl.project.utils.DisplayUtil;
 import com.example.mr_zyl.project.utils.SystemAppUtils;
 import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.bean.ImageItem;
@@ -47,22 +42,17 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     private static final String TAG = "MainActivity";
     @BindView(R.id.ll_main_content)
     LinearLayout ll_main_content;
+
     @BindView(R.id.tv_bottomnavigation_view)
     View tv_bottomnavigation_view;
     @BindView(android.R.id.tabhost)
     MyFragmentTabHost fragmenttabhost;
-    @BindView(R.id.lv_main_leftmenu)
-    ListView lv_main_leftmenu;
-    @BindView(R.id.dl_main)
-    SlidingMenu dl_main;
-    @BindView(R.id.ll_left_menu)
-    MyLinearLayout ll_left_menu;
 
     private List<Tabitem> tablists;
     private long lasttime;
     private MoreWindow mMoreWindow;
     private int bottomStatusHeight;
-
+    ResideMenu resideMenu;
     @Override
     protected int initLayoutId() {
         return R.layout.activity_main;
@@ -71,7 +61,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
+
         //设置不填充到虚拟按键之下
         setNoFitBottomStatus();
         //先初始化每个tab对象的数据
@@ -79,8 +69,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         //再初始化TabHost控件
         initTabHost();
         //菜单默认不展开所以拦截掉事件
-        ll_left_menu.setIntercept(true);
-        ll_left_menu.getLayoutParams().width= (int) (DisplayUtil.Width(this)*0.8f);
 //        dl_main.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
 //            @Override
 //            public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -91,23 +79,12 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 //                contentView.setTranslationX(trans);
 //            }
 //        });
-        List<String> lists = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            lists.add("menu:" + (i + 1));
-        }
-        ArrayAdapter<String> leftmenuAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lists);
-        lv_main_leftmenu.setAdapter(leftmenuAdapter);
-    }
-
-    /**
-     * 滑动回调
-     *
-     * @param event
-     */
-    public void onEventMainThread(slidingEvent event) {
-        if (event!=null&&event.isDone()){
-            dl_main.toggle();
-        }
+        resideMenu = new ResideMenu(this,R.layout.main_left_layout,-1);
+        resideMenu.setUse3D(false);
+        resideMenu.setBackground(R.drawable.left_layout_bg);
+        resideMenu.attachToActivity(this,ll_main_content);
+        resideMenu.setScaleValue(0.55f);
+        resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
     }
 
     /**

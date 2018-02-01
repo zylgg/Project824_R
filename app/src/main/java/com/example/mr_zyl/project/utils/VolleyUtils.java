@@ -21,4 +21,9 @@ public class VolleyUtils {
         return requestQueue;
     }
 
+    public interface Callback{
+        void onError(String error);
+        void onSuccess(String result);
+    }
+
 }

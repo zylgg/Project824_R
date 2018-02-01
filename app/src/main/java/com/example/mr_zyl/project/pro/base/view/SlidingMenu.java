@@ -239,17 +239,6 @@ public class SlidingMenu extends FrameLayout {
         super.computeScroll();
         if (mViewDragHelper.continueSettling(true)) {// 持续执行动画，如果返回则表示动画还没有执行完
             ViewCompat.postInvalidateOnAnimation(this);
-            if (isOpen) {
-                MyLinearLayout mMenu = (MyLinearLayout) this.mMenu;
-                mMenu.setIntercept(false);
-                MyFrameLayout viewById = (MyFrameLayout) mContent.findViewById(android.R.id.tabcontent);
-                viewById.setIntercept(true);
-            } else {
-                MyLinearLayout mMenu = (MyLinearLayout) this.mMenu;
-                mMenu.setIntercept(true);
-                MyFrameLayout viewById = (MyFrameLayout) mContent.findViewById(android.R.id.tabcontent);
-                viewById.setIntercept(false);
-            }
         }
     }
 }

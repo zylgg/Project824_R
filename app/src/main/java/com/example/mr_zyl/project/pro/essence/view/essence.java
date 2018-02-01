@@ -106,9 +106,6 @@ public class essence extends BaseFragment {
                 .setLeftIconOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        slidingEvent event = new slidingEvent();
-                        event.setDone(true);
-                        EventBus.getDefault().post(event);
                     }
                 })
                 .setRightIconOnClickListener(new View.OnClickListener() {
