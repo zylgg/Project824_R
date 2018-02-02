@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
+import com.example.mr_zyl.project.pro.base.view.residemenu.resideTouch;
 import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceAdapter;
 import com.example.mr_zyl.project.pro.essence.view.navigation.EssenceNavigationBuilder;
@@ -126,22 +127,22 @@ public class essence extends BaseFragment {
         this.vp_essence.setAdapter(adapter);
 //        this.vp_essence.setCurrentItem(4);
         this.vp_essence.setOffscreenPageLimit(1);
-        this.vp_essence.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                Log.i(TAG, "position: "+position);
-                Log.i(TAG, "positionOffset: "+positionOffset);
-                Log.i(TAG, "positionOffsetPixels: "+positionOffsetPixels);
-            }
-
+        //默认在左边界
+        resideTouch touch=new resideTouch();
+        touch.setIs_Left(true);
+        EventBus.getDefault().post(touch);
+        this.vp_essence.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-
+                Log.i(TAG, "position: "+position);
+                resideTouch touch=new resideTouch();
+                touch.setIs_Left(position==0?true:false);
+                EventBus.getDefault().post(touch);
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
         });
         this.tab_essence.setupWithViewPager(this.vp_essence);

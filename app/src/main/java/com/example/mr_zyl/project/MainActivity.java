@@ -17,6 +17,7 @@ import com.example.mr_zyl.project.pro.attention.view.Attention;
 import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost;
 import com.example.mr_zyl.project.pro.base.view.residemenu.ResideMenu;
+import com.example.mr_zyl.project.pro.base.view.residemenu.resideTouch;
 import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.essence;
 import com.example.mr_zyl.project.pro.mine.view.Mine;
@@ -61,7 +62,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        EventBus.getDefault().register(this);
         //设置不填充到虚拟按键之下
         setNoFitBottomStatus();
         //先初始化每个tab对象的数据
@@ -81,10 +82,15 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 //        });
         resideMenu = new ResideMenu(this,R.layout.main_left_layout,-1);
         resideMenu.setUse3D(false);
-        resideMenu.setBackground(R.drawable.left_layout_bg);
+//        resideMenu.setBackground(R.drawable.left_layout_bg);
         resideMenu.attachToActivity(this,ll_main_content);
         resideMenu.setScaleValue(0.55f);
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+    }
+    public void onEventMainThread(resideTouch touch){
+        if (touch!=null){
+            resideMenu.setIsLeftBorder(touch.is_Left());
+        }
     }
 
     /**
