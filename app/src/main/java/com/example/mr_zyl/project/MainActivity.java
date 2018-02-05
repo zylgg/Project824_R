@@ -7,9 +7,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -27,6 +30,7 @@ import com.example.mr_zyl.project.pro.publish.view.Publish;
 import com.example.mr_zyl.project.pro.publish.view.SimpleTakePhotoActivity;
 import com.example.mr_zyl.project.pro.publish.view.self.MoreWindow;
 import com.example.mr_zyl.project.utils.SystemAppUtils;
+import com.example.mr_zyl.project.utils.ToastUtil;
 import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.bean.ImageItem;
 import com.lqr.imagepicker.ui.ImageGridActivity;
@@ -80,11 +84,26 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 //                contentView.setTranslationX(trans);
 //            }
 //        });
-        resideMenu = new ResideMenu(this,R.layout.main_left_layout,-1);
+
+        View view= LayoutInflater.from(this).inflate(R.layout.main_left_layout,null);
+        ListView lv_main_leftmenu = (ListView) view.findViewById(R.id.lv_main_leftmenu);
+        ImageView iv_main_headImg= (ImageView) view.findViewById(R.id.iv_main_headImg);
+        iv_main_headImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.showToast(MainActivity.this,"头像");
+            }
+        });
+        List<String> datas = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            datas.add("item:" + i);
+        }
+        lv_main_leftmenu.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, datas));
+
+        resideMenu = new ResideMenu(this,view,null);
         resideMenu.setUse3D(false);
-//        resideMenu.setBackground(R.drawable.left_layout_bg);
+        resideMenu.setScaleValue(0.8f);
         resideMenu.attachToActivity(this,ll_main_content);
-        resideMenu.setScaleValue(0.55f);
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
     }
     public void onEventMainThread(resideTouch touch){

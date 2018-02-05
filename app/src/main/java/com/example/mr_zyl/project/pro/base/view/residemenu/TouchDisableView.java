@@ -9,13 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by thonguyen on 15/4/14.
  */
 class TouchDisableView extends ViewGroup {
 
     private View mContent;
 
-    //	private int mMode;
     private boolean mTouchDisabled = false;
 
     public TouchDisableView(Context context) {
