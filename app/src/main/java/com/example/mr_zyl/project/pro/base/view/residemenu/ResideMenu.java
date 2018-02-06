@@ -56,7 +56,7 @@ public class ResideMenu extends FrameLayout {
 
     public ResideMenu(Context context) {
         super(context);
-        initViews(context, null , null);
+        initViews(context, null, null);
     }
 
     /**
@@ -391,12 +391,14 @@ public class ResideMenu extends FrameLayout {
                     if (yOffset > 8 || yOffset < -8) {
                         pressedState = PRESSED_MOVE_VERTICAL;
                         if (isOpened() && lastActionDownX > getScreenWidth() * mScaleValue) {//如果触摸了空白区域
-                            ev.setAction(MotionEvent.ACTION_CANCEL);
+                            ev.setAction(MotionEvent.ACTION_CANCEL);//取消事件
                         }
                     }
                     if (xOffset < -8 || xOffset > 8) {
-                        pressedState = PRESSED_MOVE_HORIZONTAL;
-                        ev.setAction(MotionEvent.ACTION_CANCEL);
+                        if (Math.abs(xOffset) > Math.abs(yOffset)) {
+                            pressedState = PRESSED_MOVE_HORIZONTAL;
+                            ev.setAction(MotionEvent.ACTION_CANCEL);//取消事件传递
+                        }
                     }
                 } else if (pressedState == PRESSED_MOVE_HORIZONTAL) {
                     if (mUse3D && currentActivityScaleX < 0.95) {
