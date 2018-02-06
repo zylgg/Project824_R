@@ -1,16 +1,15 @@
 package com.example.mr_zyl.project.pro.base.view.residemenu;
 
 
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 /**
  */
-class TouchDisableView extends ViewGroup {
+class TouchDisableView extends FrameLayout {
 
     private View mContent;
 
@@ -22,6 +21,7 @@ class TouchDisableView extends ViewGroup {
 
     public TouchDisableView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
     }
 
     public void setContent(View v) {

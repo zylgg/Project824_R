@@ -20,7 +20,7 @@ import com.example.mr_zyl.project.pro.attention.view.Attention;
 import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost;
 import com.example.mr_zyl.project.pro.base.view.residemenu.ResideMenu;
-import com.example.mr_zyl.project.pro.base.view.residemenu.resideTouch;
+import com.example.mr_zyl.project.pro.base.view.residemenu.ResideTouch;
 import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.essence;
 import com.example.mr_zyl.project.pro.mine.view.Mine;
@@ -30,7 +30,6 @@ import com.example.mr_zyl.project.pro.publish.view.Publish;
 import com.example.mr_zyl.project.pro.publish.view.SimpleTakePhotoActivity;
 import com.example.mr_zyl.project.pro.publish.view.self.MoreWindow;
 import com.example.mr_zyl.project.utils.SystemAppUtils;
-import com.example.mr_zyl.project.utils.ToastUtil;
 import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.bean.ImageItem;
 import com.lqr.imagepicker.ui.ImageGridActivity;
@@ -58,6 +57,11 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     private MoreWindow mMoreWindow;
     private int bottomStatusHeight;
     ResideMenu resideMenu;
+    /**
+     * 精华的vp是否在边界
+     */
+    private ResideTouch essence_vp_resideTouch;
+
     @Override
     protected int initLayoutId() {
         return R.layout.activity_main;
@@ -85,30 +89,36 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 //            }
 //        });
 
-        View view= LayoutInflater.from(this).inflate(R.layout.main_left_layout,null);
+        View view = LayoutInflater.from(this).inflate(R.layout.main_left_layout, null);
         ListView lv_main_leftmenu = (ListView) view.findViewById(R.id.lv_main_leftmenu);
-        ImageView iv_main_headImg= (ImageView) view.findViewById(R.id.iv_main_headImg);
-        iv_main_headImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtil.showToast(MainActivity.this,"头像");
-            }
-        });
         List<String> datas = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             datas.add("item:" + i);
         }
         lv_main_leftmenu.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, datas));
 
-        resideMenu = new ResideMenu(this,view,null);
+        resideMenu = new ResideMenu(this, view, null);
         resideMenu.setUse3D(false);
         resideMenu.setScaleValue(0.8f);
-        resideMenu.attachToActivity(this,ll_main_content);
+        resideMenu.attachToActivity(this, ll_main_content);
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
     }
-    public void onEventMainThread(resideTouch touch){
-        if (touch!=null){
-            resideMenu.setIsLeftBorder(touch.is_Left());
+
+    /**
+     * 侧滑菜单的回调功能
+     * @param touch
+     */
+    public void onEventMainThread(ResideTouch touch) {
+        if (touch != null) {
+            switch (touch.getHandleType()) {
+                case ResideTouch.HandleTypeTagLeftBorder:
+                    essence_vp_resideTouch = touch;
+                    resideMenu.setIsLeftBorder(essence_vp_resideTouch.is_Left());
+                    break;
+                case ResideTouch.HandleTypeTagToggle:
+                    resideMenu.toggleMenu();
+                    break;
+            }
         }
     }
 
@@ -196,6 +206,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
     @Override
     public void onTabChanged(String tabId) {
+        //关掉tab中新的fragment
         FragmentManager Frmanager = getSupportFragmentManager();
         FragmentTransaction ft = Frmanager.beginTransaction();
 
@@ -211,13 +222,20 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         }
         ft.commit();
 
-        if (TextUtils.isEmpty(tabId)) {
+        if (TextUtils.isEmpty(tabId)) {//选中了空fragment选项
 //            startActivity(new Intent(this, PlayActivity.class));
+        }
+        if (tabId.equals(getString(R.string.main_essence_text)) && essence_vp_resideTouch != null) {
+            resideMenu.setIsLeftBorder(essence_vp_resideTouch.is_Left());
+        } else {
+            resideMenu.setIsLeftBorder(true);
         }
         //重置Tab样式
         for (int i = 0; i < tablists.size(); i++) {
             Tabitem tabItem = tablists.get(i);
-            if (tabId.equals(tabItem.getTitleString())) {
+            String titleString = tabItem.getTitleString();
+            //只有选中精华时判断是不是在边界，
+            if (tabId.equals(titleString)) {
                 //选中设置为选中状态
                 tabItem.setChecked(true);
             } else {

@@ -3,13 +3,15 @@ package com.example.mr_zyl.project.pro.base.view.residemenu;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.v4.graphics.ColorUtils;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.example.mr_zyl.project.R;
 import com.nineoldandroids.animation.Animator;
@@ -34,6 +36,7 @@ public class ResideMenu extends FrameLayout {
     private static final int PRESSED_DOWN = 3;
     private static final int PRESSED_DONE = 4;
     private static final int PRESSED_MOVE_VERTICAL = 5;
+    private static final String TAG = "ResideMenu";
 
     public View scrollViewLeftMenu;
     private View scrollViewRightMenu;
@@ -59,19 +62,12 @@ public class ResideMenu extends FrameLayout {
         initViews(context, null, null);
     }
 
-    /**
-     */
-    public ResideMenu(Context context, View customLeftMenuId,
-                      View customRightMenuId) {
+    public ResideMenu(Context context, View customLeftMenuId, View customRightMenuId) {
         super(context);
         initViews(context, customLeftMenuId, customRightMenuId);
     }
 
-    private void initViews(Context context, View customLeftMenuId,
-                           View customRightMenuId) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.residemenu_custom, this);
+    private void initViews(Context context, View customLeftMenuId, View customRightMenuId) {
 
         if (customLeftMenuId != null) {
             addView(customLeftMenuId);
@@ -96,6 +92,8 @@ public class ResideMenu extends FrameLayout {
         return scrollViewRightMenu;
     }
 
+    private ImageView iv_main_background;
+
     /**
      * Set up the activity;
      *
@@ -107,6 +105,9 @@ public class ResideMenu extends FrameLayout {
         viewActivity = new TouchDisableView(this.activity);
         ViewGroup parent1 = (ViewGroup) ll_main_content.getParent();
         parent1.removeViewAt(0);
+
+        iv_main_background = (ImageView) ll_main_content.findViewById(R.id.iv_main_background);
+        iv_main_background.setBackgroundColor(getResources().getColor(R.color.transparent));
 
         viewActivity.setContent(ll_main_content);
 
@@ -139,6 +140,7 @@ public class ResideMenu extends FrameLayout {
         animationOpen_activity.addListener(animationListener);
 //        scaleDown_activity.playTogether(scaleDown_shadow);
         animationOpen_activity.start();
+        iv_main_background.setBackgroundColor(getResources().getColor(R.color.transparent2));
     }
 
     /**
@@ -150,6 +152,7 @@ public class ResideMenu extends FrameLayout {
         AnimatorSet animationUp_activity = buildUpAnimation(viewActivity, 1.0f);
         animationUp_activity.addListener(animationListener);
         animationUp_activity.start();
+        iv_main_background.setBackgroundColor(getResources().getColor(R.color.transparent));
     }
 
     public void setSwipeDirectionDisable(int direction) {
@@ -197,18 +200,10 @@ public class ResideMenu extends FrameLayout {
         return isOpened;
     }
 
-    private OnClickListener viewActivityOnClickListener = new OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            if (isOpened()) closeMenu();
-        }
-    };
-
     private Animator.AnimatorListener animationListener = new Animator.AnimatorListener() {
         @Override
         public void onAnimationStart(Animator animation) {
             if (isOpened()) {
-//                showScrollViewMenu(scrollViewMenu);
                 if (menuListener != null)
                     menuListener.openMenu();
             }
@@ -218,12 +213,15 @@ public class ResideMenu extends FrameLayout {
         public void onAnimationEnd(Animator animation) {
             if (isOpened()) {
                 viewActivity.setTouchDisable(true);
-                viewActivity.setOnClickListener(viewActivityOnClickListener);
+                viewActivity.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (isOpened()) closeMenu();
+                    }
+                });
             } else {
                 viewActivity.setTouchDisable(false);
                 viewActivity.setOnClickListener(null);
-//                hideScrollViewMenu(scrollViewLeftMenu);
-//                hideScrollViewMenu(scrollViewRightMenu);
                 if (menuListener != null)
                     menuListener.closeMenu();
             }
@@ -310,12 +308,6 @@ public class ResideMenu extends FrameLayout {
     }
 
     /**
-     */
-    public void clearIgnoredViewList() {
-        ignoredViews.clear();
-    }
-
-    /**
      * @param ev
      * @return
      */
@@ -356,8 +348,10 @@ public class ResideMenu extends FrameLayout {
         return targetTrans;
     }
 
-
+    //按下的坐标
     private float lastActionDownX, lastActionDownY;
+    //Velocity
+    VelocityTracker mVelocityTracker;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -378,8 +372,13 @@ public class ResideMenu extends FrameLayout {
                 lastActionDownY = ev.getY();
                 isInIgnoredView = isInIgnoredView(ev) && !isOpened();
                 pressedState = PRESSED_DOWN;
+                mVelocityTracker = VelocityTracker.obtain();
+                if (mVelocityTracker != null) {
+                    mVelocityTracker.addMovement(ev);
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
+                //如果是忽略布局，也不执行后续移动判断。
                 if (isInIgnoredView || isInDisableDirection(scaleDirection))
                     break;
                 if (pressedState != PRESSED_DOWN && pressedState != PRESSED_MOVE_HORIZONTAL)
@@ -397,17 +396,25 @@ public class ResideMenu extends FrameLayout {
                     if (xOffset < -8 || xOffset > 8) {
                         if (Math.abs(xOffset) > Math.abs(yOffset)) {
                             pressedState = PRESSED_MOVE_HORIZONTAL;
-                            ev.setAction(MotionEvent.ACTION_CANCEL);//取消事件传递
+                            ev.setAction(MotionEvent.ACTION_CANCEL);//达到侧滑条件后，不往里分发事件。让自己下一次开始侧滑
                         }
                     }
                 } else if (pressedState == PRESSED_MOVE_HORIZONTAL) {
+                    if (mVelocityTracker != null) {
+                        mVelocityTracker.addMovement(ev);
+                    }
                     if (mUse3D && currentActivityScaleX < 0.95) {
-                        showScrollViewMenu(scrollViewMenu);
+//                        showScrollViewMenu(scrollViewMenu);
                     } else if (currentActivityTransX > 0.05f * getScreenWidth()) {
-                        showScrollViewMenu(scrollViewMenu);
+//                        showScrollViewMenu(scrollViewMenu);
                     }
                     float targetScale = getTargetScale(ev.getRawX());
                     float targetTrans = getTargetTrans(ev.getRawX());
+
+                    float ratio = targetTrans / (getScreenWidth() * mScaleValue);
+                    int color = ColorUtils.blendARGB(getResources().getColor(R.color.transparent), getResources().getColor(R.color.transparent2), ratio);
+                    iv_main_background.setBackgroundColor(color);
+
                     if (mUse3D) {
                         int angle = scaleDirection == DIRECTION_LEFT ? -ROTATE_Y_ANGLE : ROTATE_Y_ANGLE;
                         angle *= (1 - targetScale) * 2;
@@ -424,12 +431,14 @@ public class ResideMenu extends FrameLayout {
                 break;
 
             case MotionEvent.ACTION_UP:
-
+                //如果是忽略布局，也不执行后续回弹
                 if (isInIgnoredView) break;
+                //如果不是自己滑动抬起，不在继续后续回弹。否则执行后续回弹。
                 if (pressedState != PRESSED_MOVE_HORIZONTAL) break;
 
                 pressedState = PRESSED_DONE;
                 float slidingBorderValue = mScaleValue * 0.56f;//滑动边界值
+
                 if (isOpened()) {
                     if (mUse3D) {
                         if (currentActivityScaleX > slidingBorderValue)
@@ -437,30 +446,67 @@ public class ResideMenu extends FrameLayout {
                         else
                             openMenu(scaleDirection);
                     } else {
-                        if (currentActivityTransX < slidingBorderValue * getScreenWidth())
+                        mVelocityTracker.addMovement(ev);
+                        mVelocityTracker.computeCurrentVelocity(1000);
+                        float xVelocity = mVelocityTracker.getXVelocity();
+//                        Log.i(TAG, isOpened()+"xVelocity: "+xVelocity);
+
+                        if (currentActivityTransX < slidingBorderValue * getScreenWidth() || Math.abs(xVelocity) > 1000) {
                             closeMenu();
-                        else
+                        } else {
                             openMenu(scaleDirection);
+                        }
                     }
                 } else {
                     if (mUse3D) {
-                        if (currentActivityScaleX < slidingBorderValue) {
+                        if (currentActivityScaleX < slidingBorderValue)
                             openMenu(scaleDirection);
-                        } else {
+                        else
                             closeMenu();
-                        }
                     } else {
-                        if (currentActivityTransX > slidingBorderValue * getScreenWidth()) {
+                        mVelocityTracker.addMovement(ev);
+                        mVelocityTracker.computeCurrentVelocity(1000);
+                        float xVelocity = mVelocityTracker.getXVelocity();
+//                        Log.i(TAG, isOpened()+"xVelocity: "+xVelocity);
+
+                        if (currentActivityTransX > slidingBorderValue * getScreenWidth() || Math.abs(xVelocity) > 1000) {
                             openMenu(scaleDirection);
                         } else {
                             closeMenu();
                         }
                     }
                 }
+                releaseVelocityTracker();
                 break;
+            case MotionEvent.ACTION_CANCEL:
+                releaseVelocityTracker();
+                break;
+
         }
         lastRawX = ev.getRawX();
         return super.dispatchTouchEvent(ev);
+    }
+
+    /**
+     * 释放VelocityTracker
+     */
+    private void releaseVelocityTracker() {
+        if (null != mVelocityTracker) {
+            mVelocityTracker.clear();
+            mVelocityTracker.recycle();
+            mVelocityTracker = null;
+        }
+    }
+
+    /**
+     * 侧滑菜单切换
+     */
+    public void toggleMenu() {
+        if (isOpened()) {
+            closeMenu();
+        } else {
+            openMenu(scaleDirection);
+        }
     }
 
     public int getScreenHeight() {
@@ -485,17 +531,5 @@ public class ResideMenu extends FrameLayout {
         void openMenu();
 
         void closeMenu();
-    }
-
-    private void showScrollViewMenu(View scrollViewMenu) {
-        if (scrollViewMenu != null && scrollViewMenu.getParent() == null) {
-            addView(scrollViewMenu, 0);
-        }
-    }
-
-    private void hideScrollViewMenu(View scrollViewMenu) {
-        if (scrollViewMenu != null && scrollViewMenu.getParent() != null) {
-            removeView(scrollViewMenu);
-        }
     }
 }

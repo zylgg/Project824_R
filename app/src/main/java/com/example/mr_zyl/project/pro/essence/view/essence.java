@@ -8,7 +8,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
-import com.example.mr_zyl.project.pro.base.view.residemenu.resideTouch;
+import com.example.mr_zyl.project.pro.base.view.residemenu.ResideTouch;
 import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceAdapter;
 import com.example.mr_zyl.project.pro.essence.view.navigation.EssenceNavigationBuilder;
@@ -107,6 +106,9 @@ public class essence extends BaseFragment {
                 .setLeftIconOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        ResideTouch touch=new ResideTouch();
+                        touch.setHandleType(ResideTouch.HandleTypeTagToggle);
+                        EventBus.getDefault().post(touch);
                     }
                 })
                 .setRightIconOnClickListener(new View.OnClickListener() {
@@ -124,20 +126,15 @@ public class essence extends BaseFragment {
     public void initData() {
         String[] titles = getResources().getStringArray(R.array.essence_video_tab);
         EssenceAdapter adapter = new EssenceAdapter(getFragmentManager(), Arrays.asList(titles));
-        this.vp_essence.setAdapter(adapter);
-//        this.vp_essence.setCurrentItem(4);
         this.vp_essence.setOffscreenPageLimit(1);
+        this.vp_essence.setAdapter(adapter);
         //默认在左边界
-        resideTouch touch=new resideTouch();
-        touch.setIs_Left(true);
-        EventBus.getDefault().post(touch);
+        EventBus.getDefault().post(new ResideTouch(true,ResideTouch.HandleTypeTagLeftBorder));
         this.vp_essence.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                Log.i(TAG, "position: "+position);
-                resideTouch touch=new resideTouch();
-                touch.setIs_Left(position==0?true:false);
-                EventBus.getDefault().post(touch);
+//                Log.i(TAG, "position: "+position);
+                EventBus.getDefault().post(new ResideTouch(position==0?true:false,ResideTouch.HandleTypeTagLeftBorder));
             }
 
             @Override
