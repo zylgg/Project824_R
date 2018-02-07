@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.support.v4.graphics.ColorUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.example.mr_zyl.project.R;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
+import com.nineoldandroids.animation.ValueAnimator;
 import com.nineoldandroids.view.ViewHelper;
 
 import java.util.ArrayList;
@@ -39,8 +41,6 @@ public class ResideMenu extends FrameLayout {
     private static final String TAG = "ResideMenu";
 
     public View scrollViewLeftMenu;
-    private View scrollViewRightMenu;
-    private View scrollViewMenu;
     private Activity activity;
     private TouchDisableView viewActivity;
     private boolean isOpened;
@@ -52,22 +52,25 @@ public class ResideMenu extends FrameLayout {
     private int scaleDirection = DIRECTION_LEFT;
     private int pressedState = PRESSED_DOWN;
     private List<Integer> disabledSwipeDirection = new ArrayList<Integer>();
-    private float mScaleValue = 0.5f;
+    private float mScaleValue = 0.6f;
 
     private boolean mUse3D;
     private static final int ROTATE_Y_ANGLE = 10;
+    private int color1,color2;
 
     public ResideMenu(Context context) {
         super(context);
-        initViews(context, null, null);
+        initViews(context, null);
     }
 
-    public ResideMenu(Context context, View customLeftMenuId, View customRightMenuId) {
+    public ResideMenu(Context context, View customLeftMenuId) {
         super(context);
-        initViews(context, customLeftMenuId, customRightMenuId);
+        initViews(context, customLeftMenuId);
+        color1=getResources().getColor(R.color.transparent);
+        color2=getResources().getColor(R.color.transparent2);
     }
 
-    private void initViews(Context context, View customLeftMenuId, View customRightMenuId) {
+    private void initViews(Context context, View customLeftMenuId) {
 
         if (customLeftMenuId != null) {
             addView(customLeftMenuId);
@@ -75,21 +78,10 @@ public class ResideMenu extends FrameLayout {
         } else {
             scrollViewLeftMenu = new View(context);
         }
-
-        if (customRightMenuId != null) {
-            addView(customRightMenuId);
-            scrollViewRightMenu = customRightMenuId;
-        } else {
-            scrollViewRightMenu = new View(context);
-        }
     }
 
     public View getLeftMenuView() {
         return scrollViewLeftMenu;
-    }
-
-    public View getRightMenuView() {
-        return scrollViewRightMenu;
     }
 
     private ImageView iv_main_background;
@@ -107,7 +99,7 @@ public class ResideMenu extends FrameLayout {
         parent1.removeViewAt(0);
 
         iv_main_background = (ImageView) ll_main_content.findViewById(R.id.iv_main_background);
-        iv_main_background.setBackgroundColor(getResources().getColor(R.color.transparent));
+        iv_main_background.setBackgroundColor(color1);
 
         viewActivity.setContent(ll_main_content);
 
@@ -136,11 +128,9 @@ public class ResideMenu extends FrameLayout {
 
         isOpened = true;
         AnimatorSet animationOpen_activity = buildOpenAnimation(viewActivity, mScaleValue, mScaleValue);
-
         animationOpen_activity.addListener(animationListener);
 //        scaleDown_activity.playTogether(scaleDown_shadow);
         animationOpen_activity.start();
-        iv_main_background.setBackgroundColor(getResources().getColor(R.color.transparent2));
     }
 
     /**
@@ -152,7 +142,6 @@ public class ResideMenu extends FrameLayout {
         AnimatorSet animationUp_activity = buildUpAnimation(viewActivity, 1.0f);
         animationUp_activity.addListener(animationListener);
         animationUp_activity.start();
-        iv_main_background.setBackgroundColor(getResources().getColor(R.color.transparent));
     }
 
     public void setSwipeDirectionDisable(int direction) {
@@ -179,13 +168,10 @@ public class ResideMenu extends FrameLayout {
         float pivotY = getScreenHeight() * 0.5f;
 
         if (direction == DIRECTION_LEFT) {
-            scrollViewMenu = scrollViewLeftMenu;
             pivotX = screenWidth * 1.5f;
         } else {
-            scrollViewMenu = scrollViewRightMenu;
             pivotX = screenWidth * -0.5f;
         }
-
         if (mUse3D) {
             ViewHelper.setPivotX(viewActivity, pivotX);
             ViewHelper.setPivotY(viewActivity, pivotY);
@@ -245,6 +231,8 @@ public class ResideMenu extends FrameLayout {
      * @return
      */
     private AnimatorSet buildOpenAnimation(View target, float targetScaleX, float targetScaleY) {
+        final int startColor=ColorUtils.blendARGB(color1, color2, ViewHelper.getTranslationX(target)/(getScreenWidth()*mScaleValue));
+
         AnimatorSet scaleDown = new AnimatorSet();
         if (mUse3D) {
             scaleDown.playTogether(
@@ -254,10 +242,22 @@ public class ResideMenu extends FrameLayout {
             int angle = scaleDirection == DIRECTION_LEFT ? -ROTATE_Y_ANGLE : ROTATE_Y_ANGLE;
             scaleDown.playTogether(ObjectAnimator.ofFloat(target, "rotationY", angle));
         } else {
-            scaleDown.playTogether(ObjectAnimator.ofFloat(target, "translationX", getScreenWidth() * mScaleValue));
+            //给位移添加更新监听，让背景色渐变
+            ObjectAnimator targetTranslationX = ObjectAnimator.ofFloat(target, "translationX", getScreenWidth() * mScaleValue);
+            targetTranslationX.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    float animatedFraction = valueAnimator.getAnimatedFraction();
+                    iv_main_background.setBackgroundColor(ColorUtils.blendARGB(startColor, color2, animatedFraction));
+                }
+            });
+            ObjectAnimator menuTranslationX = ObjectAnimator.ofFloat(scrollViewLeftMenu, "translationX", 0);
+
+            scaleDown.playTogether(targetTranslationX,menuTranslationX);
         }
         scaleDown.setInterpolator(AnimationUtils.loadInterpolator(activity,
                 android.R.anim.decelerate_interpolator));
+
         scaleDown.setDuration(250);
         return scaleDown;
     }
@@ -268,7 +268,7 @@ public class ResideMenu extends FrameLayout {
      * @return
      */
     private AnimatorSet buildUpAnimation(View target, float targetScale) {
-
+        final int startColor=ColorUtils.blendARGB(color1, color2, ViewHelper.getTranslationX(target)/(getScreenWidth()*mScaleValue));
         AnimatorSet scaleClose = new AnimatorSet();
         if (mUse3D) {
             scaleClose.playTogether(ObjectAnimator.ofFloat(target, "rotationY", 0));
@@ -276,9 +276,22 @@ public class ResideMenu extends FrameLayout {
                     ObjectAnimator.ofFloat(target, "scaleX", targetScale),
                     ObjectAnimator.ofFloat(target, "scaleY", targetScale));
         } else {
-            scaleClose.playTogether(ObjectAnimator.ofFloat(target, "translationX", 0));
+            ObjectAnimator targetTranslationX = ObjectAnimator.ofFloat(target, "translationX", 0);
+            targetTranslationX.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    float animatedFraction = valueAnimator.getAnimatedFraction();
+                    iv_main_background.setBackgroundColor(ColorUtils.blendARGB(startColor, color1, animatedFraction));
+                }
+            });
+            ObjectAnimator menuTranslationX = ObjectAnimator.ofFloat(scrollViewLeftMenu, "translationX", -getScreenWidth() * (1-mScaleValue));
+            scaleClose.playTogether(targetTranslationX,menuTranslationX);
         }
+        scaleClose.setInterpolator(AnimationUtils.loadInterpolator(activity,
+                android.R.anim.decelerate_interpolator));
         scaleClose.setDuration(250);
+
+        iv_main_background.setBackgroundColor(color1);
         return scaleClose;
     }
 
@@ -315,6 +328,7 @@ public class ResideMenu extends FrameLayout {
         Rect rect = new Rect();
         for (View v : ignoredViews) {
             v.getGlobalVisibleRect(rect);
+            Log.i(TAG, "isInIgnoredView: "+rect.toString());
             if (rect.contains((int) ev.getX(), (int) ev.getY()))
                 return true;
         }
@@ -334,7 +348,7 @@ public class ResideMenu extends FrameLayout {
 
         float targetScale = ViewHelper.getScaleX(viewActivity) - scaleFloatX;
         targetScale = targetScale > 1.0f ? 1.0f : targetScale;
-        targetScale = targetScale < 0.5f ? 0.5f : targetScale;
+        targetScale = targetScale < (1-mScaleValue) ? (1-mScaleValue) : targetScale;
         return targetScale;
     }
 
@@ -351,7 +365,7 @@ public class ResideMenu extends FrameLayout {
     //按下的坐标
     private float lastActionDownX, lastActionDownY;
     //Velocity
-    VelocityTracker mVelocityTracker;
+     VelocityTracker mVelocityTracker;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -370,6 +384,7 @@ public class ResideMenu extends FrameLayout {
             case MotionEvent.ACTION_DOWN:
                 lastActionDownX = ev.getX();
                 lastActionDownY = ev.getY();
+                //为了让“忽略布局”在左边菜单关闭时（也可以无论什么时候都自己消费），触摸事件自己消费
                 isInIgnoredView = isInIgnoredView(ev) && !isOpened();
                 pressedState = PRESSED_DOWN;
                 mVelocityTracker = VelocityTracker.obtain();
@@ -412,8 +427,7 @@ public class ResideMenu extends FrameLayout {
                     float targetTrans = getTargetTrans(ev.getRawX());
 
                     float ratio = targetTrans / (getScreenWidth() * mScaleValue);
-                    int color = ColorUtils.blendARGB(getResources().getColor(R.color.transparent), getResources().getColor(R.color.transparent2), ratio);
-                    iv_main_background.setBackgroundColor(color);
+                    iv_main_background.setBackgroundColor(ColorUtils.blendARGB(color1, color2, ratio));
 
                     if (mUse3D) {
                         int angle = scaleDirection == DIRECTION_LEFT ? -ROTATE_Y_ANGLE : ROTATE_Y_ANGLE;
@@ -423,6 +437,7 @@ public class ResideMenu extends FrameLayout {
                         ViewHelper.setScaleY(viewActivity, targetScale);
                     } else {
                         ViewHelper.setTranslationX(viewActivity, targetTrans);
+                        ViewHelper.setTranslationX(scrollViewLeftMenu, targetTrans*((1-mScaleValue)/mScaleValue)-getScreenWidth()*(1-mScaleValue));
                     }
                     lastRawX = ev.getRawX();
                     return true;
@@ -437,20 +452,16 @@ public class ResideMenu extends FrameLayout {
                 if (pressedState != PRESSED_MOVE_HORIZONTAL) break;
 
                 pressedState = PRESSED_DONE;
-                float slidingBorderValue = mScaleValue * 0.56f;//滑动边界值
+                float slidingBorderValue = mScaleValue * 0.56f;//滑动边界值(大于一半，随意多一点即可,)
 
                 if (isOpened()) {
                     if (mUse3D) {
-                        if (currentActivityScaleX > slidingBorderValue)
-                            closeMenu();
-                        else
-                            openMenu(scaleDirection);
+//                        Log.i(TAG, isOpened+"currentActivityScaleX: "+currentActivityScaleX);
+                        if (currentActivityScaleX >  0.75f)closeMenu();else openMenu(scaleDirection);
                     } else {
                         mVelocityTracker.addMovement(ev);
                         mVelocityTracker.computeCurrentVelocity(1000);
-                        float xVelocity = mVelocityTracker.getXVelocity();
-//                        Log.i(TAG, isOpened()+"xVelocity: "+xVelocity);
-
+                        float xVelocity = mVelocityTracker.getXVelocity();//如果抬起时速度够快
                         if (currentActivityTransX < slidingBorderValue * getScreenWidth() || Math.abs(xVelocity) > 1000) {
                             closeMenu();
                         } else {
@@ -459,16 +470,12 @@ public class ResideMenu extends FrameLayout {
                     }
                 } else {
                     if (mUse3D) {
-                        if (currentActivityScaleX < slidingBorderValue)
-                            openMenu(scaleDirection);
-                        else
-                            closeMenu();
+//                        Log.i(TAG, isOpened+"currentActivityScaleX: "+currentActivityScaleX);
+                        if (currentActivityScaleX <  0.75f)openMenu(scaleDirection);else closeMenu();
                     } else {
                         mVelocityTracker.addMovement(ev);
                         mVelocityTracker.computeCurrentVelocity(1000);
-                        float xVelocity = mVelocityTracker.getXVelocity();
-//                        Log.i(TAG, isOpened()+"xVelocity: "+xVelocity);
-
+                        float xVelocity = mVelocityTracker.getXVelocity();//如果抬起时速度够快
                         if (currentActivityTransX > slidingBorderValue * getScreenWidth() || Math.abs(xVelocity) > 1000) {
                             openMenu(scaleDirection);
                         } else {

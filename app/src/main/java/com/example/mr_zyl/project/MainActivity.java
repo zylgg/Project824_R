@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project.pro.attention.view.Attention;
@@ -29,6 +30,7 @@ import com.example.mr_zyl.project.pro.newpost.view.Newpost;
 import com.example.mr_zyl.project.pro.publish.view.Publish;
 import com.example.mr_zyl.project.pro.publish.view.SimpleTakePhotoActivity;
 import com.example.mr_zyl.project.pro.publish.view.self.MoreWindow;
+import com.example.mr_zyl.project.utils.DisplayUtil;
 import com.example.mr_zyl.project.utils.SystemAppUtils;
 import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.bean.ImageItem;
@@ -51,6 +53,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     View tv_bottomnavigation_view;
     @BindView(android.R.id.tabhost)
     MyFragmentTabHost fragmenttabhost;
+    @BindView(android.R.id.tabs)
+    TabWidget tabs;
 
     private List<Tabitem> tablists;
     private long lasttime;
@@ -97,15 +101,19 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         }
         lv_main_leftmenu.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, datas));
 
-        resideMenu = new ResideMenu(this, view, null);
+        view.setLayoutParams(new LinearLayout.LayoutParams((int) (DisplayUtil.Width(this) * 0.8f), LinearLayout.LayoutParams.MATCH_PARENT));
+
+        resideMenu = new ResideMenu(this, view);
         resideMenu.setUse3D(false);
         resideMenu.setScaleValue(0.8f);
         resideMenu.attachToActivity(this, ll_main_content);
+        resideMenu.addIgnoredView(tabs);
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
     }
 
     /**
      * 侧滑菜单的回调功能
+     *
      * @param touch
      */
     public void onEventMainThread(ResideTouch touch) {
