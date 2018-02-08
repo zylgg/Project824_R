@@ -3,6 +3,8 @@ package com.example.mr_zyl.project.pro.essence.view;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
@@ -64,10 +66,22 @@ public class essence extends BaseFragment {
     }
 
     @Override
-    public void initContentView(View viewContent) {
-        EventBus.getDefault().register(this);
-        ButterKnife.bind(this, viewContent);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (EventBus.getDefault().isRegistered(this)){
+            EventBus.getDefault().unregister(this);
+        }
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void initContentView(View viewContent) {
+        ButterKnife.bind(this, viewContent);
         color1=getResources().getColor(R.color.colorAccent);
         color2=getResources().getColor(R.color.white);
         setStatusBarView(tv_fitssystemwindows_view);

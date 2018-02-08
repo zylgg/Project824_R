@@ -123,7 +123,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
 
             @Override
             public void transProgressRadio(float ratio) {
-//                Log.i(TAG, "transProgressRadio: "+ratio);
+                Log.i(TAG, "transProgressRadio: "+ratio);
                 EventBus.getDefault().post(new ResideDispatch(ratio));
             }
         });

@@ -71,10 +71,14 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     public void initContentView(View contentView) {
         ButterKnife.bind(this, contentView);
-        EventBus.getDefault().register(this);
-
         initListener();
 
         fab_scrollTop.setOnClickListener(this);
