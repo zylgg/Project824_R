@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
 import android.util.TypedValue;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.mr_zyl.project.R;
 import com.example.mr_zyl.project.pro.base.view.BaseFragment;
+import com.example.mr_zyl.project.pro.base.view.residemenu.ResideDispatch;
 import com.example.mr_zyl.project.pro.base.view.residemenu.ResideTouch;
 import com.example.mr_zyl.project.pro.essence.refreshEvent;
 import com.example.mr_zyl.project.pro.essence.view.adapter.EssenceAdapter;
@@ -54,6 +56,7 @@ public class essence extends BaseFragment {
     @BindView(R.id.cl_essence)
     CoordinatorLayout cl_essence;
     private EssenceNavigationBuilder builder;
+    private int color1,color2;
 
     @Override
     public int getContentView() {
@@ -62,13 +65,17 @@ public class essence extends BaseFragment {
 
     @Override
     public void initContentView(View viewContent) {
+        EventBus.getDefault().register(this);
         ButterKnife.bind(this, viewContent);
 
+        color1=getResources().getColor(R.color.colorAccent);
+        color2=getResources().getColor(R.color.white);
         setStatusBarView(tv_fitssystemwindows_view);
         initToolBar(ll_essence_tabcontainer);
 
-        tv_fitssystemwindows_view.setBackgroundResource(R.drawable.toolbar_backgound_essence_shape);
-        tab_essence.setBackgroundResource(R.drawable.toolbar_backgound_essence_shape);
+//        R.drawable.toolbar_backgound_essence_shape;
+        tv_fitssystemwindows_view.setBackgroundColor(color1);
+        tab_essence.setBackgroundColor(color1);
         abl_essence.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -97,16 +104,24 @@ public class essence extends BaseFragment {
         }
     }
 
+    public void onEventMainThread(ResideDispatch touch) {
+
+        int currentColor = ColorUtils.blendARGB(color1,color2, touch.getRadio());
+
+        tv_fitssystemwindows_view.setBackgroundColor(currentColor);
+        tab_essence.setBackgroundColor(currentColor);
+        builder.getContentView().setBackgroundColor(currentColor);
+    }
+
     private void initToolBar(View viewContent) {
         builder = new EssenceNavigationBuilder(getContext());
-        builder.setBackground(R.drawable.toolbar_backgound_essence_shape)
-                .setTitle(R.string.main_essence_text)
+        builder.setTitle(R.string.main_essence_text)
                 .setLeftIcon(R.drawable.ic_head)
                 .setRightIcon(R.drawable.ic_cleancache)
                 .setLeftIconOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ResideTouch touch=new ResideTouch();
+                        ResideTouch touch = new ResideTouch();
                         touch.setHandleType(ResideTouch.HandleTypeTagToggle);
                         EventBus.getDefault().post(touch);
                     }
@@ -117,6 +132,8 @@ public class essence extends BaseFragment {
                         ClearMemoryCache();
                     }
                 }).createAndBind((ViewGroup) viewContent);
+
+        builder.getContentView().setBackgroundColor(color1);
 
     }
 
@@ -129,12 +146,12 @@ public class essence extends BaseFragment {
         this.vp_essence.setOffscreenPageLimit(1);
         this.vp_essence.setAdapter(adapter);
         //默认在左边界
-        EventBus.getDefault().post(new ResideTouch(true,ResideTouch.HandleTypeTagLeftBorder));
+        EventBus.getDefault().post(new ResideTouch(true, ResideTouch.HandleTypeTagLeftBorder));
         this.vp_essence.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
 //                Log.i(TAG, "position: "+position);
-                EventBus.getDefault().post(new ResideTouch(position==0?true:false,ResideTouch.HandleTypeTagLeftBorder));
+                EventBus.getDefault().post(new ResideTouch(position == 0 ? true : false, ResideTouch.HandleTypeTagLeftBorder));
             }
 
             @Override
@@ -233,4 +250,9 @@ public class essence extends BaseFragment {
         dialog.show();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
 }

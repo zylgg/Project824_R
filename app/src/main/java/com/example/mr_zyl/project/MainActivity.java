@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.mr_zyl.project.pro.attention.view.Attention;
 import com.example.mr_zyl.project.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost;
+import com.example.mr_zyl.project.pro.base.view.residemenu.ResideDispatch;
 import com.example.mr_zyl.project.pro.base.view.residemenu.ResideMenu;
 import com.example.mr_zyl.project.pro.base.view.residemenu.ResideTouch;
 import com.example.mr_zyl.project.pro.essence.refreshEvent;
@@ -109,6 +110,23 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         resideMenu.attachToActivity(this, ll_main_content);
         resideMenu.addIgnoredView(tabs);
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+        resideMenu.setMenuListener(new ResideMenu.OnMenuListener() {
+            @Override
+            public void openMenu() {
+
+            }
+
+            @Override
+            public void closeMenu() {
+
+            }
+
+            @Override
+            public void transProgressRadio(float ratio) {
+//                Log.i(TAG, "transProgressRadio: "+ratio);
+                EventBus.getDefault().post(new ResideDispatch(ratio));
+            }
+        });
     }
 
     /**
