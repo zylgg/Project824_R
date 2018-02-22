@@ -155,7 +155,7 @@ public class XRefreshContentView implements OnScrollListener, OnTopRefreshTime, 
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         getRecyclerViewInfo(layoutManager);
         refreshAdapter(adapter, layoutManager);
-        LogUtils.d("test pre onScrolled mIsLoadingMore=" + mIsLoadingMore);
+//        LogUtils.d("test pre onScrolled mIsLoadingMore=" + mIsLoadingMore);
         if (onRecyclerViewTop()) {
             if (Utils.isRecyclerViewFullscreen(recyclerView)) {
 //                        addFooterView(true);

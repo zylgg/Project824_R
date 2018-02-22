@@ -1,6 +1,8 @@
 package com.example.mr_zyl.project.pro.essence.view.fragment;
 
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -71,9 +73,15 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        EventBus.getDefault().register(this);
+
     }
 
     @Override
