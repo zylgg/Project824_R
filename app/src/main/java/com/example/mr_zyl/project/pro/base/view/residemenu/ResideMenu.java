@@ -204,11 +204,17 @@ public class ResideMenu extends FrameLayout {
                         if (isOpened()) closeMenu();
                     }
                 });
+                if (menuListener != null) {
+                    menuListener.transProgressRadio(1.0f);
+                }
             } else {
                 viewActivity.setTouchDisable(false);
                 viewActivity.setOnClickListener(null);
                 if (menuListener != null)
                     menuListener.closeMenu();
+                if (menuListener != null) {
+                    menuListener.transProgressRadio(0.0f);
+                }
             }
         }
 
