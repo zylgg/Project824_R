@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'//butterknife插件
+//apply plugin: 'android-apt'//butterknife插件
 apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.example.mr_zyl.project824"
@@ -17,12 +17,27 @@ android {
             renderscriptTargetApi 23
             renderscriptSupportModeEnabled true
         }
+        // 使用Cmake工具
+//        externalNativeBuild {
+//            cmake {
+//                cppFlags ""
+//                //生成多个版本的so文件
+//                abiFilters 'arm64-v8a','armeabi-v7a','x86','x86_64'
+//            }
+//        }
+
         ndk {
             moduleName "mathkitso"
 //            abiFilters "arm64-v8a","armeabi", "armeabi-v7a", "x86", "mips","x86_64"
             abiFilters "armeabi-v7a"
         }
     }
+    // 配置CMakeLists.txt路径
+//    externalNativeBuild {
+//        cmake {
+//            path "CMakeLists.txt"  // 设置所要编写的c源码位置，以及编译后so文件的名字
+//        }
+//    }
     buildTypes {
         release {
             minifyEnabled false
@@ -58,15 +73,20 @@ dependencies {
     // 头像
     compile 'de.hdodenhof:circleimageview:2.0.0'
     //黄油刀注解
-    compile 'com.jakewharton:butterknife:8.4.0'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+//    compile 'com.jakewharton:butterknife:8.4.0'
+//    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    // butterknife   组件注入
+    implementation 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+
+
     //图片加载器，支持GIF，手势缩放以及分块显示超大图片
     compile 'me.xiaopan:sketch:2.3.0'
     //标准设计的dialog风格
     compile 'com.robbypond:material-dialogs:1.0.0'
     //图片加载框架
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile project(':zylsmallvideolibrary')
+    implementation project(':zylsmallvideolibrary')
     //网络请求
     compile 'com.zhy:okhttputils:2.6.2'
     //图片加载
