@@ -1,8 +1,12 @@
 package com.example.mr_zyl.project824.pro.base.view;
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.util.AttributeSet;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.example.mr_zyl.project824.BaseApplication;
@@ -28,8 +32,9 @@ public abstract class BaseActivity<P extends MvpBasePresenter> extends MvpActivi
         return (BaseApplication) this.getApplication();
     }
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         netEvevt = this;
         initNetType();

@@ -43,9 +43,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="icAwoyV0rftCISU3HHLo61pVkKTo8Yok" />
-        <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="43898fd97ccdad6f5dee63d81d243508" />
 
@@ -72,7 +69,6 @@
         </activity>
         <activity android:name=".pro.publish.view.PlayActivity" />
         <activity android:name=".pro.mine.view.activity.MoreLevelActivity" />
-        <activity android:name=".pro.mine.view.activity.BaiduMapActivity" />
         <activity android:name=".pro.mine.view.activity.CurtainActivity" />
         <activity
             android:name=".pro.mine.view.activity.FastBlurActivity"

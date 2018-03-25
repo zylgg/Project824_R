@@ -2,8 +2,8 @@ package com.example.mr_zyl.project824;
 
 import android.app.Activity;
 import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.example.mr_zyl.project824.bean.UILImageLoader;
 import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.view.CropImageView;
@@ -26,27 +26,19 @@ import okhttp3.OkHttpClient;
 /**
  * Created by Mr_Zyl on 2016/9/18.
  */
-public class BaseApplication extends Application {
+public class BaseApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        //初始化百度地图
-        SDKInitializer.initialize(getApplicationContext());
-        //imageloader配置
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
-//                .writeDebugLogs()
-                .build();
-        ImageLoader.getInstance().init(config);
-
-//        initUniversalImageLoader();
+        initUniversalImageLoader();
         initImagePicker();
 
         //okhttputils配置
         CookieJarImpl cookieJar = new CookieJarImpl(new PersistentCookieStore(getApplicationContext()));
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new LoggerInterceptor("OkhttpClient"))
-                .connectTimeout(20*1000L, TimeUnit.MILLISECONDS)
-                .readTimeout(20*1000L, TimeUnit.MILLISECONDS)
+                .connectTimeout(20 * 1000L, TimeUnit.MILLISECONDS)
+                .readTimeout(20 * 1000L, TimeUnit.MILLISECONDS)
                 .cookieJar(cookieJar)
                 .build();
         OkHttpUtils.initClient(okHttpClient);
@@ -60,6 +52,7 @@ public class BaseApplication extends Application {
 //        configuration.setMemoryCache(new LruMemoryCache(this,newMemoryCacheMaxSize));//设置最大的内存缓存
         configuration.setDiskCache(new LruDiskCache(this, configuration, 1, 50 * 1024 * 1024));//设置最大的磁盘缓存
     }
+
     private void initUniversalImageLoader() {
         //初始化ImageLoader
         ImageLoader.getInstance().init(

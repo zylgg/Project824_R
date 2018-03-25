@@ -1,14 +1,17 @@
 package com.example.mr_zyl.project824;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,9 +46,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
-public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements TabHost.OnTabChangeListener, View.OnClickListener {
 
     private static final String TAG = "MainActivity";
     @BindView(R.id.ll_main_content)
@@ -68,7 +72,6 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
      */
     private ResideTouch essence_vp_resideTouch;
 
-    @Override
     protected int initLayoutId() {
         return R.layout.activity_main;
     }
@@ -76,7 +79,9 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(initLayoutId());
         EventBus.getDefault().register(this);
+        ButterKnife.bind(this);
         //设置不填充到虚拟按键之下
         setNoFitBottomStatus();
         //先初始化每个tab对象的数据
@@ -128,6 +133,19 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                 EventBus.getDefault().post(new ResideDispatch(ratio));
             }
         });
+    }
+    @Override
+    protected void onResume() {
+        /**
+         * 设置为横屏
+         * android:configChanges="orientation|screenSize" 切屏不重走oncreate（）方法
+         */
+        if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+        //自动调节输入法区域
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        super.onResume();
     }
 
     /**
@@ -292,20 +310,20 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         currenttabtag = v.getTag().toString();
     }
 
-    @Override
-    public void onNetChange(int netMobile) {
-        super.onNetChange(netMobile);
-        boolean netConnect = isNetConnect(netMobile);
-        if (!netConnect)
-//            ToastUtil.showToast(this,"当前网络状态不可用，请检查你的网络设置！");
-            new MySnackbarUtils.Builder(this)
-                    .setCoverStatusBar(true)
-                    .setIcon(R.drawable.red_log)
-                    .setBackgroundColor(R.color.white)
-                    .setMessage("当前网络状态不可用，请检查你的网络设置！")
-                    .setMessageColor(R.color.black)
-                    .show();
-    }
+//    @Override
+//    public void onNetChange(int netMobile) {
+//        super.onNetChange(netMobile);
+//        boolean netConnect = isNetConnect(netMobile);
+//        if (!netConnect)
+////            ToastUtil.showToast(this,"当前网络状态不可用，请检查你的网络设置！");
+//            new MySnackbarUtils.Builder(this)
+//                    .setCoverStatusBar(true)
+//                    .setIcon(R.drawable.red_log)
+//                    .setBackgroundColor(R.color.white)
+//                    .setMessage("当前网络状态不可用，请检查你的网络设置！")
+//                    .setMessageColor(R.color.black)
+//                    .show();
+//    }
 
     /**
      * 图片选择器请求码

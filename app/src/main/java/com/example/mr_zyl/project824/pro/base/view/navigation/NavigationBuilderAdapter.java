@@ -1,6 +1,7 @@
 package com.example.mr_zyl.project824.pro.base.view.navigation;
 
 import android.content.Context;
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.mr_zyl.project824.R;
 
-public abstract class NavigationBuilderAdapter implements NavigationBuilder{
+public abstract class NavigationBuilderAdapter implements NavigationBuilder {
 
     private Context context;
     private String title;
@@ -26,7 +27,7 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder{
     private View.OnClickListener leftIconOnClickListener;
     private View.OnClickListener rightIconOnClickListener;
 
-    public NavigationBuilderAdapter(Context context){
+    public NavigationBuilderAdapter(Context context) {
         this.context = context;
     }
 
@@ -36,7 +37,7 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder{
 
     @Override
     public NavigationBuilder setBackground(int backgroundIconRes) {
-        this.backgroundIconRes=backgroundIconRes;
+        this.backgroundIconRes = backgroundIconRes;
         return this;
     }
 
@@ -71,50 +72,63 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder{
     }
 
     @Override
-    public NavigationBuilderAdapter setLeftIconOnClickListener(View.OnClickListener onClickListener){
+    public NavigationBuilderAdapter setLeftIconOnClickListener(View.OnClickListener onClickListener) {
         this.leftIconOnClickListener = onClickListener;
         return this;
     }
 
     @Override
-    public NavigationBuilderAdapter setRightIconOnClickListener(View.OnClickListener onClickListener){
+    public NavigationBuilderAdapter setRightIconOnClickListener(View.OnClickListener onClickListener) {
         this.rightIconOnClickListener = onClickListener;
         return this;
     }
 
     @Override
     public void createAndBind(ViewGroup parent) {
-        contentView = LayoutInflater.from(getContext()).inflate(getLayoutId(),parent,false);
-        ll_toolbar_essence_contentlayou= (LinearLayout) contentView.findViewById(R.id.ll_toolbar_essence_contentlayou);
-        ViewGroup viewGroup = (ViewGroup)contentView.getParent();
-        if (viewGroup != null){
+        contentView = LayoutInflater.from(getContext()).inflate(getLayoutId(), parent, false);
+        ll_toolbar_essence_contentlayou = (LinearLayout) contentView.findViewById(R.id.ll_toolbar_essence_contentlayou);
+        ViewGroup viewGroup = (ViewGroup) contentView.getParent();
+        if (viewGroup != null) {
             viewGroup.removeView(contentView);
         }
-        parent.addView(contentView,0);
+        parent.addView(contentView, 0);
+        setStatusBarView(contentView);
     }
 
-    public void setImageViewStyle(int viewId, int imageRes, View.OnClickListener onClickListener){
-        ImageView imageView = (ImageView)getContentView().findViewById(viewId);
-        if (imageRes == 0){
+    public void setImageViewStyle(int viewId, int imageRes, View.OnClickListener onClickListener) {
+        ImageView imageView = (ImageView) getContentView().findViewById(viewId);
+        if (imageRes == 0) {
             imageView.setVisibility(View.GONE);
-        }else {
+        } else {
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageResource(imageRes);
             imageView.setOnClickListener(onClickListener);
         }
     }
-    public void setTextViewStyle(int viewId){
-        TextView textview = (TextView)getContentView().findViewById(viewId);
-        if (TextUtils.isEmpty(title)){
+
+    public void setTextViewStyle(int viewId) {
+        TextView textview = (TextView) getContentView().findViewById(viewId);
+        if (TextUtils.isEmpty(title)) {
             textview.setText("");
             textview.setVisibility(View.GONE);
-        }else {
+        } else {
             textview.setText(title);
             textview.setVisibility(View.VISIBLE);
         }
     }
 
-    public View findViewById(int id){
+    public void setStatusBarView(View content) {
+        View view = content.findViewById(R.id.tv_fitssystemwindows_view);
+        if (view != null) {
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {//如果系统不支持透明状态栏
+                view.setVisibility(View.GONE);
+            } else {
+                view.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    public View findViewById(int id) {
         return getContentView().findViewById(id);
     }
 

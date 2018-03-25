@@ -45,7 +45,7 @@ android {
     }
     sourceSets {
         main {
-            jniLibs.srcDirs = ['libs']
+            jniLibs.srcDir 'libs'
         }
     }
     greendao {
@@ -69,7 +69,6 @@ dependencies {
     compile files('libs/zxing.jar')
     compile files('libs/android-viewbadger(1).jar')
     compile files('libs/gson-2.2.4.jar')
-    compile files('libs/BaiduLBS_Android.jar')
     // 头像
     compile 'de.hdodenhof:circleimageview:2.0.0'
     //黄油刀注解
