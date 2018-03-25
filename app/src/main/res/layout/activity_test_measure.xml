@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.mr_zyl.project.pro.newpost.view.Activity.TestMeasureActivity">
+    tools:context="com.example.mr_zyl.project824.pro.newpost.view.Activity.TestMeasureActivity">
 
 
-    <com.example.mr_zyl.project.pro.newpost.view.DragLinearlayout
+    <com.example.mr_zyl.project824.pro.newpost.view.DragLinearlayout
         android:layout_width="@dimen/x720"
         android:layout_height="@dimen/y720"
         android:orientation="vertical"
@@ -24,6 +24,6 @@
             android:background="@drawable/test"
             android:text="测试textView"/>
 
-    </com.example.mr_zyl.project.pro.newpost.view.DragLinearlayout>
+    </com.example.mr_zyl.project824.pro.newpost.view.DragLinearlayout>
 
 </LinearLayout>

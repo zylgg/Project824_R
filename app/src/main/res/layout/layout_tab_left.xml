@@ -27,7 +27,7 @@
             android:text="tab_title"/>
     </LinearLayout>
 
-    <com.example.mr_zyl.project.pro.mine.view.selfview.MsgView
+    <com.example.mr_zyl.project824.pro.mine.view.selfview.MsgView
         android:layout_toRightOf="@+id/ll_tap"
         android:id="@+id/rtv_msg_tip"
         xmlns:mv="http://schemas.android.com/apk/res-auto"

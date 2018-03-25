@@ -27,7 +27,7 @@
 
     </LinearLayout>
 
-    <com.example.mr_zyl.project.pro.mine.view.selfview.MsgView
+    <com.example.mr_zyl.project824.pro.mine.view.selfview.MsgView
         android:id="@+id/rtv_msg_tip"
         xmlns:mv="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"

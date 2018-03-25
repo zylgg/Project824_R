@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost
+            <com.example.mr_zyl.project824.pro.base.view.MyFragmentTabHost
                 android:id="@android:id/tabhost"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -44,7 +44,7 @@
                         android:background="#F6F2F5" />
                 </LinearLayout>
 
-            </com.example.mr_zyl.project.pro.base.view.MyFragmentTabHost>
+            </com.example.mr_zyl.project824.pro.base.view.MyFragmentTabHost>
 
             <ImageView
                 android:id="@+id/iv_main_background"

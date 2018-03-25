@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mr_zyl.project">
+    package="com.example.mr_zyl.project824">
 
     <!-- 允许程序打开网络套接字 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -29,6 +29,12 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -38,7 +44,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="sGz75rp7TClWy47XIqHZ46dvvYmhACKK" />
+            android:value="icAwoyV0rftCISU3HHLo61pVkKTo8Yok" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="43898fd97ccdad6f5dee63d81d243508" />
@@ -83,6 +89,7 @@
         <activity android:name=".pro.publish.view.SimpleTakePhotoActivity" />
         <activity android:name=".pro.newpost.view.Activity.FontsActivity" />
         <activity android:name=".pro.mine.view.activity.GMapActivity" />
+        <activity android:name=".pro.essence.view.activity.SimpleCameraActivity"></activity>
     </application>
 
 </manifest>

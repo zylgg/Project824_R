@@ -75,7 +75,7 @@
                     android:text="保存" />
         </LinearLayout>
 
-        <com.example.mr_zyl.project.pro.essence.view.selfview.RingView
+        <com.example.mr_zyl.project824.pro.essence.view.selfview.RingView
             android:id="@+id/rv_BrowerActivity_loadprogress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

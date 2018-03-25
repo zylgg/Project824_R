@@ -3,18 +3,18 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 26
     buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.example.mr_zyl.project824"
         minSdkVersion 17
-        targetSdkVersion 23
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
         defaultConfig {
-            renderscriptTargetApi 23
+            renderscriptTargetApi 26
             renderscriptSupportModeEnabled true
         }
         // 使用Cmake工具
@@ -27,9 +27,8 @@ android {
 //        }
 
         ndk {
-            moduleName "mathkitso"
-//            abiFilters "arm64-v8a","armeabi", "armeabi-v7a", "x86", "mips","x86_64"
-            abiFilters "armeabi-v7a"
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","arm64-v8a","x86_64"
+//            abiFilters "armeabi-v7a"
         }
     }
     // 配置CMakeLists.txt路径
@@ -57,29 +56,30 @@ android {
 
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:support-v4:23.3.0'
-    compile 'com.android.support:recyclerview-v7:23.3.0'
-    compile 'com.android.support:design:24.2.0'
-    compile files('libs/BaiduLBS_Android.jar')
+    compile 'com.android.support:appcompat-v7:26+'
+    compile 'com.android.support:support-v4:26+'
+    compile 'com.android.support:recyclerview-v7:26+'
+    compile 'com.android.support:design:26+'
     compile 'org.greenrobot:greendao:3.1.0'
     //高斯模糊
     compile 'net.robinx:lib.blur:1.0.1'
     compile files('libs/zxing.jar')
     compile files('libs/android-viewbadger(1).jar')
     compile files('libs/gson-2.2.4.jar')
+    compile files('libs/BaiduLBS_Android.jar')
     // 头像
     compile 'de.hdodenhof:circleimageview:2.0.0'
     //黄油刀注解
-//    compile 'com.jakewharton:butterknife:8.4.0'
-//    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    //    compile 'com.jakewharton:butterknife:8.4.0'
+    //    apt 'com.jakewharton:butterknife-compiler:8.4.0'
     // butterknife   组件注入
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-
-
+    //拍照，录制短视频
+    compile 'cjt.library.wheel:camera:1.1.9'
     //图片加载器，支持GIF，手势缩放以及分块显示超大图片
     compile 'me.xiaopan:sketch:2.3.0'
     //标准设计的dialog风格

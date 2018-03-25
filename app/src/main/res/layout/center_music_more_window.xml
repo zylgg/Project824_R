@@ -1,4 +1,4 @@
-<com.example.mr_zyl.project.pro.publish.view.self.BlurRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.mr_zyl.project824.pro.publish.view.self.BlurRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bmrl_main_poplayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -106,4 +106,4 @@
             android:src="@drawable/tabbar_compose_background_icon_close" />
 
     </LinearLayout>
-</com.example.mr_zyl.project.pro.publish.view.self.BlurRelativeLayout>
+</com.example.mr_zyl.project824.pro.publish.view.self.BlurRelativeLayout>

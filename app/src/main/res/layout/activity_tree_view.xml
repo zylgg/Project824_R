@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.mr_zyl.project.pro.newpost.view.Activity.TreeViewActivity">
-    <com.example.mr_zyl.project.pro.newpost.view.selfview.TreeGroup2
+    tools:context="com.example.mr_zyl.project824.pro.newpost.view.Activity.TreeViewActivity">
+    <com.example.mr_zyl.project824.pro.newpost.view.selfview.TreeGroup2
         android:id="@+id/tg_treeview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -45,7 +45,7 @@
                 app:layout_collapseMode="pin" />
 
 
-            <com.example.mr_zyl.project.pro.mine.view.selfview.SlideView
+            <com.example.mr_zyl.project824.pro.mine.view.selfview.SlideView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rect_shape"
@@ -64,9 +64,9 @@
                     app:civ_border_width="@dimen/x3" />
 
 
-            </com.example.mr_zyl.project.pro.mine.view.selfview.SlideView>
+            </com.example.mr_zyl.project824.pro.mine.view.selfview.SlideView>
 
-            <com.example.mr_zyl.project.pro.mine.view.selfview.SlideView
+            <com.example.mr_zyl.project824.pro.mine.view.selfview.SlideView
                 android:id="@+id/slv_image_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
                     android:text="个人详情"
                     android:textColor="@color/white"
                     android:textSize="@dimen/x63" />
-            </com.example.mr_zyl.project.pro.mine.view.selfview.SlideView>
+            </com.example.mr_zyl.project824.pro.mine.view.selfview.SlideView>
 
 
         </android.support.design.widget.CollapsingToolbarLayout>

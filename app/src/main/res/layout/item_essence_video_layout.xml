@@ -48,7 +48,7 @@
 
     </LinearLayout>
 
-    <com.example.mr_zyl.project.pro.essence.view.selfview.ExpandableTextView
+    <com.example.mr_zyl.project824.pro.essence.view.selfview.ExpandableTextView
         android:id="@+id/etv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
             android:minWidth="0dp"
             />
 
-    </com.example.mr_zyl.project.pro.essence.view.selfview.ExpandableTextView>
+    </com.example.mr_zyl.project824.pro.essence.view.selfview.ExpandableTextView>
 
     <RelativeLayout
         android:id="@+id/ll_commondata"
@@ -136,7 +136,7 @@
             android:layout_marginTop="@dimen/margin_left_5_dp"
             android:contentDescription="用于播放视频或mp3" />
 
-        <com.example.mr_zyl.project.pro.essence.view.selfview.PlayVideoIconView
+        <com.example.mr_zyl.project824.pro.essence.view.selfview.PlayVideoIconView
             android:id="@+id/pviv_video_detail"
             android:layout_width="36dp"
             android:layout_height="36dp"
@@ -144,7 +144,7 @@
             android:visibility="gone"
             app:themecolor="@color/colorAccent" />
 
-        <com.example.mr_zyl.project.pro.essence.view.selfview.RingView
+        <com.example.mr_zyl.project824.pro.essence.view.selfview.RingView
             android:id="@+id/rv_loadprogress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
