@@ -310,21 +310,6 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         currenttabtag = v.getTag().toString();
     }
 
-//    @Override
-//    public void onNetChange(int netMobile) {
-//        super.onNetChange(netMobile);
-//        boolean netConnect = isNetConnect(netMobile);
-//        if (!netConnect)
-////            ToastUtil.showToast(this,"当前网络状态不可用，请检查你的网络设置！");
-//            new MySnackbarUtils.Builder(this)
-//                    .setCoverStatusBar(true)
-//                    .setIcon(R.drawable.red_log)
-//                    .setBackgroundColor(R.color.white)
-//                    .setMessage("当前网络状态不可用，请检查你的网络设置！")
-//                    .setMessageColor(R.color.black)
-//                    .show();
-//    }
-
     /**
      * 图片选择器请求码
      */
