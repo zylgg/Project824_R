@@ -10,6 +10,15 @@ public class attention {
     private String sub_number;
     private int is_sub;
     private int is_default;
+    private boolean is_onClicked;
+
+    public boolean isIs_onClicked() {
+        return is_onClicked;
+    }
+
+    public void setIs_onClicked(boolean is_onClicked) {
+        this.is_onClicked = is_onClicked;
+    }
 
     public String getTheme_id() {
         return theme_id;

@@ -76,7 +76,6 @@
         <activity
             android:name=".pro.mine.view.activity.BlurredActivity"
             android:theme="@style/BlurredTheme" />
-        <activity android:name=".pro.mine.view.activity.ListViewSSActivity" />
         <activity android:name=".pro.mine.view.activity.LoadGifActivity" />
         <activity android:name=".pro.mine.view.activity.QRImageActivity" />
         <activity android:name=".pro.newpost.view.Activity.TestMeasureActivity" />
