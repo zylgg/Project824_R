@@ -1,5 +1,4 @@
 package com.example.mr_zyl.project824.pro.mine.view.selfview;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -23,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project824.R;
-import com.example.mr_zyl.project824.pro.mine.view.impl.ThemeResolver;
 
 /**
  * Created by TFHR02 on 2017/9/6.
@@ -77,6 +75,7 @@ public class MySnackbar extends LinearLayout {
 
         inflate(getContext(), R.layout.layout_cookie, this);
         contentview = findViewById(R.id.cookie);
+        contentview.getLayoutParams().width=context.getResources().getDisplayMetrics().widthPixels;
         viewDragHelper = ViewDragHelper.create(this, dragCallback);
         detectorCompat = new GestureDetectorCompat(getContext(), onGestureListener);
 
@@ -242,7 +241,7 @@ public class MySnackbar extends LinearLayout {
                 }
 
                 if (TextUtils.isEmpty(params.title)) {
-                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvMessage
+                    LayoutParams layoutParams = (LayoutParams) tvMessage
                             .getLayoutParams();
                     layoutParams.topMargin = 0;
                 }

@@ -21,7 +21,6 @@ import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project824.pro.attention.view.Attention;
-import com.example.mr_zyl.project824.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project824.pro.base.view.MyFragmentTabHost;
 import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideDispatch;
 import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideMenu;
@@ -36,6 +35,7 @@ import com.example.mr_zyl.project824.pro.publish.view.Publish;
 import com.example.mr_zyl.project824.pro.publish.view.SimpleTakePhotoActivity;
 import com.example.mr_zyl.project824.pro.publish.view.self.MoreWindow;
 import com.example.mr_zyl.project824.utils.DisplayUtil;
+import com.example.mr_zyl.project824.utils.StatusBarUtils;
 import com.example.mr_zyl.project824.utils.SystemAppUtils;
 import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.bean.ImageItem;
@@ -55,8 +55,6 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     @BindView(R.id.ll_main_content)
     LinearLayout ll_main_content;
 
-    @BindView(R.id.tv_bottomnavigation_view)
-    View tv_bottomnavigation_view;
     @BindView(android.R.id.tabhost)
     MyFragmentTabHost fragmenttabhost;
     @BindView(android.R.id.tabs)
@@ -65,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     private List<Tabitem> tablists;
     private long lasttime;
     private MoreWindow mMoreWindow;
-    private int bottomStatusHeight;
     ResideMenu resideMenu;
     /**
      * 精华的vp是否在边界
@@ -80,25 +77,13 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(initLayoutId());
+        StatusBarUtils.setTransparent(this);
         EventBus.getDefault().register(this);
         ButterKnife.bind(this);
-        //设置不填充到虚拟按键之下
-        setNoFitBottomStatus();
         //先初始化每个tab对象的数据
         initFragmentTabData();
         //再初始化TabHost控件
         initTabHost();
-        //菜单默认不展开所以拦截掉事件
-//        dl_main.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-//            @Override
-//            public void onDrawerSlide(View drawerView, float slideOffset) {
-//                super.onDrawerSlide(drawerView, slideOffset);
-//                View contentView = dl_main.getChildAt(0);
-//                float trans = drawerView.getWidth() * slideOffset;
-//                //让内容跟着滑动
-//                contentView.setTranslationX(trans);
-//            }
-//        });
 
         View view = LayoutInflater.from(this).inflate(R.layout.main_left_layout, null);
         ListView lv_main_leftmenu = (ListView) view.findViewById(R.id.lv_main_leftmenu);
@@ -164,16 +149,6 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
                     resideMenu.toggleMenu();
                     break;
             }
-        }
-    }
-
-    /**
-     * 设置底部布局填充
-     */
-    private void setNoFitBottomStatus() {
-        bottomStatusHeight = SystemAppUtils.getBottomStatusHeight(this);
-        if (bottomStatusHeight > 0) {
-            tv_bottomnavigation_view.getLayoutParams().height = bottomStatusHeight;
         }
     }
 
@@ -244,7 +219,6 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
                     .setMessage("再点击一次退出" + getString(R.string.app_name))
                     .setMessageColor(R.color.white)
                     .show();
-//            ToastUtil.showToast(this, "再点击一次退出" + getString(R.string.app_name) + "！");
         }
         lasttime = System.currentTimeMillis();
     }
@@ -336,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
             });
             mMoreWindow.init();
         }
-        mMoreWindow.showMoreWindow(fragmenttabhost, bottomStatusHeight);
+        mMoreWindow.showMoreWindow(fragmenttabhost, 0);
     }
 
     @Override

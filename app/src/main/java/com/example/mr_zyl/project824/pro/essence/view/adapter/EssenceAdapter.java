@@ -2,8 +2,10 @@ package com.example.mr_zyl.project824.pro.essence.view.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.example.mr_zyl.project824.pro.essence.OnVisibilityTitleListener;
 import com.example.mr_zyl.project824.pro.essence.view.fragment.EssenceMyLvFragment;
 import com.example.mr_zyl.project824.pro.essence.view.fragment.EssenceMyTestFragment;
 import com.example.mr_zyl.project824.pro.essence.view.fragment.EssenceVideoFragment;
@@ -11,15 +13,17 @@ import com.example.mr_zyl.project824.pro.essence.view.fragment.EssenceVideoFragm
 import java.util.List;
 
 
-public class EssenceAdapter extends FragmentStatePagerAdapter {
+public class EssenceAdapter extends FragmentPagerAdapter {
 
     public static final String TAB_TAG = "@zylmove@";
 
     private List<String> mTitles;
+    private OnVisibilityTitleListener onVisibilityTitleListener;
 
-    public EssenceAdapter(FragmentManager fm, List<String> titles) {
+    public EssenceAdapter(FragmentManager fm, List<String> titles,OnVisibilityTitleListener listener) {
         super(fm);
         mTitles = titles;
+        this.onVisibilityTitleListener=listener;
     }
 
     @Override
@@ -37,6 +41,7 @@ public class EssenceAdapter extends FragmentStatePagerAdapter {
             fragment6.setTitle(title6[0]);
             return fragment6;
         } else {
+            fragment.setOnVisibilityTitleListener(onVisibilityTitleListener);
             return fragment;
         }
     }

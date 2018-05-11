@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project824.R;
+import com.example.mr_zyl.project824.utils.SystemAppUtils;
 
 public abstract class NavigationBuilderAdapter implements NavigationBuilder {
 
@@ -21,7 +22,7 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder {
     private int leftIconRes;
     private int rightIconRes;
     private int titleIconRes;
-
+    private int TitleMeasureHeigth;
     private View contentView;
     private LinearLayout ll_toolbar_essence_contentlayou;
     private View.OnClickListener leftIconOnClickListener;
@@ -39,6 +40,14 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder {
     public NavigationBuilder setBackground(int backgroundIconRes) {
         this.backgroundIconRes = backgroundIconRes;
         return this;
+    }
+
+    public int getTitleMeasureHeigth() {
+        return TitleMeasureHeigth;
+    }
+
+    public void setTitleMeasureHeigth(int titleMeasureHeigth) {
+        TitleMeasureHeigth = titleMeasureHeigth;
     }
 
     @Override
@@ -85,7 +94,7 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder {
 
     @Override
     public void createAndBind(ViewGroup parent) {
-        contentView = LayoutInflater.from(getContext()).inflate(getLayoutId(), parent, false);
+        contentView = LayoutInflater.from(getContext()).inflate(getLayoutId(), null, false);
         ll_toolbar_essence_contentlayou = (LinearLayout) contentView.findViewById(R.id.ll_toolbar_essence_contentlayou);
         ViewGroup viewGroup = (ViewGroup) contentView.getParent();
         if (viewGroup != null) {
@@ -117,14 +126,17 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder {
         }
     }
 
+    /**
+     * 处理沉浸式状态栏
+     * @param content
+     */
     public void setStatusBarView(View content) {
-        View view = content.findViewById(R.id.tv_fitssystemwindows_view);
-        if (view != null) {
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {//如果系统不支持透明状态栏
-                view.setVisibility(View.GONE);
-            } else {
-                view.setVisibility(View.VISIBLE);
-            }
+        if (Build.VERSION.SDK_INT >= 19) {
+            content.measure(0,0);
+            setTitleMeasureHeigth(content.getMeasuredHeight());
+            content.getLayoutParams().height = content.getMeasuredHeight() + SystemAppUtils.getStatusHeight(context);//25dp是状态栏高度
+
+            content.setPadding(0, SystemAppUtils.getStatusHeight(context), 0, 0);
         }
     }
 

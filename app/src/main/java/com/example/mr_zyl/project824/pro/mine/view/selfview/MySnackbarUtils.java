@@ -1,18 +1,23 @@
 package com.example.mr_zyl.project824.pro.mine.view.selfview;
 
-
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.PixelFormat;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.Toast;
 
 import com.example.mr_zyl.project824.pro.mine.view.impl.OnActionClickListener;
+
+import java.lang.reflect.Field;
 
 
 /**
@@ -20,12 +25,12 @@ import com.example.mr_zyl.project824.pro.mine.view.impl.OnActionClickListener;
  */
 
 public class MySnackbarUtils {
-
+    private static Toast mToast;
     private static final String TAG = "MySnackbarUtils";
     private MySnackbar mySnackbarView;
     private Activity context;
-    private WindowManager windowManager = null;
     private boolean isCoverStatusBar;
+
 
     private MySnackbarUtils() {
     }
@@ -33,46 +38,61 @@ public class MySnackbarUtils {
     private MySnackbarUtils(Activity context, Params params, boolean isCoverStatusBar) {
         this.context = context;
         this.isCoverStatusBar = isCoverStatusBar;
-        mySnackbarView = new MySnackbar(context, this);
-        mySnackbarView.setParams(params);
-        windowManager = context.getWindowManager();
+        this.mySnackbarView = new MySnackbar(context, this);
+        this.mySnackbarView.setParams(params);
     }
 
     public void show() {
-        if (mySnackbarView != null) {
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                    WindowManager.LayoutParams.MATCH_PARENT,
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.TYPE_SYSTEM_ERROR,
-                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                    PixelFormat.TRANSLUCENT);
-            params.gravity = Gravity.TOP | Gravity.LEFT;
-            params.windowAnimations = android.R.style.Animation_Toast;
-            params.y = 0;
-            params.x = 0;
+        if (mToast == null) {
+            mToast = new Toast(context);
+        } else {//让新的toast在最上面。
+            mToast.cancel();
+            mToast = new Toast(context);
+        }
+        mToast.setView(mySnackbarView);
+        mToast.setGravity(mySnackbarView.getLayoutGravity(), 0, 0);
+        mToast.setDuration(Toast.LENGTH_LONG);
 
-            final ViewGroup decorView = (ViewGroup) context.getWindow().getDecorView();
-            final ViewGroup content = (ViewGroup) decorView.findViewById(android.R.id.content);
-            if (mySnackbarView.getParent() == null) {
-                if (mySnackbarView.getLayoutGravity() == Gravity.BOTTOM) {
-                    content.addView(mySnackbarView, layoutParams);
-                } else {
-                    if (isCoverStatusBar) {
-                        windowManager.addView(mySnackbarView, params);
-                    } else {
-                        decorView.addView(mySnackbarView, layoutParams);
-                    }
+        try {
+            Object mTN = null;
+            mTN = getField(mToast, "mTN");
+            if (mTN != null) {
+                Object mParams = getField(mTN, "mParams");
+                if (mParams != null
+                        && mParams instanceof WindowManager.LayoutParams) {
+                    WindowManager.LayoutParams params = (WindowManager.LayoutParams) mParams;
+
+                    int flag = params.flags =WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                                    | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+//                                    | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                            |WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                            |WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
+                            ;
+
+                    int coverFlag = flag | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+                    params.type=WindowManager.LayoutParams.TYPE_TOAST|WindowManager.LayoutParams.FIRST_APPLICATION_WINDOW;
+                    params.flags = mySnackbarView.isCoverStatusBar() ? coverFlag : flag;
                 }
             }
+        } catch (Exception e) {
+            Log.i("error", "T: Exception");
         }
+
+        mToast.show();
+    }
+
+    private static Object getField(Object object, String fieldName)
+            throws NoSuchFieldException, IllegalAccessException {
+        Field field = object.getClass().getDeclaredField(fieldName);
+        if (field != null) {
+            field.setAccessible(true);
+            return field.get(object);
+        }
+        return null;
     }
 
     public void dismiss() {
-        if (mySnackbarView!=null&&mySnackbarView.getParent()!=null){
-            windowManager.removeView(mySnackbarView);
-        }
-//        windowManager.removeView(mySnackbarView);
+        Log.i(TAG, "dismiss");
     }
 
     public static class Builder {
@@ -163,6 +183,7 @@ public class MySnackbarUtils {
 
         /**
          * 只对 不覆盖状态栏时有效
+         *
          * @param layoutGravity
          * @return
          */

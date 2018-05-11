@@ -55,10 +55,6 @@
         </receiver>
 
         <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/THEME_trans" />
-        <activity
             android:name=".LaunchActivity"
             android:theme="@style/LaunchTheme">
             <intent-filter>
@@ -67,15 +63,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity" />
+
         <activity android:name=".pro.publish.view.PlayActivity" />
         <activity android:name=".pro.mine.view.activity.MoreLevelActivity" />
         <activity android:name=".pro.mine.view.activity.CurtainActivity" />
-        <activity
-            android:name=".pro.mine.view.activity.FastBlurActivity"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".pro.mine.view.activity.BlurredActivity"
-            android:theme="@style/BlurredTheme" />
+        <activity android:name=".pro.mine.view.activity.FastBlurActivity" />
+        <activity android:name=".pro.mine.view.activity.BlurredActivity" />
         <activity android:name=".pro.mine.view.activity.LoadGifActivity" />
         <activity android:name=".pro.mine.view.activity.QRImageActivity" />
         <activity android:name=".pro.newpost.view.Activity.TestMeasureActivity" />

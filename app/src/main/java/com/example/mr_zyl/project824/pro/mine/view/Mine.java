@@ -64,8 +64,7 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
      * 是否停止了进度动画
      */
     boolean is_stop = true;
-    @BindView(R.id.ctl_tablist)
-    CommonTabLayout ctl_tablist;
+
     @BindView(R.id.rv_mine_loadprogress)
     RingView rv_mine_loadprogress;
     /**
@@ -91,14 +90,6 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
     private List<BuilderItemEntity> itemlists = new ArrayList<>();
     private Intent intent = null;
 
-    private String[] mTitles = {"首页", "消息", "联系人", "更多"};
-    private int[] mIconUnselectIds = {
-            R.mipmap.tab_home_unselect, R.mipmap.tab_speech_unselect,
-            R.mipmap.tab_contact_unselect, R.mipmap.tab_more_unselect};
-    private int[] mIconSelectIds = {
-            R.mipmap.tab_home_select, R.mipmap.tab_speech_select,
-            R.mipmap.tab_contact_select, R.mipmap.tab_more_select};
-    private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 
     @Override
     public int getContentView() {
@@ -113,10 +104,6 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
         initview(viewContent);
         initlistener();
         initBuilderItems(viewContent);
-        for (int i = 0; i < mTitles.length; i++) {
-            mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));
-        }
-        ctl_tablist.setTabData(mTabEntities);
     }
 
     private void initview(View viewContent) {

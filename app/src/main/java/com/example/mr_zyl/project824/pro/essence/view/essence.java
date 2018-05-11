@@ -1,12 +1,12 @@
 package com.example.mr_zyl.project824.pro.essence.view;
 
+import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.graphics.ColorUtils;
 import android.support.v4.view.ViewPager;
@@ -15,7 +15,9 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -23,7 +25,7 @@ import com.example.mr_zyl.project824.R;
 import com.example.mr_zyl.project824.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideDispatch;
 import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideTouch;
-import com.example.mr_zyl.project824.pro.essence.refreshEvent;
+import com.example.mr_zyl.project824.pro.essence.OnVisibilityTitleListener;
 import com.example.mr_zyl.project824.pro.essence.view.adapter.EssenceAdapter;
 import com.example.mr_zyl.project824.pro.essence.view.navigation.EssenceNavigationBuilder;
 import com.example.mr_zyl.project824.utils.ToastUtil;
@@ -42,23 +44,20 @@ import me.xiaopan.sketch.cache.MemoryCache;
 /**
  * Created by Mr_Zyl on 2016/8/25.
  */
-public class essence extends BaseFragment {
+public class essence extends BaseFragment implements OnVisibilityTitleListener {
 
     private static final String TAG = "essence";
-    @BindView(R.id.tv_fitssystemwindows_view)
-    TextView tv_fitssystemwindows_view;
+
+    @BindView(R.id.ll_essence_title)
+    LinearLayout ll_essence_title;
     @BindView(R.id.ll_essence_tabcontainer)
     LinearLayout ll_essence_tabcontainer;
     @BindView(R.id.tab_essence)
     TabLayout tab_essence;
     @BindView(R.id.vp_essence)
     ViewPager vp_essence;
-    @BindView(R.id.abl_essence)
-    AppBarLayout abl_essence;
-    @BindView(R.id.cl_essence)
-    CoordinatorLayout cl_essence;
     private EssenceNavigationBuilder builder;
-    private int color1,color2;
+    private int color1, color2;
 
     @Override
     public int getContentView() {
@@ -73,7 +72,7 @@ public class essence extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (EventBus.getDefault().isRegistered(this)){
+        if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
         EventBus.getDefault().register(this);
@@ -82,26 +81,11 @@ public class essence extends BaseFragment {
     @Override
     public void initContentView(View viewContent) {
         ButterKnife.bind(this, viewContent);
-        color1=getResources().getColor(R.color.colorAccent);
-        color2=getResources().getColor(R.color.white);
-        setStatusBarView(tv_fitssystemwindows_view);
+        color1 = getResources().getColor(R.color.colorAccent);
+        color2 = getResources().getColor(R.color.white);
         initToolBar(ll_essence_tabcontainer);
 
-//        R.drawable.toolbar_backgound_essence_shape;
-        tv_fitssystemwindows_view.setBackgroundColor(color1);
         tab_essence.setBackgroundColor(color1);
-        abl_essence.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                refreshEvent event = new refreshEvent();
-                if (verticalOffset == 0) {//完全展开
-                    event.setCan(true);
-                } else {//有折叠
-                    event.setCan(false);
-                }
-                EventBus.getDefault().post(event);
-            }
-        });
     }
 
     @Override
@@ -118,11 +102,15 @@ public class essence extends BaseFragment {
         }
     }
 
+    /**
+     * 主页侧滑回调处理
+     *
+     * @param touch
+     */
     public void onEventMainThread(ResideDispatch touch) {
 
-        int currentColor = ColorUtils.blendARGB(color1,color2, touch.getRadio());
+        int currentColor = ColorUtils.blendARGB(color1, color2, touch.getRadio());
 
-        tv_fitssystemwindows_view.setBackgroundColor(currentColor);
         tab_essence.setBackgroundColor(currentColor);
         builder.getContentView().setBackgroundColor(currentColor);
     }
@@ -156,7 +144,7 @@ public class essence extends BaseFragment {
     @Override
     public void initData() {
         String[] titles = getResources().getStringArray(R.array.essence_video_tab);
-        EssenceAdapter adapter = new EssenceAdapter(getFragmentManager(), Arrays.asList(titles));
+        EssenceAdapter adapter = new EssenceAdapter(getFragmentManager(), Arrays.asList(titles), this);
         this.vp_essence.setOffscreenPageLimit(1);
         this.vp_essence.setAdapter(adapter);
         //默认在左边界
@@ -269,4 +257,58 @@ public class essence extends BaseFragment {
         super.onDestroyView();
         EventBus.getDefault().unregister(this);
     }
+
+    @Override
+    public void hide() {
+        if (ll_essence_title.getTranslationY() == 0)
+            createTranslate(false, builder.getTitleMeasureHeigth());
+    }
+
+    @Override
+    public void open() {
+        if (ll_essence_title.getTranslationY() == (-builder.getTitleMeasureHeigth()))
+            createTranslate(true, builder.getTitleMeasureHeigth());
+    }
+
+    private TextView tv_essence_title;
+    private ImageView iv_essence_left,iv_essence_right;
+
+    private void createTranslate(final boolean is_open, final int scroll_max_height) {
+        final int colorAccent = getContext().getResources().getColor(R.color.colorAccent);
+        tv_essence_title = ButterKnife.findById(builder.getContentView(), R.id.tv_essence_title);
+        iv_essence_left=ButterKnife.findById(builder.getContentView(), R.id.iv_essence_left);
+        iv_essence_right=ButterKnife.findById(builder.getContentView(), R.id.iv_essence_right);
+
+
+        ValueAnimator animation = ValueAnimator.ofInt(0, scroll_max_height);
+        animation.setDuration(250);
+        animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float animatedValue = animation.getAnimatedFraction();
+                if (is_open) {//向下 打开
+                    ll_essence_title.setTranslationY(scroll_max_height * (animatedValue - 1));
+                    tv_essence_title.setTextColor(ColorUtils.blendARGB(colorAccent, Color.WHITE, animatedValue));
+                    iv_essence_left.setAlpha(255*animatedValue);
+                    iv_essence_right.setAlpha(255*animatedValue);
+
+                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) vp_essence.getLayoutParams();
+                    layoutParams.topMargin = (int) (scroll_max_height * (animatedValue - 1));
+                    vp_essence.setLayoutParams(layoutParams);
+                } else {//向上 隐藏
+                    ll_essence_title.setTranslationY(-scroll_max_height * animatedValue);
+                    tv_essence_title.setTextColor(ColorUtils.blendARGB(Color.WHITE, colorAccent, animatedValue));
+                    iv_essence_left.setAlpha(255*(1-animatedValue));
+                    iv_essence_right.setAlpha(255*(1-animatedValue));
+
+                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) vp_essence.getLayoutParams();
+                    layoutParams.topMargin = (int) (-scroll_max_height * animatedValue);
+                    vp_essence.setLayoutParams(layoutParams);
+                }
+
+            }
+        });
+        animation.start();
+    }
+
 }

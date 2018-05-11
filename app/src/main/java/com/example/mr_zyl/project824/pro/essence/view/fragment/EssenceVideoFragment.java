@@ -14,6 +14,8 @@ import com.example.mr_zyl.project824.mvp.presenter.impl.MvpBasePresenter;
 import com.example.mr_zyl.project824.pro.base.presenter.SimpleOnUiThreadListener;
 import com.example.mr_zyl.project824.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project824.pro.base.view.refreshview.XRefreshView;
+import com.example.mr_zyl.project824.pro.essence.OnVisibilityTitleListener;
+import com.example.mr_zyl.project824.pro.essence.RvScrollListener;
 import com.example.mr_zyl.project824.pro.essence.presenter.EssenceVideoPresenter;
 import com.example.mr_zyl.project824.pro.essence.refreshEvent;
 import com.example.mr_zyl.project824.pro.essence.view.adapter.EssenceRecycleAdapter;
@@ -60,6 +62,11 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
     private List<PostsListBean.PostList> postlists = new ArrayList<>();
     private RecyclerView.OnScrollListener scrollListener;
     private XRefreshView.XRefreshViewListener xRefreshListener;
+    private OnVisibilityTitleListener onVisibilityTitleListener;
+
+    public void setOnVisibilityTitleListener(OnVisibilityTitleListener onVisibilityTitleListener) {
+        this.onVisibilityTitleListener = onVisibilityTitleListener;
+    }
 
     @Override
     public int getContentView() {
@@ -109,6 +116,7 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
         rv_essence_one.setHasFixedSize(true);
         rv_essence_one.setLayoutManager(new LinearLayoutManager(getContext()));//设置列表管理器(LinearLayoutManager指水平或者竖直，默认数值)
         rv_essence_one.addOnScrollListener(scrollListener);
+        rv_essence_one.addOnScrollListener(RvScrollListener.getInstance(onVisibilityTitleListener));
         rv_essence_one.setAdapter(adapter);
     }
 
@@ -224,8 +232,8 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
             refreshview_id.startRefresh();
             return;
         }
-        // 接受essence协调布局监听器 发送的消息：判断是否可以下拉rv
-        setPullRefresh(event.isCan());
+//        // 接受essence协调布局监听器 发送的消息：判断是否可以下拉rv
+//        setPullRefresh(event.isCan());
     }
 
     public void onEventMainThread(VideoEvents event) {

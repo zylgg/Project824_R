@@ -6,24 +6,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="THEME_trans" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="BlurredTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorPrimary">@color/transparent</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
 
     <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
+
+
     <style name="DialogWindowTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <!-- Dialog的windowFrame框为无 -->
         <item name="android:windowFrame">@android:color/transparent</item>
@@ -38,9 +28,6 @@
         <!--控制灰度的值-->
         <item name="android:backgroundDimAmount">0.3</item>
         <!--windowAnimationStyle分为两种，一种是activityAnimation，一种是windowAnimation。-->
-        <!--只对当前启动的Activity生效，分别是进入和退出动画。一般用于Dialog或者透明Activity。
-            当Activity设置了android:windowIsTranslucent=true时，
-            给Activity设置ActivityAnimation会不起作用，只能设置windowAnimation：-->
         <item name="android:windowAnimationStyle">@null</item>
         <!--是否允许对话框的背景变暗-->
         <item name="android:backgroundDimEnabled">true</item>
@@ -48,9 +35,6 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="TabLayoutTextStyle">
-        <item name="android:textSize">12dp</item>
-    </style>
     <style name="Myratingbar" parent="Base.Widget.AppCompat.RatingBar.Indicator">
         <item name="android:progressDrawable">@drawable/ratingbar_style</item>
         <item name="android:minHeight">21.5dp</item>
