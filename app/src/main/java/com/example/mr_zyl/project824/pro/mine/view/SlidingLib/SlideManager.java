@@ -1,5 +1,9 @@
 package com.example.mr_zyl.project824.pro.mine.view.SlidingLib;
 
+import android.util.Log;
+
+import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideMenu;
+
 import java.util.HashSet;
 
 //统一管理回调监听
@@ -26,6 +30,15 @@ public class SlideManager {
 		public void onStartOpen(SlidingItemLayout swipeLayout) {
 			closeAllLayout();
 			mUnClosedLayouts.add(swipeLayout);
+		}
+
+		@Override
+		public void onCloseOther() {
+			closeAllLayout();
+		}
+		@Override
+		public int getNoCloseCount(){
+			return getUnClosedCount();
 		}
 	};
 

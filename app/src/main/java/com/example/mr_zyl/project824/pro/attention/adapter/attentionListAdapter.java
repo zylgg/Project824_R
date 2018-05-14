@@ -1,6 +1,7 @@
 package com.example.mr_zyl.project824.pro.attention.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -31,6 +32,10 @@ public class attentionListAdapter extends CommonAdapter<attention> {
         slideManager = new SlideManager();
     }
 
+    public SlideManager getSlideManager() {
+        return slideManager;
+    }
+
     @Override
     public void setLists(List<attention> datas) {
         super.lists.clear();
@@ -55,6 +60,7 @@ public class attentionListAdapter extends CommonAdapter<attention> {
         ImageLoader.getInstance().displayImage(bean.getImage_list(), ((ImageView) holder.findView(R.id.iv_header)));
 
         final SlidingItemLayout view = (SlidingItemLayout) holder.getContentView();
+        view.setTag(R.id.open_item_tagid,position);
 
         holder.findView(R.id.sil_attention).setBackgroundResource(bean.isIs_onClicked()?R.drawable.item_build_default_press:R.drawable.item_build_default_normal);
 
@@ -70,9 +76,9 @@ public class attentionListAdapter extends CommonAdapter<attention> {
             public void onClick(View v) {
                 if (slideManager.getUnClosedCount() == 0) {
                     itemClickListener.onItemClick(position);
-                    return;
+                }else{
+                    slideManager.closeAllLayout();
                 }
-                slideManager.closeAllLayout();
             }
         });
         holder.findView(R.id.bt_call).setOnClickListener(new View.OnClickListener() {

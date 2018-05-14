@@ -58,7 +58,6 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
     ViewPager vp_essence;
     private EssenceNavigationBuilder builder;
     private int color1, color2;
-
     @Override
     public int getContentView() {
         return R.layout.essence;
@@ -147,13 +146,11 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
         EssenceAdapter adapter = new EssenceAdapter(getFragmentManager(), Arrays.asList(titles), this);
         this.vp_essence.setOffscreenPageLimit(1);
         this.vp_essence.setAdapter(adapter);
-        //默认在左边界
-        EventBus.getDefault().post(new ResideTouch(true, ResideTouch.HandleTypeTagLeftBorder));
         this.vp_essence.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-//                Log.i(TAG, "position: "+position);
-                EventBus.getDefault().post(new ResideTouch(position == 0 ? true : false, ResideTouch.HandleTypeTagLeftBorder));
+                ResideTouch resideTouch = new ResideTouch(position == 0 ? true : false, ResideTouch.HandleTypeTagLeftBorder);
+                EventBus.getDefault().post(resideTouch);
             }
 
             @Override

@@ -9,11 +9,15 @@ import android.widget.FrameLayout;
 
 /**
  */
-class TouchDisableView extends FrameLayout {
+public class TouchDisableView extends FrameLayout {
 
     private View mContent;
 
-    private boolean mTouchDisabled = false;
+    public static final int touchStatusIntercept=1;
+    public static final int touchStatusNoIntercept=0;
+    public static final int touchStatusBySuper=-1;
+
+    private int  mTouchDisabled = 0;
 
     public TouchDisableView(Context context) {
         this(context, null);
@@ -57,14 +61,19 @@ class TouchDisableView extends FrameLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return mTouchDisabled;
+        if (mTouchDisabled==1){
+            return true;
+        }else if (mTouchDisabled==0){
+            return false;
+        }
+        return super.onInterceptTouchEvent(ev);
     }
 
-    void setTouchDisable(boolean disableTouch) {
+    public void setTouchDisable(int disableTouch) {
         mTouchDisabled = disableTouch;
     }
 
-    boolean isTouchDisabled() {
+    public int getTouchDisabled() {
         return mTouchDisabled;
     }
 }

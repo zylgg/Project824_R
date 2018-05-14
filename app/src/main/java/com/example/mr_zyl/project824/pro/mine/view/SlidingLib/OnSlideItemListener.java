@@ -19,4 +19,10 @@ public interface OnSlideItemListener {
 
 	//开始打开
 	public void onStartOpen(SlidingItemLayout swipeLayout);
+
+	//OpenOther
+	public void onCloseOther();
+
+	int getNoCloseCount();
+
 }

@@ -225,6 +225,10 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
     }
 
 
+    /**
+     * 首页底部菜单，点击回调刷新
+     * @param event
+     */
     public void onEventMainThread(refreshEvent event) {
         //点击菜单，刷新当前tab分类
         boolean refreshCurrent = event.is_RefreshCurrent();

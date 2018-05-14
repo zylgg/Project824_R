@@ -20,11 +20,13 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.example.mr_zyl.project824.bean.TabItem;
 import com.example.mr_zyl.project824.pro.attention.view.Attention;
 import com.example.mr_zyl.project824.pro.base.view.MyFragmentTabHost;
 import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideDispatch;
 import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideMenu;
 import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideTouch;
+import com.example.mr_zyl.project824.pro.base.view.residemenu.TouchDisableView;
 import com.example.mr_zyl.project824.pro.essence.refreshEvent;
 import com.example.mr_zyl.project824.pro.essence.view.activity.SimpleCameraActivity;
 import com.example.mr_zyl.project824.pro.essence.view.essence;
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     @BindView(android.R.id.tabs)
     TabWidget tabs;
 
-    private List<Tabitem> tablists;
+    private List<TabItem> tablists;
     private long lasttime;
     private MoreWindow mMoreWindow;
     ResideMenu resideMenu;
@@ -96,11 +98,10 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         view.setLayoutParams(new LinearLayout.LayoutParams((int) (DisplayUtil.Width(this) * 0.8f), LinearLayout.LayoutParams.MATCH_PARENT));
 
         resideMenu = new ResideMenu(this, view);
-        resideMenu.setUse3D(false);
         resideMenu.setScaleValue(0.8f);
         resideMenu.attachToActivity(this, ll_main_content);
         resideMenu.addIgnoredView(tabs);
-        resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+        resideMenu.setIsLeftBorder(true);
         resideMenu.setMenuListener(new ResideMenu.OnMenuListener() {
             @Override
             public void openMenu() {
@@ -113,12 +114,13 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
             }
 
             @Override
-            public void transProgressRadio(float ratio) {
-                Log.i(TAG, "transProgressRadio: "+ratio);
+            public void transProgressRadio(float ratio) {//侧滑的比率
+                Log.i(TAG, "transProgressRadio: " + ratio);
                 EventBus.getDefault().post(new ResideDispatch(ratio));
             }
         });
     }
+
     @Override
     protected void onResume() {
         /**
@@ -155,20 +157,20 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     private void initFragmentTabData() {
         this.tablists = new ArrayList<>();
         //添加精华Tab
-        tablists.add(new Tabitem(R.drawable.main_bottom_essence_normal
-                , R.drawable.main_bottom_essence_press, R.string.main_essence_text, essence.class));
+        tablists.add(new TabItem(R.drawable.main_bottom_essence_normal, R.drawable.main_bottom_essence_press,
+                R.string.main_essence_text, essence.class, this));
         //添加新帖Tab
-        tablists.add(new Tabitem(R.drawable.main_bottom_newpost_normal
-                , R.drawable.main_bottom_newpost_press, R.string.main_newpost_text, Newpost.class));
+        tablists.add(new TabItem(R.drawable.main_bottom_newpost_normal, R.drawable.main_bottom_newpost_press,
+                R.string.main_newpost_text, Newpost.class, this));
         //添加发布Tab
-        tablists.add(new Tabitem(R.drawable.main_bottom_public_normal
-                , R.drawable.main_bottom_public_press, 0, Publish.class));
+        tablists.add(new TabItem(R.drawable.main_bottom_public_normal, R.drawable.main_bottom_public_press,
+                0, Publish.class, this));
         //添加关注Tab
-        tablists.add(new Tabitem(R.drawable.main_bottom_attention_normal
-                , R.drawable.main_bottom_attention_press, R.string.main_attention_text, Attention.class));
+        tablists.add(new TabItem(R.drawable.main_bottom_attention_normal, R.drawable.main_bottom_attention_press,
+                R.string.main_attention_text, Attention.class, this));
         //添加我的Tab
-        tablists.add(new Tabitem(R.drawable.main_bottom_mine_normal
-                , R.drawable.main_bottom_mine_press, R.string.main_mine_text, Mine.class));
+        tablists.add(new TabItem(R.drawable.main_bottom_mine_normal, R.drawable.main_bottom_mine_press,
+                R.string.main_mine_text, Mine.class, this));
     }
 
     /**
@@ -180,10 +182,10 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         fragmenttabhost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
         fragmenttabhost.getTabWidget().setDividerDrawable(null);
         for (int i = 0; i < tablists.size(); i++) {
-            Tabitem tabItem = tablists.get(i);
+            TabItem tabItem = tablists.get(i);
             TabHost.TabSpec tabSpec = fragmenttabhost
                     .newTabSpec(tabItem.getTitleString())//添加标题，
-                    .setIndicator(tabItem.getview());//添加相应的view布局
+                    .setIndicator(tabItem.getView());//添加相应的view布局
             //参数1：选项卡；参数1，选项卡绑定的碎片fragment；参数3，该fragment所携带的bundle数据
             fragmenttabhost.addTab(tabSpec, tabItem.getFragmentclass(), tabItem.getBundle());
             //给我们的Tab按钮设置背景
@@ -245,17 +247,23 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
 //            startActivity(new Intent(this, PlayActivity.class));
         }
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+        TouchDisableView touchDisableView = (TouchDisableView) resideMenu.getChildAt(1);
+        touchDisableView.setTouchDisable(TouchDisableView.touchStatusNoIntercept);
+
         if (tabId.equals(getString(R.string.main_essence_text)) && essence_vp_resideTouch != null) {
             resideMenu.setIsLeftBorder(essence_vp_resideTouch.is_Left());
         } else {
-            if (tabId.equals(getString(R.string.main_mine_text))){
+            if (tabId.equals(getString(R.string.main_mine_text))) {
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            }else if(tabId.equals(getString(R.string.main_attention_text))){
+                touchDisableView.setTouchDisable(TouchDisableView.touchStatusBySuper);
             }
+            //如果不是精华页一律设置达到左边界
             resideMenu.setIsLeftBorder(true);
         }
         //重置Tab样式
         for (int i = 0; i < tablists.size(); i++) {
-            Tabitem tabItem = tablists.get(i);
+            TabItem tabItem = tablists.get(i);
             String titleString = tabItem.getTitleString();
             //只有选中精华时判断是不是在边界，
             if (tabId.equals(titleString)) {
@@ -271,11 +279,11 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     @Override
     public void onClick(View v) {
         if (v.getId() == 0) {
-            showMoreWindow(v);
+            showMoreWindow();
             return;
         }
+        //如果再次点击当前底部tab菜单
         if (currenttabtag.equals(v.getTag())) {
-//            Log.i("TAG", "又一次点击：currenttabtag: "+currenttabtag);
             //可执行刷新数据等操作：
             refreshEvent event = new refreshEvent();
             event.setIs_RefreshCurrent(true);
@@ -292,9 +300,8 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     /**
      * 显示更多窗口
      *
-     * @param view
      */
-    private void showMoreWindow(View view) {
+    private void showMoreWindow() {
         if (null == mMoreWindow) {
             mMoreWindow = new MoreWindow(this, new MoreWindow.MenuOnclickListener() {
                 @Override
@@ -335,97 +342,6 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
                     break;
             }
         }
-    }
-
-    public class Tabitem {
-        private int imagedefault;
-        private int imageselected;
-        private int titleid;
-        private String titleString;
-
-        private Class<? extends Fragment> fragmentclass;
-        private View view;
-        private ImageView imageView;
-        private TextView textView;
-        private Bundle bundle;
-
-        public Tabitem(int imagedefault, int imageselected, int titleid, Class<? extends Fragment> fragmentclass) {
-//			super();
-            this.imagedefault = imagedefault;
-            this.imageselected = imageselected;
-            this.titleid = titleid;
-            this.fragmentclass = fragmentclass;
-        }
-
-        public int getImagedefault() {
-            return imagedefault;
-        }
-
-        public int getImageselected() {
-            return imageselected;
-        }
-
-        public int getTitleid() {
-            return titleid;
-        }
-
-        public String getTitleString() {
-            if (titleid == 0) {
-                return "";
-            }
-            if (TextUtils.isEmpty(titleString)) {
-                titleString = getResources().getString(titleid);
-            }
-            return titleString;
-        }
-
-        public Class<? extends Fragment> getFragmentclass() {
-            return fragmentclass;
-        }
-
-        public Bundle getBundle() {
-            if (bundle == null) {
-                bundle = new Bundle();
-            }
-            bundle.putString("title", getTitleString());
-            return bundle;
-        }
-
-        public void setChecked(boolean ischecked) {
-            if (imageView != null) {
-                if (ischecked) {//选中切换图案背景
-                    imageView.setImageResource(imageselected);
-                } else {
-                    imageView.setImageResource(imagedefault);
-                }
-            }
-            if (textView != null && titleid != 0) {
-                if (ischecked) {//选中切换Tv颜色
-                    textView.setTextColor(getResources().getColor(R.color.main_bottom_text_select));
-                } else {
-                    textView.setTextColor(getResources().getColor(R.color.main_bottom_text_normal));
-                }
-            }
-        }
-
-        public View getview() {
-            if (this.view == null) {
-                this.view = getLayoutInflater().inflate(R.layout.view_tab_indicator, null);
-                View ll_tab_indicator_content = view.findViewById(R.id.ll_tab_indicator_content);
-                ll_tab_indicator_content.setTag(getTitleString());
-                this.imageView = (ImageView) this.view.findViewById(R.id.iv_tab);
-                this.textView = (TextView) this.view.findViewById(R.id.tv_tab);
-                if (this.titleid == 0) {//目前只针对那个（加号tab）文字隐藏，以后。。
-                    this.textView.setVisibility(View.GONE);
-                } else {
-                    this.textView.setVisibility(View.VISIBLE);
-                    this.textView.setText(getTitleString());
-                }
-                this.imageView.setImageResource(imagedefault);
-            }
-            return this.view;
-        }
-
     }
 
     @Override

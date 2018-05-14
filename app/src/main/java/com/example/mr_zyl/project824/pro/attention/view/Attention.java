@@ -1,7 +1,9 @@
 package com.example.mr_zyl.project824.pro.attention.view;
 
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.example.mr_zyl.project824.R;
@@ -11,7 +13,9 @@ import com.example.mr_zyl.project824.pro.attention.bean.attention;
 import com.example.mr_zyl.project824.pro.attention.presenter.AttentionListPresenter;
 import com.example.mr_zyl.project824.pro.base.presenter.SimpleOnUiThreadListener;
 import com.example.mr_zyl.project824.pro.base.view.BaseFragment;
+import com.example.mr_zyl.project824.pro.mine.view.SlidingLib.SlideManager;
 import com.example.mr_zyl.project824.pro.mine.view.SlidingLib.SlidingContentView;
+import com.example.mr_zyl.project824.pro.mine.view.SlidingLib.SlidingItemLayout;
 import com.example.mr_zyl.project824.pro.newpost.natvigation.NewpostNavigationBuilder;
 import com.example.mr_zyl.project824.utils.VolleyUtils;
 
@@ -33,8 +37,8 @@ public class Attention extends BaseFragment {
     @BindView(R.id.lv_attention)
     ListView lv_attention;
     private AttentionListPresenter attentionListPresenter;
-    ArrayList<attention> attentions = new ArrayList<>();
-
+    private ArrayList<attention> attentions = new ArrayList<>();
+    private  attentionListAdapter mListAdapter;
     public Attention() {
 
     }
@@ -49,32 +53,30 @@ public class Attention extends BaseFragment {
         attentionListPresenter = new AttentionListPresenter(Fcontext);
         return attentionListPresenter;
     }
-
     int last_click_position = -1;
 
     @Override
     public void initContentView(View viewContent) {
         ButterKnife.bind(this, viewContent);
         initToolBar(viewContent);
-        final attentionListAdapter attentionListAdapter = new attentionListAdapter(Fcontext, attentions);
-        attentionListAdapter.setOnItemClickListener(new SlidingContentView.OnItemClickListener() {
+        if (mListAdapter==null)mListAdapter= new attentionListAdapter(Fcontext, attentions);
+        mListAdapter.setOnItemClickListener(new SlidingContentView.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 if (last_click_position != -1) {
                     attention last_b = (attention) lv_attention.getItemAtPosition(last_click_position);
                     last_b.setIs_onClicked(false);
-                    attentionListAdapter.updateSingleRow(lv_attention, last_b.getTheme_name());
+                    mListAdapter.updateSingleRow(lv_attention, last_b.getTheme_name());
                 }
                 attention b = (attention) lv_attention.getItemAtPosition(position);
                 b.setIs_onClicked(true);
-                attentionListAdapter.updateSingleRow(lv_attention, b.getTheme_name());
+                mListAdapter.updateSingleRow(lv_attention, b.getTheme_name());
                 
                 last_click_position = position;
             }
         });
-        lv_attention.setAdapter(attentionListAdapter);
+        lv_attention.setAdapter(mListAdapter);
     }
-
     @Override
     public void initData() {
         requestData();

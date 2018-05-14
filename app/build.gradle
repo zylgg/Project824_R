@@ -4,7 +4,7 @@ apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.example.mr_zyl.project824"
@@ -57,20 +57,20 @@ android {
 
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:26+'
-    compile 'com.android.support:support-v4:26+'
-    compile 'com.android.support:recyclerview-v7:26+'
-    compile 'com.android.support:design:26+'
-    compile 'org.greenrobot:greendao:3.1.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:26+'
+    implementation 'com.android.support:support-v4:26+'
+    implementation 'com.android.support:recyclerview-v7:26+'
+    implementation 'com.android.support:design:26+'
+    implementation 'org.greenrobot:greendao:3.1.0'
     //高斯模糊
-    compile 'net.robinx:lib.blur:1.0.1'
-    compile files('libs/zxing.jar')
-    compile files('libs/android-viewbadger(1).jar')
-    compile files('libs/gson-2.2.4.jar')
+    implementation 'net.robinx:lib.blur:1.0.1'
+    implementation files('libs/zxing.jar')
+    implementation files('libs/android-viewbadger(1).jar')
+    implementation files('libs/gson-2.2.4.jar')
     // 头像
-    compile 'de.hdodenhof:circleimageview:2.0.0'
+    implementation 'de.hdodenhof:circleimageview:2.0.0'
     //黄油刀注解
     //    compile 'com.jakewharton:butterknife:8.4.0'
     //    apt 'com.jakewharton:butterknife-compiler:8.4.0'
@@ -78,23 +78,23 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     //拍照，录制短视频
-    compile 'cjt.library.wheel:camera:1.1.9'
+    implementation 'cjt.library.wheel:camera:1.1.9'
     //图片加载器，支持GIF，手势缩放以及分块显示超大图片
-    compile 'me.xiaopan:sketch:2.3.0'
+    implementation 'me.xiaopan:sketch:2.3.0'
     //标准设计的dialog风格
-    compile 'com.robbypond:material-dialogs:1.0.0'
+    implementation 'com.robbypond:material-dialogs:1.0.0'
     //图片加载框架
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation project(':zylsmallvideolibrary')
     //网络请求
-    compile 'com.zhy:okhttputils:2.6.2'
+    implementation 'com.zhy:okhttputils:2.6.2'
     //图片加载
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
     //图片浏览处理框架
-    compile 'com.lqr.imagepicker:library:1.0.0'
+    implementation 'com.lqr.imagepicker:library:1.0.0'
     //代替cardview边角和阴影色自定义
-    compile 'com.loopeer.lib:shadow:0.0.3'
-    compile files('libs/AMap3DMap_5.6.0_AMapNavi_5.4.0_AMapSearch_5.5.0_AMapLocation_3.6.1_20171128.jar')
-    compile files('libs/nineoldandroids-2.4.0.jar')
-    compile files('libs/volley.jar')
+    implementation 'com.loopeer.lib:shadow:0.0.3'
+    implementation files('libs/AMap3DMap_5.6.0_AMapNavi_5.4.0_AMapSearch_5.5.0_AMapLocation_3.6.1_20171128.jar')
+    implementation files('libs/nineoldandroids-2.4.0.jar')
+    implementation files('libs/volley.jar')
 }

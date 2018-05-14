@@ -51,8 +51,4 @@ public class EssenceAdapter extends FragmentPagerAdapter {
         return mTitles.size();
     }
 
-//    @Override
-//    public CharSequence getPageTitle(int position) {
-//        return mTitles.get(position).split(TAB_TAG)[0];
-//    }
 }
