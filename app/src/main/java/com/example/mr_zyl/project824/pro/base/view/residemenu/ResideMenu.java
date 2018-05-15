@@ -357,7 +357,7 @@ public class ResideMenu extends FrameLayout {
                                 menuListener.transProgressRadio(Float.valueOf(decimalFormat.format(ratio)));
                             }
                             viewActivity.setTouchDisable(TouchDisableView.touchStatusIntercept);
-                            if (!isOpened()&&xOffset<=-8){
+                            if (!isOpened()&&xOffset<=-8){//向左滑
                                 viewActivity.setTouchDisable(TouchDisableView.touchStatusNoIntercept);
                             }
                             viewActivity.setOnClickListener(null);
