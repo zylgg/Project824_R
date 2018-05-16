@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.support.v4.graphics.ColorUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -15,8 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.example.mr_zyl.project824.R;
-import com.example.mr_zyl.project824.pro.attention.view.Attention;
-import com.example.mr_zyl.project824.pro.mine.view.SlidingLib.SlideManager;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
@@ -400,7 +397,7 @@ public class ResideMenu extends FrameLayout {
                     mVelocityTracker.addMovement(ev);
                     mVelocityTracker.computeCurrentVelocity(1000);
                     float xVelocity = mVelocityTracker.getXVelocity();//如果抬起时速度够快
-                    if (currentActivityTransX < slidingBorderValue * getScreenWidth() || Math.abs(xVelocity) > 1000) {
+                    if (currentActivityTransX < slidingBorderValue * getScreenWidth() || xVelocity< -1000) {
                         closeMenu();
                     } else {
                         openMenu();

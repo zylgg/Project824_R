@@ -1,4 +1,4 @@
-package com.example.mr_zyl.project824.pro.mine.view.SlidingLib;
+package com.example.mr_zyl.project824.pro.attention.view.SlidingLib;
 
 //9、自定义内容视图
 //9.1 提供接口

@@ -1,7 +1,6 @@
 package com.example.mr_zyl.project824.pro.attention.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -11,10 +10,9 @@ import com.example.mr_zyl.project824.R;
 import com.example.mr_zyl.project824.pro.attention.bean.attention;
 import com.example.mr_zyl.project824.pro.base.view.CommonAdapter;
 import com.example.mr_zyl.project824.pro.base.view.CommonViewHolder;
-import com.example.mr_zyl.project824.pro.mine.view.SlidingLib.SlideManager;
-import com.example.mr_zyl.project824.pro.mine.view.SlidingLib.SlidingContentView;
-import com.example.mr_zyl.project824.pro.mine.view.SlidingLib.SlidingItemLayout;
-import com.example.mr_zyl.project824.pro.mine.view.SlidingLib.listviewbean;
+import com.example.mr_zyl.project824.pro.attention.view.SlidingLib.SlideManager;
+import com.example.mr_zyl.project824.pro.attention.view.SlidingLib.SlidingContentView;
+import com.example.mr_zyl.project824.pro.attention.view.SlidingLib.SlidingItemLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;

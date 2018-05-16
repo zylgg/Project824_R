@@ -1,8 +1,4 @@
-package com.example.mr_zyl.project824.pro.mine.view.SlidingLib;
-
-import android.util.Log;
-
-import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideMenu;
+package com.example.mr_zyl.project824.pro.attention.view.SlidingLib;
 
 import java.util.HashSet;
 

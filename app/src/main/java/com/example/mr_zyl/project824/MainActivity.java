@@ -31,6 +31,7 @@ import com.example.mr_zyl.project824.pro.essence.refreshEvent;
 import com.example.mr_zyl.project824.pro.essence.view.activity.SimpleCameraActivity;
 import com.example.mr_zyl.project824.pro.essence.view.essence;
 import com.example.mr_zyl.project824.pro.mine.view.Mine;
+import com.example.mr_zyl.project824.pro.mine.view.selfview.MyListView;
 import com.example.mr_zyl.project824.pro.mine.view.selfview.MySnackbarUtils;
 import com.example.mr_zyl.project824.pro.newpost.view.Newpost;
 import com.example.mr_zyl.project824.pro.publish.view.Publish;
@@ -86,9 +87,8 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         initFragmentTabData();
         //再初始化TabHost控件
         initTabHost();
-
         View view = LayoutInflater.from(this).inflate(R.layout.main_left_layout, null);
-        ListView lv_main_leftmenu = (ListView) view.findViewById(R.id.lv_main_leftmenu);
+        MyListView lv_main_leftmenu =view.findViewById(R.id.lv_main_leftmenu);
         List<String> datas = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             datas.add("item:" + i);
@@ -217,7 +217,6 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
             ((BaseApplication) this.getApplication()).exit(0);
         } else {
             new MySnackbarUtils.Builder(this)
-                    .setCoverStatusBar(true)
                     .setMessage("再点击一次退出" + getString(R.string.app_name))
                     .setMessageColor(R.color.white)
                     .show();

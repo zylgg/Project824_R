@@ -1,4 +1,4 @@
-package com.example.mr_zyl.project824.pro.mine.view.SlidingLib;
+package com.example.mr_zyl.project824.pro.attention.view.SlidingLib;
 
 /**
  * 10 定义回调监听

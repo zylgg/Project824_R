@@ -29,15 +29,12 @@ public class MySnackbarUtils {
     private static final String TAG = "MySnackbarUtils";
     private MySnackbar mySnackbarView;
     private Activity context;
-    private boolean isCoverStatusBar;
-
 
     private MySnackbarUtils() {
     }
 
-    private MySnackbarUtils(Activity context, Params params, boolean isCoverStatusBar) {
+    private MySnackbarUtils(Activity context, Params params) {
         this.context = context;
-        this.isCoverStatusBar = isCoverStatusBar;
         this.mySnackbarView = new MySnackbar(context, this);
         this.mySnackbarView.setParams(params);
     }
@@ -65,12 +62,10 @@ public class MySnackbarUtils {
                     int flag = params.flags =WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                                     | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
 //                                    | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-                            |WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                            |WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION
                             ;
 
                     int coverFlag = flag | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
-                    params.type=WindowManager.LayoutParams.TYPE_TOAST|WindowManager.LayoutParams.FIRST_APPLICATION_WINDOW;
+                    params.type=WindowManager.LayoutParams.TYPE_TOAST;
                     params.flags = mySnackbarView.isCoverStatusBar() ? coverFlag : flag;
                 }
             }
@@ -92,7 +87,9 @@ public class MySnackbarUtils {
     }
 
     public void dismiss() {
-        Log.i(TAG, "dismiss");
+        if (mToast!=null){
+            mToast.cancel();
+        }
     }
 
     public static class Builder {
@@ -193,7 +190,7 @@ public class MySnackbarUtils {
         }
 
         public MySnackbarUtils create() {
-            MySnackbarUtils cookie = new MySnackbarUtils(context, params, params.isCoverStatusBar);
+            MySnackbarUtils cookie = new MySnackbarUtils(context, params);
             return cookie;
         }
 
@@ -206,7 +203,7 @@ public class MySnackbarUtils {
 
     final static class Params {
 
-        boolean isCoverStatusBar;
+        boolean isCoverStatusBar=true;
 
         public String title;
 

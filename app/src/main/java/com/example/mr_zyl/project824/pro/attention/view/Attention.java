@@ -1,9 +1,7 @@
 package com.example.mr_zyl.project824.pro.attention.view;
 
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.example.mr_zyl.project824.R;
@@ -13,9 +11,7 @@ import com.example.mr_zyl.project824.pro.attention.bean.attention;
 import com.example.mr_zyl.project824.pro.attention.presenter.AttentionListPresenter;
 import com.example.mr_zyl.project824.pro.base.presenter.SimpleOnUiThreadListener;
 import com.example.mr_zyl.project824.pro.base.view.BaseFragment;
-import com.example.mr_zyl.project824.pro.mine.view.SlidingLib.SlideManager;
-import com.example.mr_zyl.project824.pro.mine.view.SlidingLib.SlidingContentView;
-import com.example.mr_zyl.project824.pro.mine.view.SlidingLib.SlidingItemLayout;
+import com.example.mr_zyl.project824.pro.attention.view.SlidingLib.SlidingContentView;
 import com.example.mr_zyl.project824.pro.newpost.natvigation.NewpostNavigationBuilder;
 import com.example.mr_zyl.project824.utils.VolleyUtils;
 

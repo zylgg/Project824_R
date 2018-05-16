@@ -1,29 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:id="@+id/ll_left_menu"
+    android:id="@+id/ll_left_menu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:orientation="vertical">
+    <!--android:layout_gravity="left"-->
+
+    <ImageView
+        android:id="@+id/iv_main_headImg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:clickable="true">
-        <!--android:layout_gravity="left"-->
+        android:layout_height="@dimen/y480"
+        android:scaleType="centerCrop"
+        android:src="@drawable/resource_icon" />
 
-        <ImageView
-            android:id="@+id/iv_main_headImg"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/y480"
-            android:scaleType="centerCrop"
-            android:src="@drawable/resource_icon" />
+    <com.example.mr_zyl.project824.pro.mine.view.selfview.MyListView
+        android:id="@+id/lv_main_leftmenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <ListView
-            android:id="@+id/lv_main_leftmenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    </com.example.mr_zyl.project824.pro.mine.view.selfview.MyListView>
 
-        </ListView>
-
-    </LinearLayout>
 </LinearLayout>
