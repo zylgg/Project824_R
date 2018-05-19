@@ -164,7 +164,7 @@ public class EssenceMyTestFragment extends BaseFragment  {
             @Override
             public void OnAfter() {
             }
-        });
+        },true);
     }
 
 

@@ -37,77 +37,58 @@ public class EssenceVideoPresenter extends BasePresenter<EssenceVideoModel> {
         if (isDownRefresh) {//下拉刷新
             maxtime = null;
         }
-        getModel().getEssenceList(type, page, maxtime, new HttpUtils.OnHttpResultListener() {
-            @Override
-            public void onResult(String result) {
-                Log.i(TAG, "onResult: "+result);
-                if (TextUtils.isEmpty(result)) {
-                    //等于空---通知UI线程---刷新UI界面
-                    onhttpResultlistener.OnResult(null);
-                } else {
-                    //不等于null
-                    //解析数据
-                    PostsListBean lists = getGson().fromJson(result, PostsListBean.class);
-                    //处理分页逻辑---UI层只负责现实数据,不要做任何与网络相关的逻辑处理
-                    if (lists != null && lists.getInfo() != null) {
-                        maxtime = lists.getInfo().getMaxtime();
-                    }
-                    if (isDownRefresh) {
-                        page = 0;
-                    } else {
-//                        page++;
-                    }
-                    onhttpResultlistener.OnResult(lists.getList());
+        if (isUserHttp) {
+            getModel().getEssenceList(type, page, maxtime, new HttpUtils.OnHttpResultListener() {
+                @Override
+                public void onResult(String result) {
+                    onSuccess(onhttpResultlistener, result, isDownRefresh);
                     onhttpResultlistener.OnAfter();
                 }
-            }
-        });
-    }
+            });
+        }else{
+            getModel().getEssenceListByOkHttp(type, page, maxtime, new StringCallback() {
+                @Override
+                public void onBefore(Request request, int id) {
+                    onhttpResultlistener.OnBefore();
+                }
 
-    public void GetEssenceListData(int type, final boolean isDownRefresh, final OnUiThreadListener<List<PostsListBean.PostList>> onhttpResultlistener) {
-        if (isDownRefresh) {//下拉刷新
-            maxtime = null;
+                @Override
+                public void onError(Call call, Exception e, int id) {
+                    ToastUtil.showToast(getContext(), "网络异常！");
+                    onhttpResultlistener.OnAfter();
+                }
+
+                @Override
+                public void onResponse(String response, int id) {
+                    onSuccess(onhttpResultlistener, response, isDownRefresh);
+                }
+
+                @Override
+                public void onAfter(int id) {
+                    onhttpResultlistener.OnAfter();
+                }
+            });
         }
-        getModel().getEssenceListByOkHttp(type, page, maxtime, new StringCallback() {
-            @Override
-            public void onBefore(Request request, int id) {
-                onhttpResultlistener.OnBefore();
+    }
+    private void onSuccess(OnUiThreadListener<List<PostsListBean.PostList>> onhttpResultlistener, String result, boolean isDownRefresh) {
+        if (TextUtils.isEmpty(result)) {
+            //等于空---通知UI线程---刷新UI界面
+            onhttpResultlistener.OnResult(null);
+        } else {
+            //不等于null
+            //解析数据
+            PostsListBean lists = getGson().fromJson(result, PostsListBean.class);
+            //处理分页逻辑---UI层只负责现实数据,不要做任何与网络相关的逻辑处理
+            if (lists != null && lists.getInfo() != null) {
+                maxtime = lists.getInfo().getMaxtime();
             }
-
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                ToastUtil.showToast(getContext(),"网络异常！");
-                onhttpResultlistener.OnAfter();
-            }
-
-            @Override
-            public void onResponse(String response, int id) {
-                if (TextUtils.isEmpty(response)) {
-                    //等于空---通知UI线程---刷新UI界面
-                    onhttpResultlistener.OnResult(null);
-                } else {
-                    //不等于null
-                    //解析数据
-                    PostsListBean lists = getGson().fromJson(response, PostsListBean.class);
-                    //处理分页逻辑---UI层只负责现实数据,不要做任何与网络相关的逻辑处理
-                    if (lists != null && lists.getInfo() != null) {
-                        maxtime = lists.getInfo().getMaxtime();
-                    }
-                    if (isDownRefresh) {
-                        page = 0;
-                    } else {
+            if (isDownRefresh) {
+                page = 0;
+            } else {
 //                        page++;
-                    }
-                    onhttpResultlistener.OnResult(lists.getList());
-                    onhttpResultlistener.OnAfter();
-                }
             }
-
-            @Override
-            public void onAfter(int id) {
-                onhttpResultlistener.OnAfter();
-            }
-        });
+            onhttpResultlistener.OnResult(lists.getList());
+        }
     }
 
 }
