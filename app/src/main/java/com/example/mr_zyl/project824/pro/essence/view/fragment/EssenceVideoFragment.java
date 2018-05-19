@@ -201,11 +201,6 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
 
             @Override
             public void OnResult(List<PostsListBean.PostList> result) {
-                if (isDownRefresh) {
-                    refreshview_id.stopRefresh();
-                } else {
-                    refreshview_id.stopLoadMore();
-                }
                 if (result == null) {
                     ToastUtil.showToast(getContext(), "加载失败！");
                 } else {
@@ -220,8 +215,13 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
 
             @Override
             public void OnAfter() {
+                if (isDownRefresh) {
+                    refreshview_id.stopRefresh();
+                } else {
+                    refreshview_id.stopLoadMore();
+                }
             }
-        });
+        },true);
     }
 
 

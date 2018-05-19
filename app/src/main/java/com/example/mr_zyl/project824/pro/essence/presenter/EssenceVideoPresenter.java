@@ -58,6 +58,7 @@ public class EssenceVideoPresenter extends BasePresenter<EssenceVideoModel> {
 //                        page++;
                     }
                     onhttpResultlistener.OnResult(lists.getList());
+                    onhttpResultlistener.OnAfter();
                 }
             }
         });
@@ -76,6 +77,7 @@ public class EssenceVideoPresenter extends BasePresenter<EssenceVideoModel> {
             @Override
             public void onError(Call call, Exception e, int id) {
                 ToastUtil.showToast(getContext(),"网络异常！");
+                onhttpResultlistener.OnAfter();
             }
 
             @Override
@@ -97,6 +99,7 @@ public class EssenceVideoPresenter extends BasePresenter<EssenceVideoModel> {
 //                        page++;
                     }
                     onhttpResultlistener.OnResult(lists.getList());
+                    onhttpResultlistener.OnAfter();
                 }
             }
 

@@ -323,6 +323,7 @@ public class ResideMenu extends FrameLayout {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         float currentActivityTransX = 0;
         currentActivityTransX = ViewHelper.getTranslationX(viewActivity);
+
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 lastActionDownX = ev.getX();
@@ -336,9 +337,10 @@ public class ResideMenu extends FrameLayout {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                //如果是忽略布局，或者是禁止滑动的方向，也不执行后续移动判断。
-                if (isInIgnoredView||!isLeftBorder)
-                    break;
+                //如果是忽略布局，或者是到达左边界，也不执行后续移动判断。
+                if (isInIgnoredView || !isLeftBorder){
+                    return false;
+                }
                 if (pressedState != PRESSED_DOWN && pressedState != PRESSED_MOVE_HORIZONTAL)
                     break;
                 int xOffset = (int) (ev.getX() - lastActionDownX);
@@ -354,7 +356,7 @@ public class ResideMenu extends FrameLayout {
                                 menuListener.transProgressRadio(Float.valueOf(decimalFormat.format(ratio)));
                             }
                             viewActivity.setTouchDisable(TouchDisableView.touchStatusIntercept);
-                            if (!isOpened()&&xOffset<=-8){//向左滑
+                            if (!isOpened() && xOffset <= -8) {//向左滑
                                 viewActivity.setTouchDisable(TouchDisableView.touchStatusNoIntercept);
                             }
                             viewActivity.setOnClickListener(null);
@@ -397,7 +399,7 @@ public class ResideMenu extends FrameLayout {
                     mVelocityTracker.addMovement(ev);
                     mVelocityTracker.computeCurrentVelocity(1000);
                     float xVelocity = mVelocityTracker.getXVelocity();//如果抬起时速度够快
-                    if (currentActivityTransX < slidingBorderValue * getScreenWidth() || xVelocity< -1000) {
+                    if (currentActivityTransX < slidingBorderValue * getScreenWidth() || xVelocity < -1000) {
                         closeMenu();
                     } else {
                         openMenu();

@@ -49,14 +49,15 @@ public class BaseApplication extends MultiDexApplication {
         // 最大容量为APP最大可用内存的十分之一
         int newMemoryCacheMaxSize = (int) (Runtime.getRuntime().maxMemory() / 10);
         Configuration configuration = Sketch.with(this).getConfiguration();
-//        configuration.setMemoryCache(new LruMemoryCache(this,newMemoryCacheMaxSize));//设置最大的内存缓存
-        configuration.setDiskCache(new LruDiskCache(this, configuration, 1, 50 * 1024 * 1024));//设置最大的磁盘缓存
+        //设置最大的内存缓存
+//        configuration.setMemoryCache(new LruMemoryCache(this,newMemoryCacheMaxSize));
+        //设置最大的磁盘缓存
+        configuration.setDiskCache(new LruDiskCache(this, configuration, 1, 50 * 1024 * 1024));
     }
 
     private void initUniversalImageLoader() {
         //初始化ImageLoader
-        ImageLoader.getInstance().init(
-                ImageLoaderConfiguration.createDefault(getApplicationContext()));
+        ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(getApplicationContext()));
     }
 
     /**
