@@ -4,11 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.mr_zyl.project824.pro.newpost.view.Activity.FontsActivity">
-    <LinearLayout
-        android:id="@+id/ll_fonts_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_fonts_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/appbar_scrolling_view_behavior"
+                android:fontFamily="@font/miaowu"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/appbar_scrolling_view_behavior"
+                android:fontFamily="@font/zaozigongfang"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="您好：你所拨打的电话已关机！"
+                android:fontFamily="@font/miaowu"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="您好：你所拨打的电话已关机！"
+                android:fontFamily="@font/zaozigongfang"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1234567890"
+                android:fontFamily="@font/miaowu"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1234567890"
+                android:fontFamily="@font/zaozigongfang"/>
+
+        </LinearLayout>
 </RelativeLayout>
