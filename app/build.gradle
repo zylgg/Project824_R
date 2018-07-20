@@ -81,12 +81,12 @@ dependencies {
     implementation 'cjt.library.wheel:camera:1.1.9'
     //图片加载器，支持GIF，手势缩放以及分块显示超大图片
     implementation 'me.xiaopan:sketch:2.3.0'
-    //标准设计的dialog风格
+    //md设计风格的dialog
     implementation 'com.robbypond:material-dialogs:1.0.0'
     //图片加载框架
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation project(':zylsmallvideolibrary')
-    //网络请求
+    //okhttp网络请求
     implementation 'com.zhy:okhttputils:2.6.2'
     //图片加载
     implementation 'com.squareup.picasso:picasso:2.5.2'
@@ -95,6 +95,7 @@ dependencies {
     //代替cardview边角和阴影色自定义
     implementation 'com.loopeer.lib:shadow:0.0.3'
     implementation files('libs/AMap3DMap_5.6.0_AMapNavi_5.4.0_AMapSearch_5.5.0_AMapLocation_3.6.1_20171128.jar')
+    //兼容低版本的动画库
     implementation files('libs/nineoldandroids-2.4.0.jar')
     implementation files('libs/volley.jar')
 }

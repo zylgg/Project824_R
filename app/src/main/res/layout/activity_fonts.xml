@@ -4,26 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.mr_zyl.project824.pro.newpost.view.Activity.FontsActivity">
-    <com.example.mr_zyl.project824.pro.mine.view.selfview.CommonTabLayout
-        xmlns:mine="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/ctl_tablist"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/white"
-        mine:tl_iconVisible="false"
-        mine:tl_indicator_color="@color/colorAccent"
-        mine:tl_indicator_height="3dp"
-        mine:tl_indicator_style="0"
-        mine:tl_tab_space_equal="true"
-        mine:tl_textsize="14sp"
-        mine:tl_textSelectColor="@color/colorAccent"
-        mine:tl_textUnselectColor="@color/item_mine_text_color"
-        mine:tl_tab_width="@dimen/x216"/>
     <LinearLayout
         android:id="@+id/ll_fonts_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/ctl_tablist"
         android:orientation="vertical">
 
     </LinearLayout>

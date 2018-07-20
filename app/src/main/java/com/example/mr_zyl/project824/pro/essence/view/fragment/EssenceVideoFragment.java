@@ -104,9 +104,9 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
         refreshview_id.setPinnedTime(1000);
         refreshview_id.setAutoRefresh(true);
         refreshview_id.setAutoLoadMore(false);
-        refreshview_id.enableReleaseToLoadMore(false);//到达底部后让其点击加载asdf
-        refreshview_id.enableRecyclerViewPullUp(false);//不让Recycleview到达底部继续上啦
-        refreshview_id.setPreLoadCount(0);//预加载数量
+//        refreshview_id.enableReleaseToLoadMore(false);//到达底部后让其点击加载asdf
+//        refreshview_id.enableRecyclerViewPullUp(false);//不让Recycleview到达底部继续上啦
+//        refreshview_id.setPreLoadCount(0);//预加载数量
         refreshview_id.setXRefreshViewListener(xRefreshListener);
 
         adapter = new EssenceRecycleAdapter(getContext(), postlists);
