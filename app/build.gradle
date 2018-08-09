@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.example.mr_zyl.project824"
         minSdkVersion 17
-        targetSdkVersion 27
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -82,7 +82,7 @@ dependencies {
     //图片加载器，支持GIF，手势缩放以及分块显示超大图片
     implementation 'me.xiaopan:sketch:2.3.0'
     //md设计风格的dialog
-    implementation 'com.robbypond:material-dialogs:1.0.0'
+    implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     //图片加载框架
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation project(':zylsmallvideolibrary')

@@ -11,7 +11,7 @@
         android:layout_width="@dimen/x720"
         android:layout_height="@dimen/y720"
         android:orientation="vertical"
-        android:background="@drawable/rect_shape"
+        android:background="@drawable/green_rect_shape"
         android:gravity="center">
 
         <TextView

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <VideoView
+        android:id="@+id/jcv_login_videopic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="用于播放视频或mp3"
+        android:fitsSystemWindows="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/app_icon"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="1dp" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_login_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textColorHint="@color/white"
+            app:errorTextAppearance="@style/InputLayoutStyle">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/tiet_login_phone"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:gravity="center_vertical|left"
+                android:hint="请输入手机号"
+                android:inputType="number"
+                android:text="13651274057"
+                android:textColor="@color/colorAccent"
+                android:textColorHint="@color/white"
+                android:theme="@style/InputStyle" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textColorHint="@color/white"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/white">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/tiet_login_password"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:gravity="center_vertical|left"
+                android:hint="登录密码"
+                android:inputType="textPassword"
+                android:textColor="@color/colorAccent"
+                android:textColorHint="@color/white"
+                android:theme="@style/InputStyle" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/bt_login_main"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/click_bg_selector"
+            android:onClick="LoginMain"
+            android:text="登录"
+            android:textColor="@drawable/click_color_selector" />
+    </LinearLayout>
+
+</RelativeLayout>

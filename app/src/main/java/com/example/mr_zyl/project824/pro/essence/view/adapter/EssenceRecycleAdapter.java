@@ -146,10 +146,10 @@ public class EssenceRecycleAdapter extends BaseRecyclerAdapter<EssenceRecycleAda
 //        View views = LayoutInflater.from(context).inflate(R.layout.item_essence_video_layout, null, false);
         View views = inflates.inflate(R.layout.item_essence_video_layout, parent, false);
 
-        ImageView iv_pic = (ImageView) views.findViewById(R.id.siv_pic);
-        SketchImageView siv_largepic = (SketchImageView) views.findViewById(R.id.siv_largepic);
-        SketchImageView siv_gifpic = (SketchImageView) views.findViewById(R.id.siv_gifpic);
-        JCVideoPlayer jcv_videopic = (JCVideoPlayer) views.findViewById(R.id.jcv_videopic);
+        ImageView iv_pic = views.findViewById(R.id.siv_pic);
+        SketchImageView siv_largepic =  views.findViewById(R.id.siv_largepic);
+        SketchImageView siv_gifpic =views.findViewById(R.id.siv_gifpic);
+        JCVideoPlayer jcv_videopic = views.findViewById(R.id.jcv_videopic);
         if (viewType == 0) {
             iv_pic.setVisibility(View.VISIBLE);
             siv_largepic.setVisibility(View.GONE);

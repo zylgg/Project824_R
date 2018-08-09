@@ -3,22 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cl_blurred"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipToPadding="true"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y720"
-        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y600"
-            android:fitsSystemWindows="true"
             app:contentScrim="@color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
             <!--app:contentScrim - 设置当完全CollapsingToolbarLayout折叠(收缩)后的背景颜色。-->
@@ -48,7 +44,7 @@
             <com.example.mr_zyl.project824.pro.mine.view.selfview.SlideView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rect_shape"
+                android:background="@drawable/green_rect_shape"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/x660"
                 app:collapsedPadding="@dimen/x150"
@@ -70,7 +66,7 @@
                 android:id="@+id/slv_image_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rect_shape"
+                android:background="@drawable/green_rect_shape"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/x660"
@@ -98,17 +94,19 @@
                 android:id="@+id/tl_blurred_tablist"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:tabGravity="fill"
                 app:tabIndicatorColor="@color/colorAccent"
                 app:tabMode="fixed"
-                app:tabGravity="fill"
                 app:tabPadding="0dp"
                 app:tabPaddingBottom="0dp"
                 app:tabPaddingEnd="0dp"
                 app:tabPaddingStart="0dp"
-                app:tabPaddingTop="0dp"/>
+                app:tabPaddingTop="0dp" />
 
         </LinearLayout>
+
     </android.support.design.widget.AppBarLayout>
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_blurred_fragment"

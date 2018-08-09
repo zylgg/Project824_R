@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:backgroundColor="@color/material_blue_500"
+        app:backgroundColor="@color/colorAccent"
         app:cornerRadius="@dimen/x90"
         app:shadowMargin="@dimen/x45">
 

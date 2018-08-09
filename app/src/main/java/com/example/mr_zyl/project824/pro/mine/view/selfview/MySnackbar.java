@@ -208,7 +208,7 @@ public class MySnackbar extends LinearLayout {
         tvMessage.setTextColor(messageColor);
         btnAction.setTextColor(actionColor);
         contentview.setBackgroundColor(backgroundColor);
-//        setBackgroundResource(R.drawable.rect_shape);
+//        setBackgroundResource(R.drawable.green_rect_shape);
     }
 
     public void setParams(final MySnackbarUtils.Params params) {

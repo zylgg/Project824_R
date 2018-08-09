@@ -51,9 +51,8 @@ public class LaunchActivity extends BaseActivity {
     @OnClick(R.id.tv_remainingTime)
     public void onViewClicked() {
         timers.cancel();
-        timers=null;
-        startActivity(new Intent(LaunchActivity.this, MainActivity.class));
-        finish();
+        timers = null;
+        startNextActivity();
     }
 
     /**
@@ -80,7 +79,7 @@ public class LaunchActivity extends BaseActivity {
     CountDownTimer timers = new CountDownTimer(4000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
-            tv_remainingTime.setText("跳过（" + (millisUntilFinished-1000) / 1000 + "）");
+            tv_remainingTime.setText("跳过（" + (millisUntilFinished - 1000) / 1000 + "）");
         }
 
         @Override
@@ -88,13 +87,25 @@ public class LaunchActivity extends BaseActivity {
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
-                    startActivity(new Intent(LaunchActivity.this,
-                            MainActivity.class));
-                    finish();
+                    startNextActivity();
                 }
             });
         }
     };
+
+    /**
+     * 下一步
+     */
+    private void startNextActivity() {
+        Intent mainIntent = new Intent(LaunchActivity.this, MainActivity.class);
+        Intent loginIntent = new Intent(LaunchActivity.this, LoginActivity.class);
+        if (LoginActivity.is_Login) {
+            startActivity(mainIntent);
+        } else {
+            startActivity(loginIntent);
+        }
+        finish();
+    }
 
     public void animate(View imageView, int durationMillis) {
         if (imageView != null) {

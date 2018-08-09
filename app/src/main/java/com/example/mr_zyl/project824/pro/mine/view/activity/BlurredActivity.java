@@ -24,6 +24,7 @@ import com.example.mr_zyl.project824.pro.mine.view.fragment.BlurredTabfragment;
 import com.example.mr_zyl.project824.pro.mine.view.selfview.MySnackbarUtils;
 import com.example.mr_zyl.project824.pro.mine.view.selfview.SlideView;
 import com.example.mr_zyl.project824.utils.SnackbarUtils;
+import com.example.mr_zyl.project824.utils.StatusBarUtils;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -61,6 +62,7 @@ public class BlurredActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtils.setTransparent(this);
         // 初始化视图
         mwindow=getWindow();
         initViews();

@@ -5,42 +5,52 @@
     android:layout_height="match_parent"
     tools:context="com.example.mr_zyl.project824.pro.newpost.view.Activity.FontsActivity">
 
-        <LinearLayout
-            android:id="@+id/ll_fonts_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/appbar_scrolling_view_behavior"
-                android:fontFamily="@font/miaowu"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/appbar_scrolling_view_behavior"
-                android:fontFamily="@font/zaozigongfang"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="您好：你所拨打的电话已关机！"
-                android:fontFamily="@font/miaowu"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="您好：你所拨打的电话已关机！"
-                android:fontFamily="@font/zaozigongfang"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1234567890"
-                android:fontFamily="@font/miaowu"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1234567890"
-                android:fontFamily="@font/zaozigongfang"/>
+    <LinearLayout
+        android:id="@+id/ll_fonts_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="沃德天"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="2dp"
+                android:autoSizeMaxTextSize="40dp"
+                android:autoSizeStepGranularity="2dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:maxLines="1"
+                android:gravity="center"
+                android:textSize="40dp"/>
+            <TextView
+                android:id="@+id/tv_auto_textview"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="沃德天啦真的"
+                android:background="@color/colorAccent"
+                android:maxLines="1"
+                android:gravity="center"
+                android:textSize="40dp"
+                android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/tv_auto_textview2"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:text="沃德天啦真的扩展了"
+                android:background="@color/colorAccent"
+                android:maxLines="1"
+                android:gravity="center"
+                android:textSize="40dp"
+                android:textColor="@color/white"/>
         </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
