@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -48,7 +50,6 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.bt_login_main)
     Button bt_login_main;
     private Uri uri;
-    public static boolean is_Login = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,22 +141,38 @@ public class LoginActivity extends BaseActivity {
      * @param V
      */
     public void LoginMain(View V) {
+        SharedPreferences preferences = getSharedPreferences("user_info", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        //获取缓存的账号信息
+        String catch_phone = preferences.getString("phone", null);
+        String catch_password = preferences.getString("password", null);
+
         String phone = tiet_login_phone.getText().toString();
         String password = tiet_login_password.getText().toString();
-        if (phone.equals("13651274057")) {
+
+        if (TextUtils.isEmpty(catch_phone)&&phone.equals("13651274057")&&password.equals("zylgg")) {
+            editor.putString("phone", phone);
+            editor.putString("password", password);
             isInputPhoneSuccess = true;
+            isInputPasswordSuccess=true;
+            editor.commit();
         } else {
-            til_login_phone.setError("手机号输入有误");
+            if (phone.equals(catch_phone)) {
+                isInputPhoneSuccess = true;
+            } else {
+                til_login_phone.setError("手机号输入有误");
+            }
+            if (password.equals(catch_password)) {
+                isInputPasswordSuccess = true;
+            } else {
+                til_login_password.setError("密码输入有误");
+            }
         }
-        if (password.equals("zylgg")) {
-            isInputPasswordSuccess = true;
-        } else {
-            til_login_password.setError("密码输入有误");
+        if (!isInputPasswordSuccess || !isInputPhoneSuccess) {
+            return;
         }
-        if (isInputPasswordSuccess && isInputPhoneSuccess) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        }
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
 }

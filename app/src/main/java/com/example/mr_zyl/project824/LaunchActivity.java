@@ -1,11 +1,13 @@
 package com.example.mr_zyl.project824;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -97,9 +99,14 @@ public class LaunchActivity extends BaseActivity {
      * 下一步
      */
     private void startNextActivity() {
-        Intent mainIntent = new Intent(LaunchActivity.this, MainActivity.class);
-        Intent loginIntent = new Intent(LaunchActivity.this, LoginActivity.class);
-        if (LoginActivity.is_Login) {
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        //获取缓存的账号信息
+        SharedPreferences preferences = getSharedPreferences("user_info", MODE_PRIVATE);
+        String catch_phone = preferences.getString("phone", null);
+        String catch_password = preferences.getString("password", null);
+
+        if (!TextUtils.isEmpty(catch_phone)&&catch_phone.equals("13651274057")&&catch_password.equals("zylgg")) {
             startActivity(mainIntent);
         } else {
             startActivity(loginIntent);

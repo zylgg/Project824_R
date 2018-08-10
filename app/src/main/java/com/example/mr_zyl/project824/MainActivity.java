@@ -1,6 +1,7 @@
 package com.example.mr_zyl.project824;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,10 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
@@ -31,7 +29,6 @@ import com.example.mr_zyl.project824.pro.essence.refreshEvent;
 import com.example.mr_zyl.project824.pro.essence.view.activity.SimpleCameraActivity;
 import com.example.mr_zyl.project824.pro.essence.view.essence;
 import com.example.mr_zyl.project824.pro.mine.view.Mine;
-import com.example.mr_zyl.project824.pro.mine.view.selfview.MyListView;
 import com.example.mr_zyl.project824.pro.mine.view.selfview.MySnackbarUtils;
 import com.example.mr_zyl.project824.pro.newpost.view.Newpost;
 import com.example.mr_zyl.project824.pro.publish.view.Publish;
@@ -39,7 +36,6 @@ import com.example.mr_zyl.project824.pro.publish.view.SimpleTakePhotoActivity;
 import com.example.mr_zyl.project824.pro.publish.view.self.MoreWindow;
 import com.example.mr_zyl.project824.utils.DisplayUtil;
 import com.example.mr_zyl.project824.utils.StatusBarUtils;
-import com.example.mr_zyl.project824.utils.SystemAppUtils;
 import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.bean.ImageItem;
 import com.lqr.imagepicker.ui.ImageGridActivity;
@@ -87,34 +83,19 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         initFragmentTabData();
         //再初始化TabHost控件
         initTabHost();
-        View view = LayoutInflater.from(this).inflate(R.layout.main_left_layout, null);
-        MyListView lv_main_leftmenu =view.findViewById(R.id.lv_main_leftmenu);
-        List<String> datas = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            datas.add("item:" + i);
-        }
-        lv_main_leftmenu.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, datas));
 
+        View view = LayoutInflater.from(this).inflate(R.layout.main_left_layout, null);
         view.setLayoutParams(new LinearLayout.LayoutParams((int) (DisplayUtil.Width(this) * 0.8f), LinearLayout.LayoutParams.MATCH_PARENT));
+        TextView tv_main_loginOut = ButterKnife.findById(view, R.id.tv_main_loginOut);
+        tv_main_loginOut.setOnClickListener(this);
 
         resideMenu = new ResideMenu(this, view);
         resideMenu.setScaleValue(0.8f);
         resideMenu.attachToActivity(this, ll_main_content);
         resideMenu.addIgnoredView(tabs);
-        resideMenu.setIsLeftBorder(true);
-        resideMenu.setMenuListener(new ResideMenu.OnMenuListener() {
+        resideMenu.setMenuListener(new ResideMenu.SimpleOnMenuListener(){
             @Override
-            public void openMenu() {
-
-            }
-
-            @Override
-            public void closeMenu() {
-
-            }
-
-            @Override
-            public void transProgressRadio(float ratio) {//侧滑的比率
+            public void transProgressRadio(float ratio) {
                 Log.i(TAG, "transProgressRadio: " + ratio);
                 EventBus.getDefault().post(new ResideDispatch(ratio));
             }
@@ -254,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         } else {
             if (tabId.equals(getString(R.string.main_mine_text))) {
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            }else if(tabId.equals(getString(R.string.main_attention_text))){
+            } else if (tabId.equals(getString(R.string.main_attention_text))) {
                 touchDisableView.setTouchDisable(TouchDisableView.touchStatusBySuper);
             }
             //如果不是精华页一律设置达到左边界
@@ -280,6 +261,14 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         if (v.getId() == 0) {
             showMoreWindow();
             return;
+        }else if (v.getId()==R.id.tv_main_loginOut){
+            //获取缓存的账号信息
+            SharedPreferences.Editor editor = getSharedPreferences("user_info", MODE_PRIVATE).edit();
+            editor.remove("phone");
+            editor.remove("password");
+            editor.commit();
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            finish();
         }
         //如果再次点击当前底部tab菜单
         if (currenttabtag.equals(v.getTag())) {
@@ -298,7 +287,6 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
 
     /**
      * 显示更多窗口
-     *
      */
     private void showMoreWindow() {
         if (null == mMoreWindow) {

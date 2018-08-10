@@ -10,9 +10,9 @@ import android.widget.ListView;
 /**
  * Created by TFHR02 on 2017/8/24.
  */
-public class MyListView extends ListView {
+public class IntercecpTouchListView extends ListView {
 
-    public MyListView(Context context, AttributeSet attrs) {
+    public IntercecpTouchListView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

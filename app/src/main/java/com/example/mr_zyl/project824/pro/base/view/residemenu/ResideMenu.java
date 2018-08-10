@@ -142,7 +142,7 @@ public class ResideMenu extends FrameLayout {
     /**
      * 是不是左边边界
      */
-    private boolean isLeftBorder;
+    private boolean isLeftBorder=true;
 
     public void setIsLeftBorder(boolean isBorder) {
         this.isLeftBorder = isBorder;
@@ -458,5 +458,22 @@ public class ResideMenu extends FrameLayout {
         void closeMenu();
 
         void transProgressRadio(float ratio);
+    }
+    public static class SimpleOnMenuListener implements  OnMenuListener{
+
+        @Override
+        public void openMenu() {
+
+        }
+
+        @Override
+        public void closeMenu() {
+
+        }
+
+        @Override
+        public void transProgressRadio(float ratio) {
+
+        }
     }
 }

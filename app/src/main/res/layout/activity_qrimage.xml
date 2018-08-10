@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="生成"
-        android:background="@drawable/item_build_default_style2"
+        android:background="@drawable/item_build_default_style"
         android:id="@+id/b_arimage_makear"
         android:layout_below="@+id/et_qrimage_text"
         android:layout_alignParentRight="true"
