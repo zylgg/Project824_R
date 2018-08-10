@@ -60,7 +60,7 @@ final class Cookie extends LinearLayout {
     }
 
     private void initViews(Context context) {
-        inflate(getContext(), R.layout.layout_cookie, this);
+        inflate(getContext(), R.layout.layout_toast_item, this);
 
         layoutCookie = (LinearLayout) findViewById(R.id.cookie);
         tvTitle = (TextView) findViewById(R.id.tv_title);

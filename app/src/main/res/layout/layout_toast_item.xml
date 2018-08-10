@@ -30,6 +30,7 @@
             android:maxLines="1"
             android:text="Title"
             android:textColor="@android:color/white"
+            android:fontFamily="@font/webfont"
             android:textSize="18sp"
             android:visibility="gone" />
 
@@ -38,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/webfont"
             android:text="message..."
             android:textColor="@android:color/white"
             android:textSize="16sp"
@@ -51,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="24dp"
+        android:fontFamily="@font/webfont"
         android:gravity="bottom"
         android:text="ACTION"
         android:textColor="@color/default_action_color"

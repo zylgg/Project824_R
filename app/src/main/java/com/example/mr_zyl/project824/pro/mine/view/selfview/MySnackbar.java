@@ -73,7 +73,7 @@ public class MySnackbar extends LinearLayout {
     private void initViews(Context context) {
         setOrientation(LinearLayout.VERTICAL);
 
-        inflate(getContext(), R.layout.layout_cookie, this);
+        inflate(getContext(), R.layout.layout_toast_item, this);
         contentview = findViewById(R.id.cookie);
         contentview.getLayoutParams().width=context.getResources().getDisplayMetrics().widthPixels;
         viewDragHelper = ViewDragHelper.create(this, dragCallback);
