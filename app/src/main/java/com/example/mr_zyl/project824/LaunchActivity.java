@@ -15,6 +15,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mr_zyl.project824.bean.UserBean;
 import com.example.mr_zyl.project824.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project824.utils.StatusBarUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -26,6 +27,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.objectbox.Box;
+
+import static com.example.mr_zyl.project824.BaseApplication.myObjectBox;
 
 public class LaunchActivity extends BaseActivity {
 
@@ -102,15 +106,21 @@ public class LaunchActivity extends BaseActivity {
         Intent mainIntent = new Intent(this, MainActivity.class);
         Intent loginIntent = new Intent(this, LoginActivity.class);
         //获取缓存的账号信息
-        SharedPreferences preferences = getSharedPreferences("user_info", MODE_PRIVATE);
-        String catch_phone = preferences.getString("phone", null);
-        String catch_password = preferences.getString("password", null);
+        Box<UserBean> userBeanBox = myObjectBox.boxFor(UserBean.class);
+        List<UserBean> all = userBeanBox.getAll();
 
-        if (!TextUtils.isEmpty(catch_phone)&&catch_phone.equals("13651274057")&&catch_password.equals("zylgg")) {
-            startActivity(mainIntent);
-        } else {
+        if (all==null||all.size()==0){
             startActivity(loginIntent);
+        }else{
+            String db_phone=all.get(0).getUsername();
+            String db_password=all.get(0).getPassword();
+            if (db_phone.equals("13651274057")&&db_password.equals("zylgg")){
+                startActivity(mainIntent);
+            }else{
+                startActivity(loginIntent);
+            }
         }
+
         finish();
     }
 

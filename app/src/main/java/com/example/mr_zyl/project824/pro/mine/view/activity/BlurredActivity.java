@@ -25,7 +25,6 @@ import com.example.mr_zyl.project824.pro.mine.view.selfview.MySnackbarUtils;
 import com.example.mr_zyl.project824.pro.mine.view.selfview.SlideView;
 import com.example.mr_zyl.project824.utils.SnackbarUtils;
 import com.example.mr_zyl.project824.utils.StatusBarUtils;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -131,9 +130,7 @@ public class BlurredActivity extends BaseActivity {
     }
 
     private void initdata() {
-        Picasso.with(this).load(R.drawable.resource_icon)
-                .error(R.drawable.transparent_corner_bg).placeholder(R.drawable.transparent_corner_bg)
-                .into(civ_blurred_head);
+        civ_blurred_head.setImageResource(R.drawable.resource_icon);
         vp_blurred_fragment.setAdapter(new VpPagerAdpater(getSupportFragmentManager()));
         tl_blurred_tablist.setupWithViewPager(vp_blurred_fragment);
         //自定义tablayout布局

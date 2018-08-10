@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -24,12 +25,18 @@ import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.example.mr_zyl.project824.bean.UserBean;
 import com.example.mr_zyl.project824.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project824.utils.StatusBarUtils;
 import com.example.mr_zyl.project824.utils.ToastUtil;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.objectbox.Box;
+
+import static com.example.mr_zyl.project824.BaseApplication.myObjectBox;
 
 public class LoginActivity extends BaseActivity {
 
@@ -141,22 +148,23 @@ public class LoginActivity extends BaseActivity {
      * @param V
      */
     public void LoginMain(View V) {
-        SharedPreferences preferences = getSharedPreferences("user_info", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
+
         //获取缓存的账号信息
-        String catch_phone = preferences.getString("phone", null);
-        String catch_password = preferences.getString("password", null);
 
         String phone = tiet_login_phone.getText().toString();
         String password = tiet_login_password.getText().toString();
-
-        if (TextUtils.isEmpty(catch_phone)&&phone.equals("13651274057")&&password.equals("zylgg")) {
-            editor.putString("phone", phone);
-            editor.putString("password", password);
+        Box<UserBean> userBeanBox = myObjectBox.boxFor(UserBean.class);
+        List<UserBean> all = userBeanBox.getAll();
+        if ((all == null || all.size() == 0) && phone.equals("13651274057") && password.equals("zylgg")) {//没缓存时且输入正确时，保存到数据库
+            UserBean bean = new UserBean();
+            bean.setUsername(phone);
+            bean.setPassword(password);
+            userBeanBox.put(bean);
             isInputPhoneSuccess = true;
-            isInputPasswordSuccess=true;
-            editor.commit();
-        } else {
+            isInputPasswordSuccess = true;
+        } else {//有缓存，判断输入是否正确
+            String catch_phone = all.get(0).getUsername();
+            String catch_password = all.get(0).getPassword();
             if (phone.equals(catch_phone)) {
                 isInputPhoneSuccess = true;
             } else {

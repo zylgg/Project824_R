@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.support.multidex.MultiDexApplication;
 
+import com.example.mr_zyl.project824.bean.MyObjectBox;
 import com.example.mr_zyl.project824.bean.UILImageLoader;
 import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.view.CropImageView;
@@ -18,6 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.objectbox.BoxStore;
 import me.xiaopan.sketch.Configuration;
 import me.xiaopan.sketch.Sketch;
 import me.xiaopan.sketch.cache.LruDiskCache;
@@ -27,9 +29,12 @@ import okhttp3.OkHttpClient;
  * Created by Mr_Zyl on 2016/9/18.
  */
 public class BaseApplication extends MultiDexApplication {
+    public static BoxStore myObjectBox;
     @Override
     public void onCreate() {
         super.onCreate();
+
+        myObjectBox= MyObjectBox.builder().androidContext(this).build();
         initUniversalImageLoader();
         initImagePicker();
 

@@ -1,7 +1,6 @@
 package com.example.mr_zyl.project824;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +18,7 @@ import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project824.bean.TabItem;
+import com.example.mr_zyl.project824.bean.UserBean;
 import com.example.mr_zyl.project824.pro.attention.view.Attention;
 import com.example.mr_zyl.project824.pro.base.view.MyFragmentTabHost;
 import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideDispatch;
@@ -47,6 +47,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
+import io.objectbox.Box;
+
+import static com.example.mr_zyl.project824.BaseApplication.myObjectBox;
+
 
 public class MainActivity extends AppCompatActivity implements TabHost.OnTabChangeListener, View.OnClickListener {
 
@@ -262,11 +266,10 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
             showMoreWindow();
             return;
         }else if (v.getId()==R.id.tv_main_loginOut){
-            //获取缓存的账号信息
-            SharedPreferences.Editor editor = getSharedPreferences("user_info", MODE_PRIVATE).edit();
-            editor.remove("phone");
-            editor.remove("password");
-            editor.commit();
+            //清除账号信息
+            Box<UserBean> userBeanBox = myObjectBox.boxFor(UserBean.class);
+            userBeanBox.removeAll();
+
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
             finish();
         }

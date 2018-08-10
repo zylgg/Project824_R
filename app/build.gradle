@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'android-apt'//butterknife插件
-//apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'io.objectbox'
 
 android {
     compileSdkVersion 27
@@ -17,26 +16,11 @@ android {
             renderscriptTargetApi 26
             renderscriptSupportModeEnabled true
         }
-        // 使用Cmake工具
-//        externalNativeBuild {
-//            cmake {
-//                cppFlags ""
-//                //生成多个版本的so文件
-//                abiFilters 'arm64-v8a','armeabi-v7a','x86','x86_64'
-//            }
-//        }
-
         ndk {
 //            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","x86_64","mips"
             abiFilters "armeabi-v7a"
         }
     }
-    // 配置CMakeLists.txt路径
-//    externalNativeBuild {
-//        cmake {
-//            path "CMakeLists.txt"  // 设置所要编写的c源码位置，以及编译后so文件的名字
-//        }
-//    }
     buildTypes {
         release {
             minifyEnabled false
@@ -48,22 +32,17 @@ android {
             jniLibs.srcDir 'libs'
         }
     }
-//    greendao {
-//        schemaVersion 1
-//        targetGenDir 'src/main/java'
-//    }
 }
 
 
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:appcompat-v7:26+'
-    implementation 'com.android.support:support-v4:26+'
-    implementation 'com.android.support:recyclerview-v7:26+'
+    testImplementation 'junit:junit:4.12'//noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:26+'//noinspection GradleCompatible
+    implementation 'com.android.support:support-v4:26+'//noinspection GradleCompatible
+    implementation 'com.android.support:recyclerview-v7:26+'//noinspection GradleCompatible
     implementation 'com.android.support:design:26+'
-    implementation 'org.greenrobot:greendao:3.1.0'
     //高斯模糊
     implementation 'net.robinx:lib.blur:1.0.1'
     implementation files('libs/zxing.jar')
@@ -71,9 +50,6 @@ dependencies {
     implementation files('libs/gson-2.2.4.jar')
     // 头像
     implementation 'de.hdodenhof:circleimageview:2.0.0'
-    //黄油刀注解
-    //    compile 'com.jakewharton:butterknife:8.4.0'
-    //    apt 'com.jakewharton:butterknife-compiler:8.4.0'
     // butterknife   组件注入
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
@@ -88,8 +64,6 @@ dependencies {
     implementation project(':zylsmallvideolibrary')
     //okhttp网络请求
     implementation 'com.zhy:okhttputils:2.6.2'
-    //图片加载
-    implementation 'com.squareup.picasso:picasso:2.5.2'
     //图片浏览处理框架
     implementation 'com.lqr.imagepicker:library:1.0.0'
     //代替cardview边角和阴影色自定义
@@ -98,4 +72,6 @@ dependencies {
     //兼容低版本的动画库
     implementation files('libs/nineoldandroids-2.4.0.jar')
     implementation files('libs/volley.jar')
+    //
+    implementation "io.objectbox:objectbox-android:2.0.0"
 }

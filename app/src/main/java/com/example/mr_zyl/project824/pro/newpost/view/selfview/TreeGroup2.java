@@ -25,7 +25,7 @@ import com.example.mr_zyl.project824.utils.DisplayUtil;
 import com.example.mr_zyl.project824.utils.GeometryUtil;
 import com.example.mr_zyl.project824.utils.SystemAppUtils;
 import com.example.mr_zyl.project824.utils.ToastUtil;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -197,9 +197,9 @@ public class TreeGroup2 extends ViewGroup {
             CircleImageView civ_newpost_treegroup = (CircleImageView) view.findViewById(R.id.civ_newpost_treegroup);
             TextView tv_newpost_treegroup = (TextView) view.findViewById(R.id.tv_newpost_treegroup);
             if (tree.getUrl() != null) {
-                Picasso.with(context).load(tree.getUrl()).into(civ_newpost_treegroup);
+                ImageLoader.getInstance().displayImage(tree.getUrl(),civ_newpost_treegroup);
             } else {
-                Picasso.with(context).load(R.mipmap.ic_launcher).into(civ_newpost_treegroup);
+                ImageLoader.getInstance().displayImage("drawable://"+R.mipmap.ic_launcher,civ_newpost_treegroup);
             }
             tv_newpost_treegroup.setText(tree.getText());
             addView(view);

@@ -1,20 +1,22 @@
 package com.example.mr_zyl.project824.bean;
 
-/**
- */
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+
+@Entity
 public class UserBean {
+    @Id long id;
+    String username="";
+    String password="";
+    String sex="";
+    String content="";
 
-    private String username;
-    private String password;
-    private String sex;
-    private String content;
+    public long getId() {
+        return id;
+    }
 
-    public UserBean(String username, String password, String sex, String content) {
-        super();
-        this.username = username;
-        this.password = password;
-        this.sex = sex;
-        this.content = content;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -48,5 +50,4 @@ public class UserBean {
     public void setContent(String content) {
         this.content = content;
     }
-
 }
