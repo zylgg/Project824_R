@@ -77,7 +77,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".pro.publish.view.PlayActivity" />
         <activity android:name=".pro.mine.view.activity.MoreLevelActivity" />
         <activity android:name=".pro.mine.view.activity.CurtainActivity" />
@@ -92,7 +95,7 @@
         <activity android:name=".pro.newpost.view.Activity.FontsActivity" />
         <activity android:name=".pro.mine.view.activity.GMapActivity" />
         <activity android:name=".pro.essence.view.activity.SimpleCameraActivity" />
-        <activity android:name=".LoginActivity"/>
+        <activity android:name=".LoginActivity" />
     </application>
 
 </manifest>

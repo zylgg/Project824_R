@@ -154,11 +154,6 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
                 ResideTouch resideTouch = new ResideTouch(position == 0 ? true : false, ResideTouch.HandleTypeTagLeftBorder);
                 EventBus.getDefault().post(resideTouch);
             }
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
         });
         this.tab_essence.setupWithViewPager(this.vp_essence);
 

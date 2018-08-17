@@ -313,16 +313,16 @@ public class MyFragmentTabHost extends TabHost
     }
 
     @Override
-    public void onTabChanged(String tabId) {
+    public void onTabChanged(String tabText) {
 //        Log.i("demo","Newtabtag:"+tabId);
-        if (!TextUtils.isEmpty(tabId)&&mAttached) {
-            FragmentTransaction ft = doTabChanged(tabId, null);
+        if (!TextUtils.isEmpty(tabText)&&mAttached) {
+            FragmentTransaction ft = doTabChanged(tabText, null);
             if (ft != null) {
                 ft.commit();
             }
         }
         if (mOnTabChangeListener != null) {
-            mOnTabChangeListener.onTabChanged(tabId);
+            mOnTabChangeListener.onTabChanged(tabText);
         }
     }
 

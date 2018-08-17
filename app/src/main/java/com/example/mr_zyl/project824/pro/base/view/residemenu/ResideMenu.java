@@ -25,10 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * User: special
- * Date: 13-12-10
- * Time: 下午10:44
- * Mail: specialcyci@gmail.com
+ *
  */
 public class ResideMenu extends FrameLayout {
 
@@ -53,7 +50,6 @@ public class ResideMenu extends FrameLayout {
     private float mScaleValue = 0.6f;
 
     private static final int ROTATE_Y_ANGLE = 10;
-    private int color1, color2;
     private DecimalFormat decimalFormat = new DecimalFormat("#.0000");
 
     public ResideMenu(Context context) {
@@ -64,8 +60,6 @@ public class ResideMenu extends FrameLayout {
     public ResideMenu(Context context, View customLeftMenuId) {
         super(context);
         initViews(context, customLeftMenuId);
-        color1 = getResources().getColor(R.color.transparent);
-        color2 = getResources().getColor(R.color.transparent2);
     }
 
     private void initViews(Context context, View customLeftMenuId) {
@@ -82,8 +76,6 @@ public class ResideMenu extends FrameLayout {
         return scrollViewLeftMenu;
     }
 
-    private ImageView iv_main_background;
-
     /**
      * @param activity
      */
@@ -93,9 +85,6 @@ public class ResideMenu extends FrameLayout {
         viewActivity = new TouchDisableView(this.activity);
         ViewGroup parent1 = (ViewGroup) ll_main_content.getParent();
         parent1.removeViewAt(0);
-
-        iv_main_background = (ImageView) ll_main_content.findViewById(R.id.iv_main_background);
-        iv_main_background.setBackgroundColor(color1);
 
         viewActivity.setContent(ll_main_content);
 
@@ -122,9 +111,8 @@ public class ResideMenu extends FrameLayout {
     public void openMenu() {
 
         isOpened = true;
-        AnimatorSet animationOpen_activity = buildOpenAnimation(viewActivity, mScaleValue, mScaleValue);
+        AnimatorSet animationOpen_activity = buildOpenAnimation(viewActivity);
         animationOpen_activity.addListener(animationListener);
-//        scaleDown_activity.playTogether(scaleDown_shadow);
         animationOpen_activity.start();
     }
 
@@ -134,13 +122,13 @@ public class ResideMenu extends FrameLayout {
     public void closeMenu() {
 
         isOpened = false;
-        AnimatorSet animationUp_activity = buildUpAnimation(viewActivity, 1.0f);
+        AnimatorSet animationUp_activity = buildUpAnimation(viewActivity);
         animationUp_activity.addListener(animationListener);
         animationUp_activity.start();
     }
 
     /**
-     * 是不是左边边界
+     * 是不是左边边界(当是左边界时可滑动)
      */
     private boolean isLeftBorder=true;
 
@@ -201,13 +189,10 @@ public class ResideMenu extends FrameLayout {
 
     /**
      * @param target
-     * @param targetScaleX
-     * @param targetScaleY
      * @return
      */
-    private AnimatorSet buildOpenAnimation(View target, float targetScaleX, float targetScaleY) {
+    private AnimatorSet buildOpenAnimation(View target) {
         final float startFraction = ViewHelper.getTranslationX(target) / (getScreenWidth() * mScaleValue);
-        final int startColor = ColorUtils.blendARGB(color1, color2, startFraction);
 
         AnimatorSet scaleDown = new AnimatorSet();
         //给位移动画添加更新监听，让背景色渐变
@@ -221,7 +206,6 @@ public class ResideMenu extends FrameLayout {
                 if (menuListener != null) {
                     menuListener.transProgressRadio(Float.valueOf(decimalFormat.format(ratio)));
                 }
-                iv_main_background.setBackgroundColor(ColorUtils.blendARGB(startColor, color2, animatedFraction));
             }
         });
         ObjectAnimator menuTranslationX = ObjectAnimator.ofFloat(scrollViewLeftMenu, "translationX", 0);
@@ -236,12 +220,10 @@ public class ResideMenu extends FrameLayout {
 
     /**
      * @param target
-     * @param targetScale
      * @return
      */
-    private AnimatorSet buildUpAnimation(View target, float targetScale) {
+    private AnimatorSet buildUpAnimation(View target) {
         final float startFraction = ViewHelper.getTranslationX(target) / (getScreenWidth() * mScaleValue);
-        final int startColor = ColorUtils.blendARGB(color1, color2, startFraction);
 
         AnimatorSet scaleClose = new AnimatorSet();
         ObjectAnimator targetTranslationX = ObjectAnimator.ofFloat(target, "translationX", 0);
@@ -254,7 +236,6 @@ public class ResideMenu extends FrameLayout {
                 if (menuListener != null) {
                     menuListener.transProgressRadio(Float.valueOf(decimalFormat.format(ratio)));
                 }
-                iv_main_background.setBackgroundColor(ColorUtils.blendARGB(startColor, color1, animatedFraction));
             }
         });
         ObjectAnimator menuTranslationX = ObjectAnimator.ofFloat(scrollViewLeftMenu, "translationX", -getScreenWidth() * (1 - mScaleValue));
@@ -263,7 +244,6 @@ public class ResideMenu extends FrameLayout {
                 android.R.anim.decelerate_interpolator));
         scaleClose.setDuration(250);
 
-        iv_main_background.setBackgroundColor(color1);
         return scaleClose;
     }
 
@@ -377,8 +357,6 @@ public class ResideMenu extends FrameLayout {
                         menuListener.transProgressRadio(Float.valueOf(decimalFormat.format(ratio)));
                     }
 
-                    iv_main_background.setBackgroundColor(ColorUtils.blendARGB(color1, color2, ratio));
-
                     ViewHelper.setTranslationX(viewActivity, targetTrans);
                     ViewHelper.setTranslationX(scrollViewLeftMenu, targetTrans * ((1 - mScaleValue) / mScaleValue) - getScreenWidth() * (1 - mScaleValue));
                     lastRawX = ev.getRawX();
@@ -440,6 +418,7 @@ public class ResideMenu extends FrameLayout {
             closeMenu();
         } else {
             openMenu();
+            isLeftBorder=true;
         }
     }
 

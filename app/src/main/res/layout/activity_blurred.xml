@@ -3,19 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cl_blurred"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y720"
+        android:background="@color/transparent"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y600"
-            app:contentScrim="@color/transparent"
+            android:fitsSystemWindows="true"
+            android:background="@color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
             <!--app:contentScrim - 设置当完全CollapsingToolbarLayout折叠(收缩)后的背景颜色。-->
             <!--app:expandedTitleMarginStart - 设置扩张时候(还没有收缩时)title向左填充的距离。-->

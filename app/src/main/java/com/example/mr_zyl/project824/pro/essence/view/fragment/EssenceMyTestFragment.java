@@ -28,7 +28,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by TFHR02 on 2017/12/26.
  */
-public class EssenceMyTestFragment extends BaseFragment  {
+public class EssenceMyTestFragment extends BaseFragment {
     private static final String TAG = "EssenceMyTestFragment";
     private int mType = 0;
     private String mTitle;
@@ -64,7 +64,7 @@ public class EssenceMyTestFragment extends BaseFragment  {
     public void initContentView(View contentView) {
         EventBus.getDefault().register(this);
         rv_essence_one = ButterKnife.findById(contentView, R.id.rv_essence_one);
-        sv_bottom_menu=ButterKnife.findById(contentView,R.id.sv_bottom_menu);
+        sv_bottom_menu = ButterKnife.findById(contentView, R.id.sv_bottom_menu);
 
         adapter = new EssenceRecycleAdapter(getContext(), postlists);
         initRecyclerListener();
@@ -76,18 +76,14 @@ public class EssenceMyTestFragment extends BaseFragment  {
     }
 
     /**
-     * recyclerview高度
-     */
-    private int scollYFirstDistance;
-    /**
      * ShadowVie最大内间距
      */
-    private int maxMargin = 0,maxRadius=0;
+    private int maxMargin = 0, maxRadius = 0;
     private RecyclerView.OnScrollListener scrollListener;
 
-    private void initRecyclerListener(){
-        maxRadius = DensityUtil.getpxByDimensize(Fcontext, R.dimen.x90);
-        maxMargin = DensityUtil.getpxByDimensize(Fcontext, R.dimen.x45);
+    private void initRecyclerListener() {
+        maxRadius = (int) sv_bottom_menu.getCornerRadiusBL();
+        maxMargin = sv_bottom_menu.getShadowMarginBottom();
         scrollListener = new RecyclerView.OnScrollListener() {
 
             @Override
@@ -97,25 +93,20 @@ public class EssenceMyTestFragment extends BaseFragment  {
                 int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
 
                 if (lastVisibleItemPosition == layoutManager.getItemCount() - 1) {//从倒数第一个开始
-
-                    View lastVisiableChildView = layoutManager.findViewByPosition(lastVisibleItemPosition);
-
-                    float height=lastVisiableChildView.getHeight();
+                    int rv_height = recyclerView.computeVerticalScrollExtent();//rv高度
+                    View lastVisiableChildView = layoutManager.findViewByPosition(lastVisibleItemPosition);//最后一个view
+                    float height = lastVisiableChildView.getHeight();
                     int top = lastVisiableChildView.getTop();
-
-                    int distance =scollYFirstDistance- top;
-
+                    //最后一个view上边界，距离底部的距离
+                    int distance = rv_height - top;
                     if (distance < 0) {
                         return;
                     }
                     float scale = distance / height;
-
-                    int radius = (int) (maxRadius * (1-scale));
-                    int margin = (int) (maxMargin * (1-scale));
-
-                    sv_bottom_menu.setCornerRadius(radius,radius,radius,radius);
+                    int radius = (int) (maxRadius * (1 - scale));
+                    int margin = (int) (maxMargin * (1 - scale));
+                    sv_bottom_menu.setCornerRadius(radius, radius, radius, radius);
                     sv_bottom_menu.setShadowMargin(margin, margin, margin, margin);
-
                 }
             }
 
@@ -156,15 +147,13 @@ public class EssenceMyTestFragment extends BaseFragment  {
                     }
                     postlists.addAll(result);
                     adapter.RefreshData(postlists);
-                    scollYFirstDistance=rv_essence_one.getHeight();
-                    Log.i(TAG, "scollYFirstDistance: "+scollYFirstDistance);
                 }
             }
 
             @Override
             public void OnAfter() {
             }
-        },true);
+        }, true);
     }
 
 

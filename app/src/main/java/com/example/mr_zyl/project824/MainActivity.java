@@ -6,13 +6,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
@@ -40,6 +43,7 @@ import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.bean.ImageItem;
 import com.lqr.imagepicker.ui.ImageGridActivity;
 import com.lqr.imagepicker.ui.ImagePreviewActivity;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,36 +92,30 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         //再初始化TabHost控件
         initTabHost();
 
+        //初始化侧边布局
+        String url = "http://inews.gtimg.com/newsapp_match/0/3348583155/0";
         View view = LayoutInflater.from(this).inflate(R.layout.main_left_layout, null);
-        view.setLayoutParams(new LinearLayout.LayoutParams((int) (DisplayUtil.Width(this) * 0.8f), LinearLayout.LayoutParams.MATCH_PARENT));
+        view.setLayoutParams(new LayoutParams((int) (DisplayUtil.Width(this) * 0.8f), LayoutParams.MATCH_PARENT));
         TextView tv_main_loginOut = ButterKnife.findById(view, R.id.tv_main_loginOut);
         tv_main_loginOut.setOnClickListener(this);
+        ImageView iv_main_headImg = ButterKnife.findById(view, R.id.iv_main_headImg);
+        ImageLoader.getInstance().displayImage(url, iv_main_headImg);
 
         resideMenu = new ResideMenu(this, view);
         resideMenu.setScaleValue(0.8f);
         resideMenu.attachToActivity(this, ll_main_content);
         resideMenu.addIgnoredView(tabs);
-        resideMenu.setMenuListener(new ResideMenu.SimpleOnMenuListener(){
+        resideMenu.setMenuListener(new ResideMenu.SimpleOnMenuListener() {
             @Override
             public void transProgressRadio(float ratio) {
-                Log.i(TAG, "transProgressRadio: " + ratio);
                 EventBus.getDefault().post(new ResideDispatch(ratio));
+
+                int color1 = getResources().getColor(R.color.transparent);
+                int color2 = getResources().getColor(R.color.transparent55);
+                ImageView iv_main_background = ll_main_content.findViewById(R.id.iv_main_background);
+                iv_main_background.setBackgroundColor(ColorUtils.blendARGB(color1, color2, ratio));
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        /**
-         * 设置为横屏
-         * android:configChanges="orientation|screenSize" 切屏不重走oncreate（）方法
-         */
-        if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
-        //自动调节输入法区域
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        super.onResume();
     }
 
     /**
@@ -128,11 +126,11 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     public void onEventMainThread(ResideTouch touch) {
         if (touch != null) {
             switch (touch.getHandleType()) {
-                case ResideTouch.HandleTypeTagLeftBorder:
+                case ResideTouch.HandleTypeTagLeftBorder://处理是否可以侧滑
                     essence_vp_resideTouch = touch;
                     resideMenu.setIsLeftBorder(essence_vp_resideTouch.is_Left());
                     break;
-                case ResideTouch.HandleTypeTagToggle:
+                case ResideTouch.HandleTypeTagToggle://点按钮打开左边菜单
                     resideMenu.toggleMenu();
                     break;
             }
@@ -185,8 +183,6 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
             }
 
             View view = fragmenttabhost.getTabWidget().getChildTabViewAt(i);
-            View ll_tab_indicator_content = view.findViewById(R.id.ll_tab_indicator_content);
-            ll_tab_indicator_content.setOnClickListener(this);
             if (tabItem.getTitleid() == 0) {//只对非fragment跳转的tab 设置自定义监听
                 view.setOnClickListener(this);
             }
@@ -210,13 +206,13 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     }
 
     @Override
-    public void onTabChanged(String tabId) {
+    public void onTabChanged(String tabText) {
         //关掉tab中新的fragment
         FragmentManager Frmanager = getSupportFragmentManager();
         FragmentTransaction ft = Frmanager.beginTransaction();
 
         Fragment newfragment = Frmanager.findFragmentByTag("newfragment");
-        Fragment selectedfragment = Frmanager.findFragmentByTag(tabId);
+        Fragment selectedfragment = Frmanager.findFragmentByTag(tabText);
         if (newfragment != null && !newfragment.isDetached()) {
             ft.detach(newfragment);
         }
@@ -227,19 +223,21 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         }
         ft.commit();
 
-        if (TextUtils.isEmpty(tabId)) {//选中了空fragment选项
+        if (TextUtils.isEmpty(tabText)) {//选中了空fragment选项
 //            startActivity(new Intent(this, PlayActivity.class));
         }
+
+        //如果设置了透明状态栏，状态栏图标文字颜色默认设为白色
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         TouchDisableView touchDisableView = (TouchDisableView) resideMenu.getChildAt(1);
         touchDisableView.setTouchDisable(TouchDisableView.touchStatusNoIntercept);
 
-        if (tabId.equals(getString(R.string.main_essence_text)) && essence_vp_resideTouch != null) {
+        if (tabText.equals(getString(R.string.main_essence_text)) && essence_vp_resideTouch != null) { //只有选中精华时判断是不是在边界，
             resideMenu.setIsLeftBorder(essence_vp_resideTouch.is_Left());
         } else {
-            if (tabId.equals(getString(R.string.main_mine_text))) {
+            if (tabText.equals(getString(R.string.main_mine_text))) {
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            } else if (tabId.equals(getString(R.string.main_attention_text))) {
+            } else if (tabText.equals(getString(R.string.main_attention_text))) {
                 touchDisableView.setTouchDisable(TouchDisableView.touchStatusBySuper);
             }
             //如果不是精华页一律设置达到左边界
@@ -249,14 +247,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         for (int i = 0; i < tablists.size(); i++) {
             TabItem tabItem = tablists.get(i);
             String titleString = tabItem.getTitleString();
-            //只有选中精华时判断是不是在边界，
-            if (tabId.equals(titleString)) {
-                //选中设置为选中状态
-                tabItem.setChecked(true);
-            } else {
-                //没有选择Tab样式设置为正常
-                tabItem.setChecked(false);
-            }
+            tabItem.setChecked(tabText.equals(titleString));
         }
     }
 
@@ -265,12 +256,12 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         if (v.getId() == 0) {
             showMoreWindow();
             return;
-        }else if (v.getId()==R.id.tv_main_loginOut){
+        } else if (v.getId() == R.id.tv_main_loginOut) {
             //清除账号信息
             Box<UserBean> userBeanBox = myObjectBox.boxFor(UserBean.class);
             userBeanBox.removeAll();
 
-            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
         }
         //如果再次点击当前底部tab菜单
@@ -280,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
             event.setIs_RefreshCurrent(true);
             EventBus.getDefault().post(event);
         }
-        currenttabtag = v.getTag().toString();
+        currenttabtag = (String) v.getTag();
     }
 
     /**

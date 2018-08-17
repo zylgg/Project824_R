@@ -7,37 +7,40 @@
     android:clickable="true"
     android:orientation="vertical">
     <!--android:layout_gravity="left"-->
-    <RelativeLayout
+
+    <ImageView
+        android:id="@+id/iv_main_headImg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y480"
-        android:layout_alignParentTop="true">
+        android:scaleType="centerCrop"
+        android:src="@drawable/resource_icon" />
 
-        <ImageView
-            android:id="@+id/iv_main_headImg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/resource_icon" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/iv_main_headImg"
+        android:layout_above="@+id/tv_main_loginOut">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="?android:attr/listPreferredItemPaddingStart"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:src="@mipmap/app_icon" />
-    </RelativeLayout>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_main_loginOut"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="center_vertical"
         android:layout_gravity="bottom"
+        android:background="@drawable/item_build_default_style"
+        android:gravity="center_vertical"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-        android:text="退出登录"
-        android:background="@drawable/item_build_default_style" />
-
+        android:text="退出登录" />
 </RelativeLayout>

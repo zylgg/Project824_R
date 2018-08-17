@@ -16,7 +16,7 @@
     <color name="gray2">#e6e6e6</color>
     <!--透明色-->
     <color name="transparent">#00000000</color>
-    <color name="transparent2">#55000000</color>
+    <color name="transparent55">#55000000</color>
 
     <color name="main_bottom_text_normal">#ff847d7b</color>
     <color name="main_bottom_text_select">#ff333333</color>
