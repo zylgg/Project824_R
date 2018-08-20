@@ -1,12 +1,14 @@
 package com.example.mr_zyl.project824.pro.mine.view;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -19,6 +21,7 @@ import com.example.mr_zyl.project824.R;
 import com.example.mr_zyl.project824.bean.BuilderItemEntity;
 import com.example.mr_zyl.project824.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project824.pro.base.view.item.DefaultImpleItemBuilder;
+import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideDispatch;
 import com.example.mr_zyl.project824.pro.essence.view.selfview.PlayVideoIconView;
 import com.example.mr_zyl.project824.pro.essence.view.selfview.RingView;
 import com.example.mr_zyl.project824.pro.mine.view.activity.BlurredActivity;
@@ -44,6 +47,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 import okhttp3.Call;
 import okhttp3.Request;
 
@@ -87,16 +91,19 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
     private List<BuilderItemEntity> itemlists = new ArrayList<>();
     private Intent intent = null;
 
-
     @Override
     public int getContentView() {
         return R.layout.mine;
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+//        Log.i("tagsss","attacth_mine");
+    }
+    @Override
     public void initContentView(View viewContent) {
         ButterKnife.bind(this, viewContent);
-        //初始化自定义的构造者模式的toolbar
         initToolBar(viewContent);
         initview(viewContent);
         initlistener();
@@ -265,7 +272,6 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
         tv_fenbianlv.append(screeninfo);
         mRatingbar.setIsIndicator(false);//是否 不允许用户操作
     }
-
     /**
      * 测试下载
      */
@@ -318,4 +324,5 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
             ToastUtil.showToast(Fcontext, address);
         }
     }
+
 }

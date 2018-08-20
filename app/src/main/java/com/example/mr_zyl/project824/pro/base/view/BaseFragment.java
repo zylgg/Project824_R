@@ -70,17 +70,7 @@ public abstract class BaseFragment<P extends MvpBasePresenter> extends MvpFragme
     public void initData() {
 
     }
-    /**
-     * 根据手机版本控制view是否显示
-     * @param view
-     */
-    public void setStatusBarView(View view) {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {//如果系统不支持透明状态栏
-            view.setVisibility(View.GONE);
-        } else {
-            view.setVisibility(View.VISIBLE);
-        }
-    }
+
     /**
      * 显示加载进度dialog
      *

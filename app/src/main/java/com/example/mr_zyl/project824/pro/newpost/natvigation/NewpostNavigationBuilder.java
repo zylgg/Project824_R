@@ -22,7 +22,6 @@ public class NewpostNavigationBuilder extends NavigationBuilderAdapter{
     @Override
     public void createAndBind(ViewGroup parent) {
         super.createAndBind(parent);
-        getContentView().setBackgroundResource(getBackgroundIconRes());
         setTextViewStyle(R.id.tv_default_title);
     }
 }

@@ -24,7 +24,6 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder {
     private int titleIconRes;
     private int TitleMeasureHeigth;
     private View contentView;
-    private LinearLayout ll_toolbar_essence_contentlayou;
     private View.OnClickListener leftIconOnClickListener;
     private View.OnClickListener rightIconOnClickListener;
 
@@ -95,7 +94,6 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder {
     @Override
     public void createAndBind(ViewGroup parent) {
         contentView = LayoutInflater.from(getContext()).inflate(getLayoutId(), null, false);
-        ll_toolbar_essence_contentlayou = (LinearLayout) contentView.findViewById(R.id.ll_toolbar_essence_contentlayou);
         ViewGroup viewGroup = (ViewGroup) contentView.getParent();
         if (viewGroup != null) {
             viewGroup.removeView(contentView);
@@ -134,8 +132,7 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder {
         if (Build.VERSION.SDK_INT >= 19) {
             content.measure(0,0);
             setTitleMeasureHeigth(content.getMeasuredHeight());
-            content.getLayoutParams().height = content.getMeasuredHeight() + SystemAppUtils.getStatusHeight(context);//25dp是状态栏高度
-
+//            content.getLayoutParams().height = content.getMeasuredHeight() + SystemAppUtils.getStatusHeight(context);//25dp是状态栏高度
             content.setPadding(0, SystemAppUtils.getStatusHeight(context), 0, 0);
         }
     }
@@ -148,10 +145,6 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder {
 
     public View getContentView() {
         return contentView;
-    }
-
-    public LinearLayout getLl_toolbar_essence_contentlayou() {
-        return ll_toolbar_essence_contentlayou;
     }
 
     public int getBackgroundIconRes() {

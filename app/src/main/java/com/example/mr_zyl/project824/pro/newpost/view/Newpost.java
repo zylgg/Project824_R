@@ -3,6 +3,7 @@ package com.example.mr_zyl.project824.pro.newpost.view;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project824.R;
@@ -17,11 +18,15 @@ import com.example.mr_zyl.project824.pro.newpost.view.Activity.TreeViewActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by Mr_Zyl on 2016/8/25.
  */
 public class Newpost extends BaseFragment implements View.OnClickListener {
-    TextView tv_newpost;
+    @BindView(R.id.ll_newpost_tabcontainer)
+    LinearLayout ll_newpost_tabcontainer;
     private List<BuilderItemEntity> itemlists = new ArrayList<>();
     private DefaultImpleItemBuilder builder;
     Intent intent;
@@ -33,7 +38,8 @@ public class Newpost extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void initContentView(View viewContent) {
-        initToolBar(viewContent);
+        ButterKnife.bind(this,viewContent);
+        initToolBar(ll_newpost_tabcontainer);
 
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "滑动页面", TestMeasureActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "拓扑图", TreeViewActivity.class, -1));
@@ -44,8 +50,8 @@ public class Newpost extends BaseFragment implements View.OnClickListener {
     private void initToolBar(View viewContent) {
         NewpostNavigationBuilder builder = new NewpostNavigationBuilder(Fcontext);
         builder.setTitle("新项")
-                .setBackground(R.drawable.toolbar_background_newpost_shape)
                 .createAndBind((ViewGroup) viewContent);
+        builder.getContentView().setBackgroundResource(R.drawable.toolbar_background_newpost_shape);
     }
 
     private void initItemLayout(View viewContent) {

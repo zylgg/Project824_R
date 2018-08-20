@@ -81,8 +81,8 @@ public class Attention extends BaseFragment {
     private void initToolBar(View viewContent) {
         NewpostNavigationBuilder builder = new NewpostNavigationBuilder(Fcontext);
         builder.setTitle("关注")
-                .setBackground(R.drawable.toolbar_background_attention_shape)
                 .createAndBind((ViewGroup) viewContent);
+        builder.getContentView().setBackgroundResource(R.drawable.toolbar_background_attention_shape);
     }
 
     private void requestData() {

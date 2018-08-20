@@ -1,7 +1,12 @@
 package com.example.mr_zyl.project824.pro.essence.view;
 
 import android.animation.ValueAnimator;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,8 +15,10 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.graphics.ColorUtils;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +67,7 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
     ViewPager vp_essence;
     private EssenceNavigationBuilder builder;
     private int color1, color2;
+
     @Override
     public int getContentView() {
         return R.layout.essence;
@@ -68,14 +76,6 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
         EventBus.getDefault().register(this);
     }
 
@@ -85,33 +85,21 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
         color1 = getResources().getColor(R.color.colorAccent);
         color2 = getResources().getColor(R.color.white);
         initToolBar(ll_essence_tabcontainer);
-
         tab_essence.setBackgroundColor(color1);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    public void setStatusBarView(View view) {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {//如果系统不支持透明状态栏
-            view.setVisibility(View.GONE);
-        } else {
-            view.setVisibility(View.VISIBLE);
-        }
     }
 
     /**
      * 主页侧滑回调处理
+     * <p>
+     * 特殊处理：如果要在不设置paddingtop的情况下让activvity的多个fragment布局沉浸，
+     * 在新fragment的attach时 让上一个fragment 中实现fitsSystemWindows="true"的view执行以下两方法，
+     * view.setFitsSystemWindows(false);
+     * ViewCompat.requestApplyInsets(view);
      *
      * @param touch
      */
     public void onEventMainThread(ResideDispatch touch) {
-
         int currentColor = ColorUtils.blendARGB(color1, color2, touch.getRadio());
-
         tab_essence.setBackgroundColor(currentColor);
         builder.getContentView().setBackgroundColor(currentColor);
     }
@@ -146,7 +134,6 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
     public void initData() {
         String[] titles = getResources().getStringArray(R.array.essence_video_tab);
         EssenceAdapter adapter = new EssenceAdapter(getFragmentManager(), Arrays.asList(titles), this);
-        this.vp_essence.setOffscreenPageLimit(1);
         this.vp_essence.setAdapter(adapter);
         this.vp_essence.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -247,12 +234,6 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
     public void hide() {
         if (ll_essence_title.getTranslationY() == 0)
             createTranslate(false, builder.getTitleMeasureHeigth());
@@ -265,13 +246,13 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
     }
 
     private TextView tv_essence_title;
-    private ImageView iv_essence_left,iv_essence_right;
+    private ImageView iv_essence_left, iv_essence_right;
 
     private void createTranslate(final boolean is_open, final int scroll_max_height) {
         final int colorAccent = getContext().getResources().getColor(R.color.colorAccent);
         tv_essence_title = ButterKnife.findById(builder.getContentView(), R.id.tv_essence_title);
-        iv_essence_left=ButterKnife.findById(builder.getContentView(), R.id.iv_essence_left);
-        iv_essence_right=ButterKnife.findById(builder.getContentView(), R.id.iv_essence_right);
+        iv_essence_left = ButterKnife.findById(builder.getContentView(), R.id.iv_essence_left);
+        iv_essence_right = ButterKnife.findById(builder.getContentView(), R.id.iv_essence_right);
 
 
         ValueAnimator animation = ValueAnimator.ofInt(0, scroll_max_height);
@@ -283,8 +264,8 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
                 if (is_open) {//向下 打开
                     ll_essence_title.setTranslationY(scroll_max_height * (animatedValue - 1));
                     tv_essence_title.setTextColor(ColorUtils.blendARGB(colorAccent, Color.WHITE, animatedValue));
-                    iv_essence_left.setAlpha(255*animatedValue);
-                    iv_essence_right.setAlpha(255*animatedValue);
+                    iv_essence_left.setAlpha(255 * animatedValue);
+                    iv_essence_right.setAlpha(255 * animatedValue);
 
                     LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) vp_essence.getLayoutParams();
                     layoutParams.topMargin = (int) (scroll_max_height * (animatedValue - 1));
@@ -292,8 +273,8 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
                 } else {//向上 隐藏
                     ll_essence_title.setTranslationY(-scroll_max_height * animatedValue);
                     tv_essence_title.setTextColor(ColorUtils.blendARGB(Color.WHITE, colorAccent, animatedValue));
-                    iv_essence_left.setAlpha(255*(1-animatedValue));
-                    iv_essence_right.setAlpha(255*(1-animatedValue));
+                    iv_essence_left.setAlpha(255 * (1 - animatedValue));
+                    iv_essence_right.setAlpha(255 * (1 - animatedValue));
 
                     LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) vp_essence.getLayoutParams();
                     layoutParams.topMargin = (int) (-scroll_max_height * animatedValue);
