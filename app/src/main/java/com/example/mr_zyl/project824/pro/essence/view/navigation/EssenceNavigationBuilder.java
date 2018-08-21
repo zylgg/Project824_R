@@ -24,5 +24,6 @@ public class EssenceNavigationBuilder extends NavigationBuilderAdapter {
         setImageViewStyle(R.id.iv_essence_left,getLeftIconRes(),getLeftIconOnClickListener());
         setTextViewStyle(R.id.tv_essence_title);
         setImageViewStyle(R.id.iv_essence_right,getRightIconRes(),getRightIconOnClickListener());
+        getContentView().setBackgroundResource(getBackgroundIconRes());
     }
 }

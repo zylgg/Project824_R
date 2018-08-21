@@ -50,8 +50,8 @@ public class Newpost extends BaseFragment implements View.OnClickListener {
     private void initToolBar(View viewContent) {
         NewpostNavigationBuilder builder = new NewpostNavigationBuilder(Fcontext);
         builder.setTitle("新项")
+                .setBackground(R.drawable.toolbar_background_newpost_shape)
                 .createAndBind((ViewGroup) viewContent);
-        builder.getContentView().setBackgroundResource(R.drawable.toolbar_background_newpost_shape);
     }
 
     private void initItemLayout(View viewContent) {

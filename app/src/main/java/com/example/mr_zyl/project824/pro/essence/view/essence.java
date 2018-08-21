@@ -85,13 +85,12 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
         color1 = getResources().getColor(R.color.colorAccent);
         color2 = getResources().getColor(R.color.white);
         initToolBar(ll_essence_tabcontainer);
-        tab_essence.setBackgroundColor(color1);
     }
 
     /**
      * 主页侧滑回调处理
      * <p>
-     * 特殊处理：如果要在不设置paddingtop的情况下让activvity的多个fragment布局沉浸，
+     * 特殊处理：如果要在不设置paddingTop的情况下让activity的多个fragment布局沉浸，
      * 在新fragment的attach时 让上一个fragment 中实现fitsSystemWindows="true"的view执行以下两方法，
      * view.setFitsSystemWindows(false);
      * ViewCompat.requestApplyInsets(view);
@@ -99,14 +98,15 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
      * @param touch
      */
     public void onEventMainThread(ResideDispatch touch) {
-        int currentColor = ColorUtils.blendARGB(color1, color2, touch.getRadio());
-        tab_essence.setBackgroundColor(currentColor);
-        builder.getContentView().setBackgroundColor(currentColor);
+//        int currentColor = ColorUtils.blendARGB(color1, color2, touch.getRadio());
+//        tab_essence.setBackgroundColor(currentColor);
+//        builder.getContentView().setBackgroundColor(currentColor);
     }
 
     private void initToolBar(View viewContent) {
         builder = new EssenceNavigationBuilder(getContext());
         builder.setTitle(R.string.main_essence_text)
+                .setBackground(R.color.colorAccent)
                 .setLeftIcon(R.drawable.ic_head)
                 .setRightIcon(R.drawable.ic_cleancache)
                 .setLeftIconOnClickListener(new View.OnClickListener() {
@@ -123,9 +123,6 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
                         ClearMemoryCache();
                     }
                 }).createAndBind((ViewGroup) viewContent);
-
-        builder.getContentView().setBackgroundColor(color1);
-
     }
 
     public static final String TAB_TAG = "@zylmove@";

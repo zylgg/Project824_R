@@ -140,13 +140,13 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
                 .setLeftIconOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ToastUtil.showToast(getContext(), "left", 0);
+                        ToastUtil.showToast(getContext(), "left");
                     }
                 })
                 .setRightIconOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ToastUtil.showToast(getContext(), "right", 0);
+                        ToastUtil.showToast(getContext(), "right");
                     }
                 }).createAndBind((ViewGroup) viewContent);
     }

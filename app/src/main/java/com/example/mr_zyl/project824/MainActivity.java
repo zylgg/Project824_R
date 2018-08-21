@@ -110,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
             public void transProgressRadio(float ratio) {
                 EventBus.getDefault().post(new ResideDispatch(ratio));
 
+                //修改主页表面背景蒙层
                 int color1 = getResources().getColor(R.color.transparent);
                 int color2 = getResources().getColor(R.color.transparent55);
                 ImageView iv_main_background = ll_main_content.findViewById(R.id.iv_main_background);
