@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.TextViewCompat;
+import android.text.Layout;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 import android.util.TypedValue;
@@ -31,6 +32,12 @@ public class FontsActivity extends BaseActivity {
     TextView tv_auto_textview;
     @BindView(R.id.tv_auto_textview2)
     TextView tv_auto_textview2;
+    @BindView(R.id.tv_fonts_auto1)
+    TextView tv_fonts_auto1;
+    @BindView(R.id.tv_fonts_auto2)
+    TextView tv_fonts_auto2;
+    @BindView(R.id.tv_fonts_auto3)
+    TextView tv_fonts_auto3;
 
     private String[] mTitles = {"首页", "消息", "联系人", "更多", "首页2", "消息2", "联系人2", "更多2"};
     private int[] mIconUnselectIds = {
@@ -63,6 +70,12 @@ public class FontsActivity extends BaseActivity {
 
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(tv_auto_textview, 2, 40, 2, TypedValue.COMPLEX_UNIT_DIP);
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(tv_auto_textview2, 2, 40, 2, TypedValue.COMPLEX_UNIT_DIP);
+
+        tv_fonts_auto1.setBreakStrategy(Layout.BREAK_STRATEGY_BALANCED);
+        tv_fonts_auto2.setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY);
+
+        tv_fonts_auto1.setHyphenationFrequency(Layout.HYPHENATION_FREQUENCY_FULL);
+        tv_fonts_auto2.setHyphenationFrequency(Layout.HYPHENATION_FREQUENCY_NORMAL);
 
     }
 

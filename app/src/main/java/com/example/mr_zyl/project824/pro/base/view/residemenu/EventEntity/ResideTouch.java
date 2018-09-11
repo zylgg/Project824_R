@@ -1,7 +1,8 @@
-package com.example.mr_zyl.project824.pro.base.view.residemenu;
+package com.example.mr_zyl.project824.pro.base.view.residemenu.EventEntity;
 
 /**
  * Created by TFHR02 on 2018/2/2.
+ * 侧滑是否处于可滑动的边界 event回调实体
  */
 public class ResideTouch {
     public static final String HandleTypeTagLeftBorder="LeftBorder";

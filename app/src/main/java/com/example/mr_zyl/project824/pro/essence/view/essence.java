@@ -1,39 +1,28 @@
 package com.example.mr_zyl.project824.pro.essence.view;
 
 import android.animation.ValueAnimator;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.graphics.ColorUtils;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.mr_zyl.project824.R;
 import com.example.mr_zyl.project824.pro.base.view.BaseFragment;
-import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideDispatch;
-import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideTouch;
+import com.example.mr_zyl.project824.pro.base.view.residemenu.EventEntity.ResideTouch;
 import com.example.mr_zyl.project824.pro.essence.OnVisibilityTitleListener;
 import com.example.mr_zyl.project824.pro.essence.view.adapter.EssenceAdapter;
 import com.example.mr_zyl.project824.pro.essence.view.navigation.EssenceNavigationBuilder;
@@ -66,41 +55,14 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
     @BindView(R.id.vp_essence)
     ViewPager vp_essence;
     private EssenceNavigationBuilder builder;
-    private int color1, color2;
-
     @Override
     public int getContentView() {
         return R.layout.essence;
     }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-    }
-
     @Override
     public void initContentView(View viewContent) {
         ButterKnife.bind(this, viewContent);
-        color1 = getResources().getColor(R.color.colorAccent);
-        color2 = getResources().getColor(R.color.white);
         initToolBar(ll_essence_tabcontainer);
-    }
-
-    /**
-     * 主页侧滑回调处理
-     * <p>
-     * 特殊处理：如果要在不设置paddingTop的情况下让activity的多个fragment布局沉浸，
-     * 在新fragment的attach时 让上一个fragment 中实现fitsSystemWindows="true"的view执行以下两方法，
-     * view.setFitsSystemWindows(false);
-     * ViewCompat.requestApplyInsets(view);
-     *
-     * @param touch
-     */
-    public void onEventMainThread(ResideDispatch touch) {
-//        int currentColor = ColorUtils.blendARGB(color1, color2, touch.getRadio());
-//        tab_essence.setBackgroundColor(currentColor);
-//        builder.getContentView().setBackgroundColor(currentColor);
     }
 
     private void initToolBar(View viewContent) {

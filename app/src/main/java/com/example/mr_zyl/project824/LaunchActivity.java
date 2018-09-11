@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.mr_zyl.project824.bean.UserBean;
 import com.example.mr_zyl.project824.pro.base.view.BaseActivity;
+import com.example.mr_zyl.project824.pro.mine.view.selfview.MySnackBarUtils;
 import com.example.mr_zyl.project824.utils.StatusBarUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -110,48 +111,18 @@ public class LaunchActivity extends BaseActivity {
         List<UserBean> all = userBeanBox.getAll();
 
         if (all==null||all.size()==0){
+            new MySnackBarUtils.Builder(this).setMessage("账号信息缺失，请重新登录！").show();
             startActivity(loginIntent);
         }else{
             String db_phone=all.get(0).getUsername();
             String db_password=all.get(0).getPassword();
-            if (db_phone.equals("13651274057")&&db_password.equals("zylgg")){
+            if (db_phone.equals(LoginActivity.RightPhone)&&db_password.equals(LoginActivity.RightPass)){
                 startActivity(mainIntent);
             }else{
                 startActivity(loginIntent);
             }
         }
-
         finish();
     }
 
-    public void animate(View imageView, int durationMillis) {
-        if (imageView != null) {
-            AlphaAnimation fadeImage = new AlphaAnimation(1f, 1f);
-            fadeImage.setDuration(durationMillis);
-            fadeImage.setInterpolator(new LinearInterpolator());
-            fadeImage.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            imageView.startAnimation(fadeImage);
-
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 }

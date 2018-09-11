@@ -21,10 +21,10 @@ import android.widget.TextView;
 import com.example.mr_zyl.project824.R;
 import com.example.mr_zyl.project824.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project824.pro.mine.view.fragment.BlurredTabfragment;
-import com.example.mr_zyl.project824.pro.mine.view.selfview.MySnackbarUtils;
+import com.example.mr_zyl.project824.pro.mine.view.selfview.MySnackBarUtils;
 import com.example.mr_zyl.project824.pro.mine.view.selfview.SlideView;
-import com.example.mr_zyl.project824.utils.SnackbarUtils;
 import com.example.mr_zyl.project824.utils.StatusBarUtils;
+import com.example.mr_zyl.project824.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -111,13 +111,10 @@ public class BlurredActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.civ_blurred_head:
-                SnackbarUtils.Long(cl_blurred, "点击了头像！")
-                        .gravityCoordinatorLayout(Gravity.TOP).paddingTop(100)
-                        .backColor(getResources().getColor(R.color.green))
-                        .show();
+                ToastUtil.showToast(this,"点击了头像！");
                 break;
             case R.id.iv_blurred_title:
-                new MySnackbarUtils.Builder(BlurredActivity.this)
+                new MySnackBarUtils.Builder(BlurredActivity.this)
                         .setCoverStatusBar(true)
                         .setLayoutGravity(Gravity.TOP)
                         .setIcon(R.mipmap.ic_launcher)

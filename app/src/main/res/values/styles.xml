@@ -6,9 +6,12 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/zaozigongfang</item>
     </style>
+    <style name="TransTheme" parent="@style/BaseAppTheme">
+        <item name="colorPrimaryDark">@color/transparent</item>
+        <item name="android:fontFamily">@font/zaozigongfang</item>
+    </style>
     <style name="AppTheme" parent="@style/BaseAppTheme">
     </style>
-
 
     <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">@color/colorAccent</item>

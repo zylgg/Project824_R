@@ -76,15 +76,40 @@
                 android:theme="@style/InputStyle" />
         </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/bt_login_main"
+        <RelativeLayout
+            android:id="@+id/rl_login_main"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/click_bg_selector"
-            android:onClick="LoginMain"
-            android:text="登录"
-            android:textColor="@drawable/click_color_selector" />
+            android:layout_marginTop="30dp">
+
+            <Button
+                android:id="@+id/bt_login_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="@drawable/click_bg_selector"
+                android:onClick="LoginMain"
+                android:text="登录"
+                android:textColor="@drawable/click_color_selector" />
+
+            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                android:id="@+id/mpb_login_loading"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                app:mpb_determinateCircularProgressStyle="dynamic"
+                android:layout_centerHorizontal="true" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lav_animation_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:lottie_autoPlay="false"
+                app:lottie_fileName="examination_done.json"
+                app:lottie_imageAssetsFolder="images"
+                app:lottie_loop="false" />
+
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

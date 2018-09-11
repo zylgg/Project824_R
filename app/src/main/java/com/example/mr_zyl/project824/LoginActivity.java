@@ -1,6 +1,7 @@
 package com.example.mr_zyl.project824;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
@@ -10,8 +11,10 @@ import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,10 +24,12 @@ import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.mr_zyl.project824.bean.UserBean;
 import com.example.mr_zyl.project824.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project824.utils.StatusBarUtils;
@@ -35,6 +40,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.objectbox.Box;
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 import static com.example.mr_zyl.project824.BaseApplication.myObjectBox;
 
@@ -54,22 +60,37 @@ public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.ll_login)
     LinearLayout ll_login;
+    @BindView(R.id.rl_login_main)
+    RelativeLayout rl_login_main;
+
     @BindView(R.id.bt_login_main)
     Button bt_login_main;
-    private Uri uri;
+
+    private Uri local_video_uri;
+    @BindView(R.id.mpb_login_loading)
+    MaterialProgressBar mpb_login_loading;
+
+    @BindView(R.id.lav_animation_view)
+    LottieAnimationView lav_animation_view;
+
+    /**
+     * 弹起软键盘窗体 需要滚动的高度
+     */
+    private int scrollHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtils.setTransparent(this);
-        uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.login);
-        initView(uri);
+        mpb_login_loading.setVisibility(View.GONE);
+        local_video_uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.login);
+        initBackVideo(local_video_uri);
 
         //禁止手机号复制粘贴
         tiet_login_phone.setTextIsSelectable(false);
         tiet_login_phone.setLongClickable(false);
 
-        controlKeyboardLayout(bt_login_main);
+        controlKeyboardLayout(rl_login_main);
     }
 
     @Override
@@ -77,7 +98,20 @@ public class LoginActivity extends BaseActivity {
         return R.layout.activity_login;
     }
 
-    int srollHeight;
+
+    public void initBackVideo(Uri uri) {
+        //播放路径
+        jcv_login_videopic.setVideoURI(uri);
+        //播放
+        jcv_login_videopic.start();
+        //循环播放
+        jcv_login_videopic.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                jcv_login_videopic.start();
+            }
+        });
+    }
 
     /**
      * @param scrollToView 被键盘遮挡的scrollToView，滚动root,使scrollToView在root可视区域的底部
@@ -101,34 +135,19 @@ public class LoginActivity extends BaseActivity {
                             // 获取scrollToView在窗体的坐标
                             scrollToView.getLocationInWindow(location);
                             // 计算root滚动高度，使scrollToView在可见区域的底部
-                            srollHeight += (location[1] + scrollToView.getHeight()) - rect.bottom;
+                            scrollHeight += (location[1] + scrollToView.getHeight()) - rect.bottom;
                         } else { // 软键盘没有弹出来的时候
-                            srollHeight = 0;
+                            scrollHeight = 0;
                         }
-                        ll_login.scrollTo(0, srollHeight);
+                        ll_login.scrollTo(0, scrollHeight);
                     }
                 });
     }
 
-    public void initView(Uri uri) {
-        //播放路径
-        jcv_login_videopic.setVideoURI(uri);
-        //播放
-        jcv_login_videopic.start();
-        //循环播放
-        jcv_login_videopic.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                jcv_login_videopic.start();
-            }
-        });
-    }
-
-
     @Override
     protected void onRestart() {
         //返回重新加载
-        initView(uri);
+        initBackVideo(local_video_uri);
         super.onRestart();
     }
 
@@ -148,39 +167,78 @@ public class LoginActivity extends BaseActivity {
      * @param V
      */
     public void LoginMain(View V) {
+        bt_login_main.setEnabled(false);
+        bt_login_main.setText("");
+        mpb_login_loading.setVisibility(View.VISIBLE);
+        //模拟网络加载
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mpb_login_loading.setVisibility(View.GONE);
+                checkLogins();
+            }
+        }, 1500);
 
+    }
+
+    /**
+     * 正确的手机号
+     */
+    public static final String RightPhone = "13651274057";
+    /**
+     * 正确的密码
+     */
+    public static final String RightPass = "zylgg";
+    public static final String phoneErrorLog="手机号输入有误";
+    public static final String passwordErrorLog="密码输入有误";
+
+    private void checkLogins() {
         //获取缓存的账号信息
-
         String phone = tiet_login_phone.getText().toString();
         String password = tiet_login_password.getText().toString();
         Box<UserBean> userBeanBox = myObjectBox.boxFor(UserBean.class);
         List<UserBean> all = userBeanBox.getAll();
-        if ((all == null || all.size() == 0) && phone.equals("13651274057") && password.equals("zylgg")) {//没缓存时且输入正确时，保存到数据库
-            UserBean bean = new UserBean();
-            bean.setUsername(phone);
-            bean.setPassword(password);
-            userBeanBox.put(bean);
-            isInputPhoneSuccess = true;
-            isInputPasswordSuccess = true;
+        if ((all == null || all.size() == 0)) {//没缓存时且输入正确时，保存到数据库
+            isInputPhoneSuccess = phone.equals(RightPhone);
+            isInputPasswordSuccess = password.equals(RightPass);
+            if (isInputPhoneSuccess && isInputPasswordSuccess) {
+                UserBean bean = new UserBean();
+                bean.setUsername(phone);
+                bean.setPassword(password);
+                userBeanBox.put(bean);
+            }
         } else {//有缓存，判断输入是否正确
             String catch_phone = all.get(0).getUsername();
             String catch_password = all.get(0).getPassword();
-            if (phone.equals(catch_phone)) {
-                isInputPhoneSuccess = true;
-            } else {
-                til_login_phone.setError("手机号输入有误");
-            }
-            if (password.equals(catch_password)) {
-                isInputPasswordSuccess = true;
-            } else {
-                til_login_password.setError("密码输入有误");
-            }
+            isInputPhoneSuccess = phone.equals(catch_phone);
+            isInputPasswordSuccess = password.equals(catch_password);
         }
+
+        if (!isInputPhoneSuccess && isInputPasswordSuccess) {
+            til_login_phone.setError(phoneErrorLog);
+        } else if (isInputPhoneSuccess && !isInputPasswordSuccess) {
+            til_login_password.setError(passwordErrorLog);
+        } else if (!isInputPhoneSuccess && !isInputPasswordSuccess) {
+            til_login_phone.setError(phoneErrorLog);
+            til_login_password.setError(passwordErrorLog);
+        }
+
         if (!isInputPasswordSuccess || !isInputPhoneSuccess) {
+            bt_login_main.setEnabled(true);
+            bt_login_main.setText("登录");
             return;
         }
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
+
+        //开始加载成功的动画
+        lav_animation_view.setVisibility(View.VISIBLE);
+        lav_animation_view.playAnimation();
+        lav_animation_view.addAnimatorListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
+            }
+        });
     }
 
 }

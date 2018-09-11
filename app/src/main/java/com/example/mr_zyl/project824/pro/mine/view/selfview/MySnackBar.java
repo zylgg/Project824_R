@@ -26,7 +26,7 @@ import com.example.mr_zyl.project824.R;
 /**
  * Created by TFHR02 on 2017/9/6.
  */
-public class MySnackbar extends LinearLayout {
+public class MySnackBar extends LinearLayout {
 
     private Animation slideInAnimation;
     private Animation slideOutAnimation;
@@ -44,19 +44,19 @@ public class MySnackbar extends LinearLayout {
     private GestureDetectorCompat detectorCompat;
 
     private int horizontalDX;
-    private MySnackbarUtils mySnackbarUtils;
+    private MySnackBarUtils mySnackbarUtils;
 
 
-    public MySnackbar(@NonNull final Context context) {
+    public MySnackBar(@NonNull final Context context) {
         this(context, null);
     }
 
-    public MySnackbar(@NonNull final Context context, MySnackbarUtils mySnackbarUtils) {
+    public MySnackBar(@NonNull final Context context, MySnackBarUtils mySnackbarUtils) {
         this(context, null, 0);
         this.mySnackbarUtils = mySnackbarUtils;
     }
 
-    public MySnackbar(@NonNull final Context context, @Nullable final AttributeSet attrs,
+    public MySnackBar(@NonNull final Context context, @Nullable final AttributeSet attrs,
                       final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initViews(context);
@@ -211,7 +211,7 @@ public class MySnackbar extends LinearLayout {
 //        setBackgroundResource(R.drawable.green_rect_shape);
     }
 
-    public void setParams(final MySnackbarUtils.Params params) {
+    public void setParams(final MySnackBarUtils.Params params) {
         if (params != null) {
             duration = params.duration;
             layoutGravity = params.layoutGravity;
@@ -368,8 +368,8 @@ public class MySnackbar extends LinearLayout {
                 } else {
                     ViewParent parent = getParent();
                     if (parent != null) {
-                        MySnackbar.this.clearAnimation();
-                        ((ViewGroup) parent).removeView(MySnackbar.this);
+                        MySnackBar.this.clearAnimation();
+                        ((ViewGroup) parent).removeView(MySnackBar.this);
                     }
                 }
             }

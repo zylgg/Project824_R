@@ -1,7 +1,6 @@
 package com.example.mr_zyl.project824;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +11,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -24,15 +22,14 @@ import com.example.mr_zyl.project824.bean.TabItem;
 import com.example.mr_zyl.project824.bean.UserBean;
 import com.example.mr_zyl.project824.pro.attention.view.Attention;
 import com.example.mr_zyl.project824.pro.base.view.MyFragmentTabHost;
-import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideDispatch;
 import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideMenu;
-import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideTouch;
+import com.example.mr_zyl.project824.pro.base.view.residemenu.EventEntity.ResideTouch;
 import com.example.mr_zyl.project824.pro.base.view.residemenu.TouchDisableView;
 import com.example.mr_zyl.project824.pro.essence.refreshEvent;
 import com.example.mr_zyl.project824.pro.essence.view.activity.SimpleCameraActivity;
 import com.example.mr_zyl.project824.pro.essence.view.essence;
 import com.example.mr_zyl.project824.pro.mine.view.Mine;
-import com.example.mr_zyl.project824.pro.mine.view.selfview.MySnackbarUtils;
+import com.example.mr_zyl.project824.pro.mine.view.selfview.MySnackBarUtils;
 import com.example.mr_zyl.project824.pro.newpost.view.Newpost;
 import com.example.mr_zyl.project824.pro.publish.view.Publish;
 import com.example.mr_zyl.project824.pro.publish.view.SimpleTakePhotoActivity;
@@ -108,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         resideMenu.setMenuListener(new ResideMenu.SimpleOnMenuListener() {
             @Override
             public void transProgressRadio(float ratio) {
-                EventBus.getDefault().post(new ResideDispatch(ratio));
 
                 //修改主页表面背景蒙层
                 int color1 = getResources().getColor(R.color.transparent);
@@ -198,9 +194,8 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         if (System.currentTimeMillis() - lasttime < 2000) {
             ((BaseApplication) this.getApplication()).exit(0);
         } else {
-            new MySnackbarUtils.Builder(this)
+            MySnackBarUtils.getBuilder(this)
                     .setMessage("再点击一次退出" + getString(R.string.app_name))
-                    .setMessageColor(R.color.white)
                     .show();
         }
         lasttime = System.currentTimeMillis();
@@ -224,10 +219,10 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         }
         ft.commit();
 
+
         if (TextUtils.isEmpty(tabText)) {//选中了空fragment选项
 //            startActivity(new Intent(this, PlayActivity.class));
         }
-
         //如果设置了透明状态栏，状态栏图标文字颜色默认设为白色
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         TouchDisableView touchDisableView = (TouchDisableView) resideMenu.getChildAt(1);

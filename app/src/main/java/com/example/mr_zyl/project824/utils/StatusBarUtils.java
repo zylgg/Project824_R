@@ -46,6 +46,11 @@ public class StatusBarUtils {
     /**
      * 设置状态栏全透明
      *
+     * 特殊处理：如果要在不设置paddingTop的情况下让activity的多个fragment布局沉浸，
+     * 在新fragment的attach时 让上一个fragment 中实现fitsSystemWindows="true"的view执行以下两方法，
+     * view.setFitsSystemWindows(false);
+     * ViewCompat.requestApplyInsets(view);
+     *
      * @param activity 需要设置的activity
      */
     public static void setTransparent(Activity activity) {

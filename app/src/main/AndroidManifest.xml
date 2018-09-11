@@ -85,7 +85,7 @@
         <activity android:name=".pro.mine.view.activity.MoreLevelActivity" />
         <activity android:name=".pro.mine.view.activity.CurtainActivity" />
         <activity android:name=".pro.mine.view.activity.FastBlurActivity" />
-        <activity android:name=".pro.mine.view.activity.BlurredActivity" />
+        <activity android:name=".pro.mine.view.activity.BlurredActivity" android:theme="@style/TransTheme"/>
         <activity android:name=".pro.mine.view.activity.LoadGifActivity" />
         <activity android:name=".pro.mine.view.activity.QRImageActivity" />
         <activity android:name=".pro.newpost.view.Activity.TestMeasureActivity" />

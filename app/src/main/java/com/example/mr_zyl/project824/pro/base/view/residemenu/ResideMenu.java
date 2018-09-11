@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * 自定义的侧滑布局
  */
 public class ResideMenu extends FrameLayout {
 

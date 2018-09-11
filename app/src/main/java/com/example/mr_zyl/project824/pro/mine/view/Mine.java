@@ -8,7 +8,6 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -21,7 +20,6 @@ import com.example.mr_zyl.project824.R;
 import com.example.mr_zyl.project824.bean.BuilderItemEntity;
 import com.example.mr_zyl.project824.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project824.pro.base.view.item.DefaultImpleItemBuilder;
-import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideDispatch;
 import com.example.mr_zyl.project824.pro.essence.view.selfview.PlayVideoIconView;
 import com.example.mr_zyl.project824.pro.essence.view.selfview.RingView;
 import com.example.mr_zyl.project824.pro.mine.view.activity.BlurredActivity;
@@ -47,7 +45,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 import okhttp3.Call;
 import okhttp3.Request;
 

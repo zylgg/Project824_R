@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 /**
+ * 控制MainActivity 是否可触摸的布局
  */
 public class TouchDisableView extends FrameLayout {
 

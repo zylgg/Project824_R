@@ -2,17 +2,12 @@ package com.example.mr_zyl.project824.pro.mine.view.selfview;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.PixelFormat;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.Toast;
 
 import com.example.mr_zyl.project824.pro.mine.view.impl.OnActionClickListener;
@@ -24,19 +19,25 @@ import java.lang.reflect.Field;
  * Created by TFHR02 on 2017/9/6.
  */
 
-public class MySnackbarUtils {
+public class MySnackBarUtils {
+    private static MySnackBarUtils mySnackBarUtils;
     private static Toast mToast;
-    private static final String TAG = "MySnackbarUtils";
-    private MySnackbar mySnackbarView;
+    private static final String TAG = "MySnackBarUtils";
+    private MySnackBar mySnackBarView;
     private Activity context;
+    private static Builder mBuilder;
 
-    private MySnackbarUtils() {
+    public static Builder getBuilder(Activity context) {
+        if (mBuilder==null){
+            mBuilder=new Builder(context);
+        }
+        return mBuilder;
     }
 
-    private MySnackbarUtils(Activity context, Params params) {
+    private MySnackBarUtils(Activity context, Params params) {
         this.context = context;
-        this.mySnackbarView = new MySnackbar(context, this);
-        this.mySnackbarView.setParams(params);
+        this.mySnackBarView = new MySnackBar(context, this);
+        this.mySnackBarView.setParams(params);
     }
 
     public void show() {
@@ -46,8 +47,8 @@ public class MySnackbarUtils {
             mToast.cancel();
             mToast = new Toast(context);
         }
-        mToast.setView(mySnackbarView);
-        mToast.setGravity(mySnackbarView.getLayoutGravity(), 0, 0);
+        mToast.setView(mySnackBarView);
+        mToast.setGravity(mySnackBarView.getLayoutGravity(), 0, 0);
         mToast.setDuration(Toast.LENGTH_LONG);
 
         try {
@@ -59,14 +60,12 @@ public class MySnackbarUtils {
                         && mParams instanceof WindowManager.LayoutParams) {
                     WindowManager.LayoutParams params = (WindowManager.LayoutParams) mParams;
 
-                    int flag = params.flags =WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                                    | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-//                                    | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-                            ;
+                    int flag = params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                            | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 
                     int coverFlag = flag | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
-                    params.type=WindowManager.LayoutParams.TYPE_TOAST;
-                    params.flags = mySnackbarView.isCoverStatusBar() ? coverFlag : flag;
+                    params.type = WindowManager.LayoutParams.TYPE_TOAST;
+                    params.flags = mySnackBarView.isCoverStatusBar() ? coverFlag : flag;
                 }
             }
         } catch (Exception e) {
@@ -87,7 +86,7 @@ public class MySnackbarUtils {
     }
 
     public void dismiss() {
-        if (mToast!=null){
+        if (mToast != null) {
             mToast.cancel();
         }
     }
@@ -98,9 +97,6 @@ public class MySnackbarUtils {
 
         public Activity context;
 
-        /**
-         * Create a builder for an cookie.
-         */
         public Builder(Activity activity) {
             this.context = activity;
         }
@@ -178,24 +174,18 @@ public class MySnackbarUtils {
             return this;
         }
 
-        /**
-         * 只对 不覆盖状态栏时有效
-         *
-         * @param layoutGravity
-         * @return
-         */
         public Builder setLayoutGravity(int layoutGravity) {
             params.layoutGravity = layoutGravity;
             return this;
         }
 
-        public MySnackbarUtils create() {
-            MySnackbarUtils cookie = new MySnackbarUtils(context, params);
+        private MySnackBarUtils create() {
+            MySnackBarUtils cookie = new MySnackBarUtils(context, params);
             return cookie;
         }
 
-        public MySnackbarUtils show() {
-            final MySnackbarUtils cookie = create();
+        public MySnackBarUtils show() {
+            final MySnackBarUtils cookie = create();
             cookie.show();
             return cookie;
         }
@@ -203,7 +193,7 @@ public class MySnackbarUtils {
 
     final static class Params {
 
-        boolean isCoverStatusBar=true;
+        boolean isCoverStatusBar = true;
 
         public String title;
 
