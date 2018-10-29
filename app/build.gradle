@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "com.example.mr_zyl.project824"
         minSdkVersion 17
-        targetSdkVersion 23
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -77,5 +77,4 @@ dependencies {
     implementation 'io.objectbox:objectbox-android:2.0.0'
     //lottie 动画播放
     implementation 'com.airbnb.android:lottie:2.6.0-beta19'
-
 }

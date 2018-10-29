@@ -1,11 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_blurred_list"
+<com.example.mr_zyl.project824.pro.base.view.refreshview.XRefreshView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/xrv_blurred_tab_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.example.mr_zyl.project824.pro.base.view.refreshview.XNestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
-        />
-</LinearLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:gravity="center"
+                android:text="大标题-中标题-小标题" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_blurred_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent" />
+
+            <TextView
+                android:id="@+id/tv_Completed_log"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="亲，已看完！"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+    </com.example.mr_zyl.project824.pro.base.view.refreshview.XNestedScrollView>
+
+</com.example.mr_zyl.project824.pro.base.view.refreshview.XRefreshView>

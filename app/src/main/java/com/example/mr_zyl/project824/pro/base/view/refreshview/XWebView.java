@@ -4,37 +4,30 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 
+/**
+ * Created by 2144 on 2017/4/25.
+ */
+
 public class XWebView extends WebView {
-	private OnScrollBottomListener _listener;
-	private int _calCount;
 
-	public interface OnScrollBottomListener {
-		void srollToBottom();
-	}
+    public XWebView(Context context) {
+        super(context);
+    }
 
-	public void registerOnBottomListener(OnScrollBottomListener l) {
-		_listener = l;
-	}
+    public XWebView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
 
-	public void unRegisterOnBottomListener() {
-		_listener = null;
-	}
+    public XWebView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-	public XWebView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-	}
+    public boolean isBottom() {
+        return computeVerticalScrollRange() == getHeight() + getScrollY();
+    }
 
-	@Override
-	protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-		if (this.getHeight() + this.getScrollY() == getHeight()) {
-			_calCount++;
-			if (_calCount == 1) {
-				if (_listener != null) {
-					_listener.srollToBottom();
-				}
-			}
-		} else {
-			_calCount = 0;
-		}
-	}
+    @Override
+    public int computeVerticalScrollRange() {
+        return super.computeVerticalScrollRange();
+    }
 }

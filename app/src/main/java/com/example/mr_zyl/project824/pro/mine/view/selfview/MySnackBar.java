@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project824.R;
+import com.example.mr_zyl.project824.utils.SystemAppUtils;
 
 /**
  * Created by TFHR02 on 2017/9/6.
@@ -72,19 +73,32 @@ public class MySnackBar extends LinearLayout {
 
     private void initViews(Context context) {
         setOrientation(LinearLayout.VERTICAL);
+        addView(inflate(getContext(),R.layout.layout_toast_item,null));
 
-        inflate(getContext(), R.layout.layout_toast_item, this);
+        View view=getChildAt(0);
+        int statusH=SystemAppUtils.getStatusHeight(context);
+        view.setPadding(view.getPaddingLeft(),statusH,view.getPaddingRight(),view.getPaddingBottom());
+        view.measure(0,0);
+        LayoutParams params= (LayoutParams) view.getLayoutParams();
+        params.height=view.getMeasuredHeight();
+        view.setLayoutParams(params);
+
         contentview = findViewById(R.id.cookie);
         contentview.getLayoutParams().width=context.getResources().getDisplayMetrics().widthPixels;
         viewDragHelper = ViewDragHelper.create(this, dragCallback);
         detectorCompat = new GestureDetectorCompat(getContext(), onGestureListener);
 
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        tvTitle.setVisibility(View.GONE);
         tvMessage = (TextView) findViewById(R.id.tv_message);
+        tvMessage.setVisibility(View.GONE);
         ivIcon = (ImageView) findViewById(R.id.iv_icon);
         btnAction = (TextView) findViewById(R.id.btn_action);
+        btnAction.setVisibility(View.GONE);
         btnActionWithIcon = (ImageView) findViewById(R.id.btn_action_with_icon);
+        btnActionWithIcon.setVisibility(View.GONE);
         initDefaultStyle(context);
+
     }
 
     private GestureDetector.OnGestureListener onGestureListener = new GestureDetector.SimpleOnGestureListener() {

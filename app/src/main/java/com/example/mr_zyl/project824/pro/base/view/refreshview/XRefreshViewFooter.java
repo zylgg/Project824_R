@@ -1,5 +1,8 @@
 package com.example.mr_zyl.project824.pro.base.view.refreshview;
 
+import com.example.mr_zyl.project824.R;
+import com.example.mr_zyl.project824.pro.base.view.refreshview.callback.IFooterCallBack;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -7,9 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.example.mr_zyl.project824.R;
-import com.example.mr_zyl.project824.pro.base.view.refreshview.callback.IFooterCallBack;
 
 
 public class XRefreshViewFooter extends LinearLayout implements IFooterCallBack {
@@ -125,5 +125,4 @@ public class XRefreshViewFooter extends LinearLayout implements IFooterCallBack 
     @Override
     public int getFooterHeight() {
         return getMeasuredHeight();
-    }
-}
+    }}

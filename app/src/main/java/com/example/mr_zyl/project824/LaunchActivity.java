@@ -3,12 +3,16 @@ package com.example.mr_zyl.project824;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -110,15 +114,15 @@ public class LaunchActivity extends BaseActivity {
         Box<UserBean> userBeanBox = myObjectBox.boxFor(UserBean.class);
         List<UserBean> all = userBeanBox.getAll();
 
-        if (all==null||all.size()==0){
+        if (all == null || all.size() == 0) {
             new MySnackBarUtils.Builder(this).setMessage("账号信息缺失，请重新登录！").show();
             startActivity(loginIntent);
-        }else{
-            String db_phone=all.get(0).getUsername();
-            String db_password=all.get(0).getPassword();
-            if (db_phone.equals(LoginActivity.RightPhone)&&db_password.equals(LoginActivity.RightPass)){
+        } else {
+            String db_phone = all.get(0).getUsername();
+            String db_password = all.get(0).getPassword();
+            if (db_phone.equals(LoginActivity.RightPhone) && db_password.equals(LoginActivity.RightPass)) {
                 startActivity(mainIntent);
-            }else{
+            } else {
                 startActivity(loginIntent);
             }
         }

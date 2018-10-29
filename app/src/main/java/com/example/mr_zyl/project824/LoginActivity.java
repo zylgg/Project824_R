@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -33,6 +34,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.mr_zyl.project824.bean.UserBean;
 import com.example.mr_zyl.project824.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project824.utils.StatusBarUtils;
+import com.example.mr_zyl.project824.utils.SystemAppUtils;
 import com.example.mr_zyl.project824.utils.ToastUtil;
 
 import java.util.List;
@@ -102,8 +104,14 @@ public class LoginActivity extends BaseActivity {
     public void initBackVideo(Uri uri) {
         //播放路径
         jcv_login_videopic.setVideoURI(uri);
-        //播放
-        jcv_login_videopic.start();
+        jcv_login_videopic.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+               // VIDEO_SCALING_MODE_SCALE_TO_FIT：适应屏幕显示
+               // VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING：充满屏幕显示，保持比例，如果屏幕比例不对，则进行裁剪
+                mp.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT);
+            }
+        });
         //循环播放
         jcv_login_videopic.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -111,6 +119,8 @@ public class LoginActivity extends BaseActivity {
                 jcv_login_videopic.start();
             }
         });
+        //播放
+        jcv_login_videopic.start();
     }
 
     /**
@@ -126,7 +136,7 @@ public class LoginActivity extends BaseActivity {
                         // 获取root在窗体的可视区域
                         ll_login.getWindowVisibleDisplayFrame(rect);
                         // 当前视图最外层的高度减去现在所看到的视图的最底部的y坐标
-                        int rootInvisibleHeight = ll_login.getRootView().getHeight() - rect.bottom;
+                        int rootInvisibleHeight = ll_login.getRootView().getHeight() - rect.bottom - SystemAppUtils.getStatusHeight(LoginActivity.this);
                         Log.i("tag", "最外层的高度" + ll_login.getRootView().getHeight());
                         // 若rootInvisibleHeight高度大于100，则说明当前视图上移了，说明软键盘弹出了
                         if (rootInvisibleHeight > 100) {
@@ -189,8 +199,8 @@ public class LoginActivity extends BaseActivity {
      * 正确的密码
      */
     public static final String RightPass = "zylgg";
-    public static final String phoneErrorLog="手机号输入有误";
-    public static final String passwordErrorLog="密码输入有误";
+    public static final String phoneErrorLog = "手机号输入有误";
+    public static final String passwordErrorLog = "密码输入有误";
 
     private void checkLogins() {
         //获取缓存的账号信息

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cookie"
     android:layout_width="match_parent"
-    android:layout_height="65dp"
+    android:layout_height="45dp"
     android:paddingLeft="10dp"
     android:background="@color/default_bg_color"
     android:gravity="center_vertical"
@@ -31,8 +31,7 @@
             android:text="Title"
             android:textColor="@android:color/white"
             android:fontFamily="@font/webfont"
-            android:textSize="18sp"
-            android:visibility="gone" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tv_message"
@@ -42,8 +41,7 @@
             android:fontFamily="@font/webfont"
             android:text="message..."
             android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:visibility="gone" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -57,15 +55,14 @@
         android:gravity="bottom"
         android:text="ACTION"
         android:textColor="@color/default_action_color"
-        android:textSize="14sp"
-        android:visibility="gone" />
+        android:textSize="14sp" />
 
     <ImageView
         android:id="@+id/btn_action_with_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
-        android:gravity="bottom"
-        android:visibility="gone" />
+        android:src="@drawable/ic_launcher"
+        android:gravity="bottom" />
 
 </LinearLayout>

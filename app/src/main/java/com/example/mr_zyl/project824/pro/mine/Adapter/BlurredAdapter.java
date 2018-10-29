@@ -27,6 +27,7 @@ public class BlurredAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, null);
+        view.setBackgroundResource(R.color.blue);
         return new MyViewHolder(view);
     }
 

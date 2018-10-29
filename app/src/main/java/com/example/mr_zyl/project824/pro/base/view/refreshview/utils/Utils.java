@@ -1,5 +1,8 @@
 package com.example.mr_zyl.project824.pro.base.view.refreshview.utils;
 
+import java.lang.reflect.Method;
+
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -16,8 +19,6 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.mr_zyl.project824.pro.base.view.refreshview.recyclerview.BaseRecyclerAdapter;
-
-import java.lang.reflect.Method;
 
 public class Utils {
 
@@ -236,5 +237,4 @@ public class Utils {
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics.widthPixels;
-    }
-}
+    }}

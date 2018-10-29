@@ -28,6 +28,7 @@ import com.example.mr_zyl.project824.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BlurredActivity extends BaseActivity {
@@ -53,6 +54,9 @@ public class BlurredActivity extends BaseActivity {
     @BindView(R.id.tl_blurred_tablist)
     TabLayout tl_blurred_tablist;
     Window mwindow;
+    public enum ShopAppBarLayoutOpenStatus {
+        wholeOpen, other,wholeClose;
+    }
     @Override
     protected int initLayoutId() {
         return R.layout.activity_blurred;
@@ -90,9 +94,16 @@ public class BlurredActivity extends BaseActivity {
                 if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
                     mwindow.setStatusBarColor(ColorUtils.blendARGB(Color.TRANSPARENT,getResources().getColor(R.color.white),expandedPercentage));
 //                    mwindow.setNavigationBarColor(ColorUtils.blendARGB(Color.TRANSPARENT,Color.WHITE,expandedPercentage));
+
+
                     if (expandedPercentage==1){
+                        EventBus.getDefault().post(ShopAppBarLayoutOpenStatus.wholeClose);
                         mwindow.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                    }else if (expandedPercentage==0){
+                        EventBus.getDefault().post(ShopAppBarLayoutOpenStatus.wholeOpen);
+                        mwindow.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
                     }else{
+                        EventBus.getDefault().post(ShopAppBarLayoutOpenStatus.other);
                         mwindow.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
                     }
                 }

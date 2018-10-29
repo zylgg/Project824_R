@@ -91,7 +91,8 @@ public class BitmapUtil {
                         QR_HEIGHT / 2);
                 canvas.drawBitmap(logoBmp, (QR_WIDTH - logoWidth) / 2,
                         (QR_HEIGHT - logoHeight) / 2, null);
-                canvas.save(Canvas.ALL_SAVE_FLAG);
+//                canvas.save(Canvas.ALL_SAVE_FLAG);
+                canvas.save();
                 canvas.restore();
                 return bitmap;
             } catch (Exception e) {
@@ -187,7 +188,8 @@ public class BitmapUtil {
         cv.drawBitmap(markBMP, srcBMP.getWidth() - markBMP.getWidth(),
                 srcBMP.getHeight()- markBMP.getHeight(), null);
         // 保存
-        cv.save(Canvas.ALL_SAVE_FLAG);
+        cv.save();
+//        canvas.save(Canvas.ALL_SAVE_FLAG);
         // 存储
         cv.restore();
         return newb;
@@ -207,7 +209,8 @@ public class BitmapUtil {
         canvas.drawBitmap(background, 0, 0, null);
         canvas.drawBitmap(foreground, (bgWidth - fgWidth) / 2,
                 (bgHeight - fgHeight) /2, null);
-        canvas.save(Canvas.ALL_SAVE_FLAG);
+        canvas.save();
+//        canvas.save(Canvas.ALL_SAVE_FLAG);
         canvas.restore();
         return newmap;
     }
