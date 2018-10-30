@@ -34,11 +34,12 @@ public class StatusBarUtils {
             View v = activity.getWindow().getDecorView();
             v.setSystemUiVisibility(View.GONE);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             View decorView = activity.getWindow().getDecorView();
             int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+//             | View.SYSTEM_UI_FLAG_FULLSCREEN
             decorView.setSystemUiVisibility(uiOptions);
         }
     }
