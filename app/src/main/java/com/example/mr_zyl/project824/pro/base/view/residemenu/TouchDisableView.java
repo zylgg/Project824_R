@@ -14,11 +14,11 @@ public class TouchDisableView extends FrameLayout {
 
     private View mContent;
 
-    public static final int touchStatusIntercept=1;
-    public static final int touchStatusNoIntercept=0;
-    public static final int touchStatusBySuper=-1;
+    public static final int touchStatusIntercept = 1;
+    public static final int touchStatusNoIntercept = 0;
+    public static final int touchStatusBySuper = -1;
 
-    private int  mTouchDisabled = 0;
+    private int mTouchDisabled = 0;
 
     public TouchDisableView(Context context) {
         this(context, null);
@@ -62,9 +62,9 @@ public class TouchDisableView extends FrameLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if (mTouchDisabled==1){
+        if (mTouchDisabled == touchStatusIntercept) {
             return true;
-        }else if (mTouchDisabled==0){
+        } else if (mTouchDisabled == touchStatusNoIntercept) {
             return false;
         }
         return super.onInterceptTouchEvent(ev);

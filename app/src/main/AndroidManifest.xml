@@ -43,7 +43,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data android:name="android.notch_support" android:value="true"/>
+        <!--华为对刘海屏的技术指导-->
+        <!--<meta-data android:name="android.notch_support" android:value="true"/>-->
+        <!--统一各大厂商的显示方案：申明更高的宽高比，适配了刘海屏-->
+        <meta-data android:name="android.max_aspect"  android:value="2.1"/>
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="43898fd97ccdad6f5dee63d81d243508" />

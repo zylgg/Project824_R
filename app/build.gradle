@@ -3,7 +3,7 @@ apply plugin: 'io.objectbox'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "com.example.mr_zyl.project824"
@@ -50,7 +50,7 @@ dependencies {
     implementation files('libs/gson-2.2.4.jar')
     // 头像  https://github.com/hdodenhof/CircleImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-    // butterknife   组件注入
+    // butterKnife   组件注入
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     //拍照，录制短视频
@@ -63,11 +63,11 @@ dependencies {
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     //视频播放库
     implementation project(':zylsmallvideolibrary')
-    //okhttp网络请求
+    //okHttp网络请求
     implementation 'com.zhy:okhttputils:2.6.2'
     //仿微信图片浏览处理框架
     implementation 'com.lqr.imagepicker:library:1.0.0'
-    //代替cardview边角和阴影色自定义
+    //代替cardView边角和阴影色自定义
     implementation 'com.loopeer.lib:shadow:0.0.3'
     implementation files('libs/AMap3DMap_5.6.0_AMapNavi_5.4.0_AMapSearch_5.5.0_AMapLocation_3.6.1_20171128.jar')
     //兼容低版本的动画库

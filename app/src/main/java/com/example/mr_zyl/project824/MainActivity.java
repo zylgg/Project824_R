@@ -226,17 +226,22 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         //如果设置了透明状态栏，状态栏图标文字颜色默认设为白色
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         TouchDisableView touchDisableView = (TouchDisableView) resideMenu.getChildAt(1);
+        //初始化，让子布局不自己拦截事件
         touchDisableView.setTouchDisable(TouchDisableView.touchStatusNoIntercept);
 
-        if (tabText.equals(getString(R.string.main_essence_text)) && essence_vp_resideTouch != null) { //只有选中精华时判断是不是在边界，
+        //“精华”时判断是不是在边界，
+        if (tabText.equals(getString(R.string.main_essence_text)) && essence_vp_resideTouch != null) {
             resideMenu.setIsLeftBorder(essence_vp_resideTouch.is_Left());
         } else {
+            //在“我”时，设置状态栏图标文字颜色为黑色
             if (tabText.equals(getString(R.string.main_mine_text))) {
                 getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            } else if (tabText.equals(getString(R.string.main_attention_text))) {
+            }
+            //在“关注”时触摸事件交给父布局处理
+            else if (tabText.equals(getString(R.string.main_attention_text))) {
                 touchDisableView.setTouchDisable(TouchDisableView.touchStatusBySuper);
             }
-            //如果不是精华页一律设置达到左边界
+            //如果不是精华页一律设置达到左边界，便于可以（默认）打开侧滑
             resideMenu.setIsLeftBorder(true);
         }
         //重置Tab样式

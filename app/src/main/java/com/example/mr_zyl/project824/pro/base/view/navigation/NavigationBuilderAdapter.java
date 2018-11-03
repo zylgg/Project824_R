@@ -132,7 +132,6 @@ public abstract class NavigationBuilderAdapter implements NavigationBuilder {
         if (Build.VERSION.SDK_INT >= 19) {
             content.measure(0,0);
             setTitleMeasureHeigth(content.getMeasuredHeight());
-//            content.getLayoutParams().height = content.getMeasuredHeight() + SystemAppUtils.getStatusHeight(context);//25dp是状态栏高度
             content.setPadding(0, SystemAppUtils.getStatusHeight(context), 0, 0);
         }
     }
