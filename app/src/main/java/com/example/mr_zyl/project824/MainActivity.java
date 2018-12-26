@@ -254,10 +254,10 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == 0) {
+        if (v.getId() == 0) {//“+”菜单
             showMoreWindow();
             return;
-        } else if (v.getId() == R.id.tv_main_loginOut) {
+        } else if (v.getId() == R.id.tv_main_loginOut) {//退出登录
             //清除账号信息
             Box<UserBean> userBeanBox = myObjectBox.boxFor(UserBean.class);
             userBeanBox.removeAll();
