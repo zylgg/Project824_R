@@ -3,6 +3,7 @@ package com.example.mr_zyl.project824;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
@@ -17,6 +18,9 @@ import com.zhy.http.okhttp.cookie.CookieJarImpl;
 import com.zhy.http.okhttp.cookie.store.PersistentCookieStore;
 import com.zhy.http.okhttp.log.LoggerInterceptor;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -32,11 +36,12 @@ import okhttp3.OkHttpClient;
  */
 public class BaseApplication extends MultiDexApplication {
     public static BoxStore myObjectBox;
+
     @Override
     public void onCreate() {
         super.onCreate();
-
-        myObjectBox= MyObjectBox.builder().androidContext(this).build();
+        closeAndroidPDialog();
+        myObjectBox = MyObjectBox.builder().androidContext(this).build();
         initUniversalImageLoader();
         initImagePicker();
 
@@ -139,5 +144,31 @@ public class BaseApplication extends MultiDexApplication {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
+    }
+
+    /**
+     * 关闭android P版本以上的debug模式应用 调用未开放的api 提示框
+     */
+    private void closeAndroidPDialog() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            try {
+                Class aClass = Class.forName("android.content.pm.PackageParser$Package");
+                Constructor declaredConstructor = aClass.getDeclaredConstructor(String.class);
+                declaredConstructor.setAccessible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                Class cls = Class.forName("android.app.ActivityThread");
+                Method declaredMethod = cls.getDeclaredMethod("currentActivityThread");
+                declaredMethod.setAccessible(true);
+                Object activityThread = declaredMethod.invoke(null);
+                Field mHiddenApiWarningShown = cls.getDeclaredField("mHiddenApiWarningShown");
+                mHiddenApiWarningShown.setAccessible(true);
+                mHiddenApiWarningShown.setBoolean(activityThread, true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

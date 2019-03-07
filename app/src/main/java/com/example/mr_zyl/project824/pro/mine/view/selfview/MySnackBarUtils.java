@@ -2,6 +2,7 @@ package com.example.mr_zyl.project824.pro.mine.view.selfview;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
@@ -66,6 +67,9 @@ public class MySnackBarUtils {
                     int coverFlag = flag | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
                     params.type = WindowManager.LayoutParams.TYPE_TOAST;
                     params.flags = mySnackBarView.isCoverStatusBar() ? coverFlag : flag;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        params.layoutInDisplayCutoutMode=WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+                    }
                 }
             }
         } catch (Exception e) {
@@ -80,6 +84,7 @@ public class MySnackBarUtils {
         Field field = object.getClass().getDeclaredField(fieldName);
         if (field != null) {
             field.setAccessible(true);
+            //返回对象obj中表示字段的值
             return field.get(object);
         }
         return null;
