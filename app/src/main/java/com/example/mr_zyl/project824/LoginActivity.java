@@ -116,7 +116,7 @@ public class LoginActivity extends BaseActivity {
         jcv_login_videopic.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
-                jcv_login_videopic.start();
+//                jcv_login_videopic.start();
             }
         });
         //播放

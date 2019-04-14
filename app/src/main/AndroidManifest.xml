@@ -46,7 +46,9 @@
         <!--华为对刘海屏的技术指导-->
         <!--<meta-data android:name="android.notch_support" android:value="true"/>-->
         <!--统一各大厂商的显示方案：申明更高的宽高比，适配了刘海屏-->
-        <meta-data android:name="android.max_aspect"  android:value="2.1"/>
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="43898fd97ccdad6f5dee63d81d243508" />
@@ -74,7 +76,9 @@
 
         <activity
             android:name=".LaunchActivity"
-            android:theme="@style/LaunchTheme">
+            android:screenOrientation="portrait"
+            android:theme="@style/LaunchTheme"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -92,8 +96,7 @@
         <activity android:name=".pro.mine.view.activity.FastBlurActivity" />
         <activity
             android:name=".pro.mine.view.activity.BlurredActivity"
-            android:theme="@style/TransTheme">
-        </activity>
+            android:theme="@style/TransTheme"></activity>
         <activity android:name=".pro.mine.view.activity.LoadGifActivity" />
         <activity android:name=".pro.mine.view.activity.QRImageActivity" />
         <activity android:name=".pro.newpost.view.Activity.TestMeasureActivity" />
@@ -102,7 +105,9 @@
         <activity android:name=".pro.publish.view.SimpleTakePhotoActivity" />
         <activity android:name=".pro.newpost.view.Activity.FontsActivity" />
         <activity android:name=".pro.mine.view.activity.GMapActivity" />
-        <activity android:name=".pro.essence.view.activity.SimpleCameraActivity" />
+        <activity
+            android:name=".pro.essence.view.activity.SimpleCameraActivity"
+            android:theme="@style/LaunchTheme" />
     </application>
 
 </manifest>

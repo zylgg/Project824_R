@@ -1,11 +1,14 @@
 package com.example.mr_zyl.project824.pro.essence.view.activity;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.cjt2325.cameralibrary.JCameraView;
@@ -14,6 +17,8 @@ import com.cjt2325.cameralibrary.listener.ErrorListener;
 import com.cjt2325.cameralibrary.listener.JCameraListener;
 import com.example.mr_zyl.project824.R;
 import com.example.mr_zyl.project824.pro.base.view.BaseActivity;
+import com.example.mr_zyl.project824.utils.StatusBarUtils;
+import com.example.mr_zyl.project824.utils.SystemAppUtils;
 
 import java.io.File;
 
@@ -24,20 +29,7 @@ public class SimpleCameraActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= 19) {
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        } else {
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(option);
-        }
+        StatusBarUtils.setFullActivity(this);
         //1.1.1
         jCameraView = findViewById(R.id.jcameraview);
 
@@ -100,10 +92,36 @@ public class SimpleCameraActivity extends BaseActivity {
     }
 
     @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        StatusBarUtils.setFullActivity(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
+        fullscreen(this);
         jCameraView.onResume();
     }
+
+    /**
+     * 显示与隐藏状态栏的代码如下：
+     *
+     * @param activity
+     */
+    private void fullscreen(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            if (SystemAppUtils.getBottomStatusHeight(activity) == 0) {
+//                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//半透明状态栏
+                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            } else {
+                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            }
+            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);//透明状态栏
+        }
+    }
+
     @Override
     protected void onPause() {
         super.onPause();

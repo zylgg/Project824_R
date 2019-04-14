@@ -1,5 +1,6 @@
 package com.example.mr_zyl.project824;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -31,6 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.objectbox.Box;
 
@@ -44,19 +47,26 @@ public class LaunchActivity extends BaseActivity {
     TextView tv_remainingTime;
 
     @Override
-    protected int initLayoutId() {
-        return R.layout.activity_launch;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtils.setFullActivity(this);
+
         timers.start();
 //        ToastUtil.showToast(this,"2*2="+ MathKit.square(2));
         ImageLoader.getInstance().displayImage(
                 "drawable://" + R.drawable.hai,
                 iv_launch_hai, new AnimateFirstDisplayListener());
+    }
+
+    @Override
+    protected int initLayoutId() {
+        return R.layout.activity_launch;
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        StatusBarUtils.setFullActivity(this);
     }
 
     @OnClick(R.id.tv_remainingTime)

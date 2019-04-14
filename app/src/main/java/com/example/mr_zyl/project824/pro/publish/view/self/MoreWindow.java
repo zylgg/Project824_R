@@ -50,7 +50,7 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
         mHeight = LinearLayout.LayoutParams.MATCH_PARENT;
 
         setWidth(mWidth);
-        setHeight(DisplayUtil.Height(mContext)- SystemAppUtils.getStatusHeight(mContext));
+        setHeight(DisplayUtil.Height(mContext));
     }
 
     public void showMoreWindow(View anchor, int bottomMargin) {
