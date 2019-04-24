@@ -1,6 +1,7 @@
 package com.example.mr_zyl.project824.pro.newpost.view;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -27,6 +28,9 @@ import butterknife.ButterKnife;
 public class Newpost extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.ll_newpost_tabcontainer)
     LinearLayout ll_newpost_tabcontainer;
+
+    @BindView(R.id.tv_toyjjy)
+    TextView tv_toyjjy;
     private List<BuilderItemEntity> itemlists = new ArrayList<>();
     private DefaultImpleItemBuilder builder;
     Intent intent;
@@ -45,6 +49,13 @@ public class Newpost extends BaseFragment implements View.OnClickListener {
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "拓扑图", TreeViewActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "全局修改字体", FontsActivity.class, -1));
         initItemLayout(viewContent);
+        tv_toyjjy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("yj://main.bjsy"));
+                startActivity(intent);
+            }
+        });
     }
 
     private void initToolBar(View viewContent) {

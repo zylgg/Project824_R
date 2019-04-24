@@ -11,7 +11,13 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
-
+        <TextView
+            android:id="@+id/tv_labeledText"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="易捷八百泉广博（GuangBo）一二三四看法家埃里克但是积分米长粒香5kg"
+            android:textSize="18dp"
+            android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,20 +67,22 @@
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/red"
-                android:text="广博（GuangBo）一二三四五六"/>
+                android:breakStrategy="simple"
+                android:text="广博（GuangBo）一二三四五六阿萨德发射点发岁的发"/>
             <TextView
                 android:id="@+id/tv_fonts_auto2"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/green"
-                android:text="广博（GuangBo）一二三四五六"/>
+                android:breakStrategy="high_quality"
+                android:text="广博（GuangBo）一二三四五六阿萨德发射点发第三方"/>
             <TextView
                 android:id="@+id/tv_fonts_auto3"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/blue"
-                android:text="广博（GuangBo）一二三四五六"
-                android:breakStrategy="simple"/>
+                android:text="广博（GuangBo）一二三四五六阿萨德发射点发岁的发斯蒂芬"
+                android:breakStrategy="balanced"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
