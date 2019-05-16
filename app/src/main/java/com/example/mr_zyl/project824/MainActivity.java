@@ -36,6 +36,7 @@ import com.example.mr_zyl.project824.pro.publish.view.SimpleTakePhotoActivity;
 import com.example.mr_zyl.project824.pro.publish.view.self.MoreWindow;
 import com.example.mr_zyl.project824.utils.DisplayUtil;
 import com.example.mr_zyl.project824.utils.StatusBarUtils;
+import com.example.mr_zyl.project824.view.TimeTableView;
 import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.bean.ImageItem;
 import com.lqr.imagepicker.ui.ImageGridActivity;
@@ -43,6 +44,7 @@ import com.lqr.imagepicker.ui.ImagePreviewActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -90,13 +92,8 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         initTabHost();
 
         //初始化侧边布局
-        String url = "http://inews.gtimg.com/newsapp_match/0/3348583155/0";
         View view = LayoutInflater.from(this).inflate(R.layout.main_left_layout, null);
-        view.setLayoutParams(new LayoutParams((int) (DisplayUtil.Width(this) * 0.8f), LayoutParams.MATCH_PARENT));
-        TextView tv_main_loginOut = ButterKnife.findById(view, R.id.tv_main_loginOut);
-        tv_main_loginOut.setOnClickListener(this);
-        ImageView iv_main_headImg = ButterKnife.findById(view, R.id.iv_main_headImg);
-        ImageLoader.getInstance().displayImage(url, iv_main_headImg);
+        initLeftMenu(view);
 
         resideMenu = new ResideMenu(this, view);
         resideMenu.setScaleValue(0.8f);
@@ -113,6 +110,27 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
                 iv_main_background.setBackgroundColor(ColorUtils.blendARGB(color1, color2, ratio));
             }
         });
+    }
+
+    /**
+     * 初始化侧边栏布局
+     *
+     * @param view
+     */
+    private void initLeftMenu(View view) {
+        view.setLayoutParams(new LayoutParams((int) (DisplayUtil.Width(this) * 0.8f), LayoutParams.MATCH_PARENT));
+        TextView tv_main_loginOut = ButterKnife.findById(view, R.id.tv_main_loginOut);
+        tv_main_loginOut.setOnClickListener(this);
+        ImageView iv_main_headImg = ButterKnife.findById(view, R.id.iv_main_headImg);
+        String url = "http://inews.gtimg.com/newsapp_match/0/3348583155/0";
+        ImageLoader.getInstance().displayImage(url, iv_main_headImg);
+        TimeTableView timeTable_view = ButterKnife.findById(view, R.id.timeTable_view);
+        Calendar calendar = Calendar.getInstance();
+        int hours = calendar.getTime().getHours();
+        int minutes = calendar.getTime().getMinutes();
+        int seconds = calendar.getTime().getSeconds();
+        timeTable_view.setTime(hours, minutes, seconds);
+        timeTable_view.start();
     }
 
     /**

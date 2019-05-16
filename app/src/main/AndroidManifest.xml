@@ -87,8 +87,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:screenOrientation="portrait" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".pro.publish.view.PlayActivity" />
         <activity android:name=".pro.mine.view.activity.MoreLevelActivity" />

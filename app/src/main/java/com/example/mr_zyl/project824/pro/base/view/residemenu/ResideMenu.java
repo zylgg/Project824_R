@@ -65,6 +65,7 @@ public class ResideMenu extends FrameLayout {
     private void initViews(Context context, View customLeftMenuId) {
 
         if (customLeftMenuId != null) {
+            //第一个子view
             addView(customLeftMenuId);
             scrollViewLeftMenu = customLeftMenuId;
         } else {
@@ -87,7 +88,7 @@ public class ResideMenu extends FrameLayout {
         parent1.removeViewAt(0);
 
         viewActivity.setContent(ll_main_content);
-
+        //第二个子view
         addView(viewActivity);
 
         parent1.addView(this);

@@ -15,8 +15,11 @@
             android:id="@+id/tv_labeledText"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:text="易捷八百泉广博（GuangBo）一二三四看法家埃里克但是积分米长粒香5kg"
-            android:textSize="18dp"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:lineSpacingExtra="6dp"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"

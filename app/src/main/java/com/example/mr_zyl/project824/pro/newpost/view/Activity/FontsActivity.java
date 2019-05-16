@@ -34,6 +34,7 @@ import android.widget.TextView;
 
 import com.example.mr_zyl.project824.R;
 import com.example.mr_zyl.project824.pro.base.view.BaseActivity;
+import com.example.mr_zyl.project824.pro.newpost.view.selfview.CenterAlignImageSpan;
 import com.example.mr_zyl.project824.utils.DensityUtil;
 import com.example.mr_zyl.project824.utils.TextDrawUtils;
 
@@ -101,7 +102,7 @@ public class FontsActivity extends BaseActivity {
         spannable.setSpan(new ImageSpan(TextDrawUtils.getTagDrawable(this, tag, R.drawable.labeled_text_shape)), 0, tag.length(), ImageSpan.ALIGN_BASELINE);
 
         int tag2Start = tag.length() + kongGe.length();
-        spannable.setSpan(new ImageSpan(TextDrawUtils.getTagDrawable(this, tag2, R.drawable.labeled_text_shape2)), tag2Start, tag2Start + tag2.length(), ImageSpan.ALIGN_BASELINE);
+        spannable.setSpan(new CenterAlignImageSpan(TextDrawUtils.getTagDrawable(this, tag2, R.drawable.labeled_text_shape2)), tag2Start, tag2Start + tag2.length(), ImageSpan.ALIGN_BASELINE);
         tv_labeledText.setText(spannable);
     }
 

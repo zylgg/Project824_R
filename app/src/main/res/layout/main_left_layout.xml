@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_left_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:clickable="true"
+    android:focusable="false"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
     <!--android:layout_gravity="left"-->
 
@@ -15,21 +19,36 @@
         android:scaleType="centerCrop"
         android:src="@drawable/resource_icon" />
 
-    <LinearLayout
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:src="@mipmap/app_icon" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/iv_main_headImg"
-        android:layout_above="@+id/tv_main_loginOut">
+        android:layout_above="@+id/tv_main_loginOut"
+        android:layout_below="@+id/iv_main_headImg">
+        <com.example.mr_zyl.project824.view.TimeTableView
+            android:id="@+id/timeTable_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:background="#fff"
+            app:borderColor="#96FF4081"
+            app:borderWidth="1dp"
+            app:centerPointColor="#96FF4081"
+            app:centerPointRadiu="2dp"
+            app:centerPointType="circle"
+            app:textColor="#96FF4081"
+            app:selectedTextColor="#FF4081"
+            app:textSize="15dp" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:src="@mipmap/app_icon" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_main_loginOut"
@@ -40,7 +59,7 @@
         android:background="@drawable/item_build_default_style"
         android:gravity="center_vertical"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
         android:text="退出登录" />
 </RelativeLayout>
