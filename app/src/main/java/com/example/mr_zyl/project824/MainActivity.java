@@ -11,6 +11,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -34,9 +36,15 @@ import com.example.mr_zyl.project824.pro.newpost.view.Newpost;
 import com.example.mr_zyl.project824.pro.publish.view.Publish;
 import com.example.mr_zyl.project824.pro.publish.view.SimpleTakePhotoActivity;
 import com.example.mr_zyl.project824.pro.publish.view.self.MoreWindow;
+import com.example.mr_zyl.project824.utils.DateUtils;
 import com.example.mr_zyl.project824.utils.DisplayUtil;
 import com.example.mr_zyl.project824.utils.StatusBarUtils;
-import com.example.mr_zyl.project824.view.TimeTableView;
+import com.example.mr_zyl.project824.view.AutoRotateDayView;
+import com.example.mr_zyl.project824.view.AutoRotateHoursView;
+import com.example.mr_zyl.project824.view.AutoRotateMinuteView;
+import com.example.mr_zyl.project824.view.AutoRotateMonthView;
+import com.example.mr_zyl.project824.view.AutoRotateSecondView;
+import com.example.mr_zyl.project824.view.AutoRotateWeekView;
 import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.bean.ImageItem;
 import com.lqr.imagepicker.ui.ImageGridActivity;
@@ -112,6 +120,15 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         });
     }
 
+    private AutoRotateSecondView timeView_second;
+    private AutoRotateMinuteView timeView_minute;
+    private AutoRotateHoursView timeView_hours;
+    private AutoRotateWeekView timeView_week;
+    private AutoRotateDayView timeView_day;
+    private AutoRotateMonthView timeView_month;
+    private TextView timeView_year;
+    private View v_dividing2;
+
     /**
      * 初始化侧边栏布局
      *
@@ -124,13 +141,82 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         ImageView iv_main_headImg = ButterKnife.findById(view, R.id.iv_main_headImg);
         String url = "http://inews.gtimg.com/newsapp_match/0/3348583155/0";
         ImageLoader.getInstance().displayImage(url, iv_main_headImg);
-        TimeTableView timeTable_view = ButterKnife.findById(view, R.id.timeTable_view);
+
+        timeView_second = ButterKnife.findById(view, R.id.timeView_second);
+        timeView_minute = ButterKnife.findById(view, R.id.timeView_minute);
+        timeView_hours = ButterKnife.findById(view, R.id.timeView_hours);
+        timeView_week = ButterKnife.findById(view, R.id.timeView_week);
+        timeView_day = ButterKnife.findById(view, R.id.timeView_day);
+        timeView_month = ButterKnife.findById(view, R.id.timeView_month);
+        timeView_year = ButterKnife.findById(view, R.id.timeView_year);
+        v_dividing2 = ButterKnife.findById(view, R.id.v_dividing2);
+        initListener();
+        setData();
+    }
+
+    private void initListener() {
+        //设置因月份的改变，改变年和天的监听
+        timeView_month.setChangeTimeListener(new AutoRotateMonthView.OnChangeTimeListener() {
+            @Override
+            public void changeYear(final int year) {
+                timeView_year.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        timeView_year.setText("" + year);
+                    }
+                });
+            }
+
+            @Override
+            public void changeDay(final int count) {
+                timeView_day.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        timeView_day.setTime(1, count);
+                    }
+                });
+            }
+        });
+        //秒钟绘制完后，设置水平渐变条的宽度
+        final ViewTreeObserver viewTreeObserver = timeView_second.getViewTreeObserver();
+        viewTreeObserver.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                if (viewTreeObserver.isAlive()) {
+                    viewTreeObserver.removeOnPreDrawListener(this);
+                }
+                ViewGroup.LayoutParams layoutParams = v_dividing2.getLayoutParams();
+                layoutParams.width = timeView_second.getViewMaxWidth();
+                v_dividing2.setLayoutParams(layoutParams);
+                return true;
+            }
+        });
+    }
+
+    private void setData() {
         Calendar calendar = Calendar.getInstance();
-        int hours = calendar.getTime().getHours();
-        int minutes = calendar.getTime().getMinutes();
-        int seconds = calendar.getTime().getSeconds();
-        timeTable_view.setTime(hours, minutes, seconds);
-        timeTable_view.start();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int week = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hours = calendar.get(Calendar.HOUR_OF_DAY);
+        int minutes = calendar.get(Calendar.MINUTE);
+        int seconds = calendar.get(Calendar.SECOND);
+
+//        Log.i("Calendar_years", "-" + year);
+//        Log.i("Calendar_month", "-" + month);
+        Log.i("Calendar_week", "-" + week);
+//        Log.i("Calendar_day", "-" + day);
+//        Log.i("Calendar_hours", "-" + hours);
+//        Log.i("Calendar_minutes", "-" + minutes);
+//        Log.i("Calendar_seconds", "-" + seconds);
+
+        timeView_second.setTime(seconds).start();
+        timeView_minute.setTime(minutes).start();
+        timeView_hours.setTime(hours).start();
+        timeView_week.setTime(week).start();
+        timeView_day.setTime(day, DateUtils.getDays(year, month)).start();
+        timeView_month.setTime(month, DateUtils.getDays(year, month)).start();
     }
 
     /**

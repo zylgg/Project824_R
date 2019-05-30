@@ -32,21 +32,58 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/tv_main_loginOut"
-        android:layout_below="@+id/iv_main_headImg">
-        <com.example.mr_zyl.project824.view.TimeTableView
-            android:id="@+id/timeTable_view"
+        android:layout_below="@+id/iv_main_headImg"
+        android:background="#000000">
+        <com.example.mr_zyl.project824.view.AutoRotateSecondView
+            android:id="@+id/timeView_second"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:background="#fff"
-            app:borderColor="#96FF4081"
-            app:borderWidth="1dp"
-            app:centerPointColor="#96FF4081"
-            app:centerPointRadiu="2dp"
-            app:centerPointType="circle"
-            app:textColor="#96FF4081"
-            app:selectedTextColor="#FF4081"
-            app:textSize="15dp" />
+            app:circleRadiusScale="5/14"/>
+
+        <com.example.mr_zyl.project824.view.AutoRotateMinuteView
+            android:id="@+id/timeView_minute"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:circleRadiusScale="5/14"/>
+
+        <com.example.mr_zyl.project824.view.AutoRotateHoursView
+            android:id="@+id/timeView_hours"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:circleRadiusScale="5/14"/>
+
+        <com.example.mr_zyl.project824.view.AutoRotateWeekView
+            android:id="@+id/timeView_week"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.example.mr_zyl.project824.view.AutoRotateDayView
+            android:id="@+id/timeView_day"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.example.mr_zyl.project824.view.AutoRotateMonthView
+            android:id="@+id/timeView_month"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/timeView_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="4dp"
+            android:text="2019"
+            android:textColor="#ffffff"
+            android:textSize="12dp" />
+
+        <View
+            android:id="@+id/v_dividing2"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/myshape"
+            android:visibility="visible" />
 
     </RelativeLayout>
 

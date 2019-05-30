@@ -25,8 +25,8 @@
         <attr name="autoLoadMore" format="boolean" />
     </declare-styleable>
     <declare-styleable name="RingView">
-        <attr name="ringtextcolor" format="color"/>
-        <attr name="pecentColor" format="color"/>
+        <attr name="ringtextcolor" format="color" />
+        <attr name="pecentColor" format="color" />
     </declare-styleable>
     <declare-styleable name="PlayVideoIconView">
         <attr name="themecolor" format="color"></attr>
@@ -44,66 +44,50 @@
     </declare-styleable>
     <declare-styleable name="Cookie">
         <!--TextColor-->
-        <attr name="cookieTitleColor" format="color"/>
-        <attr name="cookieMessageColor" format="color"/>
-        <attr name="cookieActionColor" format="color"/>
-        <attr name="cookieBackgroundColor" format="color"/>
+        <attr name="cookieTitleColor" format="color" />
+        <attr name="cookieMessageColor" format="color" />
+        <attr name="cookieActionColor" format="color" />
+        <attr name="cookieBackgroundColor" format="color" />
         <!--TextSize-->
-        <attr name="titleTextSize" format="dimension"/>
-        <attr name="messageTextSize" format="dimension"/>
-        <attr name="actionTextSize" format="dimension"/>
+        <attr name="titleTextSize" format="dimension" />
+        <attr name="messageTextSize" format="dimension" />
+        <attr name="actionTextSize" format="dimension" />
     </declare-styleable>
     <declare-styleable name="MsgView">
         <!-- 圆角矩形背景色 -->
-        <attr name="mv_backgroundColor" format="color"/>
+        <attr name="mv_backgroundColor" format="color" />
         <!-- 圆角弧度,单位dp-->
-        <attr name="mv_cornerRadius" format="dimension"/>
+        <attr name="mv_cornerRadius" format="dimension" />
         <!-- 圆角弧度,单位dp-->
-        <attr name="mv_strokeWidth" format="dimension"/>
+        <attr name="mv_strokeWidth" format="dimension" />
         <!-- 圆角边框颜色-->
-        <attr name="mv_strokeColor" format="color"/>
+        <attr name="mv_strokeColor" format="color" />
         <!-- 圆角弧度是高度一半-->
-        <attr name="mv_isRadiusHalfHeight" format="boolean"/>
+        <attr name="mv_isRadiusHalfHeight" format="boolean" />
         <!-- 圆角矩形宽高相等,取较宽高中大值-->
-        <attr name="mv_isWidthHeightEqual" format="boolean"/>
+        <attr name="mv_isWidthHeightEqual" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="ExpandableTextView">
-        <attr name="maxCollapsedLines" format="integer"/>
-        <attr name="animDuration" format="integer"/>
-        <attr name="animAlphaStart" format="float"/>
-        <attr name="expandDrawable" format="reference"/>
-        <attr name="collapseDrawable" format="reference"/>
+        <attr name="maxCollapsedLines" format="integer" />
+        <attr name="animDuration" format="integer" />
+        <attr name="animAlphaStart" format="float" />
+        <attr name="expandDrawable" format="reference" />
+        <attr name="collapseDrawable" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="TimeView">
-        <attr name="borderWidth" format="dimension"/>
-        <attr name="borderColor" format="color"/>
-        <attr name="circleBackground" format="color"/>
-        <attr name="minScaleColor" format="color"/>
-        <attr name="midScaleColor" format="color"/>
-        <attr name="maxScaleColor" format="color"/>
-        <attr name="minScaleLength" format="dimension"/>
-        <attr name="midScaleLength" format="dimension"/>
-        <attr name="maxScaleLength" format="dimension"/>
-        <attr name="textColor" format="color"/>
-        <attr name="selectedTextColor" format="color"/>
-        <attr name="textSize" format="dimension"/>
-        <attr name="isDrawText" format="boolean"/>
-        <attr name="secondPointerColor" format="color"/>
-        <attr name="minPointerColor" format="color"/>
-        <attr name="hourPointerColor" format="color"/>
-        <attr name="secondPointerLength" format="dimension"/>
-        <attr name="minPointerLength" format="dimension"/>
-        <attr name="hourPointerLength" format="dimension"/>
-        <attr name="secondPointerSize" format="dimension"/>
-        <attr name="minPointerSize" format="dimension"/>
-        <attr name="hourPointerSize" format="dimension"/>
-        <attr name="centerPointColor" format="color"/>
-        <attr name="centerPointSize" format="dimension"/>
-        <attr name="centerPointRadiu" format="dimension"/>
-        <attr name="centerPointType" format="string"/>
-        <attr name="isSecondGoSmooth" format="boolean"/>
-
+        <attr name="borderWidth" format="dimension" />
+        <attr name="borderColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="isDrawText" format="boolean" />
+        <attr name="centerPointColor" format="color" />
+        <attr name="centerPointSize" format="dimension" />
+        <attr name="centerPointRadiu" format="dimension" />
+        <attr name="centerPointType" format="string" />
+        <attr name="selectedTextColor" format="color" />
+        <!--圆的半径-相对布局宽度的比例用/符号连接（比如:1/3）-->
+        <attr name="circleRadiusScale" format="string" />
     </declare-styleable>
 </resources>
