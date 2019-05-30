@@ -41,6 +41,7 @@ public class AutoRotateHoursView extends View {
     private String centerPointType = "circle";
     private int sleepTime;
     private boolean isDrawText;
+
     private String circleRadiusScale = "1/3";
     private String hourArray[] = new String[12];
     private Timer mTimer = new Timer();
