@@ -283,7 +283,7 @@ public class MySnackBar extends LinearLayout {
             if (params.actionIcon != 0 && params.onActionClickListener != null) {
                 btnAction.setVisibility(GONE);
                 btnActionWithIcon.setVisibility(VISIBLE);
-                btnActionWithIcon.setBackgroundResource(params.actionIcon);
+                btnActionWithIcon.setImageResource(params.actionIcon);
                 btnActionWithIcon.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {

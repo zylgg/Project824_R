@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:rotate="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_left_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,39 +33,51 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/tv_main_loginOut"
         android:layout_below="@+id/iv_main_headImg"
-        android:background="#000000">
+        android:background="#ffffff">
         <com.example.mr_zyl.project824.view.AutoRotateSecondView
             android:id="@+id/timeView_second"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:circleRadiusScale="5/14"/>
+            rotate:circleRadiusScale="5/14"
+            rotate:textColor="#66FF4081"
+            rotate:selectedTextColor="@color/colorAccent"/>
 
         <com.example.mr_zyl.project824.view.AutoRotateMinuteView
             android:id="@+id/timeView_minute"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:circleRadiusScale="5/14"/>
+            rotate:circleRadiusScale="5/14"
+            rotate:textColor="#66FF4081"
+            rotate:selectedTextColor="@color/colorAccent"/>
 
         <com.example.mr_zyl.project824.view.AutoRotateHoursView
             android:id="@+id/timeView_hours"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:circleRadiusScale="5/14"/>
+            rotate:circleRadiusScale="5/14"
+            rotate:textColor="#66FF4081"
+            rotate:selectedTextColor="@color/colorAccent"/>
 
         <com.example.mr_zyl.project824.view.AutoRotateWeekView
             android:id="@+id/timeView_week"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            rotate:textColor="#66FF4081"
+            rotate:selectedTextColor="@color/colorAccent"/>
 
         <com.example.mr_zyl.project824.view.AutoRotateDayView
             android:id="@+id/timeView_day"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            rotate:textColor="#66FF4081"
+            rotate:selectedTextColor="@color/colorAccent"/>
 
         <com.example.mr_zyl.project824.view.AutoRotateMonthView
             android:id="@+id/timeView_month"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            rotate:textColor="#66FF4081"
+            rotate:selectedTextColor="@color/colorAccent"/>
 
         <TextView
             android:id="@+id/timeView_year"
@@ -74,7 +86,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="4dp"
             android:text="2019"
-            android:textColor="#ffffff"
+            android:textColor="@color/colorAccent"
             android:textSize="12dp" />
 
         <View
@@ -93,10 +105,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@drawable/item_build_default_style"
+        android:background="?android:attr/selectableItemBackground"
         android:gravity="center_vertical"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
         android:text="退出登录" />
 </RelativeLayout>

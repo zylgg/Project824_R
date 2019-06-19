@@ -41,6 +41,7 @@ public class AutoRotateMonthView extends View {
     private float centerPointSize;
     private float borderWidth;
     private float centerPointRadiu;
+    private int selectedTextColor;
     private String centerPointType = "circle";
     private int sleepTime;
     private boolean isDrawText;
@@ -124,6 +125,7 @@ public class AutoRotateMonthView extends View {
         centerPointRadiu = ta.getDimension(R.styleable.TimeView_centerPointRadiu,
                 SizeUtils.dp2px(context, 2));
         centerPointType = ta.getString(R.styleable.TimeView_centerPointType);
+        selectedTextColor=ta.getColor(R.styleable.TimeView_selectedTextColor,Color.WHITE);
         if (TextUtils.isEmpty(centerPointType)) {
             centerPointType = "circle";
         }
@@ -143,7 +145,7 @@ public class AutoRotateMonthView extends View {
         //文字选中的画笔
         mSelectedPaint = new Paint();
         mSelectedPaint.setAntiAlias(true);
-        mSelectedPaint.setColor(Color.WHITE);
+        mSelectedPaint.setColor(selectedTextColor);
         mSelectedPaint.setStyle(Paint.Style.FILL);
         mSelectedPaint.setStrokeWidth(1);
         mSelectedPaint.setTextSize(textSize);

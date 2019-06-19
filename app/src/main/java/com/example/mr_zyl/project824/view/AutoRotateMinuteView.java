@@ -41,6 +41,7 @@ public class AutoRotateMinuteView extends View {
     private String centerPointType = "circle";
     private int sleepTime;
     private boolean isDrawText;
+    private int selectedTextColor;
     private String circleRadiusScale = "1/3";
     private String minuteArray[] = new String[60];
     private Timer mTimer = new Timer();
@@ -121,6 +122,7 @@ public class AutoRotateMinuteView extends View {
                 SizeUtils.dp2px(context, 2));
         circleRadiusScale = ta.getString(R.styleable.TimeView_circleRadiusScale);
         centerPointType = ta.getString(R.styleable.TimeView_centerPointType);
+        selectedTextColor=ta.getColor(R.styleable.TimeView_selectedTextColor,Color.WHITE);
         if (TextUtils.isEmpty(centerPointType)) {
             centerPointType = "circle";
         }
@@ -141,7 +143,7 @@ public class AutoRotateMinuteView extends View {
         //文字选中的画笔
         mSelectedPaint = new Paint();
         mSelectedPaint.setAntiAlias(true);
-        mSelectedPaint.setColor(Color.WHITE);
+        mSelectedPaint.setColor(selectedTextColor);
         mSelectedPaint.setStyle(Paint.Style.FILL);
         mSelectedPaint.setStrokeWidth(1);
         mSelectedPaint.setTextSize(textSize);

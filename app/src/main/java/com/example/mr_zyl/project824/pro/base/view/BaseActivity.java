@@ -1,17 +1,26 @@
 package com.example.mr_zyl.project824.pro.base.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.example.mr_zyl.project824.BaseApplication;
+import com.example.mr_zyl.project824.R;
 import com.example.mr_zyl.project824.mvp.presenter.impl.MvpBasePresenter;
 import com.example.mr_zyl.project824.mvp.view.impl.MvpActivity;
+import com.example.mr_zyl.project824.pro.mine.view.impl.OnActionClickListener;
+import com.example.mr_zyl.project824.pro.mine.view.selfview.MySnackBarUtils;
 import com.example.mr_zyl.project824.utils.NetUtils;
 
 import butterknife.ButterKnife;
@@ -46,12 +55,30 @@ public abstract class BaseActivity<P extends MvpBasePresenter> extends MvpActivi
         ButterKnife.bind(this);
     }
 
-    private boolean initNetType() {
-        this.netMobile = NetUtils.getNetWorkState(this);
-        return isNetConnect(this.netMobile);
+    protected abstract int initLayoutId();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //注册网络状态监听的广播
+        registerBroadcastReceiver();
+
     }
 
-    protected abstract int initLayoutId();
+    private NetBroadcastReceiver netBroadcastReceiver;
+
+    /**
+     * 注册网络状态广播
+     */
+    private void registerBroadcastReceiver() {
+        //注册广播
+        if (netBroadcastReceiver == null) {
+            netBroadcastReceiver = new NetBroadcastReceiver();
+            IntentFilter filter = new IntentFilter();
+            filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+            registerReceiver(netBroadcastReceiver, filter);
+        }
+    }
 
     @Override
     protected void onResume() {
@@ -74,8 +101,29 @@ public abstract class BaseActivity<P extends MvpBasePresenter> extends MvpActivi
 
     @Override
     public void onNetChange(int netMobile) {
-        this.netMobile=netMobile;
-//        isNetConnect(this.netMobile);
+        this.netMobile = netMobile;
+        boolean isHasNet = isNetConnect(this.netMobile);
+        if (!isHasNet) {
+            int actionColors=android.R.drawable.ic_menu_send;
+            MySnackBarUtils.getBuilder(this)
+                    .setBackgroundColor(R.color.white)
+                    .setMessageColor(R.color.red)
+                    .setMessage("网络不给力，请检查网络设置。")
+                    .setActionWithIcon(actionColors, new OnActionClickListener() {
+                        @Override
+                        public void onClick() {
+                            Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                            startActivity(intent);
+                        }
+                    })
+                    .show();
+        }
+    }
+
+
+    private boolean initNetType() {
+        this.netMobile = NetUtils.getNetWorkState(this);
+        return isNetConnect(this.netMobile);
     }
 
     /**
@@ -98,6 +146,10 @@ public abstract class BaseActivity<P extends MvpBasePresenter> extends MvpActivi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (netBroadcastReceiver != null) {
+            //注销监听网络的广播
+            unregisterReceiver(netBroadcastReceiver);
+        }
         getMyApplication().removeActivity(this);
     }
 

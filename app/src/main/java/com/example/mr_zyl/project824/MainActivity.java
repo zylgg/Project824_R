@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.mr_zyl.project824.bean.TabItem;
 import com.example.mr_zyl.project824.bean.UserBean;
 import com.example.mr_zyl.project824.pro.attention.view.Attention;
+import com.example.mr_zyl.project824.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project824.pro.base.view.MyFragmentTabHost;
 import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideMenu;
 import com.example.mr_zyl.project824.pro.base.view.residemenu.EventEntity.ResideTouch;
@@ -63,7 +64,7 @@ import io.objectbox.Box;
 import static com.example.mr_zyl.project824.BaseApplication.myObjectBox;
 
 
-public class MainActivity extends AppCompatActivity implements TabHost.OnTabChangeListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements TabHost.OnTabChangeListener, View.OnClickListener {
 
     private static final String TAG = "MainActivity";
     @BindView(R.id.ll_main_content)
@@ -90,10 +91,10 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(initLayoutId());
+//        setContentView(initLayoutId());
         StatusBarUtils.setTransparent(this);
         EventBus.getDefault().register(this);
-        ButterKnife.bind(this);
+//        ButterKnife.bind(this);
         //先初始化每个tab对象的数据
         initFragmentTabData();
         //再初始化TabHost控件

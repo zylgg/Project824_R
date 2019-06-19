@@ -26,13 +26,9 @@ public class MySnackBarUtils {
     private static final String TAG = "MySnackBarUtils";
     private MySnackBar mySnackBarView;
     private Activity context;
-    private static Builder mBuilder;
 
     public static Builder getBuilder(Activity context) {
-        if (mBuilder==null){
-            mBuilder=new Builder(context);
-        }
-        return mBuilder;
+        return new Builder(context);
     }
 
     private MySnackBarUtils(Activity context, Params params) {
@@ -68,7 +64,7 @@ public class MySnackBarUtils {
                     params.type = WindowManager.LayoutParams.TYPE_TOAST;
                     params.flags = mySnackBarView.isCoverStatusBar() ? coverFlag : flag;
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                        params.layoutInDisplayCutoutMode=WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+                        params.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
                     }
                 }
             }
