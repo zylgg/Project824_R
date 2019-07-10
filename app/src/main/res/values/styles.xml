@@ -15,12 +15,10 @@
 
     <style name="LaunchTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowLayoutInDisplayCutoutMode" tools:ignore="NewApi">shortEdges</item>
     </style>
-
-
 
 
 

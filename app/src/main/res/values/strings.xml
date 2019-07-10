@@ -52,6 +52,13 @@
         <item>广告@zylmove@5</item>
         <item>剧情@zylmove@6</item>
     </array>
+    <array name="splash_circle_colors">
+        <item>#33FFFF</item>
+        <item>#FF33FF</item>
+        <item>#FFFF33</item>
+        <item>#40C0A0</item>
+        <item>#FF4081</item>
+    </array>
 
     <array name="newpost_video_tab">
         <item>美女@zylmove@0</item>

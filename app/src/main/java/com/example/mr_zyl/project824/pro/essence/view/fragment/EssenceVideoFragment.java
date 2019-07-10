@@ -22,6 +22,7 @@ import com.example.mr_zyl.project824.pro.essence.view.adapter.EssenceRecycleAdap
 import com.example.mr_zyl.project824.pro.essence.view.selfview.CustomFooterView;
 import com.example.mr_zyl.project824.pro.essence.view.selfview.MyDecoration;
 import com.example.mr_zyl.project824.utils.ToastUtil;
+import com.example.mr_zyl.project824.view.LoadView;
 import com.example.zylsmallvideolibrary.JCVideoPlayer;
 import com.example.zylsmallvideolibrary.VideoEvents;
 
@@ -47,6 +48,9 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
     RecyclerView rv_essence_one;
     @BindView(R.id.fab_scrollTop)
     FloatingActionButton fab_scrollTop;
+    @BindView(R.id.lv_essence_floatingLoad)
+    LoadView lv_essence_floatingLoad;
+    boolean isFirstLoad=true;
 
     public EssenceVideoFragment() {
     }
@@ -216,6 +220,10 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
             @Override
             public void OnAfter() {
                 if (isDownRefresh) {
+                    if (isFirstLoad){//如果是第一次加载
+                        lv_essence_floatingLoad.splashAndDisappear();
+                        isFirstLoad=false;
+                    }
                     refreshview_id.stopRefresh();
                 } else {
                     refreshview_id.stopLoadMore();
