@@ -1,6 +1,7 @@
 package com.example.mr_zyl.project824;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -91,6 +93,11 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= 21) {
+            // 开启硬件加速
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                    WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+        }
 //        setContentView(initLayoutId());
         StatusBarUtils.setTransparent(this);
         EventBus.getDefault().register(this);
@@ -122,7 +129,9 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             @Override
             public void closeMenu() {
                 super.closeMenu();
-                resideMenu.setIsLeftBorder(essence_vp_resideTouch.is_Left());
+                if (essence_vp_resideTouch!=null){
+                    resideMenu.setIsLeftBorder(essence_vp_resideTouch.is_Left());
+                }
             }
         });
     }
