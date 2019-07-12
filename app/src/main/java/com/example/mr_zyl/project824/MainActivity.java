@@ -118,6 +118,12 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                 ImageView iv_main_background = ll_main_content.findViewById(R.id.iv_main_background);
                 iv_main_background.setBackgroundColor(ColorUtils.blendARGB(color1, color2, ratio));
             }
+
+            @Override
+            public void closeMenu() {
+                super.closeMenu();
+                resideMenu.setIsLeftBorder(essence_vp_resideTouch.is_Left());
+            }
         });
     }
 

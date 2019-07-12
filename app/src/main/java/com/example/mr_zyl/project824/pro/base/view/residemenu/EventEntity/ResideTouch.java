@@ -5,7 +5,13 @@ package com.example.mr_zyl.project824.pro.base.view.residemenu.EventEntity;
  * 侧滑是否处于可滑动的边界 event回调实体
  */
 public class ResideTouch {
+    /**
+     * 页面滚动到 可侧滑的界点
+     */
     public static final String HandleTypeTagLeftBorder="LeftBorder";
+    /**
+     * 点击按钮 侧滑
+     */
     public static final String HandleTypeTagToggle="Toggle";
 
     private boolean is_Left=true;
