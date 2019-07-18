@@ -14,6 +14,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 
 import com.example.mr_zyl.project824.R;
+import com.example.mr_zyl.project824.utils.DensityUtil;
 
 /**
  * 加载动画view
@@ -330,7 +331,7 @@ public class LoadView extends View{
     private class ExpandingStae implements LoadState{
         private ValueAnimator animator;
         public ExpandingStae() {
-            animator = ValueAnimator.ofFloat(0,mDiagonalDist);
+            animator = ValueAnimator.ofFloat(0,mDiagonalDist+DensityUtil.dip2px(getContext(),50));
             animator.setDuration(mSplashDuration);
             //扩散我这边使用的是匀速，可以换成加速：AccelerateInterpolator
             animator.setInterpolator(new LinearInterpolator());

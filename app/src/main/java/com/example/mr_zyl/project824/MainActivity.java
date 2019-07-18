@@ -129,7 +129,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             @Override
             public void closeMenu() {
                 super.closeMenu();
-                if (essence_vp_resideTouch!=null){
+                if (essence_vp_resideTouch!=null&&currenttabtag.equals(getString(R.string.main_essence_text))){
                     resideMenu.setIsLeftBorder(essence_vp_resideTouch.is_Left());
                 }
             }
@@ -299,10 +299,10 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                 currenttabtag = tabItem.getTitleString();
             }
 
-            View view = fragmenttabhost.getTabWidget().getChildTabViewAt(i);
-            if (tabItem.getTitleid() == 0) {//只对非fragment跳转的tab 设置自定义监听
-                view.setOnClickListener(this);
-            }
+//            View view = fragmenttabhost.getTabWidget().getChildTabViewAt(i);
+//            if (tabItem.getTitleid() == 0) {//只对非fragment跳转的tab 设置自定义监听
+//                view.setOnClickListener(this);
+//            }
         }
     }
 
@@ -343,6 +343,7 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         if (TextUtils.isEmpty(tabText)) {//选中了空fragment选项
 //            startActivity(new Intent(this, PlayActivity.class));
         }
+        currenttabtag=tabText;
         //如果设置了透明状态栏，状态栏图标文字颜色默认设为白色
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         TouchDisableView touchDisableView = (TouchDisableView) resideMenu.getChildAt(1);
@@ -385,14 +386,14 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
         }
-        //如果再次点击当前底部tab菜单
-        if (currenttabtag.equals(v.getTag())) {
-            //可执行刷新数据等操作：
-            refreshEvent event = new refreshEvent();
-            event.setIs_RefreshCurrent(true);
-            EventBus.getDefault().post(event);
-        }
-        currenttabtag = (String) v.getTag();
+//        //如果再次点击当前底部tab菜单
+//        if (currenttabtag.equals(v.getTag())) {
+//            //可执行刷新数据等操作：
+//            refreshEvent event = new refreshEvent();
+//            event.setIs_RefreshCurrent(true);
+//            EventBus.getDefault().post(event);
+//        }
+//        currenttabtag = (String) v.getTag();
     }
 
     /**
