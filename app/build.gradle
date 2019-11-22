@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "com.example.mr_zyl.project824"
         minSdkVersion 17
-        targetSdkVersion 27
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         multiDexEnabled true

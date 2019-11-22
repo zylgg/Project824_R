@@ -4,13 +4,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
+    android:background="@color/transparent"
     tools:context="com.example.mr_zyl.project824.LaunchActivity">
 
     <ImageView
         android:id="@+id/iv_launch_hai"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/iv_launch_log"
+        android:src="@color/white"
         android:scaleType="fitXY"/>
+    <ImageView
+        android:id="@+id/iv_launch_log"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/x160"
+        android:layout_marginBottom="@dimen/x160"
+        android:visibility="invisible"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignParentBottom="true"></ImageView>
     <TextView
         android:id="@+id/tv_remainingTime"
         android:layout_width="wrap_content"

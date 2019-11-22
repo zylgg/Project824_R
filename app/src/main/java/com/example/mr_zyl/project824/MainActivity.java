@@ -41,7 +41,9 @@ import com.example.mr_zyl.project824.pro.publish.view.SimpleTakePhotoActivity;
 import com.example.mr_zyl.project824.pro.publish.view.self.MoreWindow;
 import com.example.mr_zyl.project824.utils.DateUtils;
 import com.example.mr_zyl.project824.utils.DisplayUtil;
+import com.example.mr_zyl.project824.utils.NotchInScreenUtils;
 import com.example.mr_zyl.project824.utils.StatusBarUtils;
+import com.example.mr_zyl.project824.utils.SystemAppUtils;
 import com.example.mr_zyl.project824.view.AutoRotateDayView;
 import com.example.mr_zyl.project824.view.AutoRotateHoursView;
 import com.example.mr_zyl.project824.view.AutoRotateMinuteView;
@@ -134,6 +136,14 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        if (NotchInScreenUtils.hasNotchInScreen(this)){//如果有刘海屏
+//            resideMenu.getLeftMenuView().setPadding(0,SystemAppUtils.getStatusHeight(this),0,0);
+//        }
     }
 
     private AutoRotateSecondView timeView_second;

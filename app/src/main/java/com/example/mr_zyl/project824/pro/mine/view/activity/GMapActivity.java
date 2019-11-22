@@ -3,6 +3,7 @@ package com.example.mr_zyl.project824.pro.mine.view.activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,6 +50,8 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
         //设置定位属性
         MyLocationStyle style = new MyLocationStyle();
         style.showMyLocation(true);
+//        style.strokeColor(Color.TRANSPARENT);
+        style.radiusFillColor(Color.TRANSPARENT);
         style.interval(2500);
         style.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER);
 

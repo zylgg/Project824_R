@@ -52,10 +52,10 @@ public class LaunchActivity extends BaseActivity {
         StatusBarUtils.setFullActivity(this);
 
         timers.start();
-//        ToastUtil.showToast(this,"2*2="+ MathKit.square(2));
-        ImageLoader.getInstance().displayImage(
-                "drawable://" + R.drawable.hai,
-                iv_launch_hai, new AnimateFirstDisplayListener());
+//        ToastUtil.showToast(this,"2*2="+ MathKit.square(2));http://oak-goods.oss-cn-zhangjiakou.aliyuncs.com/oak/goods/ce3128cf4f9807c64e0f5510cdd130b2.jpg
+        ImageLoader.getInstance().displayImage("drawable://" + R.drawable.hai, iv_launch_hai, new AnimateFirstDisplayListener());
+//        String url ="http://oak-goods.oss-cn-zhangjiakou.aliyuncs.com/oak/goods/ce3128cf4f9807c64e0f5510cdd130b2.jpg";
+//        ImageLoader.getInstance().displayImage(url, iv_launch_hai, new AnimateFirstDisplayListener());
     }
 
     @Override

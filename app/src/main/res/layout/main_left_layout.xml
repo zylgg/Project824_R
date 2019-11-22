@@ -15,7 +15,7 @@
     <ImageView
         android:id="@+id/iv_main_headImg"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y480"
+        android:layout_height="@dimen/y420"
         android:scaleType="centerCrop"
         android:src="@drawable/resource_icon" />
 
@@ -31,7 +31,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/tv_main_loginOut"
         android:layout_below="@+id/iv_main_headImg"
         android:background="#ffffff">
         <com.example.mr_zyl.project824.view.AutoRotateSecondView
@@ -106,7 +105,7 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:background="?android:attr/selectableItemBackground"
-        android:gravity="center_vertical"
+        android:gravity="center_vertical|right"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:text="退出登录" />
 </RelativeLayout>
