@@ -9,9 +9,9 @@ import com.example.mr_zyl.project824.pro.base.view.refreshview.utils.LogUtils;
 import com.example.mr_zyl.project824.pro.base.view.refreshview.utils.Utils;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import androidx.annotation.LayoutRes;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

@@ -1,6 +1,7 @@
 package com.example.mr_zyl.project824.utils;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -68,12 +69,20 @@ public class DensityUtil {
     /** 
      * 密度转换像素 
      * */  
-    public static int dip2px(Context context,float dipValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
+    public static int dp2px(float dipValue) {
+        final float scale = Resources.getSystem().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);  
   
-    }  
-  
+    }
+    /**
+     * 密度转换像素
+     * */
+    public static int dip2px(Context context,float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+
+    }
+
     /** 
      * 像素转换密度 
      * */  

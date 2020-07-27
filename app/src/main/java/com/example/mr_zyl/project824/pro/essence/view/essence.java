@@ -3,12 +3,11 @@ package com.example.mr_zyl.project824.pro.essence.view;
 import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v4.view.ViewPager;
+
+import androidx.annotation.NonNull;
+
+import androidx.core.graphics.ColorUtils;
+import androidx.viewpager.widget.ViewPager;
 import android.text.format.Formatter;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -26,7 +25,9 @@ import com.example.mr_zyl.project824.pro.base.view.residemenu.EventEntity.Reside
 import com.example.mr_zyl.project824.pro.essence.OnVisibilityTitleListener;
 import com.example.mr_zyl.project824.pro.essence.view.adapter.EssenceAdapter;
 import com.example.mr_zyl.project824.pro.essence.view.navigation.EssenceNavigationBuilder;
+import com.example.mr_zyl.project824.utils.ButterKnifes;
 import com.example.mr_zyl.project824.utils.ToastUtil;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.Arrays;
 
@@ -209,9 +210,9 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
 
     private void createTranslate(final boolean is_open, final int scroll_max_height) {
         final int colorAccent = getContext().getResources().getColor(R.color.colorAccent);
-        tv_essence_title = ButterKnife.findById(builder.getContentView(), R.id.tv_essence_title);
-        iv_essence_left = ButterKnife.findById(builder.getContentView(), R.id.iv_essence_left);
-        iv_essence_right = ButterKnife.findById(builder.getContentView(), R.id.iv_essence_right);
+        tv_essence_title = ButterKnifes.findById(builder.getContentView(), R.id.tv_essence_title);
+        iv_essence_left = ButterKnifes.findById(builder.getContentView(), R.id.iv_essence_left);
+        iv_essence_right = ButterKnifes.findById(builder.getContentView(), R.id.iv_essence_right);
 
 
         ValueAnimator animation = ValueAnimator.ofInt(0, scroll_max_height);

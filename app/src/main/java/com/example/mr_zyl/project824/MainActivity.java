@@ -3,11 +3,11 @@ package com.example.mr_zyl.project824;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.core.graphics.ColorUtils;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,7 +30,6 @@ import com.example.mr_zyl.project824.pro.base.view.MyFragmentTabHost;
 import com.example.mr_zyl.project824.pro.base.view.residemenu.ResideMenu;
 import com.example.mr_zyl.project824.pro.base.view.residemenu.EventEntity.ResideTouch;
 import com.example.mr_zyl.project824.pro.base.view.residemenu.TouchDisableView;
-import com.example.mr_zyl.project824.pro.essence.refreshEvent;
 import com.example.mr_zyl.project824.pro.essence.view.activity.SimpleCameraActivity;
 import com.example.mr_zyl.project824.pro.essence.view.essence;
 import com.example.mr_zyl.project824.pro.mine.view.Mine;
@@ -39,11 +38,10 @@ import com.example.mr_zyl.project824.pro.newpost.view.Newpost;
 import com.example.mr_zyl.project824.pro.publish.view.Publish;
 import com.example.mr_zyl.project824.pro.publish.view.SimpleTakePhotoActivity;
 import com.example.mr_zyl.project824.pro.publish.view.self.MoreWindow;
+import com.example.mr_zyl.project824.utils.ButterKnifes;
 import com.example.mr_zyl.project824.utils.DateUtils;
 import com.example.mr_zyl.project824.utils.DisplayUtil;
-import com.example.mr_zyl.project824.utils.NotchInScreenUtils;
 import com.example.mr_zyl.project824.utils.StatusBarUtils;
-import com.example.mr_zyl.project824.utils.SystemAppUtils;
 import com.example.mr_zyl.project824.view.AutoRotateDayView;
 import com.example.mr_zyl.project824.view.AutoRotateHoursView;
 import com.example.mr_zyl.project824.view.AutoRotateMinuteView;
@@ -162,20 +160,20 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
      */
     private void initLeftMenu(View view) {
         view.setLayoutParams(new LayoutParams((int) (DisplayUtil.Width(this) * 0.8f), LayoutParams.MATCH_PARENT));
-        TextView tv_main_loginOut = ButterKnife.findById(view, R.id.tv_main_loginOut);
+        TextView tv_main_loginOut = ButterKnifes.findById(view, R.id.tv_main_loginOut);
         tv_main_loginOut.setOnClickListener(this);
-        ImageView iv_main_headImg = ButterKnife.findById(view, R.id.iv_main_headImg);
+        ImageView iv_main_headImg = ButterKnifes.findById(view, R.id.iv_main_headImg);
         String url = "http://inews.gtimg.com/newsapp_match/0/3348583155/0";
         ImageLoader.getInstance().displayImage(url, iv_main_headImg);
 
-        timeView_second = ButterKnife.findById(view, R.id.timeView_second);
-        timeView_minute = ButterKnife.findById(view, R.id.timeView_minute);
-        timeView_hours = ButterKnife.findById(view, R.id.timeView_hours);
-        timeView_week = ButterKnife.findById(view, R.id.timeView_week);
-        timeView_day = ButterKnife.findById(view, R.id.timeView_day);
-        timeView_month = ButterKnife.findById(view, R.id.timeView_month);
-        timeView_year = ButterKnife.findById(view, R.id.timeView_year);
-        v_dividing2 = ButterKnife.findById(view, R.id.v_dividing2);
+        timeView_second = ButterKnifes.findById(view, R.id.timeView_second);
+        timeView_minute = ButterKnifes.findById(view, R.id.timeView_minute);
+        timeView_hours = ButterKnifes.findById(view, R.id.timeView_hours);
+        timeView_week = ButterKnifes.findById(view, R.id.timeView_week);
+        timeView_day = ButterKnifes.findById(view, R.id.timeView_day);
+        timeView_month = ButterKnifes.findById(view, R.id.timeView_month);
+        timeView_year = ButterKnifes.findById(view, R.id.timeView_year);
+        v_dividing2 = ButterKnifes.findById(view, R.id.v_dividing2);
         initListener();
         setData();
     }

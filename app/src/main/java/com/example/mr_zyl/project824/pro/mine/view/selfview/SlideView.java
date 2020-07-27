@@ -9,10 +9,9 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.core.graphics.ColorUtils;
+import androidx.appcompat.widget.Toolbar;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -24,6 +23,7 @@ import android.widget.TextView;
 import com.example.mr_zyl.project824.R;
 import com.example.mr_zyl.project824.utils.DensityUtil;
 import com.example.mr_zyl.project824.utils.SystemAppUtils;
+import com.google.android.material.appbar.AppBarLayout;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

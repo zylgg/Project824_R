@@ -1,9 +1,8 @@
 package com.example.mr_zyl.project824.pro.essence.view.adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.mr_zyl.project824.pro.essence.OnVisibilityTitleListener;
 import com.example.mr_zyl.project824.pro.essence.view.fragment.EssenceMyLvFragment;
