@@ -2,7 +2,7 @@ package com.example.mr_zyl.project824.pro.base.view.refreshview.recyclerview;
 
 import com.example.mr_zyl.project824.pro.base.view.refreshview.XRefreshView;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by 2144 on 2016/8/16.

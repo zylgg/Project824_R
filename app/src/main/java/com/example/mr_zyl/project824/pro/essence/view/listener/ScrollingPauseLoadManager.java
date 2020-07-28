@@ -1,7 +1,7 @@
 package com.example.mr_zyl.project824.pro.essence.view.listener;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;

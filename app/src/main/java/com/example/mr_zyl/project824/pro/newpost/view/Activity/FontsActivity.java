@@ -1,34 +1,14 @@
 package com.example.mr_zyl.project824.pro.newpost.view.Activity;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.TextViewCompat;
+
+import androidx.core.widget.TextViewCompat;
 import android.text.Layout;
 import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.TextPaint;
-import android.text.TextUtils;
-import android.text.style.AbsoluteSizeSpan;
-import android.text.style.BackgroundColorSpan;
 import android.text.style.ImageSpan;
 import android.util.TypedValue;
-import android.view.DragEvent;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -37,9 +17,6 @@ import com.example.mr_zyl.project824.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project824.pro.newpost.view.selfview.CenterAlignImageSpan;
 import com.example.mr_zyl.project824.utils.DensityUtil;
 import com.example.mr_zyl.project824.utils.TextDrawUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
