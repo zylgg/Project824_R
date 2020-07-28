@@ -1,16 +1,18 @@
 package com.example.mr_zyl.project824.pro.mine.view.fragment;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.mr_zyl.project824.R;
 import com.example.mr_zyl.project824.pro.base.view.BaseFragment;
+import com.example.mr_zyl.project824.pro.base.view.refreshview.XNestedScrollView;
 import com.example.mr_zyl.project824.pro.base.view.refreshview.XRefreshView;
 import com.example.mr_zyl.project824.pro.base.view.refreshview.XRefreshViewFooter;
+import com.example.mr_zyl.project824.pro.base.view.refreshview.XScrollView;
 import com.example.mr_zyl.project824.pro.mine.Adapter.BlurredAdapter;
 import com.example.mr_zyl.project824.pro.mine.view.activity.BlurredActivity;
 

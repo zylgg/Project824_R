@@ -1,6 +1,6 @@
 package com.example.mr_zyl.project824.pro.base.view.refreshview.recyclerview;
 
-import androidx.recyclerview.widget.GridLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 
 /**
  * use this class to let the footerview have full width

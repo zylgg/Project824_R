@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".pro.mine.view.activity.FastBlurActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <android.support.v7.widget.Toolbar
         android:id="@+id/tb_fast_blur_title"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -17,7 +17,7 @@
             android:text="这是toolbar"
             android:textColor="@color/red" />
 
-    </androidx.appcompat.widget.Toolbar>
+    </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
         android:layout_width="match_parent"

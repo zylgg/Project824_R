@@ -1,10 +1,11 @@
 package com.example.mr_zyl.project824.pro.mine.view.selfview;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
-import androidx.annotation.ColorRes;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.StringRes;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.WindowManager;

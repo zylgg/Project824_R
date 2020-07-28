@@ -90,41 +90,4 @@
         <!--圆的半径-相对布局宽度的比例用/符号连接（比如:1/3）-->
         <attr name="circleRadiusScale" format="string" />
     </declare-styleable>
-
-    <declare-styleable name="SmartRefreshLayout">
-        <attr format="integer" name="srlReboundDuration"/>
-        <attr format="dimension" name="srlHeaderHeight"/>
-        <attr format="dimension" name="srlFooterHeight"/>
-        <attr format="dimension" name="srlHeaderInsetStart"/>
-        <attr format="dimension" name="srlFooterInsetStart"/>
-        <attr format="float" name="srlDragRate"/>
-        <attr format="float" name="srlHeaderMaxDragRate"/>
-        <attr format="float" name="srlFooterMaxDragRate"/>
-        <attr format="float" name="srlHeaderTriggerRate"/>
-        <attr format="float" name="srlFooterTriggerRate"/>
-        <attr format="boolean" name="srlEnableRefresh"/>
-        <attr format="boolean" name="srlEnableLoadMore"/>
-        <attr format="boolean" name="srlEnableHeaderTranslationContent"/>
-        <attr format="boolean" name="srlEnableFooterTranslationContent"/>
-        <attr format="reference" name="srlHeaderTranslationViewId"/>
-        <attr format="reference" name="srlFooterTranslationViewId"/>
-        <attr format="boolean" name="srlEnablePreviewInEditMode"/>
-        <attr format="boolean" name="srlEnableAutoLoadMore"/>
-        <attr format="boolean" name="srlEnableOverScrollBounce"/>
-        <attr format="boolean" name="srlEnablePureScrollMode"/>
-        <attr format="boolean" name="srlEnableNestedScrolling"/>
-        <attr format="boolean" name="srlEnableScrollContentWhenLoaded"/>
-        <attr format="boolean" name="srlEnableScrollContentWhenRefreshed"/>
-        <attr format="boolean" name="srlEnableLoadMoreWhenContentNotFull"/>
-        <attr format="boolean" name="srlEnableFooterFollowWhenLoadFinished"/>
-        <attr format="boolean" name="srlEnableFooterFollowWhenNoMoreData"/>
-        <attr format="boolean" name="srlEnableClipHeaderWhenFixedBehind"/>
-        <attr format="boolean" name="srlEnableClipFooterWhenFixedBehind"/>
-        <attr format="boolean" name="srlEnableOverScrollDrag"/>
-        <!--<attr name="srlEnableNestedScrollingOnly" format="boolean"/>-->
-        <attr format="boolean" name="srlDisableContentWhenRefresh"/>
-        <attr format="boolean" name="srlDisableContentWhenLoading"/>
-        <attr format="reference" name="srlFixedHeaderViewId"/>
-        <attr format="reference" name="srlFixedFooterViewId"/>
-    </declare-styleable>
 </resources>

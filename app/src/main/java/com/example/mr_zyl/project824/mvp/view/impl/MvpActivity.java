@@ -2,7 +2,7 @@ package com.example.mr_zyl.project824.mvp.view.impl;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import androidx.appcompat.app.AppCompatActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.mr_zyl.project824.mvp.presenter.impl.MvpBasePresenter;
 import com.example.mr_zyl.project824.mvp.view.MvpView;

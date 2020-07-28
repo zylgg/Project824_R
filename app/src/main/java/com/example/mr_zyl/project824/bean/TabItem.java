@@ -2,7 +2,7 @@ package com.example.mr_zyl.project824.bean;
 
 import android.content.Context;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;

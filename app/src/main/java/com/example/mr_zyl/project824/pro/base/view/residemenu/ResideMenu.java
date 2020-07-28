@@ -3,6 +3,7 @@ package com.example.mr_zyl.project824.pro.base.view.residemenu;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.v4.graphics.ColorUtils;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -10,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
+import com.example.mr_zyl.project824.R;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;

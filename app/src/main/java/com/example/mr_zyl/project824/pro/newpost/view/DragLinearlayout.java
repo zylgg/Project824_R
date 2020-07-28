@@ -5,7 +5,7 @@ package com.example.mr_zyl.project824.pro.newpost.view;
  */
 
 import android.content.Context;
-import androidx.customview.widget.ViewDragHelper;
+import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
