@@ -44,6 +44,7 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'//3.14.0 （如果用3.14.0，则API21以下证书验证会崩溃）
     //轮播库
     implementation 'cn.bingoogolapple:bga-banner:2.2.6@aar'
     //高斯模糊

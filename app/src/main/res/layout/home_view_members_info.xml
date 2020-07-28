@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_home_view_member_info"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp30"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_gravity="bottom"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/home_member_info_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/home_memberinfo_view_bg_shape2"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp12"
+        android:paddingRight="@dimen/dp8">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/dp19"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/home_members_info_noLoginRegister_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:lines="1"
+                android:text="登录/注册"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/home_members_info_yijiebi_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="易捷币"
+                    android:textColor="@color/white"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/home_members_info_yijiebi_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="--"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp15"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/home_members_info_coupon_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="卡券"
+                    android:textColor="@color/white"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/home_members_info_coupon_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="--"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp15"
+                    android:textStyle="bold" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_home_members_info_redPoint"
+                    android:layout_width="@dimen/dp12"
+                    android:layout_height="@dimen/dp12"
+                    android:layout_margin="@dimen/dp2"
+                    android:layout_gravity="top"
+                    android:visibility="gone"
+                    app:cardCornerRadius="@dimen/dp6"
+                    app:cardBackgroundColor="@color/red">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="0"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/dp10" />
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/home_members_info_save_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已省"
+                    android:textColor="@color/white"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/home_members_info_save_money_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dp15" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="元"
+                    android:textColor="@color/white"
+                    android:textSize="13dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/home_members_info_know_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:text="巨惠专区购买规则"
+                android:textColor="@color/white"
+                android:textSize="13dp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/home_members_info_qualityCard"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawablePadding="@dimen/dp4"
+            android:gravity="center"
+            android:text="资质证照"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dp10" />
+    </LinearLayout>
+
+</RelativeLayout>
