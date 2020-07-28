@@ -43,6 +43,9 @@ dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    //轮播库
+    implementation 'cn.bingoogolapple:bga-banner:2.2.6@aar'
     //高斯模糊
     implementation 'net.robinx:lib.blur:1.0.1'
     implementation files('libs/zxing.jar')
