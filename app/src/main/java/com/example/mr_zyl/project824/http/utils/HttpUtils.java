@@ -1,5 +1,7 @@
 package com.example.mr_zyl.project824.http.utils;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -13,10 +15,24 @@ public class HttpUtils {
 
 	public static final String URL_STR = "http://192.168.57.1:8080/Dream_4_23_PhoneGapServer/PhoneGapServlet";
 
-	public static String get(String urlStr) {
+	public static String get(String urlStr,Map<String, Object> paramMap) {
 		String result = null;
 		try {
-			URL url = new URL(urlStr);
+			//拼接参数
+			StringBuilder params = new StringBuilder();
+			int i = 0;
+			for (String key : paramMap.keySet()) {
+				Object value = paramMap.get(key);
+				params.append(key);
+				params.append("=");
+				params.append(value);
+				if (i < paramMap.size() - 1) {
+					params.append("&");
+				}
+				i++;
+			}
+			URL url = new URL(urlStr+"?"+paramMap.toString());
+			Log.i("HttpUtils","url0:"+urlStr+"?"+params.toString());
 			HttpURLConnection connection = (HttpURLConnection) url
 					.openConnection();
 			connection.setReadTimeout(5000);
@@ -59,6 +75,7 @@ public class HttpUtils {
 		}
 		//创建请求地址
 		URL url = new URL(urlStr);
+		Log.i("HttpUtils","url1:"+urlStr+"?"+params.toString());
 		//打开连接
 		HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
 		// 设置参数

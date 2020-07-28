@@ -1,6 +1,6 @@
 package com.example.mr_zyl.project824.pro.essence;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class RvScrollListener extends RecyclerView.OnScrollListener {
 
