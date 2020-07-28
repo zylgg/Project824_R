@@ -70,7 +70,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="@dimen/dp13"
                                 android:layout_marginRight="@dimen/dp13"
-                                android:text="更多网点"
+                                android:text="更多网点s"
                                 android:textColor="@color/red"
                                 android:textSize="@dimen/dp12"
                                 android:textStyle="bold" />
