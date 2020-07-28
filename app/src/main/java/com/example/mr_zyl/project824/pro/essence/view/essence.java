@@ -1,7 +1,9 @@
 package com.example.mr_zyl.project824.pro.essence.view;
 
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
@@ -78,6 +80,12 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
                         ResideTouch touch = new ResideTouch();
                         touch.setHandleType(ResideTouch.HandleTypeTagToggle);
                         EventBus.getDefault().post(touch);
+
+                        //stationbuy.ejoy.sinopec.com://?stnCode
+                        //activity.ejoy.sinopec.com://?openWalletRecharge=1   scheme1://host1:8080/path1?query1=1&query2=true
+//                        Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("activity.ejoy.sinopec.com://?openWalletRecharge=1"));
+                        Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("stationbuy.ejoy.sinopec.com://?stnCode=32550160"));
+                        startActivity(intent);
                     }
                 })
                 .setRightIconOnClickListener(new View.OnClickListener() {
