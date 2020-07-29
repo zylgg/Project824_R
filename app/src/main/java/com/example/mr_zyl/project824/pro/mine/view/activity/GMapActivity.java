@@ -10,10 +10,13 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
@@ -28,12 +31,17 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.animation.Animation;
 import com.amap.api.maps.model.animation.RotateAnimation;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.poisearch.PoiResult;
+import com.amap.api.services.poisearch.PoiSearch;
 import com.example.mr_zyl.project824.R;
 import com.example.mr_zyl.project824.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project824.pro.mine.view.selfview.MapContainer;
@@ -50,7 +58,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.bgabanner.BGABanner;
 
-public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChangeListener {
+public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChangeListener, PoiSearch.OnPoiSearchListener {
 
     private static final String TAG = "GMapActivity";
     @BindView(R.id.tmv_current_oilStation)
@@ -86,6 +94,9 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
     @BindView(R.id.appbar_home)
     AppBarLayout appbarHome;
 
+    @BindView(R.id.rv_poi_searchList)
+    RecyclerView rv_poi_searchList;
+
 
     //创建覆盖物
     ArrayList<MarkerOptions> markerOptionsList = new ArrayList<>();
@@ -100,6 +111,9 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
         super.onCreate(savedInstanceState);
         tmv_current_oilStation.onCreate(savedInstanceState);
         Log.i(TAG, "当前编译的APK的SHA1: " + sHA1(this));
+        rv_poi_searchList.setVisibility(View.GONE);
+        rv_poi_searchList.setLayoutManager(new LinearLayoutManager(this));
+        rv_poi_searchList.setAdapter(mPoiSearchAdaper);
 
         //获取地图对象
         aMap = tmv_current_oilStation.getMap();
@@ -125,6 +139,7 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
         aMap.setMyLocationEnabled(true);
         aMap.setOnMyLocationChangeListener(this);
 
+        //设置infowindow
         aMap.setInfoWindowAdapter(new AMap.InfoWindowAdapter() {
             @Override
             public View getInfoWindow(final Marker marker) {
@@ -220,10 +235,15 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
                     //到此如果地图已加载完成，则执行定位缩放显示操作
                     setLocation(needLocationLatlngWhenMapLoaded);
                 }
+                if (marker.isInfoWindowShown()) {
+                    marker.hideInfoWindow();
+                } else {
+                    marker.showInfoWindow();
+                }
                 return false;
             }
         });
-        //设置地图的单击
+        //设置地图加载完成后的监听
         aMap.setOnMapLoadedListener(new AMap.OnMapLoadedListener() {
             @Override
             public void onMapLoaded() {
@@ -233,6 +253,60 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
                 }
             }
         });
+        //设置地图改变完成后的监听
+        aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+
+            }
+
+            @Override
+            public void onCameraChangeFinish(CameraPosition cameraPosition) {
+                PoiSearch.Query poiQuery = new PoiSearch.Query(null, "010000\n" +
+                        "010100\n" +
+                        "010101\n" +
+                        "010102\n" +
+                        "010103\n" +
+                        "010104\n" +
+                        "010105\n" +
+                        "010107\n" +
+                        "010108\n" +
+                        "010109\n" +
+                        "010110\n" +
+                        "010111\n" +
+                        "010112\n" +
+                        "010200\n" +
+                        "010300\n" +
+                        "010400\n" +
+                        "010401\n" +
+                        "010500\n" +
+                        "010600\n" +
+                        "010700\n" +
+                        "010800\n" +
+                        "010900\n" +
+                        "010901\n" +
+                        "011000\n" +
+                        "011100\n" +
+                        "020000\n" +
+                        "020100\n" +
+                        "020101\n" +
+                        "020102\n" +
+                        "020103\n" +
+                        "020104\n", "北京");
+                poiQuery.setPageSize(10);
+                poiQuery.setDistanceSort(true);
+                setPoiSearch(poiQuery,cameraPosition.target);
+            }
+        });
+    }
+
+    private void setPoiSearch(PoiSearch.Query query,LatLng point) {
+        PoiSearch poiSearch = new PoiSearch(GMapActivity.this, query);
+        poiSearch.setOnPoiSearchListener(this);
+
+        PoiSearch.SearchBound bound = new PoiSearch.SearchBound(new LatLonPoint(point.latitude, point.longitude), 2000);
+        poiSearch.setBound(bound);
+        poiSearch.searchPOIAsyn();
     }
 
     /**
@@ -263,7 +337,7 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
                 final LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                 aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
 
-                isNetworkRequest=false;
+                isNetworkRequest = false;
                 tmv_current_oilStation.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -328,6 +402,63 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
         } else {
             aMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
         }
+    }
+
+    private List pois=new ArrayList<PoiItem>();
+    @Override
+    public void onPoiSearched(PoiResult poiResult, int i) {
+        Log.i(TAG, "onPoiSearched: " + poiResult + "i:" + i);
+        if (i == 1000) {
+            if (poiResult != null && poiResult.getPois() != null && poiResult.getPois().size() > 0) {
+//                setMyLocationMapCenter(new LatLng(poiResult.getPois().get(0).getLatLonPoint().getLatitude(),poiResult.getPois().get(0).getLatLonPoint().getLongitude()));
+//                show(poiResult.getPois().get(0));
+                rv_poi_searchList.setVisibility(View.VISIBLE);
+                pois.clear();
+                pois.addAll(poiResult.getPois());
+                Log.i(TAG, "onPoiSearched: " + poiResult.getPois().get(0).getTitle() + "i:" + i);
+                rv_poi_searchList.getAdapter().notifyDataSetChanged();
+
+            } else {
+                rv_poi_searchList.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    RecyclerView.Adapter<GMapActivity.poiSearchHolder> mPoiSearchAdaper = new RecyclerView.Adapter<GMapActivity.poiSearchHolder>() {
+        @android.support.annotation.NonNull
+        @Override
+        public poiSearchHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(GMapActivity.this).inflate(android.R.layout.simple_list_item_2, null);
+            poiSearchHolder poiSearchHolder = new poiSearchHolder(view);
+            return poiSearchHolder;
+        }
+
+        @Override
+        public void onBindViewHolder(poiSearchHolder holder, int position) {
+            PoiItem poiItem = (PoiItem) pois.get(position);
+            TextView text1 = holder.itemView.findViewById(android.R.id.text1);
+            text1.setText(poiItem.getTitle());
+            TextView text2 = holder.itemView.findViewById(android.R.id.text2);
+            text2.setText(poiItem.getAdName());
+        }
+
+        @Override
+        public int getItemCount() {
+            return pois.size();
+        }
+
+    };
+
+    class poiSearchHolder extends RecyclerView.ViewHolder {
+
+        public poiSearchHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    @Override
+    public void onPoiItemSearched(PoiItem poiItem, int i) {
+
     }
 
     /**
