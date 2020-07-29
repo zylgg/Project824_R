@@ -3,6 +3,7 @@ package com.example.mr_zyl.project824.pro.mine.view.activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Location;
 import android.os.Bundle;
@@ -41,6 +42,8 @@ import com.example.mr_zyl.project824.utils.ToastUtil;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -84,9 +87,8 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
     AppBarLayout appbarHome;
 
 
-    // 下拉刷新
-
-    private Marker marker;
+    //创建覆盖物
+    ArrayList<MarkerOptions> markerOptionsList = new ArrayList<>();
 
     @Override
     protected int initLayoutId() {
@@ -106,9 +108,11 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
         //设置定位属性
         MyLocationStyle style = new MyLocationStyle();
         style.showMyLocation(true);
+        style.strokeColor(Color.TRANSPARENT);//蓝点精度圆圈的边框
+        style.radiusFillColor(Color.TRANSPARENT);//蓝点精度圆圈的填充
         style.myLocationType(MyLocationStyle.LOCATION_TYPE_SHOW);
 
-         //设置定位样式并开始定位
+        //设置定位样式并开始定位
         aMap.setMyLocationStyle(style);
         UiSettings uiSettings = aMap.getUiSettings();
         uiSettings.setZoomControlsEnabled(false);//关闭放大 缩小ui
@@ -116,37 +120,29 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
         uiSettings.setCompassEnabled(false);//关闭指南针
         uiSettings.setScaleControlsEnabled(false);//控制比例尺控件是否显示
 
+        isNetworkRequest = false;
+        needLocationLatlngWhenMapLoaded = new LatLng(39.906901, 116.397972);//默认北京
         aMap.setMyLocationEnabled(true);
         aMap.setOnMyLocationChangeListener(this);
 
-
-        //创建覆盖物
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(new LatLng(39.906901, 116.397972))
-                .title("北京")
-                .draggable(true)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marka))
-                .snippet("默认的marker");
-        marker = aMap.addMarker(markerOptions);
-        //设置动画并开始
-        Animation markerAnimation=new RotateAnimation(marker.getRotateAngle(),marker.getRotateAngle()+360);
-        markerAnimation.setDuration(2000);
-        markerAnimation.setInterpolator(new LinearInterpolator());
-        marker.setAnimation(markerAnimation);
-        marker.startAnimation();
-        //自定义infowindow
         aMap.setInfoWindowAdapter(new AMap.InfoWindowAdapter() {
             @Override
             public View getInfoWindow(final Marker marker) {
-                View  view= LayoutInflater.from(GMapActivity.this).inflate(R.layout.activity_amap_infowindow,null);
-                TextView Title =view.findViewById(R.id.Title);
+                View view = LayoutInflater.from(GMapActivity.this).inflate(R.layout.activity_amap_infowindow, null);
+                TextView Title = view.findViewById(R.id.Title);
                 Title.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ToastUtil.showToast(GMapActivity.this,marker.getTitle());
+                        ToastUtil.showToast(GMapActivity.this, marker.getTitle());
                     }
                 });
-                TextView Content=view.findViewById(R.id.Content);
+                TextView Content = view.findViewById(R.id.Content);
+                Content.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ToastUtil.showToast(GMapActivity.this, marker.getSnippet());
+                    }
+                });
                 Title.setText(marker.getTitle());
                 Content.setText(marker.getSnippet());
                 return view;
@@ -165,6 +161,7 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
      * 中间空出的地图高度
      */
     private int spaceMapH = 0;
+
     /**
      * 初始化监听
      */
@@ -217,33 +214,39 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
         aMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+                isNetworkRequest = true;//标记，等 setOnMapLoadedCallback 中回调完执行
+                needLocationLatlngWhenMapLoaded = new LatLng(marker.getPosition().latitude, marker.getPosition().longitude);
+                if (isMapLoaded) {
+                    //到此如果地图已加载完成，则执行定位缩放显示操作
+                    setLocation(needLocationLatlngWhenMapLoaded);
+                }
                 return false;
             }
         });
         //设置地图的单击
-        aMap.setOnMapClickListener(new AMap.OnMapClickListener() {
+        aMap.setOnMapLoadedListener(new AMap.OnMapLoadedListener() {
             @Override
-            public void onMapClick(LatLng latLng) {
-//                if (marker.isInfoWindowShown()){
-//                    marker.hideInfoWindow();
-//                }else{
-//                    marker.showInfoWindow();
-//                }
-            }
-        });
-        //设置地图的点击事件
-        aMap.setOnInfoWindowClickListener(new AMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-                if (marker.isInfoWindowShown()){
-                    marker.hideInfoWindow();
-                }else{
-                    marker.showInfoWindow();
+            public void onMapLoaded() {
+                isMapLoaded = true;
+                if (isNetworkRequest) {
+                    setLocation(needLocationLatlngWhenMapLoaded);
                 }
             }
         });
     }
 
+    /**
+     * 地图是否加载过
+     */
+    private boolean isMapLoaded = false;
+    /**
+     * 定位请求是否记录过
+     */
+    private boolean isNetworkRequest = false;
+    /**
+     * 当地图加载完后 需要定位的坐标
+     */
+    private LatLng needLocationLatlngWhenMapLoaded;
 
     @Override
     public void onMyLocationChange(Location location) {
@@ -252,17 +255,39 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
             Log.e("onMyLocationChange", "onMyLocationChange 定位成功， lat: " + location.getLatitude() + " lon: " + location.getLongitude());
             Bundle bundle = location.getExtras();
             if (bundle != null) {
+//                aMap.setMyLocationEnabled(false);
                 int errorCode = bundle.getInt(MyLocationStyle.ERROR_CODE);
                 String errorInfo = bundle.getString(MyLocationStyle.ERROR_INFO);
                 // 定位类型，可能为GPS WIFI等，具体可以参考官网的定位SDK介绍
                 int locationType = bundle.getInt(MyLocationStyle.LOCATION_TYPE);
-                LatLng latLng=new LatLng(location.getLatitude(),location.getLongitude());
-                setLocation(latLng);
-                /*
-                errorCode
-                errorInfo
-                locationType
-                */
+                final LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
+
+                isNetworkRequest=false;
+                tmv_current_oilStation.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < 10; i++) {
+                            MarkerOptions markerOptions = new MarkerOptions();
+                            markerOptions.position(new LatLng(latLng.latitude + 0.0004 * i, latLng.longitude + 0.0004 * i))
+                                    .title("北京")
+                                    .draggable(true)
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marka))
+                                    .snippet("默认的marker" + i);
+                            markerOptionsList.add(markerOptions);
+                        }
+                        aMap.addMarkers(markerOptionsList, false);
+                        if (markerOptionsList.size() > 0) {
+                            MarkerOptions markerOptions = markerOptionsList.get(0);
+                            isNetworkRequest = true;//标记，等 setOnMapLoadedCallback 中回调完执行
+                            needLocationLatlngWhenMapLoaded = markerOptions.getPosition();
+                            if (isMapLoaded) {
+                                setLocation(markerOptions.getPosition());
+                            }
+                        }
+
+                    }
+                }, 1500);
                 Log.e("onMyLocationChange", "定位信息， code: " + errorCode + " errorInfo: " + errorInfo + " locationType: " + locationType);
             } else {
                 Log.e("onMyLocationChange", "定位信息， bundle is null ");
@@ -280,6 +305,12 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
      * @param ll
      */
     private void setLocation(LatLng ll) {
+        setLocation(ll, false);
+    }
+
+    ;
+
+    private void setLocation(LatLng ll, boolean isZoom) {
         if (ll_oilstatiion_contentLayout == null) {//修改app后台被系统销毁时 定位后视图null不处理
             return;
         }
@@ -292,7 +323,11 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
         point.y = (int) (point.y + offsetY - DensityUtil.dp2px(0));//（40dp）避免太靠上往下移一点
 
         LatLng latLng = aMap.getProjection().fromScreenLocation(point);
-        aMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+        if (isZoom) {
+            aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        } else {
+            aMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+        }
     }
 
     /**
