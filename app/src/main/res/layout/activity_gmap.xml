@@ -52,6 +52,11 @@
                                 android:id="@+id/tmv_current_oilStation"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_centerInParent="true"
+                                android:src="@color/colorAccent"/>
                         </com.example.mr_zyl.project824.pro.mine.view.selfview.MapContainer>
 
                         <androidx.cardview.widget.CardView
@@ -70,7 +75,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginLeft="@dimen/dp13"
                                 android:layout_marginRight="@dimen/dp13"
-                                android:text="更多网点s"
+                                android:text="隐藏poi列表"
                                 android:textColor="@color/red"
                                 android:textSize="@dimen/dp12"
                                 android:textStyle="bold" />

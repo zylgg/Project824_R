@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/circle_radius_shape">
+    android:background="@drawable/circle_radius_shape"
+    android:paddingHorizontal="@dimen/dp6"
+    android:paddingVertical="@dimen/dp3">
     <!--background 不设置的话，高德地图会提供默认的-->
 
 
