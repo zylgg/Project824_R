@@ -28,6 +28,7 @@ import com.example.mr_zyl.project824.pro.mine.view.activity.FastBlurActivity;
 import com.example.mr_zyl.project824.pro.mine.view.activity.GMapActivity;
 import com.example.mr_zyl.project824.pro.mine.view.activity.LoadGifActivity;
 import com.example.mr_zyl.project824.pro.mine.view.activity.MoreLevelActivity;
+import com.example.mr_zyl.project824.pro.mine.view.activity.NowZBActivity;
 import com.example.mr_zyl.project824.pro.mine.view.activity.QRImageActivity;
 import com.example.mr_zyl.project824.pro.mine.view.navigation.MineNavigationBuilder;
 import com.example.mr_zyl.project824.pro.mine.view.selfview.SmileyLoadingView;
@@ -163,6 +164,7 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "协调布局", BlurredActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "本地Gif加载", LoadGifActivity.class, -1));
         itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "生成二维码", QRImageActivity.class, -1));
+//        itemlists.add(new BuilderItemEntity(R.drawable.login_unlogin_header, "Now直播", NowZBActivity.class, -1));
         for (int i = 0; i < itemlists.size(); i++) {
             BuilderItemEntity entity = itemlists.get(i);
             builder = new DefaultImpleItemBuilder(getActivity());

@@ -32,6 +32,11 @@ android {
             jniLibs.srcDir 'libs'
         }
     }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
 
 
@@ -81,4 +86,6 @@ dependencies {
     implementation 'io.objectbox:objectbox-android:2.3.4'
     //lottie 动画播放
     implementation 'com.airbnb.android:lottie:2.6.0-beta19'
+
+    implementation(name: 'nowsdk-2.0.0.7', ext: 'aar')
 }

@@ -14,6 +14,7 @@ import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.view.CropImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.tencent.intervideo.nowproxy.NowLive;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.cookie.CookieJarImpl;
 import com.zhy.http.okhttp.cookie.store.PersistentCookieStore;
@@ -73,6 +74,10 @@ public class BaseApplication extends MultiDexApplication {
 //        configuration.setMemoryCache(new LruMemoryCache(this,newMemoryCacheMaxSize));
         //设置最大的磁盘缓存
         configuration.setDiskCache(new LruDiskCache(this, configuration, 1, 50 * 1024 * 1024));
+
+//        //now直播
+//        NowLive.start(this,NowLive.makeInitData(NowLive.NOW_SDK_DEMO_APPID,"1.0.0.1"));
+
     }
 
     private void initUniversalImageLoader() {
