@@ -28,7 +28,6 @@ import com.example.mr_zyl.project824.pro.mine.view.activity.FastBlurActivity;
 import com.example.mr_zyl.project824.pro.mine.view.activity.GMapActivity;
 import com.example.mr_zyl.project824.pro.mine.view.activity.LoadGifActivity;
 import com.example.mr_zyl.project824.pro.mine.view.activity.MoreLevelActivity;
-import com.example.mr_zyl.project824.pro.mine.view.activity.NowZBActivity;
 import com.example.mr_zyl.project824.pro.mine.view.activity.QRImageActivity;
 import com.example.mr_zyl.project824.pro.mine.view.navigation.MineNavigationBuilder;
 import com.example.mr_zyl.project824.pro.mine.view.selfview.SmileyLoadingView;
@@ -36,9 +35,9 @@ import com.example.mr_zyl.project824.utils.AutoRefresh;
 import com.example.mr_zyl.project824.utils.DisplayUtil;
 import com.example.mr_zyl.project824.utils.SystemAppUtils;
 import com.example.mr_zyl.project824.utils.ToastUtil;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.FileCallBack;
-import com.zhy.http.okhttp.request.RequestCall;
+//import com.zhy.http.okhttp.OkHttpUtils;
+//import com.zhy.http.okhttp.callback.FileCallBack;
+//import com.zhy.http.okhttp.request.RequestCall;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -274,47 +273,47 @@ public class Mine extends BaseFragment implements View.OnClickListener, RatingBa
     /**
      * 测试下载
      */
-    private RequestCall call;
+//    private RequestCall call;
 
-    private void DownQQMusicApk() {
-        String filepath = BaseFragment.FilePath;
-        File files = new File(filepath);
-        if (!files.exists()) {
-            files.mkdirs();
-        }
-        //okhttputils不支持断点下载。。。
-        FileCallBack fileCallBack = new FileCallBack(filepath, "qqmusic.apk") {
-            @Override
-            public void onBefore(Request request, int id) {
-                showProgressDialog("下载中。。。", ProgressDialog.STYLE_HORIZONTAL);
-            }
-
-            @Override
-            public void inProgress(float progress, long total, int id) {
-                int progress_value = (int) (progress * total);
-                int total_value = (int) total;
-                setHorizontalProgressValue(total_value, progress_value);
-            }
-
-            @Override
-            public void onResponse(File response, int id) {
-                ToastUtil.showToast(Fcontext, "path " + response.getAbsolutePath());
-                pviv_mine_test.performClick();
-            }
-
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                ToastUtil.showToast(Fcontext, "下载失败！");
-            }
-
-            @Override
-            public void onAfter(int id) {
-                dismissProgressDialog();
-            }
-        };
-        call = OkHttpUtils.get().url("http://dldir1.qq.com/music/clntupate/QQMusic72282.apk").build();
-        call.execute(fileCallBack);
-    }
+//    private void DownQQMusicApk() {
+//        String filepath = BaseFragment.FilePath;
+//        File files = new File(filepath);
+//        if (!files.exists()) {
+//            files.mkdirs();
+//        }
+//        //okhttputils不支持断点下载。。。
+//        FileCallBack fileCallBack = new FileCallBack(filepath, "qqmusic.apk") {
+//            @Override
+//            public void onBefore(Request request, int id) {
+//                showProgressDialog("下载中。。。", ProgressDialog.STYLE_HORIZONTAL);
+//            }
+//
+//            @Override
+//            public void inProgress(float progress, long total, int id) {
+//                int progress_value = (int) (progress * total);
+//                int total_value = (int) total;
+//                setHorizontalProgressValue(total_value, progress_value);
+//            }
+//
+//            @Override
+//            public void onResponse(File response, int id) {
+//                ToastUtil.showToast(Fcontext, "path " + response.getAbsolutePath());
+//                pviv_mine_test.performClick();
+//            }
+//
+//            @Override
+//            public void onError(Call call, Exception e, int id) {
+//                ToastUtil.showToast(Fcontext, "下载失败！");
+//            }
+//
+//            @Override
+//            public void onAfter(int id) {
+//                dismissProgressDialog();
+//            }
+//        };
+//        call = OkHttpUtils.get().url("http://dldir1.qq.com/music/clntupate/QQMusic72282.apk").build();
+//        call.execute(fileCallBack);
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

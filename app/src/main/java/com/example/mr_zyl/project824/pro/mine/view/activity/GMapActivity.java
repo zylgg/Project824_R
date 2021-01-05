@@ -269,42 +269,42 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
             }
         });
         //设置地图改变完成后的监听
-        aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
-            @Override
-            public void onCameraChange(CameraPosition cameraPosition) {
-                if (lastPoiMarker!=null){
-                    lastPoiMarker.hideInfoWindow();
-                    lastPoiMarker.destroy();
-                }
-                if (regeocodeSearchMarker!=null){
-                    regeocodeSearchMarker.hideInfoWindow();
-                    regeocodeSearchMarker.destroy();
-                }
-            }
-
-            @Override
-            public void onCameraChangeFinish(CameraPosition cameraPosition) {
-                PoiSearch.Query poiQuery = new PoiSearch.Query("楼|街|店|区|油站|公寓", null, "北京");
-//                "汽车服务|汽车销售|\n" +
-//                        "  汽车维修|摩托车服务|餐饮服务|购物服务|生活服务|体育休闲服务|医疗保健服务|\n" +
-//                        "  住宿服务|风景名胜|商务住宅|政府机构及社会团体|科教文化服务|交通设施服务|\n" +
-//                        "  金融保险服务|公司企业|道路附属设施|地名地址信息|公共设施"
-                LatLng currentPoiCenter=cameraPosition.target;
-                if (lastPoiMarker!=null){
-                    lastPoiMarker.destroy();
-                }
-                Marker marker = aMap.addMarker(new MarkerOptions().position(currentPoiCenter).title("当前位置:").snippet("定位中").icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marka)));
-                marker.showInfoWindow();
-                lastPoiMarker=marker;
-                //查询当前地址
-                getAddressByLatlng(currentPoiCenter);
-
-                //搜索附近的地点
-                poiQuery.setPageSize(10);
-                poiQuery.setDistanceSort(true);
-                setPoiSearch(poiQuery,cameraPosition.target);
-            }
-        });
+//        aMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
+//            @Override
+//            public void onCameraChange(CameraPosition cameraPosition) {
+//                if (lastPoiMarker!=null){
+//                    lastPoiMarker.hideInfoWindow();
+//                    lastPoiMarker.destroy();
+//                }
+//                if (regeocodeSearchMarker!=null){
+//                    regeocodeSearchMarker.hideInfoWindow();
+//                    regeocodeSearchMarker.destroy();
+//                }
+//            }
+//
+//            @Override
+//            public void onCameraChangeFinish(CameraPosition cameraPosition) {
+//                PoiSearch.Query poiQuery = new PoiSearch.Query("楼|街|店|区|油站|公寓", null, "北京");
+////                "汽车服务|汽车销售|\n" +
+////                        "  汽车维修|摩托车服务|餐饮服务|购物服务|生活服务|体育休闲服务|医疗保健服务|\n" +
+////                        "  住宿服务|风景名胜|商务住宅|政府机构及社会团体|科教文化服务|交通设施服务|\n" +
+////                        "  金融保险服务|公司企业|道路附属设施|地名地址信息|公共设施"
+//                LatLng currentPoiCenter=cameraPosition.target;
+//                if (lastPoiMarker!=null){
+//                    lastPoiMarker.destroy();
+//                }
+//                Marker marker = aMap.addMarker(new MarkerOptions().position(currentPoiCenter).title("当前位置:").snippet("定位中").icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marka)));
+//                marker.showInfoWindow();
+//                lastPoiMarker=marker;
+//                //查询当前地址
+//                getAddressByLatlng(currentPoiCenter);
+//
+//                //搜索附近的地点
+//                poiQuery.setPageSize(10);
+//                poiQuery.setDistanceSort(true);
+//                setPoiSearch(poiQuery,cameraPosition.target);
+//            }
+//        });
     }
 
     /**
@@ -392,7 +392,16 @@ public class GMapActivity extends BaseActivity implements AMap.OnMyLocationChang
                                     .snippet("默认的marker" + i);
                             markerOptionsList.add(markerOptions);
                         }
-                        aMap.addMarkers(markerOptionsList, false);
+                        //添加覆盖物
+                        for (int i=0;i<markerOptionsList.size();i++){
+                            if (i==0){
+                                Marker marker = aMap.addMarker(markerOptionsList.get(0));
+                                marker.showInfoWindow();
+                            }else{
+                                aMap.addMarker(markerOptionsList.get(i));
+                            }
+                        }
+                        //定位第一个点
                         if (markerOptionsList.size() > 0) {
                             MarkerOptions markerOptions = markerOptionsList.get(0);
                             isNetworkRequest = true;//标记，等 setOnMapLoadedCallback 中回调完执行

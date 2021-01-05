@@ -44,6 +44,16 @@ public abstract class BaseActivity<P extends MvpBasePresenter> extends MvpActivi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /**
+         * 设置为横屏
+         * android:configChanges="orientation|screenSize" 切屏不重走oncreate（）方法
+         */
+        if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+        //自动调节输入法区域
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         super.onCreate(savedInstanceState);
         netEvevt = this;
         initNetType();
@@ -82,15 +92,6 @@ public abstract class BaseActivity<P extends MvpBasePresenter> extends MvpActivi
 
     @Override
     protected void onResume() {
-        /**
-         * 设置为横屏
-         * android:configChanges="orientation|screenSize" 切屏不重走oncreate（）方法
-         */
-        if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
-        //自动调节输入法区域
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         super.onResume();
     }
 

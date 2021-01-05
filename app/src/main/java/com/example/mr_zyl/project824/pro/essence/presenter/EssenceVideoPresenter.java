@@ -9,12 +9,14 @@ import com.example.mr_zyl.project824.http.utils.HttpUtils;
 import com.example.mr_zyl.project824.pro.base.presenter.BasePresenter;
 import com.example.mr_zyl.project824.pro.essence.model.EssenceVideoModel;
 import com.example.mr_zyl.project824.utils.ToastUtil;
-import com.zhy.http.okhttp.callback.StringCallback;
+//import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Request;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Created by TFHR02 on 2017/2/22.
@@ -22,7 +24,7 @@ import okhttp3.Request;
 public class EssenceVideoPresenter extends BasePresenter<EssenceVideoModel> {
     private static final String TAG = "EssenceVideoPresenter";
     private int page = 0;
-    private String maxtime = null;
+    private String maxtime = "";
 
     public EssenceVideoPresenter(Context context) {
         super(context);
@@ -45,29 +47,43 @@ public class EssenceVideoPresenter extends BasePresenter<EssenceVideoModel> {
                     onhttpResultlistener.OnAfter();
                 }
             });
+
+//            getModel().getEssenceListByRetrofit(type,page,maxtime,new retrofit2.Callback<String>(){
+//
+//                @Override
+//                public void onResponse(retrofit2.Call<String> call, Response<String> response) {
+//                    onSuccess(onhttpResultlistener, response.body(), isDownRefresh);
+//                }
+//
+//                @Override
+//                public void onFailure(retrofit2.Call<String> call, Throwable t) {
+//                    ToastUtil.showToast(getContext(), "网络异常！");
+//                    onhttpResultlistener.OnAfter();
+//                }
+//            });
         }else{
-            getModel().getEssenceListByOkHttp(type, page, maxtime, new StringCallback() {
-                @Override
-                public void onBefore(Request request, int id) {
-                    onhttpResultlistener.OnBefore();
-                }
-
-                @Override
-                public void onError(Call call, Exception e, int id) {
-                    ToastUtil.showToast(getContext(), "网络异常！");
-                    onhttpResultlistener.OnAfter();
-                }
-
-                @Override
-                public void onResponse(String response, int id) {
-                    onSuccess(onhttpResultlistener, response, isDownRefresh);
-                }
-
-                @Override
-                public void onAfter(int id) {
-                    onhttpResultlistener.OnAfter();
-                }
-            });
+//            getModel().getEssenceListByOkHttp(type, page, maxtime, new StringCallback() {
+//                @Override
+//                public void onBefore(Request request, int id) {
+//                    onhttpResultlistener.OnBefore();
+//                }
+//
+//                @Override
+//                public void onError(Call call, Exception e, int id) {
+//                    ToastUtil.showToast(getContext(), "网络异常！");
+//                    onhttpResultlistener.OnAfter();
+//                }
+//
+//                @Override
+//                public void onResponse(String response, int id) {
+//                    onSuccess(onhttpResultlistener, response, isDownRefresh);
+//                }
+//
+//                @Override
+//                public void onAfter(int id) {
+//                    onhttpResultlistener.OnAfter();
+//                }
+//            });
         }
     }
     private void onSuccess(OnUiThreadListener<List<PostsListBean.PostList>> onhttpResultlistener, String result, boolean isDownRefresh) {

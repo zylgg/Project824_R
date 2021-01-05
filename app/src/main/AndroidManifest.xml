@@ -34,7 +34,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".pro.mine.view.activity.NowZBActivity"></activity>
         <!-- 华为对刘海屏的技术指导 -->
         <!-- <meta-data android:name="android.notch_support" android:value="true"/> -->
         <!-- 统一各大厂商的显示方案：申明更高的宽高比，适配了刘海屏 -->

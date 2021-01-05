@@ -1,6 +1,7 @@
 package com.example.mr_zyl.project824.pro.essence.view.fragment;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;

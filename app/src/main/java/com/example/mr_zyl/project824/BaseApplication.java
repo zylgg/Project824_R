@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.StrictMode;
 import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
 
 import com.example.mr_zyl.project824.bean.MyObjectBox;
 import com.example.mr_zyl.project824.bean.UILImageLoader;
@@ -14,11 +13,10 @@ import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.view.CropImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.tencent.intervideo.nowproxy.NowLive;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.cookie.CookieJarImpl;
-import com.zhy.http.okhttp.cookie.store.PersistentCookieStore;
-import com.zhy.http.okhttp.log.LoggerInterceptor;
+//import com.zhy.http.okhttp.OkHttpUtils;
+//import com.zhy.http.okhttp.cookie.CookieJarImpl;
+//import com.zhy.http.okhttp.cookie.store.PersistentCookieStore;
+//import com.zhy.http.okhttp.log.LoggerInterceptor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -36,7 +34,7 @@ import okhttp3.OkHttpClient;
 /**
  * Created by Mr_Zyl on 2016/9/18.
  */
-public class BaseApplication extends MultiDexApplication {
+public class BaseApplication extends Application {
     public static BoxStore myObjectBox;
 
     @Override
@@ -55,14 +53,14 @@ public class BaseApplication extends MultiDexApplication {
         initImagePicker();
 
         //okhttputils配置
-        CookieJarImpl cookieJar = new CookieJarImpl(new PersistentCookieStore(getApplicationContext()));
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new LoggerInterceptor("OkhttpClient"))
-                .connectTimeout(20 * 1000L, TimeUnit.MILLISECONDS)
-                .readTimeout(20 * 1000L, TimeUnit.MILLISECONDS)
-                .cookieJar(cookieJar)
-                .build();
-        OkHttpUtils.initClient(okHttpClient);
+//        CookieJarImpl cookieJar = new CookieJarImpl(new PersistentCookieStore(getApplicationContext()));
+//        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//                .addInterceptor(new LoggerInterceptor("OkhttpClient"))
+//                .connectTimeout(20 * 1000L, TimeUnit.MILLISECONDS)
+//                .readTimeout(20 * 1000L, TimeUnit.MILLISECONDS)
+//                .cookieJar(cookieJar)
+//                .build();
+//        OkHttpUtils.initClient(okHttpClient);
 
         Sketch.with(this).getConfiguration().getDiskCache().setDisabled(true);//允许使用磁盘缓存
         Sketch.with(this).getConfiguration().getMemoryCache().setDisabled(true);//允许使用内存缓存
@@ -74,9 +72,6 @@ public class BaseApplication extends MultiDexApplication {
 //        configuration.setMemoryCache(new LruMemoryCache(this,newMemoryCacheMaxSize));
         //设置最大的磁盘缓存
         configuration.setDiskCache(new LruDiskCache(this, configuration, 1, 50 * 1024 * 1024));
-
-//        //now直播
-//        NowLive.start(this,NowLive.makeInitData(NowLive.NOW_SDK_DEMO_APPID,"1.0.0.1"));
 
     }
 

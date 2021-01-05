@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.mr_zyl.project824"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -20,6 +20,10 @@ android {
 //            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86","x86_64","mips"
             abiFilters "armeabi-v7a"
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {
@@ -49,14 +53,12 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.12.0'//3.14.0 （如果用3.14.0，则API21以下证书验证会崩溃）
     //轮播库
     implementation 'cn.bingoogolapple:bga-banner:2.2.6@aar'
     //高斯模糊
     implementation 'net.robinx:lib.blur:1.0.1'
     implementation files('libs/zxing.jar')
     implementation files('libs/android-viewbadger(1).jar')
-    implementation files('libs/gson-2.2.4.jar')
     // 头像  https://github.com/hdodenhof/CircleImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     // butterKnife   组件注入
@@ -73,7 +75,7 @@ dependencies {
     //视频播放库
     implementation project(':zylsmallvideolibrary')
     //okHttp网络请求
-    implementation 'com.zhy:okhttputils:2.6.2'
+//    implementation 'com.zhy:okhttputils:2.6.2'
     //仿微信图片浏览处理框架
     implementation 'com.lqr.imagepicker:library:1.0.0'
     //代替cardView边角和阴影色自定义
@@ -87,5 +89,17 @@ dependencies {
     //lottie 动画播放
     implementation 'com.airbnb.android:lottie:2.6.0-beta19'
 
-    implementation(name: 'nowsdk-2.0.0.7', ext: 'aar')
+
+    // RxJava
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+    // Retrofit和jxjava关联
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    // Retrofit使用Gson转换
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    // RxAndroid
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+
+    //方法数超过64k
+    implementation 'com.android.support:multidex:1.0.3'
 }

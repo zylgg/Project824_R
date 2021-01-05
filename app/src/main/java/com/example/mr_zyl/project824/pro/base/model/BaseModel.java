@@ -19,6 +19,6 @@ public class BaseModel implements MvpModel {
     }
 
     public String getServerUrl() {
-        return "http://api.budejie.com";
+        return "http://api.budejie.com/";
     }
 }

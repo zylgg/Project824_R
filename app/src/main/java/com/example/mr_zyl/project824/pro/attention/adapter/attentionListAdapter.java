@@ -97,7 +97,7 @@ public class attentionListAdapter extends CommonAdapter<attention> {
 
     //单行更新，
     public void updateSingleRow(ListView listView, String name) {
-        if (listView != null) {
+        if (listView != null) {//复用区域更新
             int start = listView.getFirstVisiblePosition();
             int j = listView.getLastVisiblePosition();
             for (int i = start; i <= j; i++) {

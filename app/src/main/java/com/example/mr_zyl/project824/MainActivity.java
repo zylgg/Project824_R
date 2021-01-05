@@ -309,10 +309,10 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
                 currenttabtag = tabItem.getTitleString();
             }
 
-//            View view = fragmenttabhost.getTabWidget().getChildTabViewAt(i);
-//            if (tabItem.getTitleid() == 0) {//只对非fragment跳转的tab 设置自定义监听
-//                view.setOnClickListener(this);
-//            }
+            View view = fragmenttabhost.getTabWidget().getChildTabViewAt(i);
+            if (tabItem.getTitleid() == 0) {//只对非fragment跳转的tab 设置自定义监听
+                view.setOnClickListener(this);
+            }
         }
     }
 
