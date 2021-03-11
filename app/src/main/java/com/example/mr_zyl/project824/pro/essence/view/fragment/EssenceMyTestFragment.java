@@ -1,8 +1,8 @@
 package com.example.mr_zyl.project824.pro.essence.view.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 
 import com.example.mr_zyl.project824.R;
@@ -13,7 +13,6 @@ import com.example.mr_zyl.project824.pro.base.view.BaseFragment;
 import com.example.mr_zyl.project824.pro.essence.presenter.EssenceVideoPresenter;
 import com.example.mr_zyl.project824.pro.essence.view.adapter.EssenceRecycleAdapter;
 import com.example.mr_zyl.project824.pro.essence.view.selfview.MyDecoration;
-import com.example.mr_zyl.project824.utils.DensityUtil;
 import com.example.mr_zyl.project824.utils.ToastUtil;
 import com.example.zylsmallvideolibrary.JCVideoPlayer;
 import com.example.zylsmallvideolibrary.VideoEvents;
@@ -63,8 +62,9 @@ public class EssenceMyTestFragment extends BaseFragment {
     @Override
     public void initContentView(View contentView) {
         EventBus.getDefault().register(this);
-        rv_essence_one = ButterKnife.findById(contentView, R.id.rv_essence_one);
-        sv_bottom_menu = ButterKnife.findById(contentView, R.id.sv_bottom_menu);
+        rv_essence_one =  contentView.findViewById(R.id.rv_essence_one);
+
+        sv_bottom_menu =  contentView.findViewById(R.id.sv_bottom_menu);
 
         adapter = new EssenceRecycleAdapter(getContext(), postlists);
         initRecyclerListener();

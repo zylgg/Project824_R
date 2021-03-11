@@ -11,13 +11,13 @@
         app:isHeightMatchParent="true"
         app:isWidthMatchParent="true">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_essence_one"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:scrollbarStyle="insideInset"
-            android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+            android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>
 
     </com.example.mr_zyl.project824.pro.base.view.refreshview.XRefreshView>
 
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_scrollTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

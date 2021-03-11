@@ -2,10 +2,9 @@ package com.example.mr_zyl.project824.pro.base.view.refreshview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.widget.NestedScrollView;
+import androidx.core.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.ScrollView;
 
 public class XNestedScrollView extends NestedScrollView {
 

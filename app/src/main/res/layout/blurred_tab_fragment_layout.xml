@@ -22,7 +22,7 @@
                 android:gravity="center"
                 android:text="大标题-中标题-小标题" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_blurred_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -5,7 +5,7 @@ package com.example.mr_zyl.project824.pro.mine.view.selfview;
  */
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.annotation.AttrRes;
+import androidx.annotation.AttrRes;
 
 public class ThemeResolver {
 

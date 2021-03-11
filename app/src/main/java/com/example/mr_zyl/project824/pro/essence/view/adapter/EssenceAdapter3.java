@@ -1,8 +1,11 @@
 package com.example.mr_zyl.project824.pro.essence.view.adapter;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.mr_zyl.project824.pro.essence.OnVisibilityTitleListener;
 import com.example.mr_zyl.project824.pro.essence.view.fragment.EssenceMyLvFragment;
@@ -14,22 +17,17 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 
-public class EssenceAdapter extends FragmentPagerAdapter {
+public class EssenceAdapter3 extends FragmentStateAdapter {
 
     public static final String TAB_TAG = "@zylmove@";
 
     private List<String> mTitles;
     private OnVisibilityTitleListener onVisibilityTitleListener;
 
-    public EssenceAdapter(FragmentManager fm, List<String> titles,OnVisibilityTitleListener listener) {
+    public EssenceAdapter3(FragmentActivity fm, List<String> titles, OnVisibilityTitleListener listener) {
         super(fm);
         mTitles = titles;
         this.onVisibilityTitleListener=listener;
-    }
-
-    @Override
-    public Fragment getItem(int position) {
-        return getFragment(position);
     }
 
     @NotNull
@@ -53,8 +51,13 @@ public class EssenceAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return mTitles.size();
     }
 
+    @NonNull
+    @Override
+    public Fragment createFragment(int position) {
+        return  getFragment(position);
+    }
 }

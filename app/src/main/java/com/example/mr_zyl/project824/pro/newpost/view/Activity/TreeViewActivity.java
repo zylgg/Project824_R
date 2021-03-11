@@ -47,8 +47,8 @@ public class TreeViewActivity extends BaseActivity {
 
     private void initTreeMenu() {
         View view = LayoutInflater.from(this).inflate(R.layout.treegroup_item_menu, null);
-        TextView tv_treegroup_drawup = ButterKnife.findById(view, R.id.tv_treegroup_drawup);
-        TextView tv_treegroup_drawbottom = ButterKnife.findById(view, R.id.tv_treegroup_drawbottom);
+        TextView tv_treegroup_drawup = view.findViewById(R.id.tv_treegroup_drawup);
+        TextView tv_treegroup_drawbottom = view.findViewById(R.id.tv_treegroup_drawbottom);
         tv_treegroup_drawup.setOnClickListener(treemenulistener);
         tv_treegroup_drawbottom.setOnClickListener(treemenulistener);
         menuWindow = new PopupWindow(this);

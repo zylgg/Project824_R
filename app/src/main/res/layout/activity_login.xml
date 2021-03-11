@@ -37,7 +37,7 @@
             app:civ_border_color="@color/white"
             app:civ_border_width="1dp" />
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_login_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             android:textColorHint="@color/white"
             app:errorTextAppearance="@style/InputLayoutStyle">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tiet_login_phone"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
@@ -56,9 +56,9 @@
                 android:textColor="@color/colorAccent"
                 android:textColorHint="@color/white"
                 android:theme="@style/InputStyle" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_login_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/white">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tiet_login_password"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
@@ -77,7 +77,7 @@
                 android:textColor="@color/colorAccent"
                 android:textColorHint="@color/white"
                 android:theme="@style/InputStyle" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <RelativeLayout
             android:id="@+id/rl_login_main"

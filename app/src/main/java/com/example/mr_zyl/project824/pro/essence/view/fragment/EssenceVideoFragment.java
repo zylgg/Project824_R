@@ -1,12 +1,12 @@
 package com.example.mr_zyl.project824.pro.essence.view.fragment;
 
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.example.mr_zyl.project824.R;
@@ -90,12 +90,7 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
         EventBus.getDefault().register(this);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
+    @SuppressLint("RestrictedApi")
     @Override
     public void initContentView(View contentView) {
         ButterKnife.bind(this, contentView);
@@ -107,7 +102,7 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
         refreshview_id.setPullRefreshEnable(true);
         refreshview_id.setPullLoadEnable(true);
         refreshview_id.setPinnedTime(1000);
-        refreshview_id.setAutoRefresh(true);
+        refreshview_id.setAutoRefresh(false);
         refreshview_id.setAutoLoadMore(false);
 //        refreshview_id.enableReleaseToLoadMore(false);//到达底部后让其点击加载asdf
 //        refreshview_id.enableRecyclerViewPullUp(false);//不让Recycleview到达底部继续上啦
@@ -134,6 +129,7 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
                 super.onScrolled(recyclerView, dx, dy);
             }
 
+            @SuppressLint("RestrictedApi")
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -190,7 +186,7 @@ public class EssenceVideoFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void initData() {
-//        loaddata(true);
+        loaddata(true);
     }
 
     /**

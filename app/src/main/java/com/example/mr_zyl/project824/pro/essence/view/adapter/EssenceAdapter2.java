@@ -1,8 +1,11 @@
 package com.example.mr_zyl.project824.pro.essence.view.adapter;
 
+import android.annotation.SuppressLint;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.mr_zyl.project824.pro.essence.OnVisibilityTitleListener;
 import com.example.mr_zyl.project824.pro.essence.view.fragment.EssenceMyLvFragment;
@@ -13,16 +16,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-
-public class EssenceAdapter extends FragmentPagerAdapter {
+public class EssenceAdapter2 extends FragmentStatePagerAdapter {
 
     public static final String TAB_TAG = "@zylmove@";
 
     private List<String> mTitles;
     private OnVisibilityTitleListener onVisibilityTitleListener;
 
-    public EssenceAdapter(FragmentManager fm, List<String> titles,OnVisibilityTitleListener listener) {
-        super(fm);
+    @SuppressLint("WrongConstant")
+    public EssenceAdapter2(FragmentManager fm, List<String> titles, OnVisibilityTitleListener listener) {
+        super(fm,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         mTitles = titles;
         this.onVisibilityTitleListener=listener;
     }
@@ -32,6 +35,10 @@ public class EssenceAdapter extends FragmentPagerAdapter {
         return getFragment(position);
     }
 
+    @Override
+    public int getCount() {
+        return mTitles.size();
+    }
     @NotNull
     private Fragment getFragment(int position) {
         EssenceVideoFragment fragment = new EssenceVideoFragment();
@@ -51,10 +58,4 @@ public class EssenceAdapter extends FragmentPagerAdapter {
             return fragment;
         }
     }
-
-    @Override
-    public int getCount() {
-        return mTitles.size();
-    }
-
 }

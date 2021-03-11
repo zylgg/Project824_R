@@ -1,13 +1,12 @@
 package com.example.mr_zyl.project824.pro.mine.view;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -39,14 +38,11 @@ import com.example.mr_zyl.project824.utils.ToastUtil;
 //import com.zhy.http.okhttp.callback.FileCallBack;
 //import com.zhy.http.okhttp.request.RequestCall;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.Call;
-import okhttp3.Request;
 
 /**
  * Created by Mr_Zyl on 2016/8/25.

@@ -2,32 +2,23 @@ package com.example.mr_zyl.project824;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.widget.ContentLoadingProgressBar;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import androidx.core.widget.ContentLoadingProgressBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Scroller;
-import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -35,12 +26,10 @@ import com.example.mr_zyl.project824.bean.UserBean;
 import com.example.mr_zyl.project824.pro.base.view.BaseActivity;
 import com.example.mr_zyl.project824.utils.StatusBarUtils;
 import com.example.mr_zyl.project824.utils.SystemAppUtils;
-import com.example.mr_zyl.project824.utils.ToastUtil;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.objectbox.Box;
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 

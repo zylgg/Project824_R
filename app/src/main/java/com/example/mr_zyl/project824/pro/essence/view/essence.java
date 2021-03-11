@@ -5,12 +5,17 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+
+import androidx.annotation.NonNull;
+
+import com.example.mr_zyl.project824.pro.essence.view.adapter.EssenceAdapter2;
+import com.example.mr_zyl.project824.pro.essence.view.adapter.EssenceAdapter3;
+import com.google.android.material.tabs.TabLayout;
+
+import androidx.core.graphics.ColorUtils;
+import androidx.viewpager2.widget.ViewPager2;
+
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.graphics.ColorUtils;
-import android.support.v4.view.ViewPager;
 import android.text.format.Formatter;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -29,8 +34,10 @@ import com.example.mr_zyl.project824.pro.essence.OnVisibilityTitleListener;
 import com.example.mr_zyl.project824.pro.essence.view.adapter.EssenceAdapter;
 import com.example.mr_zyl.project824.pro.essence.view.navigation.EssenceNavigationBuilder;
 import com.example.mr_zyl.project824.utils.ToastUtil;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,12 +62,14 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
     @BindView(R.id.tab_essence)
     TabLayout tab_essence;
     @BindView(R.id.vp_essence)
-    ViewPager vp_essence;
+    ViewPager2 vp_essence;
     private EssenceNavigationBuilder builder;
+
     @Override
     public int getContentView() {
         return R.layout.essence;
     }
+
     @Override
     public void initContentView(View viewContent) {
         ButterKnife.bind(this, viewContent);
@@ -83,7 +92,7 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
                         //stationbuy.ejoy.sinopec.com://?stnCode
                         //activity.ejoy.sinopec.com://?openWalletRecharge=1   scheme1://host1:8080/path1?query1=1&query2=true
 //                        Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("activity.ejoy.sinopec.com://?openWalletRecharge=1"));
-                        Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("stationbuy.ejoy.sinopec.com://?stnCode=32550160"));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("stationbuy.ejoy.sinopec.com://?stnCode=32550160"));
                         startActivity(intent);
                     }
                 })
@@ -98,18 +107,36 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
     public static final String TAB_TAG = "@zylmove@";
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+//        this.vp_essence.getAdapter().notifyItemChanged(this.vp_essence.getCurrentItem());
+    }
+
+    @Override
     public void initData() {
         String[] titles = getResources().getStringArray(R.array.essence_video_tab);
-        EssenceAdapter adapter = new EssenceAdapter(getFragmentManager(), Arrays.asList(titles), this);
+        List<String> strings = Arrays.asList(titles);
+        EssenceAdapter3 adapter = new EssenceAdapter3(getActivity(),strings , this);
         this.vp_essence.setAdapter(adapter);
-        this.vp_essence.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        this.vp_essence.setSaveEnabled(false);
+        this.vp_essence.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 ResideTouch resideTouch = new ResideTouch(position == 0 ? true : false, ResideTouch.HandleTypeTagLeftBorder);
                 EventBus.getDefault().post(resideTouch);
             }
         });
-        this.tab_essence.setupWithViewPager(this.vp_essence);
+
+        new TabLayoutMediator(this.tab_essence, this.vp_essence, true, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+            }
+        }).attach();
 
         for (int i = 0; i < titles.length; i++) {
             String title = titles[i];
@@ -126,10 +153,9 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
         TextView text = (TextView) this.tab_essence.getTabAt(selectedTabPosition).getCustomView().findViewById(R.id.tv_essence_tablayout_item_text);
         text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         text.setTextColor(Color.WHITE);
-        this.tab_essence.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(this.vp_essence) {
+        this.tab_essence.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                super.onTabSelected(tab);
                 TextView text = (TextView) tab.getCustomView().findViewById(R.id.tv_essence_tablayout_item_text);
                 text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
                 text.setTextColor(Color.WHITE);
@@ -140,6 +166,11 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
                 TextView text = (TextView) tab.getCustomView().findViewById(R.id.tv_essence_tablayout_item_text);
                 text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
                 text.setTextColor(Fcontext.getResources().getColor(R.color.essence_tab_text_color_normal));
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
     }
@@ -217,9 +248,10 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
 
     private void createTranslate(final boolean is_open, final int scroll_max_height) {
         final int colorAccent = getContext().getResources().getColor(R.color.colorAccent);
-        tv_essence_title = ButterKnife.findById(builder.getContentView(), R.id.tv_essence_title);
-        iv_essence_left = ButterKnife.findById(builder.getContentView(), R.id.iv_essence_left);
-        iv_essence_right = ButterKnife.findById(builder.getContentView(), R.id.iv_essence_right);
+        tv_essence_title = builder.getContentView().findViewById(R.id.tv_essence_title);
+
+        iv_essence_left = builder.getContentView().findViewById(R.id.iv_essence_left);
+        iv_essence_right = builder.getContentView().findViewById(R.id.iv_essence_right);
 
 
         ValueAnimator animation = ValueAnimator.ofInt(0, scroll_max_height);
