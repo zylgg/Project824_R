@@ -197,6 +197,10 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
         timeView_day = view.findViewById( R.id.timeView_day);
         timeView_month = view.findViewById(R.id.timeView_month);
         timeView_year = view.findViewById( R.id.timeView_year);
+        Calendar calendar=Calendar.getInstance();
+        int YEAR = calendar.get(Calendar.YEAR);
+        timeView_year.setText(""+YEAR);
+
         v_dividing2 = view.findViewById( R.id.v_dividing2);
         initListener();
         setData();
