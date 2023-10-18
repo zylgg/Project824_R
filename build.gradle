@@ -12,6 +12,7 @@ buildscript {
     dependencies {
 
         classpath 'com.android.tools.build:gradle:3.5.3'
+        //新版objectbox插件
         classpath "io.objectbox:objectbox-gradle-plugin:2.2.0"
     }
 }
