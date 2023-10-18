@@ -93,7 +93,12 @@ public class essence extends BaseFragment implements OnVisibilityTitleListener {
                         //activity.ejoy.sinopec.com://?openWalletRecharge=1   scheme1://host1:8080/path1?query1=1&query2=true
 //                        Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("activity.ejoy.sinopec.com://?openWalletRecharge=1"));
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("stationbuy.ejoy.sinopec.com://?stnCode=32550160"));
-                        startActivity(intent);
+                        try {
+                            startActivity(intent);
+                        }catch (Exception e){
+                            ToastUtil.showToast(getActivity(),"应用找不到！");
+                        }
+
                     }
                 })
                 .setRightIconOnClickListener(new View.OnClickListener() {
