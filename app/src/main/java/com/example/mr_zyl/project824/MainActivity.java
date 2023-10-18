@@ -141,6 +141,8 @@ public class MainActivity extends BaseActivity implements TabHost.OnTabChangeLis
             Log.i(TAG, "onCreate: "+savedInstanceState);
         }
 
+        //默认展开
+        resideMenu.toggleMenu();
     }
 
     private static final String ON_SAVE_KEY="OnSaveKey";
